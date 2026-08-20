@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   PlayCircle,
   Layers,
@@ -11,13 +11,24 @@ import {
   ArrowRight,
   Trophy,
   ShieldCheck,
+  Zap,
+  Flame,
+  BookOpen,
+  Users,
+  Star,
+  Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ShimmerButton } from "@/components/magic/ShimmerButton";
+import { SpotlightCard, BentoGrid } from "@/components/magic/SpotlightCard";
+import { BackgroundBeams } from "@/components/magic/BackgroundBeams";
+import { NumberTicker } from "@/components/magic/NumberTicker";
+import { AnimatedShinyText } from "@/components/magic/BackgroundBeams";
 import { StreakBadge, XPCounter } from "@/components/StreakBadge";
 import { SmartImage } from "@/components/SmartImage";
-import { staggerContainer, fadeUp, EASE_OUT } from "@/lib/motion";
+import { staggerContainer, fadeUpReal, EASE_OUT, viewportOnce, SPRING_BOUNCY } from "@/lib/motion";
+import { useRef } from "react";
 
-/* Ảnh thật từ Pexels (miễn phí bản quyền) */
 const IMG = {
   hero: "https://images.pexels.com/photos/6503100/pexels-photo-6503100.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200",
   video: "https://images.pexels.com/photos/8055848/pexels-photo-8055848.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=600&w=800",
@@ -31,258 +42,363 @@ const FEATURES = [
     icon: PlayCircle,
     img: IMG.video,
     title: "Học qua Video",
-    desc: "Xem video có phụ đề, bấm vào từ vựng để tua đúng đoạn và học tức thì.",
-    color: "bg-brand-50 text-brand",
+    desc: "Video tương tác, bấm từ vựng để tua đúng đoạn, học tức thì với phụ đề thông minh.",
+    color: "from-brand-500 to-violet-500",
+    bg: "bg-brand-50",
+    iconColor: "text-brand",
+    stats: "500+ video",
   },
   {
     icon: Layers,
     img: IMG.flashcard,
-    title: "Flashcard thông minh",
-    desc: "Thẻ lật 3D ôn tập theo chu kỳ lặp ngắt quãng, ưu tiên từ bạn hay quên.",
-    color: "bg-success-50 text-success",
+    title: "Flashcard 3D",
+    desc: "Thẻ lật 3D với hiệu ứng tilt, lặp ngắt quãng SRS, ưu tiên từ bạn hay quên.",
+    color: "from-emerald-400 to-teal-500",
+    bg: "bg-success-50",
+    iconColor: "text-success",
+    stats: "SRS thông minh",
   },
   {
     icon: Gamepad2,
     img: IMG.game,
-    title: "Game 2D luyện từ",
-    desc: "Bắn chữ Word Defender và xếp câu Sentence Builder — học mà như chơi.",
-    color: "bg-accent-100 text-amber-600",
+    title: "Game 2D Pro",
+    desc: "Word Defender & Sentence Builder với combo, laser, bảng xếp hạng sống động.",
+    color: "from-amber-400 to-orange-500",
+    bg: "bg-accent-50",
+    iconColor: "text-amber-600",
+    stats: "2 game hot",
   },
 ];
 
 const STEPS = [
-  { n: 1, title: "Giáo viên giao bài", desc: "Đăng video, tạo bộ flashcard và bài tập cho cả lớp." },
-  { n: 2, title: "Học sinh luyện tập", desc: "Xem video, ôn thẻ, làm bài kiểm tra kiểu game." },
-  { n: 3, title: "Theo dõi tiến độ", desc: "XP, streak, huy hiệu và bảng xếp hạng tạo động lực." },
+  { n: 1, title: "Giáo viên giao bài", desc: "Đăng video YouTube, tạo flashcard tự động, giao bài cho cả lớp trong 30s.", icon: BookOpen },
+  { n: 2, title: "Học sinh bứt phá", desc: "Xem video → lật thẻ 3D → kiểm tra game hóa, tích XP thật mỗi bước.", icon: Zap },
+  { n: 3, title: "Theo dõi real-time", desc: "Ma trận tiến độ, XP, streak lửa, huy hiệu lấp lánh và bảng xếp hạng tuần.", icon: Trophy },
+];
+
+const STATS = [
+  { value: 5000, label: "Học sinh", suffix: "+", icon: Users },
+  { value: 120, label: "Từ vựng/Bài", suffix: "+", icon: BookOpen },
+  { value: 98, label: "Hài lòng", suffix: "%", icon: Star },
 ];
 
 export default function LandingPage() {
-  return (
-    <div className="min-h-screen bg-cream">
-      {/* ===== Nav ===== */}
-      <header className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <div className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-brand text-white shadow-soft">
-            <Sparkles className="h-5 w-5" />
-          </span>
-          <span className="text-lg font-extrabold tracking-tight text-slate-900">
-            Lingo<span className="text-brand">Quest</span>
-          </span>
-        </div>
-        <Button asChild size="sm" variant="outline" className="hidden sm:inline-flex">
-          <Link href="/dashboard">Đăng nhập bằng Google</Link>
-        </Button>
-      </header>
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-      {/* ===== Hero ===== */}
-      <section className="relative flex min-h-[calc(100vh_-_4rem)] items-center overflow-hidden">
-        <div className="bg-grid absolute inset-0 opacity-60" />
-        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:py-20">
+  return (
+    <div className="min-h-screen bg-cream overflow-hidden" ref={ref}>
+      {/* ===== Nav với glass ===== */}
+      <motion.header
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: EASE_OUT }}
+        className="sticky top-0 z-40 glass-strong border-b border-slate-200/50"
+      >
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+          <div className="flex items-center gap-2 group">
+            <motion.span
+              whileHover={{ rotate: 15, scale: 1.1 }}
+              className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow-brand"
+            >
+              <Sparkles className="h-5 w-5 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            </motion.span>
+            <span className="text-lg font-extrabold tracking-tight text-slate-900">
+              Lingo<span className="bg-gradient-to-r from-brand to-violet-600 bg-clip-text text-transparent">Quest</span>
+              <span className="ml-1.5 rounded-full bg-violet-500 px-2 py-0.5 text-[10px] font-black text-white">V2</span>
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
+              <Link href="/learn">Khám phá</Link>
+            </Button>
+            <ShimmerButton asChild size="sm" className="hidden sm:inline-flex">
+              <Link href="/dashboard" className="flex items-center gap-1.5"><GoogleIcon /> Đăng nhập</Link>
+            </ShimmerButton>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* ===== Hero với BackgroundBeams ===== */}
+      <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
           {/* Cột chữ */}
-          <motion.div variants={staggerContainer} initial={false} animate="show">
-            <motion.div variants={fadeUp}>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-brand shadow-soft">
-                <Trophy className="h-3.5 w-3.5 text-accent" /> Học tiếng Anh vui như chơi game
+          <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
+            <motion.div variants={fadeUpReal}>
+              <span className="group inline-flex items-center gap-2 rounded-full border border-violet-200 bg-gradient-to-r from-violet-50 to-brand-50 px-4 py-1.5 text-xs font-black text-violet-700 shadow-soft hover:shadow-glow-brand transition-all hover:scale-105">
+                <motion.span animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 2, repeat: Infinity }}><Trophy className="h-4 w-4 text-accent" /></motion.span>
+                <AnimatedShinyText>Học tiếng Anh vui như chơi game</AnimatedShinyText>
+                <span className="h-1 w-1 rounded-full bg-violet-400 animate-ping" />
               </span>
             </motion.div>
-            <motion.h1
-              variants={fadeUp}
-              className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
-            >
+            <motion.h1 variants={fadeUpReal} className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
               Chinh phục tiếng Anh cùng{" "}
-              <span className="relative whitespace-nowrap text-brand">
-                LingoQuest
-                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
-                  <path d="M2 9C50 3 150 3 198 9" stroke="#FBBF24" strokeWidth="4" strokeLinecap="round" />
-                </svg>
+              <span className="relative inline-block">
+                <span className="relative z-10 bg-gradient-to-r from-brand via-violet-600 to-brand bg-[length:200%_100%] bg-clip-text text-transparent animate-gradient-x">LingoQuest</span>
+                <motion.svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.2, delay: 0.8, ease: "easeInOut" }}>
+                  <path d="M2 9C50 3 150 3 198 9" stroke="url(#grad)" strokeWidth="4" strokeLinecap="round" />
+                  <defs><linearGradient id="grad" x1="0" x2="200" y1="0" y2="0"><stop offset="0%" stopColor="#2563eb"/><stop offset="50%" stopColor="#8b5cf6"/><stop offset="100%" stopColor="#fbbf24"/></linearGradient></defs>
+                </motion.svg>
+                <motion.div className="absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-r from-brand-100 via-violet-100 to-accent-100 blur-xl opacity-60" animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity }} />
               </span>
             </motion.h1>
-            <motion.p variants={fadeUp} className="mt-6 max-w-md text-lg text-slate-500">
-              Video tương tác, flashcard lật 3D, bài tập kiểu game và mini-game 2D — tất cả trong một
-              nền tảng được giáo viên quản lý trực tiếp.
+            <motion.p variants={fadeUpReal} className="mt-6 max-w-md text-lg leading-relaxed text-slate-600">
+              Video tương tác 3D, flashcard tilt lật, bài tập kiểu game và mini-game Phaser Pro —
+              <span className="font-bold text-slate-900"> tất cả trong một nền tảng được giáo viên quản lý trực tiếp.</span>
             </motion.p>
 
-            <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg">
-                <Link href="/dashboard">
-                  <GoogleIcon /> Đăng nhập bằng Google
+            <motion.div variants={fadeUpReal} className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <ShimmerButton asChild size="xl" className="group text-base">
+                <Link href="/dashboard" className="flex items-center gap-2">
+                  <GoogleIcon /> Bắt đầu ngay
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/learn">
-                  Khám phá bài học <ArrowRight className="h-4 w-4" />
+              </ShimmerButton>
+              <Button asChild size="xl" variant="outline" className="group border-2 hover:border-brand-200 hover:bg-brand-50">
+                <Link href="/learn" className="flex items-center gap-2">
+                  <PlayCircle className="h-5 w-5 group-hover:scale-110 transition-transform" /> Khám phá bài học
                 </Link>
               </Button>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="mt-6 flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-400">
-              <span className="flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-success" /> Miễn phí cho học sinh
+            <motion.div variants={fadeUpReal} className="mt-8 flex flex-wrap items-center gap-4">
+              <span className="flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-bold text-slate-600 shadow-soft border border-slate-100">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-success-50 text-success"><Check className="h-3 w-3" /></span> Miễn phí
               </span>
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-success" /> Dành cho lớp 6–9
+              <span className="flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-bold text-slate-600 shadow-soft border border-slate-100">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-50 text-violet-600"><ShieldCheck className="h-3 w-3" /></span> Lớp 6–9
               </span>
+              <div className="flex -space-x-2">
+                {[1,2,3].map(i => (
+                  <div key={i} className="h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand-100 to-violet-100 flex items-center justify-center text-[10px] font-bold text-brand">U{i}</div>
+                ))}
+                <div className="h-7 w-7 rounded-full border-2 border-white bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">+5k</div>
+              </div>
+            </motion.div>
+
+            {/* stats inline */}
+            <motion.div variants={fadeUpReal} className="mt-10 grid grid-cols-3 gap-4 max-w-md">
+              {STATS.map((s, i) => (
+                <div key={s.label} className="rounded-2xl bg-white/70 backdrop-blur border border-slate-200/50 p-3 text-center shadow-soft">
+                  <div className="flex items-center justify-center gap-1 text-brand">
+                    <s.icon className="h-4 w-4" />
+                    <span className="text-xl font-black"><NumberTicker value={s.value} />{s.suffix}</span>
+                  </div>
+                  <p className="mt-1 text-xs font-bold text-slate-500">{s.label}</p>
+                </div>
+              ))}
             </motion.div>
           </motion.div>
 
-          {/* Cột ảnh thật + mockup UI */}
-          <motion.div
-            initial={false}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: EASE_OUT }}
-            className="relative mx-auto h-[380px] w-full max-w-md sm:h-[460px]"
-          >
-            {/* Ảnh lớp học thật */}
-            <div className="absolute inset-0 overflow-hidden rounded-[2rem] border-4 border-white shadow-lift sm:rotate-2">
-              <SmartImage src={IMG.hero} alt="Học sinh học tiếng Anh trong lớp" className="h-full w-full object-cover" gradient="from-brand-100 to-accent-100" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
-            </div>
-
-            {/* Mockup "bài học hôm nay" đè lên ảnh */}
+          {/* Cột ảnh với tilt & beams */}
+          <motion.div style={{ y, opacity }} className="relative mx-auto h-[420px] w-full max-w-md sm:h-[520px] lg:ml-auto">
             <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-2 -left-3 w-60 rounded-2xl border border-slate-100 bg-white p-3 shadow-lift sm:-left-8"
+              initial={{ scale: 0.9, opacity: 0, rotate: -2 }}
+              animate={{ scale: 1, opacity: 1, rotate: 2 }}
+              transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.3 }}
+              className="absolute inset-0 overflow-hidden rounded-[2.5rem] border-4 border-white shadow-lift"
             >
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand text-white">
-                  <PlayCircle className="h-4 w-4" />
+              <SmartImage src={IMG.hero} alt="Học sinh" className="h-full w-full object-cover" gradient="from-brand-100 to-violet-100" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-slate-900/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-violet-500/20 mix-blend-overlay" />
+            </motion.div>
+
+            {/* floating mocks */}
+            <motion.div
+              initial={{ opacity: 0, y: 20, x: -20 }}
+              animate={{ opacity: 1, y: 0, x: 0 }}
+              transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
+              animate-y={{}}
+              className="absolute -bottom-4 -left-6 w-64 rounded-[1.5rem] border border-white/50 bg-white/90 p-4 shadow-lift backdrop-blur-xl sm:-left-12"
+            >
+              <div className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-br from-brand-50/50 to-violet-50/50" />
+              <div className="relative flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow-brand">
+                  <PlayCircle className="h-5 w-5" />
                 </span>
                 <div className="min-w-0">
-                  <p className="truncate text-xs font-extrabold text-slate-900">Talking About Your Weekend</p>
-                  <p className="text-[10px] font-semibold text-slate-400">Bài học hôm nay · 8 phút</p>
+                  <p className="truncate text-sm font-extrabold text-slate-900">Talking About Your Weekend</p>
+                  <p className="text-[11px] font-bold text-slate-500">Bài học hôm nay · 8 phút · 🔥 hot</p>
                 </div>
               </div>
-              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full w-2/5 rounded-full bg-brand" />
+              <div className="relative mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                <motion.div initial={{ width: 0 }} animate={{ width: "65%" }} transition={{ delay: 1, duration: 1 }} className="h-full rounded-full bg-gradient-to-r from-brand to-violet-500" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_2s_linear_infinite]" />
+              </div>
+              <div className="relative mt-2 flex items-center justify-between text-[10px] font-bold text-slate-400">
+                <span>65% hoàn thành</span><span className="text-brand">+30 XP</span>
               </div>
             </motion.div>
 
-            {/* Chip XP */}
             <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-              className="absolute -right-2 top-6 sm:-right-6"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, type: "spring", stiffness: 300 }}
+              className="absolute -right-4 top-8 sm:-right-8"
             >
-              <div className="rounded-2xl border border-slate-100 bg-white p-2 shadow-lift">
+              <div className="rounded-2xl border border-white/50 bg-white/90 p-2.5 shadow-lift backdrop-blur">
                 <XPCounter xp={2480} />
               </div>
             </motion.div>
 
-            {/* Chip streak */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
-              className="absolute -right-1 bottom-16 sm:right-2"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1, type: "spring", stiffness: 300 }}
+              className="absolute -right-2 bottom-20 sm:right-4"
             >
-              <div className="rounded-2xl border border-slate-100 bg-white p-2 shadow-lift">
+              <div className="rounded-2xl border border-white/50 bg-white/90 p-2.5 shadow-lift backdrop-blur">
                 <StreakBadge count={12} />
               </div>
+            </motion.div>
+
+            {/* floating elements */}
+            <motion.div animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -right-2 top-1/2 rounded-2xl bg-white p-3 shadow-card sm:-right-6">
+              <div className="flex items-center gap-2"><span className="text-lg">🎯</span><span className="text-xs font-black text-slate-700">Quest Done!</span></div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </BackgroundBeams>
+
+      {/* ===== Features Bento ===== */}
+      <section className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <motion.div initial="hidden" whileInView="show" viewport={viewportOnce} variants={staggerContainer} className="mx-auto max-w-2xl text-center">
+          <motion.div variants={fadeUpReal} className="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-4 py-1.5 text-xs font-black text-violet-700">
+            <Rocket className="h-4 w-4" /> Tính năng Pro v2
+          </motion.div>
+          <motion.h2 variants={fadeUpReal} className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+            Mọi thứ bạn cần để <span className="bg-gradient-to-r from-brand to-violet-600 bg-clip-text text-transparent">giỏi tiếng Anh</span>
+          </motion.h2>
+          <motion.p variants={fadeUpReal} className="mt-4 text-lg text-slate-600">Kết hợp 3 phương pháp hiệu quả nhất, gói gọn trong một nền tảng duy nhất.</motion.p>
+        </motion.div>
+
+        <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={viewportOnce} className="mt-12 grid gap-6 sm:grid-cols-3">
+          {FEATURES.map((f, i) => {
+            const Icon = f.icon;
+            return (
+              <motion.div key={f.title} variants={fadeUpReal} transition={{ delay: i * 0.1 } as any}>
+                <SpotlightCard className="group h-full overflow-hidden p-0 border-0 shadow-card hover:shadow-lift transition-all duration-500" spotlightColor="rgba(139,92,246,0.1)">
+                  <div className="relative h-48 overflow-hidden">
+                    <SmartImage src={f.img} alt={f.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" gradient="from-brand-100 to-violet-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent" />
+                    <div className={`absolute left-4 top-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${f.color} text-white shadow-glow-brand`}>
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <span className="absolute right-4 top-4 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-black text-slate-700 backdrop-blur shadow-soft">
+                      {f.stats}
+                    </span>
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+                      <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} viewport={viewportOnce} transition={{ duration: 1, delay: 0.5 + i * 0.1 }} className={`h-full bg-gradient-to-r ${f.color}`} />
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="flex items-center gap-2 text-lg font-extrabold text-slate-900 group-hover:text-brand transition-colors">
+                      {f.title}
+                      <Sparkles className="h-4 w-4 text-violet-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{f.desc}</p>
+                    <div className="mt-4 flex items-center gap-2 text-xs font-bold text-brand">
+                      <span>Khám phá ngay</span><ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </SpotlightCard>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </section>
+
+      {/* ===== Steps với timeline ===== */}
+      <section className="relative bg-white border-y border-slate-100 overflow-hidden">
+        <div className="absolute inset-0 bg-mesh-vibrant opacity-30" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2">
+          <motion.div initial="hidden" whileInView="show" viewport={viewportOnce} variants={staggerContainer} className="relative order-2 lg:order-1">
+            <div className="relative overflow-hidden rounded-[2.5rem] border-4 border-white shadow-lift">
+              <SmartImage src={IMG.showcase} alt="Giáo viên" className="aspect-[4/3] w-full object-cover" gradient="from-violet-100 to-brand-100" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-500/10 to-violet-500/10" />
+            </div>
+            <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -bottom-6 -right-6 rounded-2xl bg-white p-4 shadow-lift border border-slate-100 hidden sm:block">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-success to-emerald-600 flex items-center justify-center text-white"><Check className="h-5 w-5" /></div>
+                <div><p className="text-sm font-black text-slate-900">82% hoàn thành</p><p className="text-xs text-slate-500">Toàn lớp</p></div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="show" viewport={viewportOnce} variants={staggerContainer} className="order-1 lg:order-2">
+            <motion.div variants={fadeUpReal} className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-black text-brand">
+              <Zap className="h-3.5 w-3.5" /> Quy trình 3 bước
+            </motion.div>
+            <motion.h2 variants={fadeUpReal} className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl leading-tight">
+              Hoạt động đơn giản,<br />
+              <span className="bg-gradient-to-r from-brand to-violet-600 bg-clip-text text-transparent">hiệu quả rõ ràng</span>
+            </motion.h2>
+            <div className="mt-10 flex flex-col gap-8">
+              {STEPS.map((s, i) => (
+                <motion.div key={s.n} variants={fadeUpReal} transition={{ delay: i * 0.1 } as any} className="group flex gap-4">
+                  <div className="relative">
+                    <motion.span whileHover={{ scale: 1.1, rotate: 5 }} className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow-brand">
+                      <s.icon className="h-5 w-5" />
+                    </motion.span>
+                    {i < STEPS.length - 1 && <div className="absolute left-1/2 top-14 h-10 w-px -translate-x-1/2 bg-gradient-to-b from-slate-200 to-transparent" />}
+                  </div>
+                  <div className="flex-1 pt-1">
+                    <h3 className="flex items-center gap-2 font-extrabold text-slate-900 group-hover:text-brand transition-colors">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-xs font-black text-white">{s.n}</span>
+                      {s.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-600">{s.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            <motion.div variants={fadeUpReal} className="mt-10">
+              <ShimmerButton asChild size="lg"><Link href="/dashboard" className="flex items-center gap-2">Bắt đầu ngay <Rocket className="h-4 w-4" /></Link></ShimmerButton>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* ===== 3 tính năng (có ảnh thật) ===== */}
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Mọi thứ bạn cần để giỏi tiếng Anh
-          </h2>
-          <p className="mt-3 text-slate-500">Bốn phương pháp học hiệu quả nhất, gói gọn trong một nền tảng.</p>
-        </div>
-
-        <div className="mt-10 grid gap-6 sm:grid-cols-3">
-          {FEATURES.map((f, i) => {
-            const Icon = f.icon;
-            return (
-              <motion.div
-                key={f.title}
-                initial={false}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.45, delay: i * 0.08, ease: EASE_OUT }}
-                className="group overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-soft"
-              >
-                <div className="relative h-44 overflow-hidden">
-                  <SmartImage
-                    src={f.img}
-                    alt={f.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    gradient="from-brand-100 to-accent-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent" />
-                  <span className={`absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-2xl shadow-soft ${f.color}`}>
-                    <Icon className="h-5 w-5" />
-                  </span>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-extrabold text-slate-900">{f.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-500">{f.desc}</p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ===== Cách hoạt động (ảnh thật lớn) ===== */}
-      <section className="bg-white">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
+      {/* ===== CTA cuối với beams ===== */}
+      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <motion.div initial="hidden" whileInView="show" viewport={viewportOnce} variants={fadeUpReal} className="relative overflow-hidden rounded-[2.5rem] border border-violet-200 bg-gradient-to-br from-brand via-violet-600 to-brand-700 p-10 text-center shadow-lift sm:p-16">
+          <div className="absolute inset-0 bg-grid opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          <motion.div animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -top-20 -right-20 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+          <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 5, repeat: Infinity, delay: 1 }} className="absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-accent/20 blur-3xl" />
+          
           <div className="relative">
-            <div className="overflow-hidden rounded-[2rem] border-4 border-white shadow-lift sm:-rotate-2">
-              <SmartImage src={IMG.showcase} alt="Giáo viên kèm học sinh" className="aspect-[4/3] w-full object-cover" gradient="from-accent-100 to-brand-100" />
+            <motion.div variants={fadeUpReal} className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur border border-white/20 text-white mb-6">
+              <Rocket className="h-7 w-7" />
+            </motion.div>
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl leading-tight">Sẵn sàng bứt phá<br />cùng LingoQuest v2?</h2>
+            <p className="mx-auto mt-4 max-w-lg text-lg text-brand-100 leading-relaxed">Tham gia 5000+ học sinh đang học mỗi ngày. Miễn phí cho học sinh, mạnh mẽ cho giáo viên.</p>
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <ShimmerButton asChild size="xl" className="bg-white text-brand hover:bg-white border-0 shadow-lift min-w-[220px]">
+                <Link href="/dashboard" className="flex items-center gap-2"><GoogleIcon /> Đăng nhập bằng Google</Link>
+              </ShimmerButton>
+              <Button asChild size="xl" variant="ghost" className="text-white hover:bg-white/10 border border-white/20">
+                <Link href="/learn">Xem demo <PlayCircle className="h-5 w-5" /></Link>
+              </Button>
+            </div>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm font-bold text-white/70">
+              <span className="flex items-center gap-1.5"><Check className="h-4 w-4 text-white" /> Không cần thẻ tín dụng</span>
+              <span className="flex items-center gap-1.5"><Check className="h-4 w-4 text-white" /> Dùng ngay sau 30s</span>
             </div>
           </div>
-
-          <div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Hoạt động đơn giản, hiệu quả rõ ràng</h2>
-            <div className="mt-8 flex flex-col gap-6">
-              {STEPS.map((s) => (
-                <div key={s.n} className="flex gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-brand text-lg font-extrabold text-white shadow-soft">
-                    {s.n}
-                  </span>
-                  <div>
-                    <h3 className="font-extrabold text-slate-900">{s.title}</h3>
-                    <p className="text-sm text-slate-500">{s.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Button asChild className="mt-8" size="lg">
-              <Link href="/dashboard">Bắt đầu ngay <ArrowRight className="h-4 w-4" /></Link>
-            </Button>
-          </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* ===== CTA cuối ===== */}
-      <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-brand p-8 text-center shadow-lift sm:p-14">
-          <div className="bg-grid absolute inset-0 opacity-20" />
-          <div className="relative">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Sẵn sàng bắt đầu hành trình?</h2>
-            <p className="mx-auto mt-3 max-w-md text-brand-100">Đăng nhập bằng Google và gia nhập lớp học của bạn ngay hôm nay.</p>
-            <Button asChild size="lg" variant="accent" className="mt-8">
-              <Link href="/dashboard">
-                <GoogleIcon /> Đăng nhập bằng Google
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== Footer ===== */}
-      <footer className="border-t border-slate-100 bg-white">
+      <footer className="border-t border-slate-100 bg-white/50 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-sm text-slate-400 sm:flex-row sm:px-6">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-brand text-white">
-              <Sparkles className="h-4 w-4" />
-            </span>
-            <span className="font-bold text-slate-600">LingoQuest</span>
+            <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-violet-600 text-white"><Sparkles className="h-4 w-4" /></span>
+            <span className="font-bold text-slate-600">LingoQuest v2</span><span className="rounded-full bg-violet-500 px-1.5 py-0.5 text-[10px] font-black text-white">PRO</span>
           </div>
-          <p>© 2026 LingoQuest · Ảnh: Pexels · Template EdTech.</p>
+          <p className="flex items-center gap-2">© 2026 LingoQuest · Crafted with <span className="text-red-500">♥</span> + MagicUI + Aceternity · Ảnh: Pexels</p>
         </div>
       </footer>
     </div>

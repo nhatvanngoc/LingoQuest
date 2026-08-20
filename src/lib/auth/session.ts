@@ -54,24 +54,29 @@ export async function getSessionUserId(): Promise<string | null> {
 
 /** Lấy user hiện tại từ DB (KHÔNG gồm password), hoặc null. DB là nguồn chân lý về role. */
 export async function getCurrentUser(): Promise<SessionUser | null> {
-  const uid = await getSessionUserId();
-  if (!uid) return null;
+  try {
+    const uid = await getSessionUserId();
+    if (!uid) return null;
 
-  const rows = await db.select().from(users).where(eq(users.id, uid)).limit(1);
-  const row = rows[0];
-  if (!row) return null;
+    const rows = await db.select().from(users).where(eq(users.id, uid)).limit(1);
+    const row = rows[0];
+    if (!row) return null;
 
-  // Bỏ trường password trước khi đưa xuống client.
-  const { password: _password, ...rest } = row;
-  void _password;
+    // Bỏ trường password trước khi đưa xuống client.
+    const { password: _password, ...rest } = row;
+    void _password;
 
-  return {
-    id: rest.id,
-    name: rest.name,
-    email: rest.email,
-    avatarColor: rest.avatarColor,
-    role: rest.role as Role,
-  };
+    return {
+      id: rest.id,
+      name: rest.name,
+      email: rest.email,
+      avatarColor: rest.avatarColor,
+      role: rest.role as Role,
+    };
+  } catch {
+    // Mock mode - không có DB, trả null để dùng GUEST_USER
+    return null;
+  }
 }
 
 /** Bảo vệ trang: nếu chưa đăng nhập → redirect("/login"). */
