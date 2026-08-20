@@ -1,0 +1,1033 @@
+import type {
+  Assignment,
+  Badge,
+  DailyTask,
+  Deck,
+  GameInfo,
+  LeaderRow,
+  Lesson,
+  MatrixStatus,
+  MockUser,
+  QuizQuestion,
+} from "@/lib/types";
+
+/* ============================================================
+   MOCK DATA — Dữ liệu giả lập cho toàn bộ nền tảng LingoQuest.
+   Dễ thay bằng API thật sau: chỉ cần trả về đúng shape trong types.ts
+   ============================================================ */
+
+/** 3 người dùng mô phỏng cho route guard / chuyển vai trò */
+export const USERS: Record<string, MockUser> = {
+  student: {
+    id: "u1",
+    name: "Nguyễn Quang Minh",
+    email: "minh.nguyen@lingoquest.app",
+    avatarColor: "#2563EB",
+    role: "student",
+    className: "Tiếng Anh 8 — Lớp 8A2",
+    streak: 12,
+    xp: 2480,
+    level: 7,
+  },
+  teacher: {
+    id: "u2",
+    name: "Cô Lê Thị Lan",
+    email: "lan.le@lingoquest.app",
+    avatarColor: "#10B981",
+    role: "teacher",
+    streak: 0,
+    xp: 0,
+    level: 0,
+  },
+  pending: {
+    id: "u3",
+    name: "Trần Bảo Tuấn",
+    email: "tuan.tran@gmail.com",
+    avatarColor: "#FBBF24",
+    role: "pending",
+    className: undefined,
+    streak: 0,
+    xp: 0,
+    level: 0,
+  },
+};
+
+/** Bài học hôm nay */
+export const LESSONS: Lesson[] = [
+  {
+    id: "lesson-1",
+    title: "Talking About Your Weekend",
+    titleVi: "Kể về cuối tuần của bạn",
+    description:
+      "Học cách miêu tả các hoạt động cuối tuần bằng thì quá khứ đơn và từ vựng thường gặp.",
+    youtubeId: "WUfv5FD-x2g",
+    thumbnail:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+    progress: 40,
+    durationLabel: "8 phút",
+    vocab: [
+      {
+        id: "v1",
+        word: "relaxing",
+        phonetic: "/rɪˈlæksɪŋ/",
+        meaning: "thư giãn",
+        example: "I had a relaxing weekend at home.",
+        exampleVi: "Tôi đã có một cuối tuần thư giãn ở nhà.",
+        start: 18,
+      },
+      {
+        id: "v2",
+        word: "hang out",
+        phonetic: "/hæŋ aʊt/",
+        meaning: "đi chơi (với bạn bè)",
+        example: "We hung out at the mall all afternoon.",
+        exampleVi: "Chúng tôi đi chơi ở trung tâm thương mại cả buổi chiều.",
+        start: 52,
+      },
+      {
+        id: "v3",
+        word: "exhausted",
+        phonetic: "/ɪɡˈzɔːstɪd/",
+        meaning: "kiệt sức",
+        example: "After the hike I was completely exhausted.",
+        exampleVi: "Sau chuyến đi bộ đường dài tôi hoàn toàn kiệt sức.",
+        start: 96,
+      },
+      {
+        id: "v4",
+        word: "delicious",
+        phonetic: "/dɪˈlɪʃəs/",
+        meaning: "ngon miệng",
+        example: "The pizza was absolutely delicious.",
+        exampleVi: "Bánh pizza đó thực sự rất ngon.",
+        start: 138,
+      },
+    ],
+  },
+  {
+    id: "lesson-2",
+    title: "Ordering Food in English",
+    titleVi: "Gọi món ăn bằng tiếng Anh",
+    description: "Các mẫu câu giao tiếp khi gọi món tại nhà hàng.",
+    youtubeId: "uUMPULuwdLI", // Bob the Canadian — How to Order Food at a Restaurant in English
+    thumbnail:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+    progress: 0,
+    durationLabel: "10 phút",
+    vocab: [
+      {
+        id: "food1",
+        word: "menu",
+        phonetic: "/ˈmɛnjuː/",
+        meaning: "thực đơn",
+        example: "Can I see the menu, please?",
+        exampleVi: "Làm ơn cho tôi xem thực đơn.",
+        start: 25,
+      },
+      {
+        id: "food2",
+        word: "order",
+        phonetic: "/ˈɔːrdər/",
+        meaning: "gọi món",
+        example: "I'd like to order the steak.",
+        exampleVi: "Tôi muốn gọi món bít tết.",
+        start: 84,
+      },
+      {
+        id: "food3",
+        word: "reserve",
+        phonetic: "/rɪˈzɜːrv/",
+        meaning: "đặt trước (bàn)",
+        example: "We reserved a table for two.",
+        exampleVi: "Chúng tôi đã đặt trước một bàn cho hai người.",
+        start: 143,
+      },
+      {
+        id: "food4",
+        word: "appetizer",
+        phonetic: "/ˈæpɪtaɪzər/",
+        meaning: "món khai vị",
+        example: "The soup is a good appetizer.",
+        exampleVi: "Món súp là một món khai vị ngon.",
+        start: 202,
+      },
+      {
+        id: "food5",
+        word: "main course",
+        phonetic: "/meɪn kɔːrs/",
+        meaning: "món chính",
+        example: "I'll have the chicken as my main course.",
+        exampleVi: "Tôi sẽ gọi món gà làm món chính.",
+        start: 261,
+      },
+      {
+        id: "food6",
+        word: "dessert",
+        phonetic: "/dɪˈzɜːrt/",
+        meaning: "món tráng miệng",
+        example: "What do you recommend for dessert?",
+        exampleVi: "Bạn gợi ý món tráng miệng nào?",
+        start: 320,
+      },
+      {
+        id: "food7",
+        word: "bill",
+        phonetic: "/bɪl/",
+        meaning: "hóa đơn",
+        example: "Could we have the bill, please?",
+        exampleVi: "Làm ơn cho chúng tôi hóa đơn.",
+        start: 379,
+      },
+      {
+        id: "food8",
+        word: "tip",
+        phonetic: "/tɪp/",
+        meaning: "tiền boa",
+        example: "We left a generous tip.",
+        exampleVi: "Chúng tôi để lại một khoản tiền boa hậu hĩnh.",
+        start: 438,
+      },
+      {
+        id: "food9",
+        word: "recommend",
+        phonetic: "/ˌrekəˈmend/",
+        meaning: "gợi ý, đề xuất",
+        example: "Can you recommend a dish?",
+        exampleVi: "Bạn có thể gợi ý một món không?",
+        start: 497,
+      },
+      {
+        id: "food10",
+        word: "vegetarian",
+        phonetic: "/ˌvedʒɪˈteriən/",
+        meaning: "ăn chay",
+        example: "I'm vegetarian, no meat please.",
+        exampleVi: "Tôi ăn chay, không thịt nhé.",
+        start: 556,
+      },
+    ],
+  },
+  {
+    id: "lesson-3",
+    title: "Household Chores — Talking About Housework",
+    titleVi: "Việc nhà — Nói về công việc nhà",
+    description:
+      "Từ vựng và mẫu câu miêu tả các việc nhà hằng ngày (Chủ đề Tiếng Anh 10: Household chores).",
+    youtubeId: "lvKA9rH_WlU", // engVid — MAKE or DO? (housework & chores)
+    thumbnail:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+    progress: 0,
+    durationLabel: "10 phút",
+    vocab: [
+      {
+        id: "hc1",
+        word: "chores",
+        phonetic: "/tʃɔːrz/",
+        meaning: "việc nhà",
+        example: "Household chores teach us responsibility.",
+        exampleVi: "Các việc nhà dạy chúng ta biết trách nhiệm.",
+        start: 12,
+      },
+      {
+        id: "hc2",
+        word: "do the laundry",
+        phonetic: "/duː ðə ˈlɔːndri/",
+        meaning: "giặt đồ",
+        example: "I do the laundry every Sunday.",
+        exampleVi: "Tôi giặt đồ vào mỗi chủ nhật.",
+        start: 30,
+      },
+      {
+        id: "hc3",
+        word: "sweep the floor",
+        phonetic: "/swiːp ðə flɔːr/",
+        meaning: "quét nhà",
+        example: "She sweeps the floor every morning.",
+        exampleVi: "Cô ấy quét nhà mỗi sáng.",
+        start: 52,
+      },
+      {
+        id: "hc4",
+        word: "mop",
+        phonetic: "/mɒp/",
+        meaning: "lau nhà (bằng giẻ)",
+        example: "He mops the kitchen floor.",
+        exampleVi: "Anh ấy lau sàn bếp.",
+        start: 74,
+      },
+      {
+        id: "hc5",
+        word: "wash the dishes",
+        phonetic: "/wɒʃ ðə ˈdɪʃɪz/",
+        meaning: "rửa bát đĩa",
+        example: "I wash the dishes after dinner.",
+        exampleVi: "Tôi rửa bát đĩa sau bữa tối.",
+        start: 96,
+      },
+      {
+        id: "hc6",
+        word: "take out the rubbish",
+        phonetic: "/teɪk aʊt ðə ˈrʌbɪʃ/",
+        meaning: "đổ rác",
+        example: "Don't forget to take out the rubbish.",
+        exampleVi: "Đừng quên đổ rác nhé.",
+        start: 118,
+      },
+      {
+        id: "hc7",
+        word: "tidy up",
+        phonetic: "/ˈtaɪdi ʌp/",
+        meaning: "dọn dẹp",
+        example: "Please tidy up your room.",
+        exampleVi: "Hãy dọn dẹp phòng của con.",
+        start: 140,
+      },
+      {
+        id: "hc8",
+        word: "dust",
+        phonetic: "/dʌst/",
+        meaning: "lau bụi",
+        example: "I dust the furniture once a week.",
+        exampleVi: "Tôi lau bụi đồ đạc mỗi tuần một lần.",
+        start: 162,
+      },
+      {
+        id: "hc9",
+        word: "make the bed",
+        phonetic: "/meɪk ðə bed/",
+        meaning: "trải giường",
+        example: "He makes the bed every morning.",
+        exampleVi: "Anh ấy trải giường mỗi sáng.",
+        start: 184,
+      },
+      {
+        id: "hc10",
+        word: "iron",
+        phonetic: "/ˈaɪən/",
+        meaning: "là (ủi) quần áo",
+        example: "My mother irons my school uniform.",
+        exampleVi: "Mẹ tôi là đồng phục học sinh cho tôi.",
+        start: 206,
+      },
+    ],
+  },
+  {
+    id: "lesson-4",
+    title: "Protecting the Environment",
+    titleVi: "Bảo vệ môi trường",
+    description:
+      "Từ vựng chủ đề môi trường: ô nhiễm, tái chế, năng lượng sạch (Chủ đề Tiếng Anh 10: Environment).",
+    youtubeId: "zKAYAnLsoUk", // Oxford Online English — Talk About the Environment
+    thumbnail:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+    progress: 0,
+    durationLabel: "12 phút",
+    vocab: [
+      {
+        id: "env1",
+        word: "pollution",
+        phonetic: "/pəˈluːʃən/",
+        meaning: "ô nhiễm",
+        example: "Air pollution is a serious problem in big cities.",
+        exampleVi: "Ô nhiễm không khí là vấn đề nghiêm trọng ở các thành phố lớn.",
+        start: 25,
+      },
+      {
+        id: "env2",
+        word: "recycle",
+        phonetic: "/riːˈsaɪkəl/",
+        meaning: "tái chế",
+        example: "We should recycle plastic bottles.",
+        exampleVi: "Chúng ta nên tái chế chai nhựa.",
+        start: 97,
+      },
+      {
+        id: "env3",
+        word: "waste",
+        phonetic: "/weɪst/",
+        meaning: "rác thải / lãng phí",
+        example: "We must reduce household waste.",
+        exampleVi: "Chúng ta phải giảm rác thải sinh hoạt.",
+        start: 169,
+      },
+      {
+        id: "env4",
+        word: "renewable energy",
+        phonetic: "/rɪˈnjuːəbəl ˈenədʒi/",
+        meaning: "năng lượng tái tạo",
+        example: "Solar power is renewable energy.",
+        exampleVi: "Điện mặt trời là năng lượng tái tạo.",
+        start: 241,
+      },
+      {
+        id: "env5",
+        word: "climate change",
+        phonetic: "/ˈklaɪmət tʃeɪndʒ/",
+        meaning: "biến đổi khí hậu",
+        example: "Climate change affects our planet.",
+        exampleVi: "Biến đổi khí hậu ảnh hưởng đến hành tinh của chúng ta.",
+        start: 313,
+      },
+      {
+        id: "env6",
+        word: "deforestation",
+        phonetic: "/diːˌfɒrɪˈsteɪʃən/",
+        meaning: "phá rừng",
+        example: "Deforestation destroys animal habitats.",
+        exampleVi: "Phá rừng tàn phá môi trường sống của động vật.",
+        start: 385,
+      },
+      {
+        id: "env7",
+        word: "conserve",
+        phonetic: "/kənˈsɜːrv/",
+        meaning: "bảo tồn, tiết kiệm",
+        example: "We must conserve water every day.",
+        exampleVi: "Chúng ta phải tiết kiệm nước mỗi ngày.",
+        start: 457,
+      },
+      {
+        id: "env8",
+        word: "emissions",
+        phonetic: "/ɪˈmɪʃənz/",
+        meaning: "khí thải",
+        example: "Car emissions harm the environment.",
+        exampleVi: "Khí thải từ ô tô gây hại cho môi trường.",
+        start: 529,
+      },
+      {
+        id: "env9",
+        word: "sustainable",
+        phonetic: "/səˈsteɪnəbəl/",
+        meaning: "bền vững",
+        example: "We need sustainable development.",
+        exampleVi: "Chúng ta cần sự phát triển bền vững.",
+        start: 601,
+      },
+      {
+        id: "env10",
+        word: "protect",
+        phonetic: "/prəˈtekt/",
+        meaning: "bảo vệ",
+        example: "We should protect the environment.",
+        exampleVi: "Chúng ta nên bảo vệ môi trường.",
+        start: 673,
+      },
+    ],
+  },
+  {
+    id: "lesson-5",
+    title: "Music and Feelings",
+    titleVi: "Âm nhạc và cảm xúc",
+    description:
+      "Từ vựng về âm nhạc: giai điệu, nhịp điệu, nhạc cụ, thể loại (Chủ đề Tiếng Anh 10: Music).",
+    youtubeId: "fwrD70WeSzs", // 10 Great Songs For English Fluency
+    thumbnail:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+    progress: 0,
+    durationLabel: "11 phút",
+    vocab: [
+      {
+        id: "mus1",
+        word: "melody",
+        phonetic: "/ˈmelədi/",
+        meaning: "giai điệu",
+        example: "This song has a beautiful melody.",
+        exampleVi: "Bài hát này có một giai điệu thật đẹp.",
+        start: 25,
+      },
+      {
+        id: "mus2",
+        word: "rhythm",
+        phonetic: "/ˈrɪðəm/",
+        meaning: "nhịp điệu",
+        example: "The rhythm of the drums is very strong.",
+        exampleVi: "Nhịp điệu của tiếng trống rất mạnh.",
+        start: 91,
+      },
+      {
+        id: "mus3",
+        word: "lyrics",
+        phonetic: "/ˈlɪrɪks/",
+        meaning: "lời bài hát",
+        example: "I memorized the lyrics of this song.",
+        exampleVi: "Tôi đã thuộc lời bài hát này.",
+        start: 157,
+      },
+      {
+        id: "mus4",
+        word: "composer",
+        phonetic: "/kəmˈpoʊzər/",
+        meaning: "nhà soạn nhạc",
+        example: "Mozart was a famous composer.",
+        exampleVi: "Mozart là một nhà soạn nhạc nổi tiếng.",
+        start: 223,
+      },
+      {
+        id: "mus5",
+        word: "instrument",
+        phonetic: "/ˈɪnstrəmənt/",
+        meaning: "nhạc cụ",
+        example: "She plays a musical instrument.",
+        exampleVi: "Cô ấy chơi một nhạc cụ.",
+        start: 289,
+      },
+      {
+        id: "mus6",
+        word: "genre",
+        phonetic: "/ˈʒɑːnrə/",
+        meaning: "thể loại (nhạc)",
+        example: "What is your favorite music genre?",
+        exampleVi: "Thể loại nhạc yêu thích của bạn là gì?",
+        start: 355,
+      },
+      {
+        id: "mus7",
+        word: "chorus",
+        phonetic: "/ˈkɔːrəs/",
+        meaning: "điệp khúc",
+        example: "Everyone sings the chorus together.",
+        exampleVi: "Mọi người cùng hát điệp khúc.",
+        start: 421,
+      },
+      {
+        id: "mus8",
+        word: "tune",
+        phonetic: "/tjuːn/",
+        meaning: "giai điệu, bài hát",
+        example: "He was humming a cheerful tune.",
+        exampleVi: "Anh ấy đang huýt một giai điệu vui tươi.",
+        start: 487,
+      },
+      {
+        id: "mus9",
+        word: "band",
+        phonetic: "/bænd/",
+        meaning: "ban nhạc",
+        example: "The band performed on stage.",
+        exampleVi: "Ban nhạc biểu diễn trên sân khấu.",
+        start: 553,
+      },
+      {
+        id: "mus10",
+        word: "audience",
+        phonetic: "/ˈɔːdiəns/",
+        meaning: "khán giả",
+        example: "The audience applauded loudly.",
+        exampleVi: "Khán giả vỗ tay thật rầm rộ.",
+        start: 620,
+      },
+    ],
+  },
+];
+
+export const CURRENT_LESSON = LESSONS[0];
+
+/** Bộ flashcard độc lập */
+export const DECKS: Deck[] = [
+  {
+    id: "deck-1",
+    title: "Từ vựng cuối tuần",
+    total: 12,
+    learned: 4,
+    cards: [
+      {
+        id: "c1",
+        front: "relaxing",
+        phonetic: "/rɪˈlæksɪŋ/",
+        back: "thư giãn",
+        example: "a relaxing weekend",
+        exampleVi: "một cuối tuần thư giãn",
+      },
+      {
+        id: "c2",
+        front: "hang out",
+        phonetic: "/hæŋ aʊt/",
+        back: "đi chơi với bạn bè",
+        example: "We hung out at the park.",
+        exampleVi: "Chúng tôi đã đi chơi ở công viên.",
+      },
+      {
+        id: "c3",
+        front: "exhausted",
+        phonetic: "/ɪɡˈzɔːstɪd/",
+        back: "kiệt sức",
+        example: "I'm exhausted from work.",
+        exampleVi: "Tôi kiệt sức vì công việc.",
+      },
+      {
+        id: "c4",
+        front: "delicious",
+        phonetic: "/dɪˈlɪʃəs/",
+        back: "ngon miệng",
+        example: "a delicious meal",
+        exampleVi: "một bữa ăn ngon",
+      },
+      {
+        id: "c5",
+        front: "adventure",
+        phonetic: "/ədˈventʃər/",
+        back: "cuộc phiêu lưu",
+        example: "a great adventure",
+        exampleVi: "một cuộc phiêu lưu tuyệt vời",
+      },
+      {
+        id: "c6",
+        front: "groceries",
+        phonetic: "/ˈɡroʊsəriz/",
+        back: "đồ tạp hóa",
+        example: "buy weekly groceries",
+        exampleVi: "mua đồ tạp hóa hàng tuần",
+      },
+      {
+        id: "c7",
+        front: "sleep in",
+        phonetic: "/sliːp ɪn/",
+        back: "ngủ nướng",
+        example: "I love to sleep in on Sundays.",
+        exampleVi: "Tôi thích ngủ nướng vào chủ nhật.",
+      },
+      {
+        id: "c8",
+        front: "picnic",
+        phonetic: "/ˈpɪknɪk/",
+        back: "buổi dã ngoại / ăn trưa ngoài trời",
+        example: "We had a picnic by the lake.",
+        exampleVi: "Chúng tôi đã có buổi dã ngoại bên hồ.",
+      },
+      {
+        id: "c9",
+        front: "lazy",
+        phonetic: "/ˈleɪzi/",
+        back: "lười biếng",
+        example: "a lazy Sunday afternoon",
+        exampleVi: "một chiều chủ nhật lười biếng",
+      },
+      {
+        id: "c10",
+        front: "barbecue",
+        phonetic: "/ˈbɑːrbɪkjuː/",
+        back: "tiệc nướng BBQ",
+        example: "We had a barbecue in the garden.",
+        exampleVi: "Chúng tôi đã tổ chức tiệc nướng trong vườn.",
+      },
+      {
+        id: "c11",
+        front: "stroll",
+        phonetic: "/stroʊl/",
+        back: "đi dạo thong thả",
+        example: "a leisurely stroll in the park",
+        exampleVi: "một cuộc dạo chơi thong thả trong công viên",
+      },
+      {
+        id: "c12",
+        front: "recharge",
+        phonetic: "/ˌriːˈtʃɑːrdʒ/",
+        back: "nạp lại năng lượng",
+        example: "Weekends help me recharge.",
+        exampleVi: "Cuối tuần giúp tôi nạp lại năng lượng",
+      },
+    ],
+  },
+  {
+    id: "deck-2",
+    title: "Giao tiếp nhà hàng",
+    total: 20,
+    learned: 12,
+    cards: [],
+  },
+];
+
+/** Bài tập được giao — trạng thái hạn đổi màu */
+export const ASSIGNMENTS: Assignment[] = [
+  {
+    id: "a1",
+    title: "Bài kiểm tra: Thì quá khứ đơn",
+    type: "exercise",
+    lessonTitle: "Talking About Your Weekend",
+    status: "ontrack",
+    dueLabel: "Còn 3 ngày",
+    progress: 0,
+  },
+  {
+    id: "a2",
+    title: "Ôn từ vựng: Đồ ăn & Đồ uống",
+    type: "deck",
+    lessonTitle: "Ordering Food in English",
+    status: "due",
+    dueLabel: "Còn 6 giờ",
+    progress: 35,
+  },
+  {
+    id: "a3",
+    title: "Bài viết: Kể về kỳ nghỉ hè",
+    type: "exercise",
+    lessonTitle: "Writing Practice",
+    status: "overdue",
+    dueLabel: "Quá hạn 1 ngày",
+    progress: 60,
+  },
+  {
+    id: "a4",
+    title: "Bài kiểm tra: Mẫu câu gọi món",
+    type: "exercise",
+    lessonTitle: "Ordering Food in English",
+    status: "done",
+    dueLabel: "Đã nộp",
+    progress: 100,
+  },
+];
+
+/** Nhiệm vụ hằng ngày */
+export const DAILY_TASKS: DailyTask[] = [
+  { id: "t1", label: "Hoàn thành 1 bài học video", current: 1, target: 1, reward: 30 },
+  { id: "t2", label: "Ôn 12 thẻ flashcard", current: 8, target: 12, reward: 20 },
+  { id: "t3", label: "Đạt 50 XP từ game", current: 20, target: 50, reward: 25 },
+];
+
+/** 5 câu trắc nghiệm (Bước 3 — Kiểm tra) */
+export const QUIZ_QUESTIONS: QuizQuestion[] = [
+  {
+    id: "q1",
+    prompt: "Chọn từ đúng để điền: “We ____ at the mall yesterday.”",
+    options: ["hang out", "hung out", "hanging out", "hangs out"],
+    answer: 1,
+    explain: "“Yesterday” → thì quá khứ đơn, dạng quá khứ của “hang out” là “hung out”.",
+  },
+  {
+    id: "q2",
+    prompt: "Từ nào có nghĩa là “kiệt sức”?",
+    options: ["relaxing", "delicious", "exhausted", "adventure"],
+    answer: 2,
+    explain: "“Exhausted” (/ɪɡˈzɔːstɪd/) nghĩa là kiệt sức, rất mệt mỏi.",
+  },
+  {
+    id: "q3",
+    prompt: "Chọn nghĩa đúng của từ “delicious”.",
+    options: ["thư giãn", "ngon miệng", "kiệt sức", "phiêu lưu"],
+    answer: 1,
+    explain: "“Delicious” (/dɪˈlɪʃəs/) = ngon miệng, rất ngon.",
+  },
+  {
+    id: "q4",
+    prompt: "Đâu là câu miêu tả đúng về cuối tuần?",
+    options: [
+      "I has a relaxing weekend.",
+      "I had a relaxing weekend.",
+      "I having a relaxing weekend.",
+      "I have had relaxing weekend.",
+    ],
+    answer: 1,
+    explain: "Chủ ngữ “I” + quá khứ của “have” = “had”. Đúng: I had a relaxing weekend.",
+  },
+  {
+    id: "q5",
+    prompt: "Từ đồng nghĩa gần nhất với “tired”?",
+    options: ["relaxing", "exhausted", "delicious", "fresh"],
+    answer: 1,
+    explain: "“Exhausted” là mức độ mạnh hơn của “tired” (mệt).",
+  },
+];
+
+/** Bộ câu hỏi trắc nghiệm riêng theo từng bài học (Step 3 — Kiểm tra).
+ *  Nếu một bài không có ở đây, learn page sẽ dùng QUIZ_QUESTIONS chung. */
+export const LESSON_QUIZZES: Record<string, QuizQuestion[]> = {
+  "lesson-3": [
+    {
+      id: "hcq1",
+      prompt: "Chọn từ đúng để điền: “I ___ the floor every morning.”",
+      options: ["sweep", "swipe", "swept", "sweeping"],
+      answer: 0,
+      explain: "“every morning” → thì hiện tại đơn; động từ đúng là “sweep” (quét nhà).",
+    },
+    {
+      id: "hcq2",
+      prompt: "Cụm từ “do the laundry” có nghĩa là:",
+      options: ["rửa bát", "giặt đồ", "quét nhà", "lau bụi"],
+      answer: 1,
+      explain: "“do the laundry” = giặt đồ (quần áo).",
+    },
+    {
+      id: "hcq3",
+      prompt: "Điền từ: “Please ___ up your room before going out.”",
+      options: ["tidy", "clean", "make", "take"],
+      answer: 0,
+      explain: "“tidy up” = dọn dẹp; “tidy up your room” = dọn phòng.",
+    },
+    {
+      id: "hcq4",
+      prompt: "Từ nào chỉ việc “đổ rác”?",
+      options: ["wash the dishes", "make the bed", "take out the rubbish", "mop"],
+      answer: 2,
+      explain: "“take out the rubbish” = đổ rác.",
+    },
+    {
+      id: "hcq5",
+      prompt: "Chọn câu đúng:",
+      options: [
+        "He make the bed every day.",
+        "He makes the bed every day.",
+        "He making the bed every day.",
+        "He made the bed every day.",
+      ],
+      answer: 1,
+      explain: "Chủ ngữ “He” + thì hiện tại đơn → “makes”. Đúng: He makes the bed every day.",
+    },
+  ],
+  "lesson-4": [
+    {
+      id: "envq1",
+      prompt: "Từ nào có nghĩa là “tái chế”?",
+      options: ["recycle", "pollution", "protect", "emissions"],
+      answer: 0,
+      explain: "“recycle” (/riːˈsaɪkəl/) = tái chế.",
+    },
+    {
+      id: "envq2",
+      prompt: "“renewable energy” là:",
+      options: ["năng lượng tái tạo", "biến đổi khí hậu", "phá rừng", "rác thải"],
+      answer: 0,
+      explain: "“renewable energy” = năng lượng tái tạo (mặt trời, gió…).",
+    },
+    {
+      id: "envq3",
+      prompt: "Chọn từ điền: “We must ___ water to protect the environment.”",
+      options: ["conserve", "pollute", "waste", "emit"],
+      answer: 0,
+      explain: "“conserve” = bảo tồn / tiết kiệm; ở đây là tiết kiệm nước.",
+    },
+    {
+      id: "envq4",
+      prompt: "“deforestation” có nghĩa là:",
+      options: ["ô nhiễm", "tái chế", "phá rừng", "khí thải"],
+      answer: 2,
+      explain: "“deforestation” = phá rừng.",
+    },
+    {
+      id: "envq5",
+      prompt: "Chọn câu đúng:",
+      options: [
+        "We should recycling plastic bottles.",
+        "We should recycle plastic bottles.",
+        "We should recycles plastic bottles.",
+        "We should recycled plastic bottles.",
+      ],
+      answer: 1,
+      explain: "Sau “should” dùng động từ nguyên mẫu → “recycle”. Đúng: We should recycle plastic bottles.",
+    },
+  ],
+  "lesson-5": [
+    {
+      id: "musq1",
+      prompt: "Từ nào có nghĩa là “giai điệu”?",
+      options: ["melody", "rhythm", "lyrics", "genre"],
+      answer: 0,
+      explain: "“melody” (/ˈmelədi/) = giai điệu.",
+    },
+    {
+      id: "musq2",
+      prompt: "“lyrics” là:",
+      options: ["lời bài hát", "giai điệu", "nhịp điệu", "ban nhạc"],
+      answer: 0,
+      explain: "“lyrics” = lời bài hát.",
+    },
+    {
+      id: "musq3",
+      prompt: "Chọn từ điền: “Mozart was a famous ___.”",
+      options: ["composer", "instrument", "audience", "chorus"],
+      answer: 0,
+      explain: "“composer” = nhà soạn nhạc; Mozart là nhà soạn nhạc nổi tiếng.",
+    },
+    {
+      id: "musq4",
+      prompt: "Từ chỉ “thể loại nhạc” là:",
+      options: ["genre", "band", "tune", "rhythm"],
+      answer: 0,
+      explain: "“genre” (/ˈʒɑːnrə/) = thể loại (nhạc).",
+    },
+    {
+      id: "musq5",
+      prompt: "Chọn câu đúng:",
+      options: [
+        "The audience applauded loudly.",
+        "The audience applaud loud.",
+        "The audience applauding loudly.",
+        "The audiences applauded loudly.",
+      ],
+      answer: 0,
+      explain: "“audience” là danh từ tập hợp số ít → “applauded” (quá khứ). Đúng: The audience applauded loudly.",
+    },
+  ],
+};
+
+/** Hoạt động 7 ngày cho biểu đồ (số phút học) */
+export const WEEK_ACTIVITY = [
+  { day: "T2", minutes: 25 },
+  { day: "T3", minutes: 40 },
+  { day: "T4", minutes: 0 },
+  { day: "T5", minutes: 18 },
+  { day: "T6", minutes: 55 },
+  { day: "T7", minutes: 30 },
+  { day: "CN", minutes: 48 },
+];
+
+/** Bộ sưu tập huy hiệu */
+export const BADGES: Badge[] = [
+  { id: "b1", label: "Khởi đầu", icon: "🌱", earned: true, desc: "Hoàn thành bài học đầu tiên" },
+  { id: "b2", label: "Chuỗi 7 ngày", icon: "🔥", earned: true, desc: "Học liên tục 7 ngày" },
+  { id: "b3", label: "100 từ vựng", icon: "📚", earned: true, desc: "Thuộc 100 từ vựng" },
+  { id: "b4", label: "Tay chơi game", icon: "🎮", earned: true, desc: "Đạt 500 điểm game" },
+  { id: "b5", label: "Hoàn hảo", icon: "💯", earned: false, desc: "Đạt 100% một bài kiểm tra" },
+  { id: "b6", label: "Chuỗi 30 ngày", icon: "🏆", earned: false, desc: "Học liên tục 30 ngày" },
+  { id: "b7", label: "Nhà văn", icon: "✍️", earned: false, desc: "Viết 10 bài luận" },
+  { id: "b8", label: "Bậc thầy", icon: "👑", earned: false, desc: "Đạt cấp độ 10" },
+];
+
+/** Bảng xếp hạng lớp (reset hằng tuần) */
+export const LEADERBOARD: LeaderRow[] = [
+  { id: "l1", name: "Phạm Thu Hà", xp: 3120 },
+  { id: "l2", name: "Đỗ Hoàng Nam", xp: 2890 },
+  { id: "u1", name: "Nguyễn Quang Minh", xp: 2480, me: true },
+  { id: "l3", name: "Vũ Thị Mai", xp: 2310 },
+  { id: "l4", name: "Bùi Đức Anh", xp: 1980 },
+  { id: "l5", name: "Lê Khánh Linh", xp: 1760 },
+];
+
+/** Hub game 2D */
+export const GAMES: GameInfo[] = [
+  {
+    id: "word-defender",
+    title: "Word Defender",
+    desc: "Gõ từ tiếng Anh đúng để bắn hạ quái vật đang tiến tới. Càng nhanh càng nhiều điểm!",
+    emoji: "👾",
+    best: 1280,
+    accent: "bg-brand-50",
+  },
+  {
+    id: "sentence-builder",
+    title: "Sentence Builder",
+    desc: "Xếp các mảnh từ thành câu hoàn chỉnh trước khi hết giờ — luyện ngữ pháp bắc cầu.",
+    emoji: "🧩",
+    best: 840,
+    accent: "bg-accent-50",
+  },
+];
+
+/** Bảng xếp hạng game mini */
+export const GAME_LEADERBOARD: LeaderRow[] = [
+  { id: "g1", name: "Phạm Thu Hà", xp: 2100 },
+  { id: "g2", name: "Đỗ Hoàng Nam", xp: 1740 },
+  { id: "u1", name: "Nguyễn Quang Minh", xp: 1280, me: true },
+  { id: "g3", name: "Vũ Thị Mai", xp: 990 },
+];
+
+/* ---------- Dữ liệu dành cho Giáo viên ---------- */
+
+export const TEACHER_STATS = {
+  activeStudents: 28,
+  pendingGrading: 6,
+  completionRate: 82, // %
+};
+
+/** Ma trận tiến độ: hàng = học sinh, cột = bài tập */
+export const MATRIX_STUDENTS = [
+  "Nguyễn Quang Minh",
+  "Phạm Thu Hà",
+  "Đỗ Hoàng Nam",
+  "Vũ Thị Mai",
+  "Bùi Đức Anh",
+  "Lê Khánh Linh",
+];
+
+export const MATRIX_ASSIGNMENTS = [
+  "Quá khứ đơn",
+  "Gọi món ăn",
+  "Bài viết: Kỳ nghỉ",
+  "Đồ ăn & Đồ uống",
+  "Thì hiện tại",
+];
+
+/** Ma trận trạng thái [học sinh][bài tập] — tạo giả định */
+export const PROGRESS_MATRIX: MatrixStatus[][] = MATRIX_STUDENTS.map((_, si) =>
+  MATRIX_ASSIGNMENTS.map((__, ai) => {
+    const seed = (si * 3 + ai * 2) % 7;
+    if (seed === 0) return "none";
+    if (seed === 1) return "doing";
+    if (seed === 2 || seed === 3) return "submitted";
+    return "graded";
+  }),
+);
+
+/** Dữ liệu cho form giao bài tập */
+export const LESSON_OPTIONS = [
+  "Talking About Your Weekend",
+  "Ordering Food in English",
+  "Past Simple Tense",
+  "Food & Drink Vocabulary",
+  "Household Chores — Talking About Housework",
+  "Protecting the Environment",
+  "Music and Feelings",
+];
+
+export const CLASS_OPTIONS = [
+  "Tiếng Anh 8 — 8A2 (28 học sinh)",
+  "Tiếng Anh 8 — 8A1 (30 học sinh)",
+  "Tiếng Anh 9 — 9B1 (26 học sinh)",
+];
+
+export const STUDENT_OPTIONS = [
+  "Nguyễn Quang Minh",
+  "Phạm Thu Hà",
+  "Đỗ Hoàng Nam",
+  "Vũ Thị Mai",
+  "Bùi Đức Anh",
+  "Lê Khánh Linh",
+];
+
+/** Bài viết chờ chấm (cho trang /teacher/grading) */
+export interface WritingSubmission {
+  id: string;
+  student: string;
+  avatarColor: string;
+  lesson: string;
+  prompt: string;
+  text: string;
+  words: number;
+  submittedAt: string;
+}
+
+export const PENDING_SUBMISSIONS: WritingSubmission[] = [
+  {
+    id: "s1",
+    student: "Nguyễn Quang Minh",
+    avatarColor: "#2563EB",
+    lesson: "Writing Practice",
+    prompt: "Kể về kỳ nghỉ hè của bạn (tối thiểu 80 từ)",
+    text:
+      "Last summer, I had a wonderful holiday with my family in Da Nang. First of all, we went to My Khe beach and swam in the sea. The water was very clear and the weather was relaxing. After that, we tried delicious seafood at a restaurant near the beach. My favorite dish was grilled squid. In the evening, we walked along the bridge and took many photos. Finally, I felt a bit exhausted but very happy. It was an amazing adventure that I will never forget.",
+    words: 84,
+    submittedAt: "2 giờ trước",
+  },
+  {
+    id: "s2",
+    student: "Phạm Thu Hà",
+    avatarColor: "#10B981",
+    lesson: "Writing Practice",
+    prompt: "Miêu tả một người bạn thân",
+    text:
+      "My best friend is Linh. We have known each other since primary school. She is tall and has long black hair. Linh is very kind and always helps me with my homework. After school, we usually hang out at the park and ride our bicycles. She is also funny and makes me laugh every day. I hope we will be friends forever.",
+    words: 62,
+    submittedAt: "5 giờ trước",
+  },
+  {
+    id: "s3",
+    student: "Đỗ Hoàng Nam",
+    avatarColor: "#F59E0B",
+    lesson: "Writing Practice",
+    prompt: "Kể về cuối tuần của bạn",
+    text:
+      "On the weekend, I usually stay at home and relax. In the morning, I do my homework and read books. Sometimes my friends come to my house and we play football in the garden. In the evening, my mother cooks delicious food and we watch a movie together. I love weekends because I can rest and spend time with my family.",
+    words: 58,
+    submittedAt: "Hôm qua",
+  },
+];
