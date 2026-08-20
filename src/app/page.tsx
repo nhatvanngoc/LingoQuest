@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   PlayCircle,
   Layers,
@@ -14,20 +14,16 @@ import {
   Zap,
   Flame,
   BookOpen,
-  Users,
-  Star,
   Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ShimmerButton } from "@/components/magic/ShimmerButton";
 import { SpotlightCard, BentoGrid } from "@/components/magic/SpotlightCard";
 import { BackgroundBeams } from "@/components/magic/BackgroundBeams";
-import { NumberTicker } from "@/components/magic/NumberTicker";
 import { AnimatedShinyText } from "@/components/magic/BackgroundBeams";
 import { StreakBadge, XPCounter } from "@/components/StreakBadge";
 import { SmartImage } from "@/components/SmartImage";
 import { staggerContainer, fadeUpReal, EASE_OUT, viewportOnce, SPRING_BOUNCY } from "@/lib/motion";
-import { useRef } from "react";
 
 const IMG = {
   hero: "https://images.pexels.com/photos/6503100/pexels-photo-6503100.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200",
@@ -76,26 +72,36 @@ const STEPS = [
   { n: 3, title: "Theo dõi real-time", desc: "Ma trận tiến độ, XP, streak lửa, huy hiệu lấp lánh và bảng xếp hạng tuần.", icon: Trophy },
 ];
 
-const STATS = [
-  { value: 5000, label: "Học sinh", suffix: "+", icon: Users },
-  { value: 120, label: "Từ vựng/Bài", suffix: "+", icon: BookOpen },
-  { value: 98, label: "Hài lòng", suffix: "%", icon: Star },
+const POEMS = [
+  {
+    emoji: "🪶",
+    lines: ["Học một ngôn ngữ", "Mở một thế giới"],
+    author: "Ngạn ngữ",
+    gradient: "from-sky-100 to-blue-100",
+  },
+  {
+    emoji: "❤️",
+    lines: ["Mỗi ngày một chút", "Tích tiểu thành đại"],
+    author: "Kiên trì",
+    gradient: "from-rose-100 to-pink-100",
+  },
+  {
+    emoji: "💡",
+    lines: ["Kiên trì hôm nay", "Rạng ngời mai sau"],
+    author: "LingoQuest",
+    gradient: "from-amber-100 to-orange-100",
+  },
 ];
 
 export default function LandingPage() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
   return (
-    <div className="min-h-screen bg-cream overflow-hidden" ref={ref}>
+    <div className="min-h-screen bg-cream overflow-hidden">
       {/* ===== Nav với glass ===== */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: EASE_OUT }}
-        className="sticky top-0 z-40 glass-strong border-b border-slate-200/50"
+        className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/50"
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-2 group">
@@ -179,27 +185,30 @@ export default function LandingPage() {
               </div>
             </motion.div>
 
-            {/* stats inline */}
-            <motion.div variants={fadeUpReal} className="mt-10 grid grid-cols-3 gap-4 max-w-md">
-              {STATS.map((s, i) => (
-                <div key={s.label} className="rounded-2xl bg-white/70 backdrop-blur border border-slate-200/50 p-3 text-center shadow-soft">
-                  <div className="flex items-center justify-center gap-1 text-brand">
-                    <s.icon className="h-4 w-4" />
-                    <span className="text-xl font-black"><NumberTicker value={s.value} />{s.suffix}</span>
-                  </div>
-                  <p className="mt-1 text-xs font-bold text-slate-500">{s.label}</p>
+            {/* thơ ngắn thay số liệu (màu dịu, không lấn át CTA) */}
+            <motion.div variants={fadeUpReal} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 max-w-md">
+              {POEMS.map((p) => (
+                <div
+                  key={p.author}
+                  className={`group rounded-2xl bg-gradient-to-br ${p.gradient} p-4 shadow-soft ring-1 ring-white/70 transition-transform duration-300 hover:-translate-y-1`}
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-lg shadow-sm">{p.emoji}</span>
+                  <p className="mt-3 text-sm font-bold leading-snug text-slate-700">
+                    {p.lines[0]}<br />{p.lines[1]}
+                  </p>
+                  <p className="mt-2 text-[11px] font-semibold text-slate-400">— {p.author}</p>
                 </div>
               ))}
             </motion.div>
           </motion.div>
 
           {/* Cột ảnh với tilt & beams */}
-          <motion.div style={{ y, opacity }} className="relative mx-auto h-[420px] w-full max-w-md sm:h-[520px] lg:ml-auto">
+          <motion.div className="relative mx-auto w-full aspect-[4/5]">
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, rotate: -2 }}
-              animate={{ scale: 1, opacity: 1, rotate: 2 }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.3 }}
-              className="absolute inset-0 overflow-hidden rounded-[2.5rem] border-4 border-white shadow-lift"
+              className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white shadow-lift"
             >
               <SmartImage src={IMG.hero} alt="Học sinh" className="h-full w-full object-cover" gradient="from-brand-100 to-violet-100" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-slate-900/10 to-transparent" />
@@ -212,7 +221,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0, x: 0 }}
               transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
               animate-y={{}}
-              className="absolute -bottom-4 -left-6 w-64 rounded-[1.5rem] border border-white/50 bg-white/90 p-4 shadow-lift backdrop-blur-xl sm:-left-12"
+              className="absolute -bottom-3 -left-3 w-64 rounded-[1.5rem] border border-white/50 bg-white/90 p-4 shadow-lift backdrop-blur-xl"
             >
               <div className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-br from-brand-50/50 to-violet-50/50" />
               <div className="relative flex items-center gap-3">
@@ -237,7 +246,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8, type: "spring", stiffness: 300 }}
-              className="absolute -right-4 top-8 sm:-right-8"
+              className="absolute -right-2 top-4"
             >
               <div className="rounded-2xl border border-white/50 bg-white/90 p-2.5 shadow-lift backdrop-blur">
                 <XPCounter xp={2480} />
@@ -248,7 +257,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1, type: "spring", stiffness: 300 }}
-              className="absolute -right-2 bottom-20 sm:right-4"
+              className="absolute -right-1 bottom-20"
             >
               <div className="rounded-2xl border border-white/50 bg-white/90 p-2.5 shadow-lift backdrop-blur">
                 <StreakBadge count={12} />
@@ -256,7 +265,7 @@ export default function LandingPage() {
             </motion.div>
 
             {/* floating elements */}
-            <motion.div animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -right-2 top-1/2 rounded-2xl bg-white p-3 shadow-card sm:-right-6">
+            <motion.div animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -right-1 top-1/2 rounded-2xl bg-white p-3 shadow-card">
               <div className="flex items-center gap-2"><span className="text-lg">🎯</span><span className="text-xs font-black text-slate-700">Quest Done!</span></div>
             </motion.div>
           </motion.div>
