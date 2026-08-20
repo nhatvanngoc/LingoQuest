@@ -14,6 +14,8 @@ import {
   Trophy,
   BookOpen,
   Target,
+  PartyPopper,
+  Rocket,
 } from "lucide-react";
 import { type ReactNode } from "react";
 import { AppShell } from "@/components/AppShell";
@@ -109,9 +111,9 @@ export default function DashboardPage() {
               initial={{ scale: 0, rotate: -10 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
-              className="hidden text-6xl lg:block"
+              className="hidden h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-gradient-to-br from-brand-50 to-violet-50 text-brand shadow-soft lg:flex"
             >
-              🚀
+              <Rocket className="h-8 w-8" />
             </motion.div>
           </div>
         </motion.div>
@@ -128,14 +130,14 @@ export default function DashboardPage() {
                 <motion.span
                   animate={{ y: [0, -6, 0], rotate: [0, 5, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="text-5xl"
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow-brand"
                 >
-                  🎉
+                  <PartyPopper className="h-7 w-7" />
                 </motion.span>
                 <div className="min-w-0 flex-1">
                   <h3 className="text-xl font-extrabold tracking-tight text-slate-900">Chào mừng đến với LingoQuest v2!</h3>
                   <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                    Giao diện mới, hiệu ứng mới, động lực mới. Học bài đầu tiên để tích XP, mở khóa huy hiệu và bắt đầu chuỗi ngày học 🔥
+                    Giao diện mới, hiệu ứng mới, động lực mới. Học bài đầu tiên để tích XP, mở khóa huy hiệu và bắt đầu chuỗi ngày học.
                   </p>
                 </div>
                 <ShimmerButton asChild size="lg" className="shadow-glow-brand">
@@ -344,9 +346,14 @@ export default function DashboardPage() {
                 <motion.div
                   animate={{ rotate: completedTasks === dailyTasks.length ? 360 : 0 }}
                   transition={{ duration: 0.6 }}
-                  className="text-2xl"
+                  className={cn(
+                    "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
+                    completedTasks === dailyTasks.length
+                      ? "bg-gradient-to-br from-success to-emerald-600 text-white shadow-glow-success"
+                      : "bg-violet-50 text-violet-500"
+                  )}
                 >
-                  {completedTasks === dailyTasks.length ? "🎉" : "🎯"}
+                  {completedTasks === dailyTasks.length ? <PartyPopper className="h-5 w-5" /> : <Target className="h-5 w-5" />}
                 </motion.div>
               </div>
 

@@ -1,5 +1,9 @@
 # 🎯 Báo cáo Đánh giá UI/UX — LingoQuest
 
+> **Trạng thái (2026-08-20): TẤT CẢ 11 vấn đề đã được sửa & xác minh lại bằng ảnh chụp.**
+> Tóm tắt vá: (1) sidebar double-active → longest-match 1 active duy nhất; (2) xoá nút nổi "Tài khoản" — đăng xuất chuyển vào menu avatar ở header; (3) `#?` → "Chưa có xếp hạng…", biểu đồ có empty-state; (4) landing thêm `<noscript>` fallback; (5) "Tip học nhanh" chỉ còn với học sinh; (6) emoji lớn → Lucide icon; (7) ghi chú định dạng ngày; (8) bỏ số liệu mock giả (sĩ số lớp, kỷ lục game); (9) font Nunito self-host qua @fontsource (hết fallback serif, preview hiển thị đúng); (10) SmartImage nền gradient + ẩn alt-text; (11) preview sandbox trắng → `allowedDevOrigins: ["*.e2b.app"]`.
+> **Bonus fix ngoài danh sách:** ① biểu đồ "Hoạt động 7 ngày" KHÔNG BAO GIỜ hiện cột trên mọi trình duyệt thật (`items-end` + `h-full` → chiều cao co về 0; đã đổi sang `items-stretch` + `flex-1 min-h-0`); ② CSDL mới tinh không đăng nhập được (seed chỉ chạy lưới sau khi đã login) → login route tự `seedIfEmpty()` rồi thử lại 1 lần.
+
 > Ngày: 2026-08-20 · Phương pháp: **Vision QA tự động** — Next.js dev + PostgreSQL (embedded) +
 > seed data thật, đăng nhập 2 vai trò (học sinh `minh.nguyen@lingoquest.app`, giáo viên
 > `lan.le@lingoquest.app`), chụp ảnh **18 màn hình** (desktop 1440×900 đã cuộn từng viewport +

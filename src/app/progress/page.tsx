@@ -108,16 +108,25 @@ export default function ProgressPage() {
                   <TrendingUp className="h-4 w-4" /> {totalMin} phút
                 </span>
               </div>
-              <p className="mb-6 text-sm text-slate-400">Số phút học mỗi ngày - streak đang cháy 🔥</p>
+              <p className="flex items-center gap-1.5 text-sm text-slate-400">
+                Số phút học mỗi ngày <span className="text-slate-300">·</span>
+                <Flame className="h-4 w-4 text-orange-500" /> streak đang cháy
+              </p>
+              {totalMin === 0 && (
+                <p className="mt-3 flex items-center gap-2 rounded-2xl border border-dashed border-brand-200 bg-brand-50/70 px-4 py-3 text-sm font-bold text-brand">
+                  <Sparkles className="h-4 w-4 shrink-0" /> Chưa có hoạt động tuần này — học bài đầu tiên để bắt đầu chuỗi ngày!
+                </p>
+              )}
+              <div className="mb-6" />
 
-              <div className="flex h-52 items-end justify-between gap-2">
+              <div className="flex h-52 items-stretch justify-between gap-2">
                 {WEEK_ACTIVITY.map((d, i) => {
                   const h = (d.minutes / maxMin) * 100;
                   const empty = d.minutes === 0;
                   const isToday = i === WEEK_ACTIVITY.length - 1;
                   return (
                     <div key={d.day} className="flex flex-1 flex-col items-center gap-2 group">
-                      <div className="relative flex h-full w-full items-end justify-center">
+                      <div className="relative flex min-h-0 w-full flex-1 items-end justify-center">
                         <motion.div
                           initial={{ height: 0 }}
                           whileInView={{ height: `${Math.max(h, 6)}%` }}
@@ -169,10 +178,23 @@ export default function ProgressPage() {
 
               <div className="rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50 to-brand-50 p-4">
                 <div className="flex items-center gap-3">
-                  <motion.span animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity }} className="text-3xl">🏆</motion.span>
+                  <motion.span
+                    animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-glow-accent"
+                  >
+                    <Trophy className="h-5 w-5" />
+                  </motion.span>
                   <div className="flex-1">
                     <p className="text-sm font-extrabold text-violet-900">Top 3 lớp tuần này</p>
-                    <p className="text-xs font-semibold text-violet-700/70">Bạn đang ở vị trí #{leaderboard.findIndex(r => r.me) + 1 || "?" || "?"} - cố lên!</p>
+                    <p className="text-xs font-semibold text-violet-700/70">
+                      {(() => {
+                        const idx = leaderboard.findIndex((r) => r.me);
+                        return idx >= 0
+                          ? `Bạn đang ở vị trí #${idx + 1} — cố lên!`
+                          : "Chưa có xếp hạng — chơi game đầu tiên để lên bảng!";
+                      })()}
+                    </p>
                   </div>
                   <Sparkles className="h-4 w-4 text-violet-400" />
                 </div>
