@@ -15,6 +15,11 @@ import {
   Check,
   Sparkles,
   TrendingUp,
+  Target,
+  MousePointerClick,
+  Brain,
+  LetterText,
+  PartyPopper,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -28,23 +33,23 @@ import type { GameId, WordMode } from "@/components/game/PhaserGame";
 import type { LeaderRow } from "@/lib/types";
 
 /* 3 chế độ học của Word Defender — để học sinh nhớ cả TỪ lẫn NGHĨA */
-const MODES: { id: WordMode; emoji: string; title: string; desc: string; recommended?: boolean }[] = [
+const MODES: { id: WordMode; icon: typeof Brain; title: string; desc: string; recommended?: boolean }[] = [
   {
     id: "meaning",
-    emoji: "🧠",
+    icon: Brain,
     title: "Đoán từ (xem nghĩa)",
     desc: "Thấy nghĩa tiếng Việt, nhớ và gõ từ tiếng Anh — nhớ từ & nghĩa tốt nhất",
     recommended: true,
   },
   {
     id: "both",
-    emoji: "🔤",
+    icon: LetterText,
     title: "Hiện cả hai",
     desc: "Thấy cả từ và nghĩa, gõ lại từ — ôn nhẹ, ghi nhớ qua lặp lại",
   },
   {
     id: "word",
-    emoji: "⌨️",
+    icon: Keyboard,
     title: "Gõ từ (xem từ)",
     desc: "Thấy từ tiếng Anh, gõ lại — luyện chính tả thuần tuý",
   },
@@ -57,8 +62,8 @@ const HOW_TO: Record<GameId, { steps: string[]; control: string }> = {
     control: "Bàn phím",
     steps: [
       "Các từ tiếng Anh (quái) đang rơi xuống.",
-      "Gõ chữ cái đầu của một từ để khoá mục tiêu 🎯.",
-      "Gõ nốt phần còn lại để bắn hạ quái đó 💥.",
+      "Gõ chữ cái đầu của một từ để khoá mục tiêu.",
+      "Gõ nốt phần còn lại để bắn hạ quái đó.",
       "Quái chạm vạch đỏ = mất 1 mạng. Đừng để qua!",
       "Gõ liên tiếp đúng để tăng combo và điểm thưởng.",
     ],
@@ -74,12 +79,15 @@ const HOW_TO: Record<GameId, { steps: string[]; control: string }> = {
   },
 };
 
-/** Đọc/kết hợp điểm cao nhất từ localStorage với dữ liệu mock */
+/* Icon hiển thị cho từng game (thay emoji khổng lồ, hiển thị ổn định mọi thiết bị) */
+const GAME_ICON: Record<GameId, typeof Keyboard> = {
+  "word-defender": Keyboard,
+  "sentence-builder": MousePointerClick,
+};
+
+/** Đọc điểm cao nhất THẬT từ localStorage (0 = chưa chơi, không nhét số mock giả) */
 function loadBest(): Record<GameId, number> {
-  const fallback: Record<GameId, number> = {
-    "word-defender": GAMES[0].best,
-    "sentence-builder": GAMES[1].best,
-  };
+  const fallback: Record<GameId, number> = { "word-defender": 0, "sentence-builder": 0 };
   if (typeof window === "undefined") return fallback;
   try {
     const raw = window.localStorage.getItem("lingoquest:best");
@@ -88,6 +96,9 @@ function loadBest(): Record<GameId, number> {
     return fallback;
   }
 }
+
+/** Đọc/kết hợp điểm cao nhất từ localStorage với dữ liệu mock */
+
 
 export default function GamePage() {
   const [view, setView] = useState<"hub" | "playing">("hub");
@@ -174,7 +185,12 @@ export default function GamePage() {
         {/* ===== HUB ===== */}
         {view === "hub" && (
           <>
-            <h1 className="text-2xl font-extrabold text-slate-900">🎮 Hub Game luyện từ</h1>
+            <h1 className="flex items-center gap-2.5 text-2xl font-extrabold text-slate-900">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow-brand">
+                <Gamepad2 className="h-5 w-5" />
+              </span>
+              Hub Game luyện từ
+            </h1>
             <p className="mt-1 text-slate-500">Học từ vựng và ngữ pháp qua mini-game 2D vui nhộn.</p>
 
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -185,15 +201,16 @@ export default function GamePage() {
                   whileHover={{ y: -4 }}
                   className="group overflow-hidden rounded-3xl border border-slate-100 bg-white text-left shadow-soft"
                 >
-                  <div className={cn("relative flex h-36 items-center justify-center text-6xl", g.accent)}>
+                  <div className={cn("relative flex h-36 items-center justify-center", g.accent)}>
                     <motion.span
                       animate={{ y: [0, -8, 0] }}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/80 text-slate-800 shadow-lift backdrop-blur"
                     >
-                      {g.emoji}
+                      {(() => { const GIcon = GAME_ICON[g.id as GameId]; return <GIcon className="h-8 w-8" />; })()}
                     </motion.span>
                     <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-extrabold text-amber-600 shadow-soft">
-                      <Trophy className="h-3 w-3" /> Kỷ lục: {best[g.id as GameId]}
+                      <Trophy className="h-3 w-3" /> Kỷ lục: {best[g.id as GameId] > 0 ? best[g.id as GameId] : "—"}
                     </span>
                     <span className="absolute bottom-3 left-3 rounded-full bg-slate-900/70 px-2.5 py-1 text-[11px] font-bold text-white">
                       {HOW_TO[g.id as GameId].control}
@@ -227,11 +244,11 @@ export default function GamePage() {
                     <ChevronLeft className="h-4 w-4" /> Game khác
                   </Button>
                   <h1 className="flex items-center gap-2 text-xl font-extrabold text-slate-900">
-                    {game.emoji} {game.title}
+                    {(() => { const GIcon = GAME_ICON[activeGame]; return <GIcon className="h-5 w-5 text-brand" />; })()} {game.title}
                   </h1>
                 </div>
-                <span className="rounded-full bg-accent-50 px-3 py-1.5 text-sm font-extrabold text-amber-600">
-                  🏆 Kỷ lục: {best[activeGame]}
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-50 px-3 py-1.5 text-sm font-extrabold text-amber-600">
+                  <Trophy className="h-4 w-4" /> Kỷ lục: {best[activeGame] > 0 ? best[activeGame] : "—"}
                 </span>
               </div>
 
@@ -358,7 +375,9 @@ function StartScreen({
   return (
     <div className="max-h-[88vh] w-full max-w-md overflow-y-auto rounded-3xl bg-white/95 p-6 text-slate-900 shadow-lift no-scrollbar">
       <div className="flex items-center gap-3">
-        <span className="text-4xl">{game.emoji}</span>
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow-brand">
+          {(() => { const GIcon = GAME_ICON[game.id as GameId]; return <GIcon className="h-6 w-6" />; })()}
+        </span>
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-brand">Cách chơi</p>
           <h2 className="text-xl font-extrabold">{game.title}</h2>
@@ -380,7 +399,7 @@ function StartScreen({
       {isWordDefender && (
         <div className="mt-4">
           <p className="mb-2 flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wide text-slate-500">
-            🎯 Chế độ học
+            Chế độ học
           </p>
           <div className="flex flex-col gap-2">
             {MODES.map((m) => {
@@ -394,7 +413,9 @@ function StartScreen({
                     active ? "border-brand bg-brand-50" : "border-slate-200 hover:border-brand-100",
                   )}
                 >
-                  <span className="text-xl">{m.emoji}</span>
+                  <span className={cn("mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl", active ? "bg-brand text-white" : "bg-slate-100 text-slate-500")}>
+                    <m.icon className="h-4 w-4" />
+                  </span>
                   <span className="flex-1">
                     <span className="flex items-center gap-2">
                       <span className="text-sm font-extrabold text-slate-900">{m.title}</span>
@@ -473,9 +494,9 @@ function ResultScreen({
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mx-auto mt-2 w-fit rounded-full bg-accent px-3 py-1 text-xs font-extrabold text-slate-900"
+          className="mx-auto mt-2 flex w-fit items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-extrabold text-slate-900"
         >
-          🏆 Kỷ lục mới!
+          <Trophy className="h-3.5 w-3.5" /> Kỷ lục mới!
         </motion.div>
       )}
 

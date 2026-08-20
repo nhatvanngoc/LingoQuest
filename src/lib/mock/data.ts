@@ -970,9 +970,9 @@ export const LESSON_OPTIONS = [
 ];
 
 export const CLASS_OPTIONS = [
-  "Tiếng Anh 8 — 8A2 (28 học sinh)",
-  "Tiếng Anh 8 — 8A1 (30 học sinh)",
-  "Tiếng Anh 9 — 9B1 (26 học sinh)",
+  "Tiếng Anh 8 — 8A2",
+  "Tiếng Anh 8 — 8A1",
+  "Tiếng Anh 9 — 9B1",
 ];
 
 export const STUDENT_OPTIONS = [

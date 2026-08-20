@@ -4,6 +4,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { verifyPassword } from "@/lib/auth/password";
 import { createSession } from "@/lib/auth/session";
+import { seedIfEmpty } from "@/db/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -21,11 +22,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Thiếu email hoặc mật khẩu" }, { status: 400 });
     }
 
-    const rows = await db
+    let rows = await db
       .select()
       .from(users)
       .where(eq(users.email, email))
       .limit(1);
+
+    // CSDL mới tinh chưa có user nào (seed chỉ chạy lưới ở vài API classroom) →
+    // mọi lượt đăng nhập đầu đều 401 vĩnh viễn. Tự seed rồi truy vấn lại 1 lần.
+    if (!rows[0]) {
+      try {
+        await seedIfEmpty();
+        rows = await db.select().from(users).where(eq(users.email, email)).limit(1);
+      } catch {
+        // bỏ qua — rơi về nhánh sai mật khẩu bên dưới
+      }
+    }
     const user = rows[0];
 
     // Không user HOẶC chưa đặt mật khẩu (demo) → từ chối.

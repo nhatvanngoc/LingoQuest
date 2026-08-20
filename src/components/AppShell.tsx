@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
@@ -16,6 +16,8 @@ import {
   Video,
   PlayCircle,
   Sparkles,
+  LogOut,
+  ChevronDown,
 } from "lucide-react";
 import { useRole } from "@/lib/auth/role-context";
 import { useApp } from "@/lib/state/app-context";
@@ -91,6 +93,14 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const items = NAV[role];
   const { xp, streak, level } = useApp();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  // Chỉ MỘT mục active: chọn href dài nhất khớp pathname.
+  // (Tránh lỗi "/teacher" luôn active kèm "/teacher/grading"… do đo `startsWith`,
+  //  khiến 2 mục cùng "active" và pill nền layoutId chỉ vẽ cho một cái → chữ trắng trên nền trắng.)
+  const activeHref = items
+    .filter((i) => pathname === i.href || pathname.startsWith(i.href + "/"))
+    .sort((a, b) => b.href.length - a.href.length)[0]?.href;
 
   return (
     <div className="min-h-screen bg-cream relative">
@@ -143,17 +153,56 @@ export function AppShell({ children }: { children: ReactNode }) {
 
             <Notifications />
 
-            <motion.div
-              whileHover={{ scale: 1.02, y: -1 }}
-              className="group flex items-center gap-2 rounded-full border border-slate-200/60 bg-white/70 py-1 pl-1 pr-1 shadow-soft backdrop-blur transition-all hover:shadow-card hover:bg-white sm:pr-3"
-            >
-              <Avatar name={user.name} color={user.avatarColor} />
-              <div className="hidden text-left leading-tight sm:block">
-                <p className="text-sm font-bold text-slate-900 group-hover:text-brand transition-colors">{user.name}</p>
-                <p className="text-[11px] text-slate-400">
-                  {role === "student" ? user.className : role === "teacher" ? "Giáo viên" : "Chờ duyệt"}
-                </p>
-              </div>
+            {/* Chip tài khoản: bấm mở menu (thay nút "Tài khoản" nổi che nội dung) */}
+            <motion.div whileHover={{ scale: 1.02, y: -1 }} className="relative">
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen((v) => !v)}
+                aria-haspopup="menu"
+                aria-expanded={userMenuOpen}
+                className="group flex items-center gap-2 rounded-full border border-slate-200/60 bg-white/70 py-1 pl-1 pr-2 shadow-soft backdrop-blur transition-all hover:shadow-card hover:bg-white"
+              >
+                <Avatar name={user.name} color={user.avatarColor} />
+                <div className="hidden text-left leading-tight sm:block">
+                  <p className="text-sm font-bold text-slate-900 group-hover:text-brand transition-colors">{user.name}</p>
+                  <p className="text-[11px] text-slate-400">
+                    {role === "student" ? user.className : role === "teacher" ? "Giáo viên" : "Chờ duyệt"}
+                  </p>
+                </div>
+                <ChevronDown className={cn("hidden h-3.5 w-3.5 text-slate-400 transition-transform sm:block", userMenuOpen && "rotate-180")} />
+              </button>
+              <AnimatePresence>
+                {userMenuOpen && (
+                  <>
+                    <button
+                      type="button"
+                      aria-label="Đóng menu"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="fixed inset-0 z-40 cursor-default"
+                    />
+                    <motion.div
+                      role="menu"
+                      initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                      transition={{ duration: 0.16 }}
+                      className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-100 bg-white p-1.5 shadow-lift"
+                    >
+                      <div className="border-b border-slate-100 px-3 py-2">
+                        <p className="truncate text-sm font-extrabold text-slate-900">{user.name}</p>
+                        <p className="truncate text-[11px] text-slate-400">{user.email}</p>
+                      </div>
+                      {/* Đăng xuất qua route server: xoá cookie + redirect trong 1 response */}
+                      <a
+                        href="/api/auth/logout"
+                        className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-bold text-danger transition-colors hover:bg-danger/5"
+                      >
+                        <LogOut className="h-4 w-4" /> Đăng xuất
+                      </a>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </motion.div>
           </div>
         </div>
@@ -169,7 +218,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <aside className="sticky top-[88px] hidden h-[calc(100vh-112px)] w-64 shrink-0 lg:block">
             <nav className="relative flex flex-col gap-1.5 py-4">
               {items.map((item) => {
-                const active = pathname === item.href || pathname.startsWith(item.href + "/");
+                const active = item.href === activeHref;
                 const Icon = item.icon;
                 return (
                   <Link
@@ -229,21 +278,23 @@ export function AppShell({ children }: { children: ReactNode }) {
                 );
               })}
 
-              {/* Pro tip card */}
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="mt-6 rounded-3xl border border-violet-100 bg-gradient-to-br from-violet-50 to-brand-50 p-4"
-              >
-                <div className="flex gap-2">
-                  <Sparkles className="h-4 w-4 text-violet-500 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-extrabold text-violet-900">Tip học nhanh</p>
-                    <p className="mt-1 text-xs leading-relaxed text-violet-700/70">Hoàn thành nhiệm vụ hằng ngày để x2 XP!</p>
+              {/* Pro tip card — chỉ dành cho học sinh (giáo viên không có nhiệm vụ/XP) */}
+              {role === "student" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="mt-6 rounded-3xl border border-violet-100 bg-gradient-to-br from-violet-50 to-brand-50 p-4"
+                >
+                  <div className="flex gap-2">
+                    <Sparkles className="h-4 w-4 text-violet-500 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-extrabold text-violet-900">Tip học nhanh</p>
+                      <p className="mt-1 text-xs leading-relaxed text-violet-700/70">Hoàn thành nhiệm vụ hằng ngày để x2 XP!</p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              )}
             </nav>
           </aside>
         )}
@@ -261,7 +312,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         >
           <div className="mx-auto flex max-w-md items-stretch justify-around px-2 py-1">
             {items.slice(0, 5).map((item) => {
-              const active = pathname === item.href || pathname.startsWith(item.href + "/");
+              const active = item.href === activeHref;
               const Icon = item.icon;
               return (
                 <Link

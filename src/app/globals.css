@@ -9,7 +9,7 @@
    Đã nâng cấp: gradient, glass, mesh, shimmer, spotlight
    =========================================================== */
 @theme {
-  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Nunito", ui-rounded, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --color-cream: #f8fafc;
   --color-ink: #0f172a;

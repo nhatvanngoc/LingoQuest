@@ -218,9 +218,11 @@ export default function NewAssignmentPage() {
                 type="datetime-local"
                 value={due}
                 onChange={(e) => setDue(e.target.value)}
+                lang="vi"
                 className="border-0 px-0 focus:ring-0"
               />
             </div>
+            <p className="text-xs text-slate-400">Định dạng ngày/giờ hiển thị theo trình duyệt của bạn (thường là Ngày/Tháng/Năm).</p>
           </Section>
 
           {error && (

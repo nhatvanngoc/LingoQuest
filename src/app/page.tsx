@@ -95,7 +95,12 @@ const POEMS = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-cream overflow-hidden">
+    <div className="min-h-screen bg-cream overflow-hidden" data-lq-landing>
+      {/* Không-JS / in ấn / crawler: gỡ mọi trạng thái ẩn ban đầu của framer-motion
+          (opacity/transform inline) để nội dung luôn hiển thị đầy đủ */}
+      <noscript>
+        <style>{`[data-lq-landing] [style]{opacity:1 !important;transform:none !important;filter:none !important}`}</style>
+      </noscript>
       {/* ===== Nav với glass ===== */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
@@ -130,7 +135,7 @@ export default function LandingPage() {
 
       {/* ===== Hero với BackgroundBeams ===== */}
       <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 px-4 py-12 pb-16 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:py-20 lg:pb-28">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-12 pb-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:py-20 lg:pb-24">
           {/* Cột chữ */}
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
             <motion.div variants={fadeUpReal}>
@@ -203,7 +208,7 @@ export default function LandingPage() {
           </motion.div>
 
           {/* Cột ảnh với tilt & beams */}
-          <motion.div className="relative w-full aspect-[4/5] overflow-visible">
+          <motion.div className="relative mx-auto w-full max-w-md aspect-[4/3] overflow-visible sm:aspect-square lg:mx-0 lg:max-w-none lg:aspect-auto lg:h-[560px] xl:h-[600px]">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -221,7 +226,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0, x: 0 }}
               transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
               animate-y={{}}
-              className="absolute -bottom-3 -left-3 w-64 rounded-[1.5rem] border border-white/50 bg-white/90 p-4 shadow-lift backdrop-blur-xl"
+              className="absolute bottom-3 left-3 w-[min(16rem,78%)] rounded-[1.5rem] border border-white/50 bg-white/90 p-4 shadow-lift backdrop-blur-xl sm:-bottom-4 sm:-left-4 sm:w-64"
             >
               <div className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-br from-brand-50/50 to-violet-50/50" />
               <div className="relative flex items-center gap-3">
@@ -246,7 +251,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8, type: "spring", stiffness: 300 }}
-              className="absolute -right-2 top-4"
+              className="absolute right-2 top-4 sm:-right-3"
             >
               <div className="rounded-2xl border border-white/50 bg-white/90 p-2.5 shadow-lift backdrop-blur">
                 <XPCounter xp={2480} />
@@ -257,7 +262,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1, type: "spring", stiffness: 300 }}
-              className="absolute -right-1 bottom-20"
+              className="absolute right-2 bottom-20 sm:-right-2"
             >
               <div className="rounded-2xl border border-white/50 bg-white/90 p-2.5 shadow-lift backdrop-blur">
                 <StreakBadge count={12} />

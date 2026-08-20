@@ -41,10 +41,12 @@ export function SmartImage({
   }
 
   return (
+    // Nền gradient có sẵn dưới ảnh + text-transparent: chống "lóe" alt-text xấu
+    // trong khoảnh khắc trước khi onError kịp đổi sang fallback (mạng rất chậm).
     <img
       src={src}
       alt={alt}
-      className={className}
+      className={`bg-gradient-to-br from-slate-100 to-slate-200 text-transparent ${className}`}
       onError={() => setFailed(true)}
     />
   );
