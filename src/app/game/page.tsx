@@ -28,6 +28,7 @@ import { Confetti } from "@/components/Confetti";
 import { Mascot } from "@/components/brand/Mascot";
 import { GAMES } from "@/lib/mock/data";
 import { useApp } from "@/lib/state/app-context";
+import { useRole } from "@/lib/auth/role-context";
 import { cn } from "@/lib/utils";
 import type { GameId, WordMode } from "@/components/game/PhaserGame";
 import type { LeaderRow } from "@/lib/types";
@@ -110,6 +111,7 @@ export default function GamePage() {
   const [board, setBoard] = useState<LeaderRow[]>([]);
   const [mode, setMode] = useState<WordMode>("meaning"); // chế độ học Word Defender
   const { addXp, recordGame } = useApp();
+  const { user } = useRole();
   const rewardedRun = useRef(0); // runId đã thưởng XP (tránh cộng nhiều lần)
 
   const game = GAMES.find((g) => g.id === activeGame)!;
@@ -120,7 +122,8 @@ export default function GamePage() {
       .then((r) => r.json())
       .then((data: { rows?: { id: string; name: string; xp: number }[] }) => {
         if (!active) return;
-        setBoard((data.rows ?? []).map((r) => ({ ...r, me: false })));
+        // Đánh dấu hàng của mình theo id phiên đăng nhập thật
+        setBoard((data.rows ?? []).map((r) => ({ ...r, me: r.id === user.id })));
       })
       .catch(() => {
         if (!active) return;
@@ -129,7 +132,7 @@ export default function GamePage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user.id]);
 
   const openGame = (id: string) => {
     setActiveGame(id as GameId);

@@ -21,8 +21,10 @@ export interface SessionPayload {
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 
-function secretBytes(): Uint8Array {
-  return enc.encode(SESSION_SECRET);
+function secretBytes(): Uint8Array<ArrayBuffer> {
+  // TextEncoder.encode luôn cấp phát ArrayBuffer mới → ép kiểu an toàn
+  // (TS 5.9 yêu cầu Uint8Array<ArrayBuffer> cho BufferSource của WebCrypto)
+  return enc.encode(SESSION_SECRET) as Uint8Array<ArrayBuffer>;
 }
 
 /* base64url <-> Uint8Array (dùng btoa/atob thay Buffer để tương thích Edge) */
@@ -32,7 +34,7 @@ function b64urlFromBytes(bytes: Uint8Array): string {
   return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
-function b64urlToBytes(str: string): Uint8Array {
+function b64urlToBytes(str: string): Uint8Array<ArrayBuffer> {
   const norm = str.replace(/-/g, "+").replace(/_/g, "/");
   const bin = atob(norm);
   const out = new Uint8Array(bin.length);

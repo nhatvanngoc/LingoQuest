@@ -16,22 +16,56 @@ import {
   Sparkles,
   Trophy,
   Target,
+  Sprout,
+  Gamepad2,
+  PenLine,
+  type LucideIcon,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { ProgressBar, CircularProgress } from "@/components/ProgressBar";
 import { SpotlightCard, BentoGrid } from "@/components/magic/SpotlightCard";
 import { NumberTicker } from "@/components/magic/NumberTicker";
-import { WEEK_ACTIVITY, BADGES } from "@/lib/mock/data";
 import { useApp } from "@/lib/state/app-context";
+import { useRole } from "@/lib/auth/role-context";
 import { cn } from "@/lib/utils";
 import { fadeUpReal, staggerContainer, viewportOnce } from "@/lib/motion";
 import type { LeaderRow } from "@/lib/types";
 
+/** Điểm game cao nhất THẬT từ localStorage (dùng cho huy hiệu "Tay chơi game"). */
+function loadBestGameScore(): number {
+  if (typeof window === "undefined") return 0;
+  try {
+    const raw = window.localStorage.getItem("lingoquest:best");
+    if (!raw) return 0;
+    const data = JSON.parse(raw) as Record<string, number>;
+    return Math.max(0, ...Object.values(data));
+  } catch {
+    return 0;
+  }
+}
+
 export default function ProgressPage() {
-  const { xp, level, streak, wordsLearned, xpIntoLevel, xpForNext, levelPct } = useApp();
+  const { xp, level, streak, wordsLearned, xpIntoLevel, xpForNext, levelPct, weekActivity } = useApp();
+  const { user } = useRole();
   const [leaderboard, setLeaderboard] = useState<LeaderRow[]>([]);
-  const maxMin = Math.max(...WEEK_ACTIVITY.map((d) => d.minutes), 1);
-  const totalMin = WEEK_ACTIVITY.reduce((s, d) => s + d.minutes, 0);
+  // Lazy init giống trang /game: đọc kỷ lục thật từ localStorage đúng 1 lần
+  const [bestGame] = useState(loadBestGameScore);
+  const maxXp = Math.max(...weekActivity.map((d) => d.xp), 1);
+  const totalXp = weekActivity.reduce((s, d) => s + d.xp, 0);
+
+  /* Huy hiệu tính từ TIẾN TRÌNH THẬT (không hardcode earned như mock cũ)
+     — icon Lucide thay emoji khổng lồ (tránh ô vuông □ trên máy thiếu font emoji). */
+  const badges: { id: string; label: string; icon: LucideIcon; earned: boolean; desc: string }[] = [
+    { id: "b1", label: "Khởi đầu", icon: Sprout, earned: xp > 0, desc: "Kiếm XP đầu tiên" },
+    { id: "b2", label: "Chuỗi 7 ngày", icon: Flame, earned: streak >= 7, desc: "Học liên tục 7 ngày" },
+    { id: "b3", label: "100 từ vựng", icon: BookOpen, earned: wordsLearned >= 100, desc: "Thuộc 100 từ vựng" },
+    { id: "b4", label: "Tay chơi game", icon: Gamepad2, earned: bestGame >= 500, desc: "Đạt 500 điểm game" },
+    { id: "b5", label: "Hoàn hảo", icon: Target, earned: false, desc: "Đạt 100% một bài kiểm tra" },
+    { id: "b6", label: "Chuỗi 30 ngày", icon: Trophy, earned: streak >= 30, desc: "Học liên tục 30 ngày" },
+    { id: "b7", label: "Nhà văn", icon: PenLine, earned: false, desc: "Viết 10 bài luận" },
+    { id: "b8", label: "Bậc thầy", icon: Crown, earned: level >= 10, desc: "Đạt cấp độ 10" },
+  ];
+  const earnedCount = badges.filter((b) => b.earned).length;
 
   useEffect(() => {
     let active = true;
@@ -39,7 +73,8 @@ export default function ProgressPage() {
       .then((r) => r.json())
       .then((data: { rows?: { id: string; name: string; xp: number }[] }) => {
         if (!active) return;
-        setLeaderboard((data.rows ?? []).map((r) => ({ ...r, me: false })));
+        // Đánh dấu hàng CỦA MÌNH theo id phiên đăng nhập thật → highlight "Bạn" + vị trí xếp hạng
+        setLeaderboard((data.rows ?? []).map((r) => ({ ...r, me: r.id === user.id })));
       })
       .catch(() => {
         if (!active) return;
@@ -48,7 +83,7 @@ export default function ProgressPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user.id]);
 
   return (
     <AppShell>
@@ -105,14 +140,14 @@ export default function ProgressPage() {
                   Hoạt động 7 ngày qua
                 </h2>
                 <span className="flex items-center gap-1.5 rounded-full bg-success-50 px-3 py-1 text-sm font-black text-success border border-success-100">
-                  <TrendingUp className="h-4 w-4" /> {totalMin} phút
+                  <TrendingUp className="h-4 w-4" /> {totalXp} XP
                 </span>
               </div>
               <p className="flex items-center gap-1.5 text-sm text-slate-400">
-                Số phút học mỗi ngày <span className="text-slate-300">·</span>
+                XP kiếm được mỗi ngày <span className="text-slate-300">·</span>
                 <Flame className="h-4 w-4 text-orange-500" /> streak đang cháy
               </p>
-              {totalMin === 0 && (
+              {totalXp === 0 && (
                 <p className="mt-3 flex items-center gap-2 rounded-2xl border border-dashed border-brand-200 bg-brand-50/70 px-4 py-3 text-sm font-bold text-brand">
                   <Sparkles className="h-4 w-4 shrink-0" /> Chưa có hoạt động tuần này — học bài đầu tiên để bắt đầu chuỗi ngày!
                 </p>
@@ -120,12 +155,12 @@ export default function ProgressPage() {
               <div className="mb-6" />
 
               <div className="flex h-52 items-stretch justify-between gap-2">
-                {WEEK_ACTIVITY.map((d, i) => {
-                  const h = (d.minutes / maxMin) * 100;
-                  const empty = d.minutes === 0;
-                  const isToday = i === WEEK_ACTIVITY.length - 1;
+                {weekActivity.map((d, i) => {
+                  const h = (d.xp / maxXp) * 100;
+                  const empty = d.xp === 0;
+                  const isToday = i === weekActivity.length - 1;
                   return (
-                    <div key={d.day} className="flex flex-1 flex-col items-center gap-2 group">
+                    <div key={d.date} className="flex flex-1 flex-col items-center gap-2 group">
                       <div className="relative flex min-h-0 w-full flex-1 items-end justify-center">
                         <motion.div
                           initial={{ height: 0 }}
@@ -138,7 +173,7 @@ export default function ProgressPage() {
                             empty ? "bg-slate-100 border border-slate-200" : "bg-gradient-to-t from-brand to-violet-400 shadow-glow-brand",
                             isToday && !empty && "from-brand-600 to-violet-500 ring-2 ring-brand-200 shadow-glow-brand"
                           )}
-                          title={`${d.minutes} phút`}
+                          title={`${d.xp} XP`}
                         >
                           {!empty && <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent" />}
                           {!empty && <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.8 + i * 0.05 }} className="absolute inset-x-0 top-0 h-1 bg-white/40" />}
@@ -146,9 +181,9 @@ export default function ProgressPage() {
                         {isToday && <motion.div initial={{ scale: 0 }} whileInView={{ scale: 1 }} className="absolute -top-2 h-2 w-2 rounded-full bg-brand animate-ping" />}
                       </div>
                       <span className={cn("rounded-full px-2 py-0.5 text-xs font-bold transition-colors", empty ? "text-slate-300" : isToday ? "bg-brand text-white shadow-soft" : "text-slate-500 group-hover:bg-slate-100")}>
-                        {d.day}
+                        {d.label}
                       </span>
-                      <span className="text-[10px] font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">{d.minutes}m</span>
+                      <span className="text-[10px] font-bold text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">{d.xp} XP</span>
                     </div>
                   );
                 })}
@@ -212,10 +247,10 @@ export default function ProgressPage() {
             <h2 className="mb-5 flex items-center gap-2 font-extrabold text-slate-900">
               <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-orange-400 text-slate-900"><Trophy className="h-4 w-4" /></span>
               Bộ sưu tập huy hiệu
-              <span className="ml-auto rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-500">{BADGES.filter(b=>b.earned).length}/{BADGES.length} đạt được</span>
+              <span className="ml-auto rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-500">{earnedCount}/{badges.length} đạt được</span>
             </h2>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {BADGES.map((b, i) => (
+              {badges.map((b, i) => (
                 <motion.div
                   key={b.id}
                   initial={{ opacity: 0, scale: 0.9, y: 12 }}
@@ -229,9 +264,18 @@ export default function ProgressPage() {
                   )}
                 >
                   {b.earned && <div className="absolute inset-0 bg-gradient-to-br from-accent-100/0 via-accent-100/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />}
-                  <motion.span animate={b.earned ? { y: [0, -3, 0], rotate: [0, 5, -5, 0] } : {}} transition={{ duration: 3, repeat: Infinity, delay: i * 0.2 }} className={cn("relative text-4xl", !b.earned && "grayscale")}>
-                    {b.icon}
-                    {b.earned && <motion.span initial={{ scale: 0 }} whileInView={{ scale: 1 }} className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-success text-[10px] text-white shadow-soft">✓</motion.span>}
+                  <motion.span
+                    animate={b.earned ? { y: [0, -3, 0], rotate: [0, 5, -5, 0] } : {}}
+                    transition={{ duration: 3, repeat: Infinity, delay: i * 0.2 }}
+                    className={cn(
+                      "relative flex h-14 w-14 items-center justify-center rounded-2xl shadow-soft",
+                      b.earned ? "bg-gradient-to-br from-accent to-orange-400 text-slate-900" : "bg-slate-200 text-slate-400"
+                    )}
+                  >
+                    <b.icon className="h-7 w-7" />
+                    {b.earned && (
+                      <motion.span initial={{ scale: 0 }} whileInView={{ scale: 1 }} className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-success text-[10px] text-white shadow-soft">✓</motion.span>
+                    )}
                   </motion.span>
                   <div className="relative">
                     <p className="text-sm font-extrabold text-slate-900">{b.label}</p>

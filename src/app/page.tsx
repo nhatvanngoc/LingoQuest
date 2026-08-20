@@ -101,6 +101,8 @@ export default function LandingPage() {
       <noscript>
         <style>{`[data-lq-landing] [style]{opacity:1 !important;transform:none !important;filter:none !important}`}</style>
       </noscript>
+      {/* In ấn: các section chưa cuộn tới (whileInView) vẫn phải in ra đầy đủ */}
+      <style>{`@media print{[data-lq-landing] [style]{opacity:1 !important;transform:none !important;filter:none !important}}`}</style>
       {/* ===== Nav với glass ===== */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
@@ -225,7 +227,6 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20, x: -20 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
               transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
-              animate-y={{}}
               className="absolute bottom-3 left-3 w-[min(16rem,78%)] rounded-[1.5rem] border border-white/50 bg-white/90 p-4 shadow-lift backdrop-blur-xl sm:-bottom-4 sm:-left-4 sm:w-64"
             >
               <div className="absolute inset-0 rounded-[1.5rem] bg-gradient-to-br from-brand-50/50 to-violet-50/50" />

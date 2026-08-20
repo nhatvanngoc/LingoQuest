@@ -49,6 +49,18 @@ export interface Toast {
 /** Bản ghi SRS mỗi thẻ: hộp (box) 0..4 — càng cao càng thuộc. */
 type SrsMap = Record<string, number>;
 
+/** XP kiếm được theo từng ngày (khóa = yyyy-mm-dd) — nguồn THẬT cho biểu đồ 7 ngày. */
+type XpByDay = Record<string, number>;
+
+/** Một cột trong biểu đồ hoạt động 7 ngày (dữ liệu thật, không mock). */
+export interface DayActivity {
+  date: string; // yyyy-mm-dd
+  label: string; // T2..T7, CN
+  xp: number;
+}
+
+const DAY_LABELS = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]; // Date.getDay(): 0=CN
+
 const XP_PER_LEVEL = 600;
 
 /** Giá trị khởi tạo = TÀI KHOẢN MỚI hoàn toàn trống (0 XP, 0 streak, 0 từ).
@@ -80,6 +92,9 @@ interface AppStateValue {
 
   hydrated: boolean;
 
+  /** Hoạt động 7 ngày gần nhất (XP thật kiếm được mỗi ngày). */
+  weekActivity: DayActivity[];
+
   addXp: (amount: number, reason?: string) => void;
   recordCard: (deckId: string, cardId: string, known: boolean) => void;
   needsReviewCount: (keys: string[]) => number;
@@ -102,6 +117,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [streak] = useState(SEED_STREAK);
   const [wordsLearned, setWordsLearned] = useState(SEED_WORDS);
   const [srs, setSrs] = useState<SrsMap>(SEED_SRS);
+  const [xpByDay, setXpByDay] = useState<XpByDay>({});
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
@@ -133,6 +149,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (typeof data.xp === "number") setXp(data.xp);
         if (typeof data.wordsLearned === "number") setWordsLearned(data.wordsLearned);
         if (data.srs && typeof data.srs === "object") setSrs(data.srs);
+        if (data.xpByDay && typeof data.xpByDay === "object") setXpByDay(data.xpByDay);
         // Khôi phục nhiệm vụ — nhưng reset nếu sang ngày mới
         const sameDay = data.taskDay === todayStr();
         if (sameDay && data.tasks) setTasks(data.tasks);
@@ -154,12 +171,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       window.localStorage.setItem(
         "lingoquest:app",
-        JSON.stringify({ xp, streak, wordsLearned, srs, tasks, taskDay, claimed }),
+        JSON.stringify({ xp, streak, wordsLearned, srs, xpByDay, tasks, taskDay, claimed }),
       );
     } catch {
       /* bỏ qua */
     }
-  }, [xp, streak, wordsLearned, srs, tasks, taskDay, claimed, hydrated]);
+  }, [xp, streak, wordsLearned, srs, xpByDay, tasks, taskDay, claimed, hydrated]);
 
   const dismissToast = useCallback((id: number) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
@@ -181,6 +198,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const oldLevel = Math.floor(prev / XP_PER_LEVEL) + 1;
       const newLevel = Math.floor(next / XP_PER_LEVEL) + 1;
       setXp(next);
+      // Ghi nhận XP kiếm được vào NGÀY HÔM NAY (nguồn thật cho biểu đồ 7 ngày)
+      const today = todayStr();
+      setXpByDay((prev) => {
+        const updated: XpByDay = { ...prev, [today]: (prev[today] ?? 0) + amount };
+        // Chỉ giữ 14 ngày gần nhất để localStorage không phình to
+        const keys = Object.keys(updated).sort();
+        while (keys.length > 14) delete updated[keys.shift()!];
+        return updated;
+      });
       pushToast({ title: `+${amount} XP`, desc: reason, icon: "⚡", tone: "xp" });
       if (newLevel > oldLevel) {
         pushToast({ title: `Lên cấp ${newLevel}!`, desc: "Tiếp tục phát huy nhé!", icon: "🎉", tone: "badge" });
@@ -273,6 +299,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [tasks],
   );
 
+  // Hoạt động 7 ngày gần nhất (kết thúc hôm nay) — dữ liệu XP thật theo ngày
+  const weekActivity = useMemo<DayActivity[]>(() => {
+    const days: DayActivity[] = [];
+    const now = new Date();
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      const key = d.toISOString().slice(0, 10);
+      days.push({ date: key, label: DAY_LABELS[d.getDay()], xp: xpByDay[key] ?? 0 });
+    }
+    return days;
+  }, [xpByDay]);
+
   const value = useMemo<AppStateValue>(
     () => ({
       xp,
@@ -285,6 +324,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       xpForNext,
       levelPct,
       hydrated,
+      weekActivity,
       addXp,
       recordCard,
       needsReviewCount,
@@ -295,7 +335,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       markLessonDone,
       recordGame,
     }),
-    [xp, streak, wordsLearned, srs, toasts, level, xpIntoLevel, xpForNext, levelPct, hydrated, addXp, recordCard, needsReviewCount, deckLearnedCount, pushToast, dismissToast, dailyTasks, markLessonDone, recordGame],
+    [xp, streak, wordsLearned, srs, toasts, level, xpIntoLevel, xpForNext, levelPct, hydrated, weekActivity, addXp, recordCard, needsReviewCount, deckLearnedCount, pushToast, dismissToast, dailyTasks, markLessonDone, recordGame],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
