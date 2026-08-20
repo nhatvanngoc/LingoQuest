@@ -5,62 +5,120 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ===========================================================
-   LingoQuest — Design System (Tailwind v4 @theme tokens)
-   Light mode trước. Tone: sạch, phẳng, thân thiện, chuyên nghiệp.
+   LingoQuest — Design System v2 (Duolingo 2026)
+   Đã nâng cấp: gradient, glass, mesh, shimmer, spotlight
    =========================================================== */
 @theme {
-  /* Font hiển thị chính — Nunito (bo tròn, hỗ trợ tiếng Việt tốt).
-     next/font nạp font và gán vào biến --font-nunito (xem layout.tsx). */
   --font-sans: var(--font-nunito), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* Màu nền chính: trắng kem */
   --color-cream: #f8fafc;
-  --color-ink: #0f172a; /* slate-900 — chữ chính */
+  --color-ink: #0f172a;
 
-  /* Màu thương hiệu (primary) — xanh dương blue-600 */
   --color-brand: #2563eb;
   --color-brand-50: #eff6ff;
   --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
   --color-brand-600: #2563eb;
   --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
 
-  /* Màu phụ — xanh lá nhạt (đúng / hoàn thành) */
   --color-success: #10b981;
   --color-success-50: #ecfdf5;
   --color-success-100: #d1fae5;
+  --color-success-200: #a7f3d0;
+  --color-success-500: #10b981;
 
-  /* Màu nhấn năng lượng — vàng (streak, XP, huy hiệu) */
   --color-accent: #fbbf24;
   --color-accent-50: #fffbeb;
   --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
 
-  /* Màu cảnh báo — đỏ (quá hạn, sai) */
   --color-danger: #ef4444;
   --color-danger-50: #fef2f2;
   --color-danger-100: #fee2e2;
 
-  /* Bo góc & shadow thân thiện */
+  --color-violet: #8b5cf6;
+  --color-violet-50: #f5f3ff;
+  --color-violet-100: #ede9fe;
+
   --radius-xl: 1rem;
   --radius-2xl: 1.25rem;
   --radius-3xl: 1.75rem;
+  --radius-4xl: 2.5rem;
 
-  /* Shadow có chiều sâu nhẹ */
   --shadow-soft: 0 2px 8px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
   --shadow-card: 0 8px 24px rgba(16, 24, 40, 0.08);
   --shadow-lift: 0 18px 40px rgba(16, 24, 40, 0.12);
+  --shadow-glow-brand: 0 0 0 1px rgba(37,99,235,0.1), 0 8px 32px rgba(37,99,235,0.2);
+  --shadow-glow-accent: 0 0 0 1px rgba(251,191,36,0.15), 0 8px 32px rgba(251,191,36,0.25);
+  --shadow-glow-success: 0 0 0 1px rgba(16,185,129,0.1), 0 8px 32px rgba(16,185,129,0.2);
 
   --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-shimmer-slow: shimmer 4s linear infinite;
+  --animate-spotlight: spotlight 2s ease .75s 1 forwards;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out 2s infinite;
+  --animate-bounce-soft: bounce-soft 2s ease-in-out infinite;
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  --animate-ping-slow: ping-slow 2s cubic-bezier(0,0,0.2,1) infinite;
+  --animate-border-spin: border-spin 3s linear infinite;
+  --animate-gradient-x: gradient-x 4s ease infinite;
 }
 
 @keyframes pop {
-  0% {
-    transform: scale(0.85);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes spotlight {
+  0% { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
+  100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.02); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-1deg) scale(1); }
+  50% { transform: rotate(1deg) scale(1.02); }
+}
+@keyframes ping-slow {
+  75%,100% { transform: scale(1.15); opacity: 0; }
+}
+@keyframes border-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes gradient-x {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes flame-flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); filter: brightness(1); }
+  25% { transform: scaleY(1.1) scaleX(0.95); filter: brightness(1.1); }
+  50% { transform: scaleY(0.95) scaleX(1.05); filter: brightness(0.95); }
+  75% { transform: scaleY(1.05) scaleX(0.98); filter: brightness(1.05); }
+}
+@keyframes shine-sweep {
+  0% { transform: translateX(-150%) skewX(-12deg); }
+  100% { transform: translateX(200%) skewX(-12deg); }
+}
+@keyframes progress-shimmer {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(300%); opacity: 0; }
 }
 
 /* ---------- Base ---------- */
@@ -229,4 +287,95 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+/* ---------- V2 Utilities - Magic / Aceternity inspired ---------- */
+.glass {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+.glass-strong {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+}
+.text-gradient-brand {
+  background: linear-gradient(100deg, #2563eb, #8b5cf6, #2563eb);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-x 3s ease infinite;
+}
+.bg-mesh-brand {
+  background:
+    radial-gradient(at 20% 30%, rgba(37,99,235,0.18) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(139,92,246,0.15) 0px, transparent 50%),
+    radial-gradient(at 60% 80%, rgba(251,191,36,0.12) 0px, transparent 50%),
+    radial-gradient(at 20% 80%, rgba(16,185,129,0.10) 0px, transparent 50%);
+}
+.bg-mesh-vibrant {
+  background:
+    radial-gradient(at 0% 0%, rgba(37,99,235,0.15) 0%, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(251,191,36,0.18) 0%, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139,92,246,0.12) 0%, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(16,185,129,0.12) 0%, transparent 50%);
+}
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-effect::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 2s linear infinite;
+}
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shine-sweep::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: shine-sweep 2.5s ease-in-out infinite;
+}
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
+  top: var(--mouse-y, 50%);
+  left: var(--mouse-x, 50%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+.noise {
+  position: relative;
+}
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.5;
 }
