@@ -77,19 +77,19 @@ const POEMS = [
     emoji: "🪶",
     lines: ["Học một ngôn ngữ", "Mở một thế giới"],
     author: "Ngạn ngữ",
-    gradient: "from-sky-100 to-blue-100",
+    gradient: "from-slate-50 to-sky-50",
   },
   {
     emoji: "❤️",
     lines: ["Mỗi ngày một chút", "Tích tiểu thành đại"],
     author: "Kiên trì",
-    gradient: "from-rose-100 to-pink-100",
+    gradient: "from-slate-50 to-rose-50",
   },
   {
     emoji: "💡",
     lines: ["Kiên trì hôm nay", "Rạng ngời mai sau"],
     author: "LingoQuest",
-    gradient: "from-amber-100 to-orange-100",
+    gradient: "from-slate-50 to-amber-50",
   },
 ];
 
@@ -130,7 +130,7 @@ export default function LandingPage() {
 
       {/* ===== Hero với BackgroundBeams ===== */}
       <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 px-4 py-12 pb-16 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:py-20 lg:pb-28">
           {/* Cột chữ */}
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
             <motion.div variants={fadeUpReal}>
@@ -186,11 +186,11 @@ export default function LandingPage() {
             </motion.div>
 
             {/* thơ ngắn thay số liệu (màu dịu, không lấn át CTA) */}
-            <motion.div variants={fadeUpReal} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 max-w-md">
+            <motion.div variants={fadeUpReal} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {POEMS.map((p) => (
                 <div
                   key={p.author}
-                  className={`group rounded-2xl bg-gradient-to-br ${p.gradient} p-4 shadow-soft ring-1 ring-white/70 transition-transform duration-300 hover:-translate-y-1`}
+                  className={`group rounded-2xl bg-gradient-to-br ${p.gradient} p-5 shadow-sm ring-1 ring-slate-100/50 transition-transform duration-300 hover:-translate-y-1`}
                 >
                   <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-lg shadow-sm">{p.emoji}</span>
                   <p className="mt-3 text-sm font-bold leading-snug text-slate-700">
@@ -203,7 +203,7 @@ export default function LandingPage() {
           </motion.div>
 
           {/* Cột ảnh với tilt & beams */}
-          <motion.div className="relative mx-auto w-full aspect-[4/5]">
+          <motion.div className="relative w-full aspect-[4/5] overflow-visible">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -264,10 +264,6 @@ export default function LandingPage() {
               </div>
             </motion.div>
 
-            {/* floating elements */}
-            <motion.div animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -right-1 top-1/2 rounded-2xl bg-white p-3 shadow-card">
-              <div className="flex items-center gap-2"><span className="text-lg">🎯</span><span className="text-xs font-black text-slate-700">Quest Done!</span></div>
-            </motion.div>
           </motion.div>
         </div>
       </BackgroundBeams>
