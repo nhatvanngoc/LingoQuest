@@ -42,7 +42,10 @@ export function BackgroundBeams({
         <div className="absolute inset-0 bg-gradient-to-t from-cream via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-cream/80 via-transparent to-transparent" />
       </div>
-      <div className="relative z-10">{children}</div>
+      {/* w-full: khi root là flex (vd. hero "flex items-center"), wrapper này phải
+          chiếm hết bề ngang — nếu không nó co theo nội dung và DÍNH TRÁI trên màn rộng,
+          để lại khoảng trống lớn bên phải. */}
+      <div className="relative z-10 w-full">{children}</div>
     </div>
   );
 }
