@@ -108,7 +108,7 @@ export default function LandingPage() {
         transition={{ duration: 0.6, ease: EASE_OUT }}
         className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/50"
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-2 group">
             <motion.span
               whileHover={{ rotate: 15, scale: 1.1 }}
@@ -135,17 +135,17 @@ export default function LandingPage() {
 
       {/* ===== Hero với BackgroundBeams ===== */}
       <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 py-12 pb-16 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:py-20 lg:pb-24">
+        <div className="mx-auto grid w-full max-w-[1440px] items-center gap-10 px-4 py-12 pb-16 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-20 lg:pb-24 xl:gap-16">
           {/* Cột chữ */}
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
             <motion.div variants={fadeUpReal}>
-              <span className="group inline-flex items-center gap-2 rounded-full border border-violet-200 bg-gradient-to-r from-violet-50 to-brand-50 px-4 py-1.5 text-xs font-black text-violet-700 shadow-soft hover:shadow-glow-brand transition-all hover:scale-105">
+              <span className="group inline-flex items-center gap-2 rounded-full border border-violet-200 bg-gradient-to-r from-violet-50 to-brand-50 px-4 py-2 text-sm font-black text-violet-700 shadow-soft hover:shadow-glow-brand transition-all hover:scale-105">
                 <motion.span animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 2, repeat: Infinity }}><Trophy className="h-4 w-4 text-accent" /></motion.span>
                 <AnimatedShinyText>Học tiếng Anh vui như chơi game</AnimatedShinyText>
                 <span className="h-1 w-1 rounded-full bg-violet-400 animate-ping" />
               </span>
             </motion.div>
-            <motion.h1 variants={fadeUpReal} className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
+            <motion.h1 variants={fadeUpReal} className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-5xl lg:text-[4rem] xl:text-[4.5rem] lg:leading-[1.02]">
               Chinh phục tiếng Anh cùng{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-r from-brand via-violet-600 to-brand bg-[length:200%_100%] bg-clip-text text-transparent animate-gradient-x">LingoQuest</span>
@@ -156,19 +156,19 @@ export default function LandingPage() {
                 <motion.div className="absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-r from-brand-100 via-violet-100 to-accent-100 blur-xl opacity-60" animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity }} />
               </span>
             </motion.h1>
-            <motion.p variants={fadeUpReal} className="mt-6 max-w-md text-lg leading-relaxed text-slate-600">
+            <motion.p variants={fadeUpReal} className="mt-6 max-w-lg text-xl leading-relaxed text-slate-600">
               Video tương tác 3D, flashcard tilt lật, bài tập kiểu game và mini-game Phaser Pro —
               <span className="font-bold text-slate-900"> tất cả trong một nền tảng được giáo viên quản lý trực tiếp.</span>
             </motion.p>
 
             <motion.div variants={fadeUpReal} className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ShimmerButton asChild size="xl" className="group text-base">
+              <ShimmerButton asChild size="xl" className="group text-lg">
                 <Link href="/dashboard" className="flex items-center gap-2">
                   <GoogleIcon /> Bắt đầu ngay
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </ShimmerButton>
-              <Button asChild size="xl" variant="outline" className="group border-2 hover:border-brand-200 hover:bg-brand-50">
+              <Button asChild size="xl" variant="outline" className="group border-2 text-lg hover:border-brand-200 hover:bg-brand-50">
                 <Link href="/learn" className="flex items-center gap-2">
                   <PlayCircle className="h-5 w-5 group-hover:scale-110 transition-transform" /> Khám phá bài học
                 </Link>
@@ -176,29 +176,29 @@ export default function LandingPage() {
             </motion.div>
 
             <motion.div variants={fadeUpReal} className="mt-8 flex flex-wrap items-center gap-4">
-              <span className="flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-bold text-slate-600 shadow-soft border border-slate-100">
+              <span className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[15px] font-bold text-slate-600 shadow-soft border border-slate-100">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-success-50 text-success"><Check className="h-3 w-3" /></span> Miễn phí
               </span>
-              <span className="flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-bold text-slate-600 shadow-soft border border-slate-100">
+              <span className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[15px] font-bold text-slate-600 shadow-soft border border-slate-100">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-50 text-violet-600"><ShieldCheck className="h-3 w-3" /></span> Lớp 6–9
               </span>
               <div className="flex -space-x-2">
                 {[1,2,3].map(i => (
-                  <div key={i} className="h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand-100 to-violet-100 flex items-center justify-center text-[10px] font-bold text-brand">U{i}</div>
+                  <div key={i} className="h-8 w-8 rounded-full border-2 border-white bg-gradient-to-br from-brand-100 to-violet-100 flex items-center justify-center text-[11px] font-bold text-brand">U{i}</div>
                 ))}
-                <div className="h-7 w-7 rounded-full border-2 border-white bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">+5k</div>
+                <div className="h-8 w-8 rounded-full border-2 border-white bg-slate-900 text-white flex items-center justify-center text-[11px] font-bold">+5k</div>
               </div>
             </motion.div>
 
             {/* thơ ngắn thay số liệu (màu dịu, không lấn át CTA) */}
-            <motion.div variants={fadeUpReal} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <motion.div variants={fadeUpReal} className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {POEMS.map((p) => (
                 <div
                   key={p.author}
-                  className={`group rounded-2xl bg-gradient-to-br ${p.gradient} p-5 shadow-sm ring-1 ring-slate-100/50 transition-transform duration-300 hover:-translate-y-1`}
+                  className={`group rounded-2xl bg-gradient-to-br ${p.gradient} p-6 shadow-sm ring-1 ring-slate-100/50 transition-transform duration-300 hover:-translate-y-1`}
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-lg shadow-sm">{p.emoji}</span>
-                  <p className="mt-3 text-sm font-bold leading-snug text-slate-700">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/70 text-xl shadow-sm">{p.emoji}</span>
+                  <p className="mt-3 text-[15px] font-bold leading-snug text-slate-700">
                     {p.lines[0]}<br />{p.lines[1]}
                   </p>
                   <p className="mt-2 text-[11px] font-semibold text-slate-400">— {p.author}</p>
@@ -208,7 +208,7 @@ export default function LandingPage() {
           </motion.div>
 
           {/* Cột ảnh với tilt & beams */}
-          <motion.div className="relative mx-auto w-full max-w-md aspect-[4/3] overflow-visible sm:aspect-square lg:mx-0 lg:max-w-none lg:aspect-auto lg:h-[560px] xl:h-[600px]">
+          <motion.div className="relative mx-auto w-full max-w-md aspect-[4/3] overflow-visible sm:aspect-square lg:mx-0 lg:max-w-none lg:aspect-auto lg:h-[640px] xl:h-[720px]">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
