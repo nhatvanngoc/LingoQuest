@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-// Nunito self-host qua @fontsource (file woff2 nằm trong repo, được Next phục vụ tĩnh):
-// không còn phụ thuộc Google Fonts lúc build/dev → không rơi về font serif fallback.
-import "@fontsource/nunito/400.css";
-import "@fontsource/nunito/500.css";
-import "@fontsource/nunito/600.css";
-import "@fontsource/nunito/700.css";
-import "@fontsource/nunito/800.css";
-import "@fontsource/nunito/900.css";
+// Be Vietnam Pro self-host qua @fontsource — tối ưu dấu tiếng Việt, dễ đọc hơn Nunito:
+import "@fontsource/be-vietnam-pro/400.css";
+import "@fontsource/be-vietnam-pro/500.css";
+import "@fontsource/be-vietnam-pro/600.css";
+import "@fontsource/be-vietnam-pro/700.css";
+import "@fontsource/be-vietnam-pro/800.css";
 import "./globals.css";
 import { RoleProvider, type SessionUser } from "@/lib/auth/role-context";
 import { getCurrentUser } from "@/lib/auth/session";
