@@ -135,7 +135,7 @@ export default function LandingPage() {
 
       {/* ===== Hero với BackgroundBeams ===== */}
       <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-12 pb-16 sm:px-6 lg:mx-0 lg:max-w-none lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 lg:py-20 lg:pb-24 lg:pl-[max(1.5rem,calc((100vw-1152px)/2+1.5rem))] lg:pr-6">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-12 pb-16 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12 lg:py-20 lg:pb-24">
           {/* Cột chữ */}
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
             <motion.div variants={fadeUpReal}>
