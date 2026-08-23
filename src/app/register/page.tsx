@@ -1,60 +1,61 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { GraduationCap, Mail, Lock, Loader2 } from "lucide-react";
+import { GraduationCap, Mail, Lock, Loader2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { staggerContainer, fadeUp } from "@/lib/motion";
 
 /* ============================================================
-   Trang đăng nhập — email + mật khẩu qua bảng users Postgres.
-   Không có mock: gọi POST /api/auth/login, lưu session cookie,
-   rồi điều hướng theo vai trò.
+   Trang đăng ký — tạo tài khoản mới qua POST /api/auth/register.
+   Role mặc định student, điều hướng theo role trả về.
    ============================================================ */
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // Lỗi từ query (vd. thất bại OAuth Google) hoặc từ form.
-  // Khởi tạo null để server/client khớp nhau; đọc query sau khi mount
-  // (tránh mismatch hydration do nhánh typeof window).
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => {
-    const e = new URLSearchParams(window.location.search).get("error");
-    if (!e) return;
-    const reasons: Record<string, string> = {
-      google_config:
-        "Thiếu cấu hình Google: GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET chưa được điền vào .env (hoặc chưa khởi động lại server dev).",
-      google_state:
-        "Phiên OAuth không khớp (cookie lq_oauth bị mất). Thử lại; đảm bảo trình duyệt không chặn cookie của localhost.",
-      google_token:
-        "Google từ chối cấp token — sai GOOGLE_CLIENT_SECRET hoặc redirect_uri không khớp với Google Console.",
-      google_user: "Không lấy được thông tin người dùng từ Google.",
-      google_email: "Tài khoản Google không cung cấp email.",
-      google_exception: "Lỗi mạng khi gọi Google. Thử lại.",
-    };
-    setError(reasons[e] ?? "Đăng nhập Google thất bại, thử lại.");
-  }, []);
-
   const loginWithGoogle = () => {
-    // Điều hướng toàn trang để bắt đầu luồng OAuth2 PKCE.
     window.location.href = "/api/auth/google";
   };
 
-  async function doLogin(loginEmail: string, loginPassword: string) {
-    setBusy(true);
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
     setError(null);
+
+    // Validation
+    if (!name.trim() || name.trim().length < 2) {
+      setError("Tên phải có ít nhất 2 ký tự");
+      return;
+    }
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(email.trim())) {
+      setError("Email không hợp lệ");
+      return;
+    }
+    if (!password || password.length < 6) {
+      setError("Mật khẩu phải có ít nhất 6 ký tự");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Mật khẩu xác nhận không khớp");
+      return;
+    }
+
+    setBusy(true);
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), password }),
       });
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
@@ -62,22 +63,17 @@ export default function LoginPage() {
         ok?: boolean;
       };
       if (!res.ok || !data.ok) {
-        setError(data.error ?? "Đăng nhập thất bại");
-        return false;
+        setError(data.error ?? "Đăng ký thất bại");
+        return;
       }
-      router.push(data.role === "teacher" ? "/teacher" : "/dashboard");
-      return true;
+      if (data.role === "teacher") router.push("/teacher");
+      else if (data.role === "pending") router.push("/pending");
+      else router.push("/dashboard");
     } catch {
       setError("Lỗi mạng, thử lại sau");
-      return false;
     } finally {
       setBusy(false);
     }
-  }
-
-  function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    void doLogin(email, password);
   }
 
   return (
@@ -100,12 +96,30 @@ export default function LoginPage() {
             <h1 className="text-2xl font-extrabold tracking-tight">
               Lingo<span className="opacity-90">Quest</span>
             </h1>
-            <p className="mt-1 text-sm text-white/80">Đăng nhập để tiếp tục học tiếng Anh</p>
+            <p className="mt-1 text-sm text-white/80">Tạo tài khoản</p>
+            <p className="text-sm text-white/80">Bắt đầu hành trình học tiếng Anh</p>
           </div>
         </motion.div>
 
         {/* ===== Form ===== */}
         <motion.form variants={fadeUp} onSubmit={onSubmit} className="flex flex-col gap-4 px-8 py-7">
+          <div>
+            <Label htmlFor="name">Họ tên</Label>
+            <div className="relative">
+              <User className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Input
+                id="name"
+                type="text"
+                autoComplete="name"
+                placeholder="Nguyễn Văn A"
+                className="pl-10"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
           <div>
             <Label htmlFor="email">Email</Label>
             <div className="relative">
@@ -130,11 +144,28 @@ export default function LoginPage() {
               <Input
                 id="password"
                 type="password"
-                autoComplete="current-password"
+                autoComplete="new-password"
                 placeholder="••••••••"
                 className="pl-10"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <Label htmlFor="confirmPassword">Xác nhận mật khẩu</Label>
+            <div className="relative">
+              <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Input
+                id="confirmPassword"
+                type="password"
+                autoComplete="new-password"
+                placeholder="••••••••"
+                className="pl-10"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
             </div>
@@ -148,36 +179,30 @@ export default function LoginPage() {
 
           <Button type="submit" size="lg" className="mt-1 w-full" disabled={busy}>
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            Đăng nhập
+            Tạo tài khoản
           </Button>
         </motion.form>
 
-        {/* ===== Đăng nhập Google (OAuth2 PKCE) ===== */}
+        {/* ===== Divider + Google OAuth ===== */}
         <div className="flex items-center gap-3 px-8 pt-1">
           <span className="h-px flex-1 bg-slate-100" />
           <span className="text-xs font-bold uppercase tracking-wide text-slate-400">hoặc</span>
           <span className="h-px flex-1 bg-slate-100" />
         </div>
         <div className="px-8 pb-1 pt-3">
-          <Button
-            type="button"
-            variant="outline"
-            size="lg"
-            className="w-full"
-            onClick={loginWithGoogle}
-          >
+          <Button type="button" variant="outline" size="lg" className="w-full" onClick={loginWithGoogle}>
             <GoogleG className="h-4 w-4" />
             Tiếp tục với Google
           </Button>
         </div>
 
+        {/* ===== Footer link ===== */}
         <p className="px-8 pb-7 pt-4 text-center text-sm text-slate-500">
-          Chưa có tài khoản?{" "}
-          <Link href="/register" className="font-semibold text-brand hover:underline">
-            Tạo tài khoản
+          Đã có tài khoản?{" "}
+          <Link href="/login" className="font-semibold text-brand hover:underline">
+            Đăng nhập
           </Link>
         </p>
-
       </motion.div>
     </main>
   );

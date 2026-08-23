@@ -22,14 +22,15 @@ export async function middleware(req: NextRequest) {
   const isPublic =
     pathname === "/" || // trang chủ (landing page) là public
     pathname === "/login" ||
+    pathname === "/register" ||
     pathname.startsWith("/api/health") ||
-    pathname.startsWith("/api/auth") || // login/logout/google phải truy cập được khi chưa có session
+    pathname.startsWith("/api/auth") || // login/logout/google/register phải truy cập được khi chưa có session
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     pathname === "/favicon.ico";
 
-  // Đã đăng nhập mà vào /login → về trang mặc định.
-  if (isAuthed && pathname === "/login") {
+  // Đã đăng nhập mà vào /login hoặc /register → về trang mặc định.
+  if (isAuthed && (pathname === "/login" || pathname === "/register")) {
     const url = req.nextUrl.clone();
     url.pathname = role === "teacher" ? "/teacher" : "/dashboard";
     return NextResponse.redirect(url);
@@ -53,7 +54,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Loại trừ hoàn toàn: login, api/health, _next, favicon (tránh vòng lặp /
+  // Loại trừ hoàn toàn: login/register, api/health, _next, favicon (tránh vòng lặp /
   // chạy middleware trên asset tĩnh).
-  matcher: ["/((?!login|api/health|_next|favicon.ico).*)"],
+  matcher: ["/((?!login|register|api/health|_next|favicon.ico).*)"],
 };
