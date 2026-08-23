@@ -134,7 +134,7 @@ export default function LandingPage() {
       </motion.header>
 
       {/* ===== Hero với BackgroundBeams ===== */}
-      <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center">
+      <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
         <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 py-12 pb-16 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:py-20 lg:pb-24">
           {/* Cột chữ */}
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">

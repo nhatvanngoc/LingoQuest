@@ -42,7 +42,7 @@ export function BackgroundBeams({
         <div className="absolute inset-0 bg-gradient-to-t from-cream via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-cream/80 via-transparent to-transparent" />
       </div>
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 w-full">{children}</div>
     </div>
   );
 }
@@ -71,7 +71,7 @@ export function BackgroundBeamsWithCollision({
         {/* glow at bottom */}
         <div className="absolute bottom-0 left-1/2 h-40 w-[80%] -translate-x-1/2 rounded-full bg-brand-500/20 blur-3xl" />
       </div>
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 w-full">{children}</div>
     </div>
   );
 }
