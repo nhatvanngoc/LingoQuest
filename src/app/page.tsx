@@ -134,8 +134,8 @@ export default function LandingPage() {
       </motion.header>
 
       {/* ===== Hero với BackgroundBeams ===== */}
-      <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-12 pb-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:py-20 lg:pb-24">
+      <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center overflow-hidden">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-12 pb-16 sm:px-6 lg:mx-0 lg:max-w-none lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 lg:py-20 lg:pb-24 lg:pl-[max(1.5rem,calc((100vw-1152px)/2+1.5rem))] lg:pr-0">
           {/* Cột chữ */}
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
             <motion.div variants={fadeUpReal}>
@@ -207,13 +207,13 @@ export default function LandingPage() {
             </motion.div>
           </motion.div>
 
-          {/* Cột ảnh với tilt & beams */}
-          <motion.div className="relative mx-auto w-full max-w-md aspect-[4/3] overflow-visible sm:aspect-square lg:mx-0 lg:max-w-none lg:aspect-auto lg:h-[560px] xl:h-[600px]">
+          {/* Cột ảnh với tilt & beams — breakout to viewport right edge on lg+ */}
+          <motion.div className="relative mx-auto w-full max-w-md aspect-[4/3] overflow-visible sm:aspect-square lg:mx-0 lg:ml-auto lg:max-w-none lg:aspect-auto lg:h-[560px] xl:h-[600px]">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.3 }}
-              className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white shadow-lift"
+              className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white shadow-lift lg:!rounded-r-none lg:!rounded-l-[2.5rem] lg:!border-r-0"
             >
               <SmartImage src={IMG.hero} alt="Học sinh" className="h-full w-full object-cover" gradient="from-brand-100 to-violet-100" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-slate-900/10 to-transparent" />
@@ -251,7 +251,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8, type: "spring", stiffness: 300 }}
-              className="absolute right-2 top-4 sm:-right-3"
+              className="absolute right-2 top-4 sm:right-2 lg:right-4"
             >
               <div className="rounded-2xl border border-white/50 bg-white/90 p-2.5 shadow-lift backdrop-blur">
                 <XPCounter xp={2480} />
@@ -262,7 +262,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1, type: "spring", stiffness: 300 }}
-              className="absolute right-2 bottom-20 sm:-right-2"
+              className="absolute right-2 bottom-20 sm:right-2 lg:right-4"
             >
               <div className="rounded-2xl border border-white/50 bg-white/90 p-2.5 shadow-lift backdrop-blur">
                 <StreakBadge count={12} />
