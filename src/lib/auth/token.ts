@@ -43,7 +43,7 @@ function b64urlToBytes(str: string): Uint8Array {
 async function importKey() {
   return crypto.subtle.importKey(
     "raw",
-    secretBytes(),
+    secretBytes() as unknown as BufferSource,
     { name: "HMAC", hash: "SHA-256" },
     false,
     ["sign", "verify"],
@@ -53,7 +53,7 @@ async function importKey() {
 /** Ký HMAC-SHA256 (base64url) của `data` — hằng số thời gian qua subtle.verify. */
 async function signData(data: string): Promise<string> {
   const key = await importKey();
-  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(data));
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(data) as unknown as BufferSource);
   return b64urlFromBytes(new Uint8Array(sig));
 }
 
@@ -81,8 +81,8 @@ export async function verifySessionToken(token?: string | null): Promise<Session
     const valid = await crypto.subtle.verify(
       "HMAC",
       key,
-      b64urlToBytes(sig),
-      enc.encode(body),
+      b64urlToBytes(sig) as unknown as BufferSource,
+      enc.encode(body) as unknown as BufferSource,
     );
     if (!valid) return null;
 
