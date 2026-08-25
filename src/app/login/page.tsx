@@ -105,9 +105,9 @@ export default function LoginPage() {
         </motion.div>
 
         {/* ===== Form ===== */}
-        <motion.form variants={fadeUp} onSubmit={onSubmit} className="flex flex-col gap-4 px-8 py-7">
+        <motion.form variants={fadeUp} onSubmit={onSubmit} aria-label="Form đăng nhập" className="flex flex-col gap-4 px-8 py-7">
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">Email<span className="text-danger ml-1" aria-hidden="true">*</span></Label>
             <div className="relative">
               <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
               <Input
@@ -119,12 +119,15 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                aria-required="true"
+                aria-invalid={error ? true : undefined}
+                disabled={busy}
               />
             </div>
           </div>
 
           <div>
-            <Label htmlFor="password">Mật khẩu</Label>
+            <Label htmlFor="password">Mật khẩu<span className="text-danger ml-1" aria-hidden="true">*</span></Label>
             <div className="relative">
               <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
               <Input
@@ -136,18 +139,21 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                aria-required="true"
+                aria-invalid={error ? true : undefined}
+                disabled={busy}
               />
             </div>
           </div>
 
           {error && (
-            <p className="rounded-2xl border border-danger/20 bg-danger/5 px-4 py-2.5 text-sm font-semibold text-danger">
+            <p role="alert" aria-live="polite" className="rounded-2xl border border-danger/20 bg-danger/5 px-4 py-2.5 text-sm font-semibold text-danger">
               {error}
             </p>
           )}
 
-          <Button type="submit" size="lg" className="mt-1 w-full" disabled={busy}>
-            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+          <Button type="submit" size="lg" className="mt-1 w-full" disabled={busy} aria-busy={busy}>
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
             Đăng nhập
           </Button>
         </motion.form>
@@ -165,6 +171,7 @@ export default function LoginPage() {
             size="lg"
             className="w-full"
             onClick={loginWithGoogle}
+            disabled={busy}
           >
             <GoogleG className="h-4 w-4" />
             Tiếp tục với Google
@@ -173,7 +180,7 @@ export default function LoginPage() {
 
         <p className="px-8 pb-7 pt-4 text-center text-sm text-slate-500">
           Chưa có tài khoản?{" "}
-          <Link href="/register" className="font-semibold text-brand hover:underline">
+          <Link href="/register" className="font-semibold text-brand hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 rounded visited:text-violet-700 active:text-brand-700 active:underline">
             Tạo tài khoản
           </Link>
         </p>

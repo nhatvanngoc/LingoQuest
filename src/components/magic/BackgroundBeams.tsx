@@ -1,7 +1,10 @@
+/* Grid: 1280px, 12 cols, gutter 24px, margin 24/80 */
 "use client";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+// Outer uses flex items-center justify-center via className (hero: min-h-[calc(100vh-4rem)] flex items-center justify-center)
+// Inner wrapper must keep w-full to respect max-w-7xl grid container
 export function BackgroundBeams({
   className,
   children,

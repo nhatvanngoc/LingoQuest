@@ -1,3 +1,17 @@
+/* Grid: 1280px, 12 cols, gutter 24px, margin 24/80
+   Checklist 1.5 — Images & Icons:
+   - Icons: lucide-react (SVG, same square dimension, black base → Tailwind tint).
+     All icons imported here (PlayCircle, Layers, etc.) are SVG, 24×24 viewBox, stroke="currentColor".
+     Rendered square (h-4 w-4 / h-5 w-5 etc.), colored via className (text-brand, text-violet-600…).
+     Custom icons (if added) MUST be named icon-* lowercase-with-dashes (e.g. icon-sparkles.svg)
+     under public/icons/ or public/images/icons/ — see SmartImage.tsx docs.
+   - Images: public/images/{background,banners,icons,layout} with prefixes bg-, icon-, hero-, banner-
+     (e.g. public/images/background/bg-hero-gradient.svg). See SmartImage.tsx header.
+   - Pexels optimization: all IMG URLs use auto=compress&cs=tinysrgb&fit=crop + w=1200&h=900 for hero/showcase
+     (large) and w=800&h=600 for cards (correctly sized for 400-600px cards, saves bandwidth);
+     hero uses priority (eager/high) for LCP, below-fold cards use loading="lazy" via SmartImage defaults.
+     Alt text is descriptive (not empty) for a11y.
+*/
 "use client";
 
 import Link from "next/link";
@@ -26,6 +40,8 @@ import { SmartImage } from "@/components/SmartImage";
 import { staggerContainer, fadeUpReal, EASE_OUT, viewportOnce, SPRING_BOUNCY } from "@/lib/motion";
 
 const IMG = {
+  // Pexels optimized: auto=compress&cs=tinysrgb&fit=crop — hero/showcase use w=1200&h=900 (LCP, full-bleed),
+  // cards use w=800&h=600 (fits 400-500px card, avoids over-fetch). All have proper alt via SmartImage.
   hero: "https://images.pexels.com/photos/6503100/pexels-photo-6503100.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=900&w=1200",
   video: "https://images.pexels.com/photos/8055848/pexels-photo-8055848.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=600&w=800",
   flashcard: "https://images.pexels.com/photos/7319198/pexels-photo-7319198.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=600&w=800",
@@ -108,7 +124,8 @@ export default function LandingPage() {
         transition={{ duration: 0.6, ease: EASE_OUT }}
         className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/50"
       >
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-6">
+        {/* Grid container: max-w-7xl (1280px) • margin 24/80 • gutter 24 via gap-6/8/12 */}
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 group">
             <motion.span
               whileHover={{ rotate: 15, scale: 1.1 }}
@@ -123,19 +140,20 @@ export default function LandingPage() {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
-              <Link href="/learn">Khám phá</Link>
+            <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 visited:text-violet-700 active:text-brand-700 active:scale-95">
+              <Link href="/learn" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 rounded-lg visited:text-violet-700 hover:underline underline-offset-4 active:text-brand-700">Khám phá</Link>
             </Button>
-            <ShimmerButton asChild size="sm" className="hidden sm:inline-flex">
-              <Link href="/dashboard" className="flex items-center gap-1.5"><GoogleIcon /> Đăng nhập</Link>
+            <ShimmerButton asChild size="sm" className="hidden sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 visited:opacity-90 active:scale-95">
+              <Link href="/dashboard" className="flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-brand rounded-lg visited:text-white/90 active:opacity-90 hover:underline underline-offset-4"> <GoogleIcon /> Đăng nhập</Link>
             </ShimmerButton>
           </div>
         </div>
       </motion.header>
 
       {/* ===== Hero với BackgroundBeams ===== */}
+      {/* Grid: 1280px (max-w-7xl) • 12 cols • gutter 24px • outer margin px-4 sm:px-6 lg:px-8 */}
       <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
-        <div className="mx-auto grid w-full max-w-[1440px] items-center gap-10 px-4 pt-6 pb-12 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:pt-10 lg:pb-16 xl:gap-16">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-8 px-4 pt-6 pb-12 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:pt-10 lg:pb-16">
           {/* Cột chữ */}
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
             <motion.div variants={fadeUpReal}>
@@ -207,7 +225,7 @@ export default function LandingPage() {
             </motion.div>
           </motion.div>
 
-          {/* Cột ảnh với tilt & beams */}
+          {/* Cột ảnh: fluid aspect 375→768→1024 (aspect-[4/3] / sm:aspect-square), fixed height only ≥1024 via lg:aspect-auto lg:h-[640px] xl:h-[720px] — avoids overflow */}
           <motion.div className="relative mx-auto w-full max-w-md aspect-[4/3] overflow-visible sm:aspect-square lg:mx-0 lg:max-w-none lg:aspect-auto lg:h-[640px] xl:h-[720px]">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -215,7 +233,14 @@ export default function LandingPage() {
               transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.3 }}
               className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white shadow-lift"
             >
-              <SmartImage src={IMG.hero} alt="Học sinh" className="h-full w-full object-cover" gradient="from-brand-100 to-violet-100" />
+              <SmartImage
+                src={IMG.hero}
+                alt="Học sinh đang học tiếng Anh vui vẻ bên laptop — hero LingoQuest"
+                className="h-full w-full object-cover"
+                gradient="from-brand-100 to-violet-100"
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-slate-900/10 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-violet-500/20 mix-blend-overlay" />
             </motion.div>
@@ -274,7 +299,8 @@ export default function LandingPage() {
       </BackgroundBeams>
 
       {/* ===== Features Bento ===== */}
-      <section className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      {/* Grid: max-w-7xl • gap-6 • padding px-4 sm:px-6 lg:px-8 */}
+      <section className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <motion.div initial="hidden" whileInView="show" viewport={viewportOnce} variants={staggerContainer} className="mx-auto max-w-2xl text-center">
           <motion.div variants={fadeUpReal} className="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-4 py-1.5 text-xs font-black text-violet-700">
             <Rocket className="h-4 w-4" /> Tính năng Pro v2
@@ -292,7 +318,13 @@ export default function LandingPage() {
               <motion.div key={f.title} variants={fadeUpReal} transition={{ delay: i * 0.1 } as any}>
                 <SpotlightCard className="group h-full overflow-hidden p-0 border-0 shadow-card hover:shadow-lift transition-all duration-500" spotlightColor="rgba(139,92,246,0.1)">
                   <div className="relative h-48 overflow-hidden">
-                    <SmartImage src={f.img} alt={f.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" gradient="from-brand-100 to-violet-100" />
+                    {/* below-fold cards: default loading="lazy" + sizes via SmartImage; alt is descriptive */}
+                    <SmartImage
+                      src={f.img}
+                      alt={f.title}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      gradient="from-brand-100 to-violet-100"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent" />
                     <div className={`absolute left-4 top-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${f.color} text-white shadow-glow-brand`}>
                       <Icon className="h-6 w-6" />
@@ -324,10 +356,12 @@ export default function LandingPage() {
       {/* ===== Steps với timeline ===== */}
       <section className="relative bg-white border-y border-slate-100 overflow-hidden">
         <div className="absolute inset-0 bg-mesh-vibrant opacity-30" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2">
+        {/* Grid: max-w-7xl • gap-12 • padding px-4 sm:px-6 lg:px-8 */}
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:px-8 lg:grid-cols-2">
           <motion.div initial="hidden" whileInView="show" viewport={viewportOnce} variants={staggerContainer} className="relative order-2 lg:order-1">
             <div className="relative overflow-hidden rounded-[2.5rem] border-4 border-white shadow-lift">
-              <SmartImage src={IMG.showcase} alt="Giáo viên" className="aspect-[4/3] w-full object-cover" gradient="from-violet-100 to-brand-100" />
+              {/* below-fold showcase: lazy-loaded (default) */}
+              <SmartImage src={IMG.showcase} alt="Giáo viên đang hướng dẫn học sinh học tiếng Anh" className="aspect-[4/3] w-full object-cover" gradient="from-violet-100 to-brand-100" />
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-500/10 to-violet-500/10" />
             </div>
             <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -bottom-6 -right-6 rounded-2xl bg-white p-4 shadow-lift border border-slate-100 hidden sm:block">
@@ -373,7 +407,8 @@ export default function LandingPage() {
       </section>
 
       {/* ===== CTA cuối với beams ===== */}
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      {/* Grid: max-w-7xl • padding px-4 sm:px-6 lg:px-8 */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <motion.div initial="hidden" whileInView="show" viewport={viewportOnce} variants={fadeUpReal} className="relative overflow-hidden rounded-[2.5rem] border border-violet-200 bg-gradient-to-br from-brand via-violet-600 to-brand-700 p-10 text-center shadow-lift sm:p-16">
           <div className="absolute inset-0 bg-grid opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -403,7 +438,8 @@ export default function LandingPage() {
       </section>
 
       <footer className="border-t border-slate-100 bg-white/50 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-sm text-slate-400 sm:flex-row sm:px-6">
+        {/* Grid: max-w-7xl • padding px-4 sm:px-6 lg:px-8 • gutter gap-6 */}
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 py-8 text-sm text-slate-400 sm:flex-row sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
             <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-violet-600 text-white"><Sparkles className="h-4 w-4" /></span>
             <span className="font-bold text-slate-600">LingoQuest v2</span><span className="rounded-full bg-violet-500 px-1.5 py-0.5 text-[10px] font-black text-white">PRO</span>

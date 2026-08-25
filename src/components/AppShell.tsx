@@ -18,7 +18,7 @@ import {
   Sparkles,
   LogOut,
   ChevronDown,
-} from "lucide-react";
+} from "lucide-react"; // checklist 1.5: all icons SVG, same square dimension (h-4 w-4 etc.), black base → Tailwind tint; custom icons → icon-* lowercase-dash in public/icons/
 import { useRole } from "@/lib/auth/role-context";
 import { useApp } from "@/lib/state/app-context";
 import { StreakBadge, XPCounter, LevelBadge } from "@/components/StreakBadge";
@@ -54,7 +54,7 @@ const NAV: Record<Role, NavItem[]> = {
 
 function Logo() {
   return (
-    <Link href="/" className="group flex items-center gap-2">
+    <Link href="/" className="group flex items-center gap-2 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 visited:opacity-90 active:opacity-80 active:scale-[0.98] transition-all">
       <motion.span
         whileHover={{ rotate: 12, scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -114,7 +114,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="sticky top-0 z-40 border-b border-slate-200/60 glass-strong"
       >
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo />
 
           <div className="flex items-center gap-2 sm:gap-3">
@@ -160,7 +160,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 onClick={() => setUserMenuOpen((v) => !v)}
                 aria-haspopup="menu"
                 aria-expanded={userMenuOpen}
-                className="group flex items-center gap-2 rounded-full border border-slate-200/60 bg-white/70 py-1 pl-1 pr-2 shadow-soft backdrop-blur transition-all hover:shadow-card hover:bg-white"
+                className="group flex items-center gap-2 rounded-full border border-slate-200/60 bg-white/70 py-1 pl-1 pr-2 shadow-soft backdrop-blur transition-all hover:shadow-card hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 active:scale-[0.98]"
               >
                 <Avatar name={user.name} color={user.avatarColor} />
                 <div className="hidden text-left leading-tight sm:block">
@@ -195,7 +195,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                       {/* Đăng xuất qua route server: xoá cookie + redirect trong 1 response */}
                       <a
                         href="/api/auth/logout"
-                        className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-bold text-danger transition-colors hover:bg-danger/5"
+                        className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-bold text-danger transition-colors hover:bg-danger/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 visited:text-red-700 active:bg-danger/10 active:scale-[0.98]"
                       >
                         <LogOut className="h-4 w-4" /> Đăng xuất
                       </a>
@@ -212,7 +212,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </motion.header>
 
       {/* ===== Thân trang ===== */}
-      <div className="mx-auto flex max-w-6xl gap-6 px-4 pb-28 sm:px-6 lg:pb-10 relative z-10">
+      <div className="mx-auto flex max-w-7xl gap-6 px-4 pb-28 sm:px-6 lg:px-8 lg:pb-10 relative z-10">
         {/* Sidebar desktop với shared layout pill */}
         {items.length > 0 && (
           <aside className="sticky top-[88px] hidden h-[calc(100vh-112px)] w-64 shrink-0 lg:block">
@@ -224,9 +224,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <Link
                     key={item.href}
                     href={item.href}
+                    aria-current={active ? "page" : undefined}
                     className={cn(
-                      "group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition-colors",
-                      active ? "text-white" : "text-slate-500 hover:text-slate-900"
+                      "group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 visited:text-violet-700 active:scale-[0.98] active:brightness-95",
+                      active ? "text-white" : "text-slate-500 hover:text-slate-900 visited:text-slate-600 hover:underline underline-offset-4"
                     )}
                   >
                     {active && (
@@ -318,9 +319,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative flex flex-1 flex-col items-center gap-1 rounded-2xl py-2.5 text-[10px] font-bold transition-colors",
-                    active ? "text-brand" : "text-slate-400"
+                    "relative flex flex-1 flex-col items-center gap-1 rounded-2xl py-2.5 text-[10px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-1 visited:text-violet-700 active:scale-95",
+                    active ? "text-brand" : "text-slate-400 hover:text-slate-600 visited:text-slate-500"
                   )}
                 >
                   {active && (

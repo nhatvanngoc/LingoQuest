@@ -6,18 +6,18 @@ import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 relative overflow-hidden group",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 relative overflow-hidden group",
   {
     variants: {
       variant: {
-        default: "bg-brand text-white shadow-soft hover:bg-brand-700 active:translate-y-px hover:shadow-glow-brand before:absolute before:inset-0 before:rounded-[inherit] before:bg-gradient-to-b before:from-white/15 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity",
-        success: "bg-gradient-to-br from-emerald-400 to-success text-white shadow-soft hover:shadow-glow-success hover:from-emerald-500 hover:to-success/90 active:translate-y-px",
-        accent: "bg-gradient-to-br from-amber-300 to-accent text-ink shadow-soft hover:shadow-glow-accent hover:from-amber-400 hover:to-accent/90 active:translate-y-px",
-        outline: "border border-slate-200 bg-white text-ink hover:bg-cream hover:border-slate-300 hover:shadow-card active:translate-y-px",
-        ghost: "text-ink hover:bg-cream",
-        danger: "bg-gradient-to-br from-red-400 to-danger text-white shadow-soft hover:from-red-500 hover:to-danger/90 active:translate-y-px",
-        shimmer: "bg-gradient-to-br from-brand via-violet-500 to-brand text-white shadow-glow-brand hover:shadow-glow-brand border border-white/20",
-        glass: "glass border border-white/40 text-ink hover:bg-white/80 hover:shadow-card",
+        default: "bg-brand text-white shadow-soft hover:bg-brand-700 active:translate-y-px active:scale-[0.97] hover:shadow-glow-brand visited:bg-brand-800 before:absolute before:inset-0 before:rounded-[inherit] before:bg-gradient-to-b before:from-white/15 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity",
+        success: "bg-gradient-to-br from-emerald-400 to-success text-white shadow-soft hover:shadow-glow-success hover:from-emerald-500 hover:to-success/90 active:translate-y-px active:scale-[0.97]",
+        accent: "bg-gradient-to-br from-amber-300 to-accent text-ink shadow-soft hover:shadow-glow-accent hover:from-amber-400 hover:to-accent/90 active:translate-y-px active:scale-[0.97]",
+        outline: "border border-slate-200 bg-white text-ink hover:bg-cream hover:border-slate-300 hover:shadow-card active:translate-y-px active:scale-[0.97] visited:border-violet-200 visited:text-violet-700",
+        ghost: "text-ink hover:bg-cream hover:underline underline-offset-4 visited:text-violet-700 active:text-brand-700 active:bg-slate-100",
+        danger: "bg-gradient-to-br from-red-400 to-danger text-white shadow-soft hover:from-red-500 hover:to-danger/90 active:translate-y-px active:scale-[0.97]",
+        shimmer: "bg-gradient-to-br from-brand via-violet-500 to-brand text-white shadow-glow-brand hover:shadow-glow-brand border border-white/20 visited:opacity-90",
+        glass: "glass border border-white/40 text-ink hover:bg-white/80 hover:shadow-card active:scale-[0.97]",
       },
       size: {
         default: "h-11 px-5",
