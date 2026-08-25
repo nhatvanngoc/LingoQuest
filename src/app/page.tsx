@@ -198,7 +198,7 @@ export default function LandingPage() {
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-success-50 text-success"><Check className="h-3 w-3" /></span> Miễn phí
               </span>
               <span className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[15px] font-bold text-slate-600 shadow-soft border border-slate-100">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-50 text-violet-600"><ShieldCheck className="h-3 w-3" /></span> Lớp 6–9
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-50 text-violet-600"><ShieldCheck className="h-3 w-3" /></span> Lớp 10–12
               </span>
               <div className="flex -space-x-2">
                 {[1,2,3].map(i => (

@@ -62,7 +62,7 @@ export default function TeacherPage() {
         <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl font-extrabold text-slate-900">Bảng điều khiển</h1>
-            <p className="text-sm text-slate-500">Tiếng Anh 8 — 8A2</p>
+            <p className="text-sm text-slate-500">Tiếng Anh 10 — 10A1</p>
           </div>
           <div className="flex gap-2">
             <Button asChild variant="outline">

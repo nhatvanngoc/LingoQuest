@@ -86,7 +86,7 @@ export async function seedIfEmpty() {
   if (classRow.length === 0) {
     const [cls] = await db
       .insert(classes)
-      .values({ name: "Tiếng Anh 8 — 8A2", teacherId })
+      .values({ name: "Tiếng Anh 10 — 10A1", teacherId })
       .returning();
     classId = cls.id;
   } else {

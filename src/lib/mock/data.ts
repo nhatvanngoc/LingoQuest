@@ -24,7 +24,7 @@ export const USERS: Record<string, MockUser> = {
     email: "minh.nguyen@lingoquest.app",
     avatarColor: "#2563EB",
     role: "student",
-    className: "Tiếng Anh 8 — Lớp 8A2",
+    className: "Tiếng Anh 10 — Lớp 10A1",
     streak: 12,
     xp: 2480,
     level: 7,
@@ -970,9 +970,9 @@ export const LESSON_OPTIONS = [
 ];
 
 export const CLASS_OPTIONS = [
-  "Tiếng Anh 8 — 8A2",
-  "Tiếng Anh 8 — 8A1",
-  "Tiếng Anh 9 — 9B1",
+  "Tiếng Anh 10 — 10A1",
+  "Tiếng Anh 11 — 11A1",
+  "Tiếng Anh 12 — 12A1",
 ];
 
 export const STUDENT_OPTIONS = [

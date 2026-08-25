@@ -330,7 +330,7 @@ export default function StyleGuidePage() {
                 <TypeRow
                   label="Small · 600 · 13–15px"
                   className="text-sm font-semibold leading-relaxed text-slate-500"
-                  sample="Miễn phí · Lớp 6–9 · 500+ video · SRS thông minh · Mỗi ngày một chút, tích tiểu thành đại."
+                  sample="Miễn phí · Lớp 10–12 · 500+ video · SRS thông minh · Mỗi ngày một chút, tích tiểu thành đại."
                   sub="Meta, badge, caption · Dùng trong pill, footer, helper text. 11–12px chỉ cho nhãn phụ."
                 />
                 <div className="grid gap-4 bg-slate-50/70 p-6 sm:grid-cols-3">
