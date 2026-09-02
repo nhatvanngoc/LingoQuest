@@ -1,10 +1,7 @@
-/* Grid: 1280px, 12 cols, gutter 24px, margin 24/80 */
 "use client";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// Outer uses flex items-center justify-center via className (hero: min-h-[calc(100vh-4rem)] flex items-center justify-center)
-// Inner wrapper must keep w-full to respect max-w-7xl grid container
 export function BackgroundBeams({
   className,
   children,
@@ -14,36 +11,9 @@ export function BackgroundBeams({
 }) {
   return (
     <div className={cn("relative overflow-hidden bg-cream", className)}>
-      {/* Beams layer */}
-      <div className="pointer-events-none absolute inset-0">
-        {/* beam 1 */}
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="absolute top-0 -left-[20%] h-[120%] w-[60%] -rotate-12 bg-gradient-to-r from-transparent via-brand-200/30 to-transparent blur-[1px]"
-        />
-        {/* beam 2 */}
-        <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-          className="absolute top-[10%] -right-[10%] h-[100%] w-[50%] rotate-12 bg-gradient-to-r from-transparent via-violet-100/40 to-transparent blur-[1px]"
-        />
-        {/* beam 3 */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, delay: 0.4 }}
-          className="absolute bottom-0 left-[30%] h-[60%] w-[80%] -rotate-6 bg-gradient-to-r from-transparent via-accent-100/30 to-transparent"
-        />
-        {/* dots grid */}
-        <div className="absolute inset-0 bg-grid opacity-40" />
-        {/* mesh */}
-        <div className="absolute inset-0 bg-mesh-brand opacity-60" />
-        {/* vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-cream via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-cream/80 via-transparent to-transparent" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[60%] w-[80%] bg-gradient-to-b from-brand-50/40 via-transparent to-transparent blur-3xl" />
+        <div className="absolute inset-0 bg-grid opacity-30" />
       </div>
       <div className="relative z-10 w-full">{children}</div>
     </div>
@@ -59,7 +29,6 @@ export function BackgroundBeamsWithCollision({
 }) {
   return (
     <div className={cn("relative min-h-[60vh] overflow-hidden bg-slate-950", className)}>
-      {/* collision beams */}
       <div className="absolute inset-0">
         {Array.from({ length: 6 }).map((_, i) => (
           <motion.div
@@ -71,7 +40,6 @@ export function BackgroundBeamsWithCollision({
             style={{ left: `${15 + i * 14}%`, transform: `rotate(${i % 2 ? 2 : -2}deg)` }}
           />
         ))}
-        {/* glow at bottom */}
         <div className="absolute bottom-0 left-1/2 h-40 w-[80%] -translate-x-1/2 rounded-full bg-brand-500/20 blur-3xl" />
       </div>
       <div className="relative z-10 w-full">{children}</div>
@@ -96,7 +64,7 @@ export function MovingBorder({
         <div
           className="absolute inset-0"
           style={{
-            background: `conic-gradient(from 0deg, transparent, #2563eb, #8b5cf6, #fbbf24, transparent)`,
+            background: `conic-gradient(from 0deg, transparent, #0F766E, #7C3AED, #D97706, transparent)`,
             animation: `border-spin ${duration}ms linear infinite`,
           }}
         />
@@ -118,7 +86,7 @@ export function AnimatedShinyText({
   return (
     <span
       className={cn(
-        "inline-flex animate-gradient-x bg-[linear-gradient(100deg,#2563eb,#8b5cf6,#fbbf24,#2563eb)] bg-[length:200%_100%] bg-clip-text text-transparent font-extrabold",
+        "inline-flex bg-[linear-gradient(100deg,#0F766E,#7C3AED,#D97706,#0F766E)] bg-[length:200%_100%] bg-clip-text text-transparent font-bold",
         className
       )}
     >

@@ -2,7 +2,6 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-/* Badge nhỏ hiển thị trạng thái, hạn nộp, nhãn */
 const badgeVariants = cva(
   "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold whitespace-nowrap",
   {
@@ -10,9 +9,9 @@ const badgeVariants = cva(
       variant: {
         neutral: "bg-slate-100 text-slate-600",
         brand: "bg-brand-50 text-brand",
-        success: "bg-success-50 text-success",
-        accent: "bg-accent-100 text-amber-700",
-        danger: "bg-danger-50 text-danger",
+        success: "bg-green-50 text-green-700",
+        accent: "bg-amber-50 text-amber-700",
+        danger: "bg-red-50 text-red-700",
       },
     },
     defaultVariants: { variant: "neutral" },

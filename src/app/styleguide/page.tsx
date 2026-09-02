@@ -425,10 +425,10 @@ export default function StyleGuidePage() {
                     </Button>
                   </ButtonShowcase>
                   <ButtonShowcase label="shimmer · Gradient" note="Duolingo 2026 hero">
-                    <Button variant="shimmer">
+                    <Button variant="default">
                       <Sparkles className="h-4 w-4" /> Shimmer Pro
                     </Button>
-                    <Button variant="shimmer" disabled>
+                    <Button variant="default" disabled>
                       Shimmer Pro
                     </Button>
                   </ButtonShowcase>
@@ -476,7 +476,7 @@ export default function StyleGuidePage() {
               </CardHeader>
               <CardContent className="flex flex-wrap gap-3 bg-slate-50 p-6">
                 {/* Imported as regular Button shimmer to avoid extra wrapper; ShimmerButton demo */}
-                <Button variant="shimmer" size="xl" className="min-w-[220px]">
+                <Button variant="default" size="xl" className="min-w-[220px]">
                   <Sparkles className="h-4 w-4" /> Đăng nhập bằng Google
                 </Button>
                 <Button variant="outline" size="xl">

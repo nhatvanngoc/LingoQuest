@@ -7,7 +7,7 @@ export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttribute
       ref={ref}
       type={type}
       className={cn(
-        "flex h-11 w-full rounded-2xl border-2 border-slate-200 bg-white px-4 text-[15px] font-semibold text-slate-900 placeholder:font-medium placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-0 focus-visible:border-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-50 aria-[invalid=true]:border-danger aria-[invalid=true]:focus:border-danger aria-[invalid=true]:focus:ring-danger/20 aria-[invalid=true]:focus-visible:ring-danger/50 visited:border-slate-200 active:border-brand/70 transition-all",
+        "flex h-11 w-full rounded-xl border-2 border-gray-200 bg-white px-4 text-[15px] font-semibold text-slate-900 placeholder:font-medium placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-0 focus-visible:border-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-50 aria-[invalid=true]:border-red-500 aria-[invalid=true]:focus:border-red-500 aria-[invalid=true]:focus:ring-red-500/20 aria-[invalid=true]:focus-visible:ring-red-500/50 visited:border-gray-200 active:border-brand/70 transition-all",
         className,
       )}
       {...props}
@@ -23,7 +23,7 @@ export const Textarea = React.forwardRef<
   <textarea
     ref={ref}
     className={cn(
-      "flex min-h-[160px] w-full rounded-2xl border-2 border-slate-200 bg-white p-4 text-[15px] leading-relaxed text-slate-900 placeholder:font-medium placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-0 focus-visible:border-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-50 aria-[invalid=true]:border-danger aria-[invalid=true]:focus:border-danger aria-[invalid=true]:focus:ring-danger/20 aria-[invalid=true]:focus-visible:ring-danger/50 transition-all resize-y",
+      "flex min-h-[160px] w-full rounded-xl border-2 border-gray-200 bg-white p-4 text-[15px] leading-relaxed text-slate-900 placeholder:font-medium placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-0 focus-visible:border-brand disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-50 aria-[invalid=true]:border-red-500 aria-[invalid=true]:focus:border-red-500 aria-[invalid=true]:focus:ring-red-500/20 aria-[invalid=true]:focus-visible:ring-red-500/50 transition-all resize-y",
       className,
     )}
     {...props}

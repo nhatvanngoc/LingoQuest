@@ -5,134 +5,101 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ===========================================================
-   LingoQuest — Design System v2 (Duolingo 2026)
-   Đã nâng cấp: gradient, glass, mesh, shimmer, spotlight
-   Grid: 1280px, 12 cols, gutter 24px, margin 24/80
-   Containers: max-w-7xl (1280px) • outer padding px-4 sm:px-6 lg:px-8 • gutters gap-6/8/12 (hero lg:gap-12, Features gap-6, Steps gap-12)
+   LingoQuest — Design System v3 "Studio"
+   Philosophy: Ít hiệu ứng, nhiều khoảng trắng, chữ rõ ràng.
+   Palette: Teal (#0F766E) + Amber (#D97706) — không blue-violet
+   Grid: max-w-5xl (896px), 8px base unit, gutter 24px
+   Containers: px-4 sm:px-6 lg:px-8
    =========================================================== */
-/* WOFF2 total ~80-120KB for 3 weights, font-display:swap via @fontsource, fallback stack documented */
-/* Fallback stack: "Be Vietnam Pro", ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif — defined here as --font-sans */
+
 @theme {
   --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --color-cream: #f8fafc;
-  --color-ink: #0f172a;
+  /* ---- Primary: Teal (đặc biệt, không phải blue-violet template) ---- */
+  --color-brand: #0F766E;
+  --color-brand-50: #F0FDFA;
+  --color-brand-100: #CCFBF1;
+  --color-brand-200: #99F6E4;
+  --color-brand-300: #5EEAD4;
+  --color-brand-400: #2DD4BF;
+  --color-brand-500: #14B8A6;
+  --color-brand-600: #0D9488;
+  --color-brand-700: #0F766E;
+  --color-brand-800: #115E59;
 
-  --color-brand: #2563eb;
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
+  /* ---- Accent: Amber (warm, human) ---- */
+  --color-accent: #D97706;
+  --color-accent-50: #FFFBEB;
+  --color-accent-100: #FEF3C7;
+  --color-accent-200: #FDE68A;
 
-  --color-success: #10b981;
-  --color-success-50: #ecfdf5;
-  --color-success-100: #d1fae5;
-  --color-success-200: #a7f3d0;
-  --color-success-500: #10b981;
+  /* ---- Surface & Text ---- */
+  --color-cream: #FAF9F7;
+  --color-ink: #1C1917;
+  --color-text-secondary: #57534E;
+  --color-text-muted: #78716C;
+  --color-border: #E7E5E4;
 
-  --color-accent: #fbbf24;
-  --color-accent-50: #fffbeb;
-  --color-accent-100: #fef3c7;
-  --color-accent-200: #fde68a;
-  --color-accent-300: #fcd34d;
-  --color-accent-400: #fbbf24;
+  /* ---- Semantic ---- */
+  --color-success: #047857;
+  --color-success-50: #ECFDF5;
+  --color-success-100: #D1FAE5;
+  --color-success-200: #A7F3D0;
+  --color-danger: #DC2626;
+  --color-danger-50: #FEF2F2;
+  --color-danger-100: #FEE2E2;
+  --color-violet: #7C3AED;
+  --color-violet-50: #F5F3FF;
+  --color-violet-100: #EDE9FE;
 
-  --color-danger: #ef4444;
-  --color-danger-50: #fef2f2;
-  --color-danger-100: #fee2e2;
+  /* ---- Radii ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
 
-  --color-violet: #8b5cf6;
-  --color-violet-50: #f5f3ff;
-  --color-violet-100: #ede9fe;
+  /* ---- Shadows — chỉ 3 loại, đơn giản ---- */
+  --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.04);
+  --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.06);
+  --shadow-lg: 0 12px 24px rgba(28, 25, 23, 0.08);
 
-  --radius-xl: 1rem;
-  --radius-2xl: 1.25rem;
-  --radius-3xl: 1.75rem;
-  --radius-4xl: 2.5rem;
-
-  --shadow-soft: 0 2px 8px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
-  --shadow-card: 0 8px 24px rgba(16, 24, 40, 0.08);
-  --shadow-lift: 0 18px 40px rgba(16, 24, 40, 0.12);
-  --shadow-glow-brand: 0 0 0 1px rgba(37,99,235,0.1), 0 8px 32px rgba(37,99,235,0.2);
-  --shadow-glow-accent: 0 0 0 1px rgba(251,191,36,0.15), 0 8px 32px rgba(251,191,36,0.25);
-  --shadow-glow-success: 0 0 0 1px rgba(16,185,129,0.1), 0 8px 32px rgba(16,185,129,0.2);
-
+  /* ---- Animations — chỉ giữ lại những cái thực sự cần ---- */
   --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  --animate-shimmer: shimmer 2.5s linear infinite;
-  --animate-shimmer-slow: shimmer 4s linear infinite;
-  --animate-spotlight: spotlight 2s ease .75s 1 forwards;
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-float-delayed: float 6s ease-in-out 2s infinite;
   --animate-bounce-soft: bounce-soft 2s ease-in-out infinite;
-  --animate-wiggle: wiggle 1s ease-in-out infinite;
-  --animate-ping-slow: ping-slow 2s cubic-bezier(0,0,0.2,1) infinite;
-  --animate-border-spin: border-spin 3s linear infinite;
-  --animate-gradient-x: gradient-x 4s ease infinite;
 }
 
-/* Interactive states: button default #2563EB, hover #1d4ed8, focus ring brand/50, active #1e40af, disabled opacity-50; link visited #8b5cf6; input error #ef4444; ensure light/dark contrast */
-/* Accessible contrast: text-slate-600 (#475569) on bg-cream (#f8fafc) ~7.5:1 and white (#ffffff) on brand-700 (#1d4ed8) ~5.8:1 — both pass WCAG AA 4.5:1; verified via contrastchecker.com — light/dark themes maintain contrast */
-/* Color audit: all colors are named via --color-* tokens above; no hardcoded hex outside tokens — use var(--color-*) for any color usage */
+/* ============================================================
+   Keyframes — giữ lại thiết yếu, xóa shimmer/float/shine/wiggle
+   ============================================================ */
 
 @keyframes pop {
   0% { transform: scale(0.85); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-@keyframes spotlight {
-  0% { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
-  100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(1deg); }
-}
+
 @keyframes bounce-soft {
   0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-6px) scale(1.02); }
+  50% { transform: translateY(-4px) scale(1.02); }
 }
-@keyframes wiggle {
-  0%, 100% { transform: rotate(-1deg) scale(1); }
-  50% { transform: rotate(1deg) scale(1.02); }
-}
-@keyframes ping-slow {
-  75%,100% { transform: scale(1.15); opacity: 0; }
-}
-@keyframes border-spin {
-  to { transform: rotate(360deg); }
-}
-@keyframes gradient-x {
-  0%,100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
+
 @keyframes flame-flicker {
   0%, 100% { transform: scaleY(1) scaleX(1); filter: brightness(1); }
   25% { transform: scaleY(1.1) scaleX(0.95); filter: brightness(1.1); }
   50% { transform: scaleY(0.95) scaleX(1.05); filter: brightness(0.95); }
   75% { transform: scaleY(1.05) scaleX(0.98); filter: brightness(1.05); }
 }
-@keyframes shine-sweep {
-  0% { transform: translateX(-150%) skewX(-12deg); }
-  100% { transform: translateX(200%) skewX(-12deg); }
-}
-@keyframes progress-shimmer {
-  0% { transform: translateX(-100%); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateX(300%); opacity: 0; }
+
+@keyframes border-spin {
+  to { transform: rotate(360deg); }
 }
 
-/* ---------- Base ---------- */
+/* ============================================================
+   Base
+   ============================================================ */
 html {
   scroll-behavior: smooth;
-  font-size: 112.5%; /* ~18px — phóng to chữ toàn bộ giao diện; line-height 1.6 for readability, handles long Vietnamese text (dấu, word-break, wrapping) without Lorem Ipsum — Vietnamese texts kept as is */
+  font-size: 112.5%;
   line-height: 1.6;
 }
 
@@ -143,37 +110,43 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---------- Tiện ích tùy chỉnh ---------- */
-/* Ẩn thanh cuộn ngang (dùng cho thanh chip) */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
+/* ============================================================
+   Utilities tùy chỉnh
+   ============================================================ */
+.no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-/* Perspective cho hiệu ứng lật flashcard 3D */
-.perspective {
-  perspective: 1600px;
-}
-.preserve-3d {
-  transform-style: preserve-3d;
-}
+/* Flashcard 3D — giữ nguyên */
+.perspective { perspective: 1600px; }
+.preserve-3d { transform-style: preserve-3d; }
 .backface-hidden {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
+.rotate-y-180 { transform: rotateY(180deg); }
 
-/* Vết loang màu nền nhẹ cho hero */
+/* Grid nền đơn giản cho hero — teal nhẹ, không blue */
 .bg-grid {
-  background-image: radial-gradient(circle at 1px 1px, rgba(37, 99, 235, 0.12) 1px, transparent 0);
-  background-size: 28px 28px;
+  background-image: radial-gradient(circle at 1px 1px, rgba(15, 118, 110, 0.08) 1px, transparent 0);
+  background-size: 32px 32px;
 }
 
+/* Gradient text brand — KHÔNG animate */
+.text-gradient-brand {
+  background: linear-gradient(135deg, var(--color-brand-700), var(--color-brand-500));
+  background-clip: text;
+  color: transparent;
+}
+
+/* Gradient nhẹ cho backgrounds */
+.bg-gradient-warm {
+  background: linear-gradient(135deg, var(--color-brand-50) 0%, var(--color-cream) 100%);
+}
+
+/* ===== Theme inline mapping (shadcn compatibility) ===== */
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
@@ -217,178 +190,82 @@ body {
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ===== Light theme (OkLCH) ===== */
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: oklch(0.12 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.12 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  --popover-foreground: oklch(0.12 0 0);
+  --primary: oklch(0.15 0.06 165);
+  --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary-foreground: oklch(0.15 0.06 165);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.96 0.04 45);
+  --accent-foreground: oklch(0.25 0.06 45);
+  --destructive: oklch(0.58 0.22 25);
+  --border: oklch(0.92 0 0);
+  --input: oklch(0.92 0 0);
+  --ring: oklch(0.5 0.06 165);
+  --chart-1: oklch(0.88 0 0);
+  --chart-2: oklch(0.6 0 0);
+  --chart-3: oklch(0.48 0 0);
+  --chart-4: oklch(0.4 0 0);
+  --chart-5: oklch(0.3 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar: oklch(0.99 0 0);
+  --sidebar-foreground: oklch(0.12 0 0);
+  --sidebar-primary: oklch(0.15 0.06 165);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar-accent-foreground: oklch(0.15 0.06 165);
+  --sidebar-border: oklch(0.92 0 0);
+  --sidebar-ring: oklch(0.5 0.06 165);
 }
 
+/* ===== Dark theme ===== */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
+  --background: oklch(0.14 0 0);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.2 0 0);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.2 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.92 0 0);
+  --primary-foreground: oklch(0.15 0.06 165);
+  --secondary: oklch(0.26 0 0);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.26 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.26 0.06 45);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.7 0.18 25);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.5 0.06 165);
+  --chart-1: oklch(0.88 0 0);
+  --chart-2: oklch(0.6 0 0);
+  --chart-3: oklch(0.48 0 0);
+  --chart-4: oklch(0.4 0 0);
+  --chart-5: oklch(0.3 0 0);
+  --sidebar: oklch(0.2 0 0);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-primary: oklch(0.488 0.243 165);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.26 0 0);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.5 0.06 165);
 }
 
+/* ============================================================
+   Layer base
+   ============================================================ */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
-  }
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground; }
+  html { @apply font-sans; }
 }
-
-/* ---------- V2 Utilities - Magic / Aceternity inspired ---------- */
-.glass {
-  background: rgba(255,255,255,0.72);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-}
-.glass-strong {
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(24px) saturate(1.3);
-  -webkit-backdrop-filter: blur(24px) saturate(1.3);
-}
-.text-gradient-brand {
-  background: linear-gradient(100deg, var(--color-brand), var(--color-violet), var(--color-brand));
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradient-x 3s ease infinite;
-}
-.bg-mesh-brand {
-  background:
-    radial-gradient(at 20% 30%, rgba(37,99,235,0.18) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(139,92,246,0.15) 0px, transparent 50%),
-    radial-gradient(at 60% 80%, rgba(251,191,36,0.12) 0px, transparent 50%),
-    radial-gradient(at 20% 80%, rgba(16,185,129,0.10) 0px, transparent 50%);
-}
-.bg-mesh-vibrant {
-  background:
-    radial-gradient(at 0% 0%, rgba(37,99,235,0.15) 0%, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(251,191,36,0.18) 0%, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(139,92,246,0.12) 0%, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(16,185,129,0.12) 0%, transparent 50%);
-}
-.shimmer-effect {
-  position: relative;
-  overflow: hidden;
-}
-.shimmer-effect::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  transform: translateX(-100%);
-  animation: shimmer 2s linear infinite;
-}
-.shine-sweep {
-  position: relative;
-  overflow: hidden;
-}
-.shine-sweep::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-  animation: shine-sweep 2.5s ease-in-out infinite;
-}
-.spotlight-card {
-  position: relative;
-  overflow: hidden;
-}
-.spotlight-card::before {
-  content: "";
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
-  top: var(--mouse-y, 50%);
-  left: var(--mouse-x, 50%);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-.spotlight-card:hover::before {
-  opacity: 1;
-}
-.noise {
-  position: relative;
-}
-.noise::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-/* Grid container helper — unified 1280px (max-w-7xl), 12 cols, gutter 24px (gap-6), outer margin 24/80 (px-4 sm:px-6 lg:px-8) */
-/* Usage: class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" + grid gap-6/8/12; hero gap-8 lg:gap-12, Features gap-6, Steps gap-12 */
-/* Responsive image: fluid aspect-[4/3] → sm:aspect-square → lg:aspect-auto lg:h-[640px] xl:h-[720px]; no fixed h-[560px] at 1024-1280 */

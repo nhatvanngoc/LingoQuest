@@ -5,13 +5,13 @@ import { cn } from "@/lib/utils";
 type Tone = "brand" | "success" | "accent" | "danger" | "neutral" | "violet" | "gradient";
 
 const TONES: Record<Tone, string> = {
-  brand: "bg-gradient-to-r from-brand-500 to-brand-600",
-  success: "bg-gradient-to-r from-emerald-400 to-success",
-  accent: "bg-gradient-to-r from-amber-300 to-accent",
-  danger: "bg-gradient-to-r from-red-400 to-danger",
+  brand: "bg-gradient-to-r from-brand-600 to-brand-500",
+  success: "bg-gradient-to-r from-emerald-500 to-emerald-600",
+  accent: "bg-gradient-to-r from-amber-500 to-amber-600",
+  danger: "bg-gradient-to-r from-red-500 to-red-600",
   neutral: "bg-gradient-to-r from-slate-300 to-slate-400",
-  violet: "bg-gradient-to-r from-violet-400 to-brand-500",
-  gradient: "bg-gradient-to-r from-brand-500 via-violet-500 to-accent-400",
+  violet: "bg-gradient-to-r from-violet-500 to-brand-500",
+  gradient: "bg-gradient-to-r from-brand-500 via-violet-500 to-amber-400",
 };
 
 export function ProgressBar({
@@ -21,7 +21,7 @@ export function ProgressBar({
   showLabel = false,
   height = "h-2.5",
   animated = true,
-  shimmer = true,
+  shimmer = false,
   glow = false,
 }: {
   value: number;
@@ -35,19 +35,16 @@ export function ProgressBar({
 }) {
   const pct = Math.max(0, Math.min(100, value));
   const isComplete = pct >= 100;
-  
+
   return (
     <div className={cn("w-full", className)}>
-      <div className={cn("group relative w-full overflow-hidden rounded-full bg-slate-100", height)}>
-        {/* track inner shadow */}
-        <div className="absolute inset-0 rounded-full shadow-inner opacity-50" />
-        
+      <div className={cn("group relative w-full overflow-hidden rounded-full bg-gray-100", height)}>
         <motion.div
           className={cn(
             "relative h-full rounded-full",
             TONES[tone],
-            glow && "shadow-glow-brand",
-            isComplete && "shadow-glow-success",
+            glow && "shadow-md",
+            isComplete && "shadow-sm",
             "overflow-hidden"
           )}
           initial={{ width: 0 }}
@@ -58,25 +55,17 @@ export function ProgressBar({
             delay: 0.2,
           }}
         >
-          {/* shimmer sweep */}
           {shimmer && (
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
               initial={{ x: "-100%" }}
               animate={{ x: "200%" }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatDelay: 1,
-                ease: "easeInOut",
-              }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
             />
           )}
-          {/* inner highlight */}
           <div className="absolute inset-x-0 top-0 h-[40%] bg-gradient-to-b from-white/30 to-transparent rounded-full" />
         </motion.div>
 
-        {/* completion pulse */}
         {isComplete && (
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -99,7 +88,7 @@ export function ProgressBar({
               animate={{ scale: 1 }}
               className="text-success"
             >
-              Hoàn thành! ✨
+              Hoàn thành!
             </motion.span>
           )}
         </motion.div>
@@ -152,13 +141,13 @@ export function CircularProgress({
         />
         <defs>
           <linearGradient id="gradient-circular" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3b82f6" />
-            <stop offset="100%" stopColor="#8b5cf6" />
+            <stop offset="0%" stopColor="#0F766E" />
+            <stop offset="100%" stopColor="#7C3AED" />
           </linearGradient>
         </defs>
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        {children ?? <span className="text-sm font-extrabold">{Math.round(pct)}%</span>}
+        {children ?? <span className="text-sm font-bold">{Math.round(pct)}%</span>}
       </div>
     </div>
   );
