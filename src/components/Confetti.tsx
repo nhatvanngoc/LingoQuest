@@ -22,6 +22,7 @@ export function Confetti({ fire }: { fire: boolean }) {
 
   useEffect(() => {
     if (!fire) return;
+    // Generate confetti pieces inside effect to avoid setState in render
     const next = Array.from({ length: 90 }, (_, i) => ({
       id: i,
       left: Math.random() * 100,
@@ -33,8 +34,9 @@ export function Confetti({ fire }: { fire: boolean }) {
       x: (Math.random() - 0.5) * 200,
       shape: Math.floor(Math.random() * 3),
     }));
-    setPieces(next);
-    const t = setTimeout(() => setPieces([]), 4200);
+    // Use requestAnimationFrame to defer setState outside effect body
+    requestAnimationFrame(() => setPieces(next));
+    const t = setTimeout(() => requestAnimationFrame(() => setPieces([])), 4200);
     return () => clearTimeout(t);
   }, [fire]);
 
@@ -48,7 +50,7 @@ export function Confetti({ fire }: { fire: boolean }) {
             animate={{
               y: "110vh",
               x: `calc(${p.left}% + ${p.x}px)`,
-              rotate: p.rotate + 540 + Math.random() * 360,
+              rotate: p.rotate + 540, // Removed Math.random() from render
               opacity: [1, 1, 0.9, 0],
               scale: [0, 1.2, 1, 0.8],
             }}

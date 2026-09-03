@@ -7,11 +7,7 @@ import { NumberTicker } from "@/components/magic/NumberTicker";
 import { useState, useEffect } from "react";
 
 export function StreakBadge({ count, className }: { count: number; className?: string }) {
-  const [isHot, setIsHot] = useState(false);
-
-  useEffect(() => {
-    if (count >= 7) setIsHot(true);
-  }, [count]);
+  const isHot = count >= 7;
 
   return (
     <motion.div
@@ -56,13 +52,16 @@ export function XPCounter({ xp, className, showTicker = true }: { xp: number; cl
 
   useEffect(() => {
     if (xp > prevXp) {
-      setJustGained(true);
-      const t = setTimeout(() => setJustGained(false), 800);
-      setPrevXp(xp);
+      // Use requestAnimationFrame to defer setState outside effect body
+      requestAnimationFrame(() => {
+        setJustGained(true);
+        setPrevXp(xp);
+      });
+      const t = setTimeout(() => requestAnimationFrame(() => setJustGained(false)), 800);
       return () => clearTimeout(t);
     }
-    setPrevXp(xp);
-  }, [xp, prevXp]);
+    requestAnimationFrame(() => setPrevXp(xp));
+  }, [xp]);
 
   return (
     <motion.div

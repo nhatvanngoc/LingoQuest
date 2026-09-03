@@ -112,15 +112,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   // Ref đọc giá trị mới nhất (tránh side-effect bên trong updater)
   const xpRef = useRef(xp);
-  xpRef.current = xp;
   const srsRef = useRef(srs);
-  srsRef.current = srs;
   const tasksRef = useRef(tasks);
-  tasksRef.current = tasks;
   const claimedRef = useRef(claimed);
-  claimedRef.current = claimed;
   const taskDayRef = useRef(taskDay);
-  taskDayRef.current = taskDay;
+
+  // Cập nhật refs trong effect thay vì trong render body
+  useEffect(() => {
+    xpRef.current = xp;
+    srsRef.current = srs;
+    tasksRef.current = tasks;
+    claimedRef.current = claimed;
+    taskDayRef.current = taskDay;
+  }, [xp, srs, tasks, claimed, taskDay]);
 
   // Đọc trạng thái đã lưu khi tải trang
   useEffect(() => {
@@ -130,22 +134,50 @@ export function AppProvider({ children }: { children: ReactNode }) {
       // Chỉ khôi phục nếu cùng phiên bản cấu trúc; khác phiên bản → coi như tài khoản mới
       if (ver === STORAGE_VERSION && raw) {
         const data = JSON.parse(raw);
-        if (typeof data.xp === "number") setXp(data.xp);
-        if (typeof data.wordsLearned === "number") setWordsLearned(data.wordsLearned);
-        if (data.srs && typeof data.srs === "object") setSrs(data.srs);
+        let needsUpdate = false;
+        let newXp = xp;
+        let newWordsLearned = wordsLearned;
+        let newSrs = srs;
+
+        if (typeof data.xp === "number" && data.xp !== xp) {
+          newXp = data.xp;
+          needsUpdate = true;
+        }
+        if (typeof data.wordsLearned === "number" && data.wordsLearned !== wordsLearned) {
+          newWordsLearned = data.wordsLearned;
+          needsUpdate = true;
+        }
+        if (data.srs && typeof data.srs === "object" && JSON.stringify(srs) !== JSON.stringify(data.srs)) {
+          newSrs = data.srs;
+          needsUpdate = true;
+        }
+
+        if (needsUpdate) {
+          // Use requestAnimationFrame to defer setState outside effect body
+          requestAnimationFrame(() => {
+            setXp(newXp);
+            setWordsLearned(newWordsLearned);
+            setSrs(newSrs);
+          });
+        }
+
         // Khôi phục nhiệm vụ — nhưng reset nếu sang ngày mới
         const sameDay = data.taskDay === todayStr();
-        if (sameDay && data.tasks) setTasks(data.tasks);
-        if (sameDay && data.claimed) setClaimed(data.claimed);
-        setTaskDay(todayStr());
+        if (sameDay && data.tasks) {
+          requestAnimationFrame(() => setTasks(data.tasks));
+        }
+        if (sameDay && data.claimed) {
+          requestAnimationFrame(() => setClaimed(data.claimed));
+        }
+        requestAnimationFrame(() => setTaskDay(todayStr()));
       } else {
         window.localStorage.setItem("lingoquest:app-ver", STORAGE_VERSION);
-        setTaskDay(todayStr());
+        requestAnimationFrame(() => setTaskDay(todayStr()));
       }
     } catch {
       /* bỏ qua */
     }
-    setHydrated(true);
+    requestAnimationFrame(() => setHydrated(true));
   }, []);
 
   // Lưu khi thay đổi
@@ -200,10 +232,27 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setWordsLearned((w) => w + 1);
       }
       // Mỗi thẻ ôn → cộng tiến trình nhiệm vụ "ôn flashcard"
-      trackTask("cards", 1);
+      // Dùng setTimeout để tránh forward reference
+      setTimeout(() => {
+        const today = todayStr();
+        if (taskDayRef.current !== today) {
+          const zero: TaskProgress = { lesson: 0, cards: 0, game: 0 };
+          const fresh: Record<TaskKey, boolean> = { lesson: false, cards: false, game: false };
+          taskDayRef.current = today;
+          tasksRef.current = zero;
+          claimedRef.current = fresh;
+          setTaskDay(today);
+          setTasks(zero);
+          setClaimed(fresh);
+        }
+        const meta = TASK_META.find((m) => m.id === "cards");
+        if (!meta) return;
+        const prev = (tasksRef.current as any).cards ?? 0;
+        const nextVal = Math.min(meta.target, prev + 1);
+        tasksRef.current = { ...tasksRef.current, cards: nextVal } as TaskProgress;
+        setTasks((p) => ({ ...p, cards: nextVal }));
+      }, 0);
     },
-    // trackTask được định nghĩa ngay dưới đây (useCallback ổn định)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

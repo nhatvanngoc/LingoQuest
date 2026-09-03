@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { random } from "@/lib/random-seed";
 
 interface Piece {
   id: number;
@@ -12,6 +13,7 @@ interface Piece {
   size: number;
   rotate: number;
   shape: "square" | "circle" | "star";
+  duration: number;
 }
 
 const COLORS = ["#2563EB", "#8B5CF6", "#FBBF24", "#10B981", "#EF4444", "#06B6D4"];
@@ -28,9 +30,12 @@ export function ConfettiExplosion({
   onComplete?: () => void;
 }) {
   const [pieces, setPieces] = useState<Piece[]>([]);
+  const initialized = useRef(false);
 
   useEffect(() => {
-    if (!active) return;
+    if (!active || initialized.current) return;
+    initialized.current = true;
+    
     const next: Piece[] = Array.from({ length: count }, (_, i) => {
       const angle = (Math.random() * Math.PI * 2);
       const speed = 4 + Math.random() * 12;
@@ -44,11 +49,13 @@ export function ConfettiExplosion({
         size: 6 + Math.random() * 10,
         rotate: Math.random() * 360,
         shape: ["square", "circle", "star"][Math.floor(Math.random() * 3)] as any,
+        duration: 2 + Math.random(),
       };
     });
     setPieces(next);
     const timer = setTimeout(() => {
       setPieces([]);
+      initialized.current = false;
       onComplete?.();
     }, 2500);
     return () => clearTimeout(timer);
@@ -77,7 +84,7 @@ export function ConfettiExplosion({
               rotate: p.rotate + 720,
             }}
             transition={{
-              duration: 2 + Math.random(),
+              duration: p.duration,
               ease: [0.25, 0.46, 0.45, 0.94],
             }}
             style={{
@@ -96,22 +103,38 @@ export function ConfettiExplosion({
 }
 
 export function ConfettiBurstInline({ fire }: { fire: boolean }) {
+  const burstData = useMemo(
+    () =>
+      Array.from({ length: 18 }, (_, i) => {
+        const angle = random() * Math.PI * 2;
+        const radius = 20 + random() * 40;
+        return {
+          x: `${50 + Math.cos(angle) * radius}%`,
+          y: `${50 + Math.sin(angle) * radius}%`,
+          rotate: Math.floor(random() * 720),
+          duration: 0.6 + random() * 0.6,
+          delay: i * 0.03,
+        };
+      }),
+    []
+  );
+
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
       <AnimatePresence>
         {fire &&
-          Array.from({ length: 18 }).map((_, i) => (
+          burstData.map((p, i) => (
             <motion.div
               key={i}
               initial={{ x: "50%", y: "50%", scale: 0, opacity: 1 }}
               animate={{
-                x: `${20 + Math.random() * 60}%`,
-                y: `${10 + Math.random() * 60}%`,
+                x: p.x,
+                y: p.y,
                 scale: [0, 1.4, 0],
                 opacity: [1, 1, 0],
-                rotate: 360 + Math.random() * 360,
+                rotate: p.rotate,
               }}
-              transition={{ duration: 0.8 + Math.random() * 0.5, delay: i * 0.04 }}
+              transition={{ duration: p.duration, delay: p.delay }}
               className="absolute h-2 w-2 rounded-full"
               style={{ backgroundColor: COLORS[i % COLORS.length] }}
             />

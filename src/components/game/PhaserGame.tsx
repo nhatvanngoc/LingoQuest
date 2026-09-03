@@ -30,7 +30,10 @@ export default function PhaserGame({
   const hostRef = useRef<HTMLDivElement>(null);
   // Giữ callback mới nhất tránh tạo lại game khi parent re-render.
   const cbRef = useRef(onGameOver);
-  cbRef.current = onGameOver;
+
+  useEffect(() => {
+    cbRef.current = onGameOver;
+  }, [onGameOver]);
 
   useEffect(() => {
     const host = hostRef.current;
