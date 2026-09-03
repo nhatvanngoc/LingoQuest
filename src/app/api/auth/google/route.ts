@@ -36,13 +36,15 @@ export async function GET(req: Request) {
   // thể chọn Google ID khác (tránh bị "nhớ" tài khoản cũ tự động).
   authUrl.searchParams.set("prompt", "select_account");
 
-  // Gắn cookie trực tiếp lên response redirect (tránh trường hợp cookie
-  // set qua cookies() không được mang theo khi return NextResponse).
+  // Gắn cookie trực tiếp lên response redirect.
+  // Vercel *.vercel.app là public suffix → Lax đôi khi bị chặn khi quay về từ Google.
+  // Dùng SameSite=None + Secure=true trên production để đảm bảo cookie được gửi lại ở callback.
+  const isProd = process.env.NODE_ENV === "production";
   const res = NextResponse.redirect(authUrl.toString());
   res.cookies.set("lq_oauth", JSON.stringify({ state, codeVerifier }), {
     httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: isProd ? "none" : "lax",
+    secure: isProd,
     path: "/",
     maxAge: 600,
   });

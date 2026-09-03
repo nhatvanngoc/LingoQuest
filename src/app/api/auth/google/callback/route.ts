@@ -24,24 +24,34 @@ export async function GET(req: Request) {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
-  // Đọc cookie lq_oauth trực tiếp từ header (state + PKCE verifier).
-  const cookieHeader = req.headers.get("cookie") ?? "";
-  const m = cookieHeader.match(/(?:^|;\s*)lq_oauth=([^;]*)/);
+  // Đọc cookie lq_oauth — thử NextRequest.cookies trước, fallback header (Vercel edge đôi khi cần).
   let saved: { state?: string; codeVerifier?: string } = {};
   try {
-    if (m) saved = JSON.parse(decodeURIComponent(m[1]));
+    // Next.js 16: req.cookies có sẵn trên NextRequest, nhưng ở Edge `Request` thuần thì dùng header
+    const maybeNextReq = req as unknown as { cookies?: { get?: (n: string) => { value: string } | undefined } };
+    const raw = maybeNextReq.cookies?.get?.("lq_oauth")?.value ?? (() => {
+      const h = req.headers.get("cookie") ?? "";
+      const mm = h.match(/(?:^|;\s*)lq_oauth=([^;]*)/);
+      return mm ? decodeURIComponent(mm[1]) : "";
+    })();
+    if (raw) saved = JSON.parse(raw);
   } catch {
     saved = {};
   }
 
   const fail = (reason: string) => {
+    const cookieHeader = req.headers.get("cookie") ?? "";
     console.error("[google-callback] FAIL:", reason, {
       hasCode: !!code,
       hasState: !!state,
       hasSavedState: !!saved.state,
       hasVerifier: !!saved.codeVerifier,
+      hasCookieHeader: !!cookieHeader,
+      cookieHeaderPreview: cookieHeader.slice(0, 200),
       clientId: !!clientId,
       clientSecret: !!clientSecret,
+      redirectUri,
+      origin,
     });
     return NextResponse.redirect(`${origin}/login?error=${reason}`);
   };
