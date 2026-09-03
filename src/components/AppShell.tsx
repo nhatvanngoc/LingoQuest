@@ -58,13 +58,13 @@ function Logo() {
       <motion.span
         whileHover={{ rotate: 12, scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand to-brand-700 text-white shadow-md"
+        className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand to-brand-700 text-white shadow-md"
       >
         <GraduationCap className="h-5 w-5 relative z-10" />
         <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </motion.span>
-      <span className="text-lg font-bold tracking-tight text-slate-900">
-        Lingo<span className="bg-gradient-to-r from-brand to-brand-700 bg-clip-text text-transparent">Quest</span>
+      <span className="font-heading text-lg font-extrabold tracking-tight text-brand-dark">
+        Lingo<span className="text-gradient-brand">Quest</span>
       </span>
     </Link>
   );
@@ -106,7 +106,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm"
+        className="sticky top-0 z-40 border-b border-brand-100/50 bg-cream/80 backdrop-blur-md"
       >
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo />
@@ -197,20 +197,20 @@ export function AppShell({ children }: { children: ReactNode }) {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 visited:text-violet-700 active:scale-[0.98]",
+                      "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 active:scale-[0.98]",
                       active
-                        ? "bg-brand-50 text-brand"
-                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-50 visited:text-slate-600"
+                        ? "bg-gradient-to-r from-brand-50 to-teal-50 text-brand font-bold"
+                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
                     )}
                   >
                     {active && (
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-brand" />
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-gradient-to-b from-brand to-brand-500" />
                     )}
                     <span className="relative flex items-center gap-3">
                       <span
                         className={cn(
-                          "flex h-8 w-8 items-center justify-center rounded-lg transition-all",
-                          active ? "bg-brand text-white" : "bg-white text-slate-400 group-hover:text-brand group-hover:bg-brand-50 shadow-sm"
+                          "flex h-9 w-9 items-center justify-center rounded-xl transition-all",
+                          active ? "bg-gradient-to-br from-brand to-brand-700 text-white shadow-md" : "bg-white text-slate-400 group-hover:text-brand group-hover:bg-brand-50 shadow-sm"
                         )}
                       >
                         <Icon className="h-4 w-4" />
@@ -222,8 +222,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                           animate={{ scale: 1 }}
                           className={cn(
                             "rounded-full px-2 py-0.5 text-[10px] font-bold",
-                            item.badge === "NEW" ? "bg-brand text-white" : "bg-amber-100 text-amber-700",
-                            active && "bg-brand text-white"
+                            item.badge === "NEW" ? "bg-gradient-to-r from-brand to-brand-500 text-white" : "bg-amber-100 text-amber-700",
+                            active && "bg-gradient-to-r from-brand to-brand-500 text-white"
                           )}
                         >
                           {item.badge}
@@ -240,7 +240,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  className="mt-6 rounded-xl border border-brand-100 bg-brand-50 p-4"
+                  className="mt-6 rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50 to-teal-50 p-4 shadow-sm"
                 >
                   <div className="flex gap-2">
                     <Sparkles className="h-4 w-4 text-brand mt-0.5" />

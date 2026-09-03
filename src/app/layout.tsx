@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-// Be Vietnam Pro self-host qua @fontsource — tối ưu dấu tiếng Việt, dễ đọc hơn Nunito:
-/* WOFF2 total ~80-120KB for 3 weights, font-display:swap via @fontsource, fallback stack documented */
-// Fallback stack: "Be Vietnam Pro", ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif (defined in globals.css --font-sans)
-import "@fontsource/be-vietnam-pro/400.css";
-import "@fontsource/be-vietnam-pro/600.css";
-import "@fontsource/be-vietnam-pro/700.css";
+/* Nunito + Baloo 2 self-host qua @fontsource — rounded, friendly, arcade style */
+// Fallback stack: "Nunito", ui-sans-serif, system-ui (defined in globals.css --font-sans)
+// Headings: "Baloo 2", fallback Nunito (defined in globals.css --font-heading)
+import "@fontsource/nunito/400.css";
+import "@fontsource/nunito/600.css";
+import "@fontsource/nunito/700.css";
+import "@fontsource/baloo-2/400.css";
+import "@fontsource/baloo-2/600.css";
+import "@fontsource/baloo-2/700.css";
+import "@fontsource/baloo-2/800.css";
 import "./globals.css";
 import { RoleProvider, type SessionUser } from "@/lib/auth/role-context";
 import { getCurrentUser } from "@/lib/auth/session";
