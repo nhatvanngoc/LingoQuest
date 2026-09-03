@@ -7,9 +7,12 @@ export const dynamic = "force-dynamic";
    vào cookie httpOnly, rồi redirect về Google consent screen. */
 export async function GET(req: Request) {
   const origin = new URL(req.url).origin;
+  const rawRedirect = process.env.GOOGLE_REDIRECT_URI?.trim();
+  const isLocalhostEnv = !!rawRedirect && rawRedirect.includes("localhost");
+  // Trên Vercel (production) nếu env vẫn là localhost thì bỏ qua, dùng origin để tránh mất cookie lq_oauth
   const redirectUri =
-    process.env.GOOGLE_REDIRECT_URI && process.env.GOOGLE_REDIRECT_URI.trim()
-      ? process.env.GOOGLE_REDIRECT_URI.trim()
+    rawRedirect && !(process.env.NODE_ENV === "production" && isLocalhostEnv)
+      ? rawRedirect
       : `${origin}/api/auth/google/callback`;
   const clientId = process.env.GOOGLE_CLIENT_ID;
 

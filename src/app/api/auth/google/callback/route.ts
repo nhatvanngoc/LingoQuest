@@ -15,9 +15,11 @@ export async function GET(req: Request) {
   const origin = url.origin;
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
+  const rawRedirect = process.env.GOOGLE_REDIRECT_URI?.trim();
+  const isLocalhostEnv = !!rawRedirect && rawRedirect.includes("localhost");
   const redirectUri =
-    process.env.GOOGLE_REDIRECT_URI && process.env.GOOGLE_REDIRECT_URI.trim()
-      ? process.env.GOOGLE_REDIRECT_URI.trim()
+    rawRedirect && !(process.env.NODE_ENV === "production" && isLocalhostEnv)
+      ? rawRedirect
       : `${origin}/api/auth/google/callback`;
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;

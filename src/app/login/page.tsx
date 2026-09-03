@@ -32,7 +32,7 @@ export default function LoginPage() {
       google_config:
         "Thiếu cấu hình Google: GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET chưa được điền vào .env (hoặc chưa khởi động lại server dev).",
       google_state:
-        "Phiên OAuth không khớp (cookie lq_oauth bị mất). Thử lại; đảm bảo trình duyệt không chặn cookie của localhost.",
+        "Phiên OAuth không khớp (cookie lq_oauth bị mất). Thử lại; nếu trên Vercel, hãy để GOOGLE_REDIRECT_URI trống hoặc đặt đúng https://<domain>.vercel.app/api/auth/google/callback và thêm URI này vào Google Cloud Console → Authorized redirect URIs.",
       google_token:
         "Google từ chối cấp token — sai GOOGLE_CLIENT_SECRET hoặc redirect_uri không khớp với Google Console.",
       google_user: "Không lấy được thông tin người dùng từ Google.",
