@@ -5,18 +5,24 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ===========================================================
-   LingoQuest — Design System v3 "Studio"
-   Philosophy: Ít hiệu ứng, nhiều khoảng trắng, chữ rõ ràng.
-   Palette: Teal (#0F766E) + Amber (#D97706) — không blue-violet
-   Grid: max-w-5xl (896px), 8px base unit, gutter 24px
-   Containers: px-4 sm:px-6 lg:px-8
+   LingoQuest — Design System v4 "Arcade"
+   Style: Playful, Duolingo-like energy, warm cream background
+   Palette: Cream #FBF7EF, Teal #0E8074, Brand gradient teal→green
+   Fonts: Baloo 2 (headings), Nunito (body)
+   Radius: cards 20-24px, pills 999px
+   Shadow: 0 12px 30px rgba(23,60,56,.12)
    =========================================================== */
 
 @theme {
-  --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Nunito", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: "Baloo 2", "Nunito", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* ---- Primary: Teal (đặc biệt, không phải blue-violet template) ---- */
-  --color-brand: #0F766E;
+  /* ---- Background & Base ---- */
+  --color-cream: #FBF7EF;
+  
+  /* ---- Primary: Teal ---- */
+  --color-brand: #0E8074;
+  --color-brand-dark: #0B5D54;
   --color-brand-50: #F0FDFA;
   --color-brand-100: #CCFBF1;
   --color-brand-200: #99F6E4;
@@ -26,16 +32,18 @@
   --color-brand-600: #0D9488;
   --color-brand-700: #0F766E;
   --color-brand-800: #115E59;
-
-  /* ---- Accent: Amber (warm, human) ---- */
-  --color-accent: #D97706;
-  --color-accent-50: #FFFBEB;
-  --color-accent-100: #FEF3C7;
-  --color-accent-200: #FDE68A;
-
+  
+  /* ---- Brand Gradient: Teal → Green ---- */
+  --gradient-brand: linear-gradient(90deg, #14B8A6 0%, #34D399 100%);
+  
+  /* ---- Accents: Arcade palette ---- */
+  --color-amber-accent: #F6A21E;
+  --color-coral: #FF6B6B;
+  --color-sky: #4CC3F7;
+  --color-lilac: #A78BFA;
+  
   /* ---- Surface & Text ---- */
-  --color-cream: #FAF9F7;
-  --color-ink: #1C1917;
+  --color-ink: #0B5D54;
   --color-text-secondary: #57534E;
   --color-text-muted: #78716C;
   --color-border: #E7E5E4;
@@ -44,43 +52,54 @@
   --color-success: #047857;
   --color-success-50: #ECFDF5;
   --color-success-100: #D1FAE5;
-  --color-success-200: #A7F3D0;
   --color-danger: #DC2626;
   --color-danger-50: #FEF2F2;
-  --color-danger-100: #FEE2E2;
   --color-violet: #7C3AED;
   --color-violet-50: #F5F3FF;
   --color-violet-100: #EDE9FE;
 
   /* ---- Radii ---- */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-pill: 999px;
 
-  /* ---- Shadows — chỉ 3 loại, đơn giản ---- */
-  --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.04);
-  --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.06);
-  --shadow-lg: 0 12px 24px rgba(28, 25, 23, 0.08);
+  /* ---- Shadows — Arcade soft glow ---- */
+  --shadow-sm: 0 4px 12px rgba(23, 60, 56, 0.08);
+  --shadow-md: 0 8px 20px rgba(23, 60, 56, 0.1);
+  --shadow-lg: 0 12px 30px rgba(23, 60, 56, 0.12);
+  --shadow-glow: 0 0 20px rgba(20, 184, 166, 0.4);
 
-  /* ---- Animations — chỉ giữ lại những cái thực sự cần ---- */
-  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* ---- Animations ---- */
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-drift: drift 4s ease-in-out infinite;
   --animate-bounce-soft: bounce-soft 2s ease-in-out infinite;
 }
 
 /* ============================================================
-   Keyframes — giữ lại thiết yếu, xóa shimmer/float/shine/wiggle
+   Keyframes — Arcade playful motion
    ============================================================ */
 
-@keyframes pop {
-  0% { transform: scale(0.85); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateX(0px) scale(1); }
+  50% { transform: translateX(10px) scale(1.02); }
 }
 
 @keyframes bounce-soft {
   0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-4px) scale(1.02); }
+  50% { transform: translateY(-6px) scale(1.02); }
+}
+
+@keyframes pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes flame-flicker {
@@ -119,7 +138,7 @@ body {
   scrollbar-width: none;
 }
 
-/* Flashcard 3D — giữ nguyên */
+/* Flashcard 3D */
 .perspective { perspective: 1600px; }
 .preserve-3d { transform-style: preserve-3d; }
 .backface-hidden {
@@ -128,27 +147,45 @@ body {
 }
 .rotate-y-180 { transform: rotateY(180deg); }
 
-/* Grid nền đơn giản cho hero — teal nhẹ, không blue */
+/* Grid nền đơn giản cho hero */
 .bg-grid {
-  background-image: radial-gradient(circle at 1px 1px, rgba(15, 118, 110, 0.08) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(14, 128, 116, 0.08) 1px, transparent 0);
   background-size: 32px 32px;
 }
 
-/* Gradient text brand — KHÔNG animate */
+/* Gradient text brand */
 .text-gradient-brand {
-  background: linear-gradient(135deg, var(--color-brand-700), var(--color-brand-500));
+  background: var(--gradient-brand);
   background-clip: text;
   color: transparent;
 }
 
 /* Gradient nhẹ cho backgrounds */
 .bg-gradient-warm {
-  background: linear-gradient(135deg, var(--color-brand-50) 0%, var(--color-cream) 100%);
+  background: linear-gradient(135deg, var(--color-cream) 0%, #FFF9F0 100%);
+}
+
+/* Blob decor */
+.blob-decor {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  animation: drift 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-decor,
+  *[style*="animation"],
+  *[class*="animate-"] {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* ===== Theme inline mapping (shadcn compatibility) ===== */
 @theme inline {
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-heading);
   --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -192,24 +229,24 @@ body {
 
 /* ===== Light theme (OkLCH) ===== */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.12 0 0);
+  --background: oklch(0.98 0.01 95);
+  --foreground: oklch(0.25 0.08 165);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.12 0 0);
+  --card-foreground: oklch(0.25 0.08 165);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.12 0 0);
-  --primary: oklch(0.15 0.06 165);
+  --popover-foreground: oklch(0.25 0.08 165);
+  --primary: oklch(0.55 0.12 165);
   --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.15 0.06 165);
+  --secondary-foreground: oklch(0.25 0.08 165);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.96 0.04 45);
-  --accent-foreground: oklch(0.25 0.06 45);
+  --accent: oklch(0.92 0.06 165);
+  --accent-foreground: oklch(0.25 0.08 165);
   --destructive: oklch(0.58 0.22 25);
   --border: oklch(0.92 0 0);
   --input: oklch(0.92 0 0);
-  --ring: oklch(0.5 0.06 165);
+  --ring: oklch(0.55 0.12 165);
   --chart-1: oklch(0.88 0 0);
   --chart-2: oklch(0.6 0 0);
   --chart-3: oklch(0.48 0 0);
@@ -217,13 +254,13 @@ body {
   --chart-5: oklch(0.3 0 0);
   --radius: 0.625rem;
   --sidebar: oklch(0.99 0 0);
-  --sidebar-foreground: oklch(0.12 0 0);
-  --sidebar-primary: oklch(0.15 0.06 165);
+  --sidebar-foreground: oklch(0.25 0.08 165);
+  --sidebar-primary: oklch(0.55 0.12 165);
   --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.15 0.06 165);
+  --sidebar-accent-foreground: oklch(0.25 0.08 165);
   --sidebar-border: oklch(0.92 0 0);
-  --sidebar-ring: oklch(0.5 0.06 165);
+  --sidebar-ring: oklch(0.55 0.12 165);
 }
 
 /* ===== Dark theme ===== */
@@ -235,7 +272,7 @@ body {
   --popover: oklch(0.2 0 0);
   --popover-foreground: oklch(0.98 0 0);
   --primary: oklch(0.92 0 0);
-  --primary-foreground: oklch(0.15 0.06 165);
+  --primary-foreground: oklch(0.25 0.08 165);
   --secondary: oklch(0.26 0 0);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.26 0 0);
@@ -245,7 +282,7 @@ body {
   --destructive: oklch(0.7 0.18 25);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.5 0.06 165);
+  --ring: oklch(0.55 0.12 165);
   --chart-1: oklch(0.88 0 0);
   --chart-2: oklch(0.6 0 0);
   --chart-3: oklch(0.48 0 0);
@@ -258,7 +295,7 @@ body {
   --sidebar-accent: oklch(0.26 0 0);
   --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.5 0.06 165);
+  --sidebar-ring: oklch(0.55 0.12 165);
 }
 
 /* ============================================================

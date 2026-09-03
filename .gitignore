@@ -2,31 +2,27 @@
 # Dependencies
 node_modules/
 
-# Build outputs
-.next/
-dist/
-build/
-*.tsbuildinfo
-
 # Environment variables
 .env
 .env.local
-*.env.*
+.env.*
+
+# Build outputs
+dist/
+build/
+target/
 
 # Logs
 *.log
 
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# IDE specific
+# IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
+*.tmp
 
-# Python cache (if any Python files exist in project)
+# Python cache (if applicable)
 __pycache__/
 *.pyc
 *.pyo
@@ -35,20 +31,12 @@ __pycache__/
 # Coverage reports
 coverage/
 htmlcov/
-*.coverage
+.coverage
 
-# Temporary files
-*.tmp
-*.temp
+# OS generated files
+.DS_Store
+Thumbs.db
 
-# Compressed files
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
+# Package manager lock files (preserve existing)
+package-lock.json
 ```

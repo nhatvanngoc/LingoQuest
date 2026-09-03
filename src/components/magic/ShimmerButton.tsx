@@ -18,9 +18,10 @@ export function ShimmerButton({
     <Button
       asChild={asChild}
       className={cn(
-        "relative overflow-hidden group border border-white/10",
-        "bg-brand hover:bg-brand-700 text-white",
-        "before:absolute before:inset-0 before:rounded-[inherit] before:bg-gradient-to-b before:from-white/15 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity",
+        "relative overflow-hidden group border-0",
+        "bg-gradient-to-r from-brand to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white",
+        "rounded-full font-bold shadow-md hover:shadow-glow transition-all duration-300",
+        "before:absolute before:inset-0 before:rounded-[inherit] before:bg-gradient-to-b before:from-white/20 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity",
         className
       )}
       {...props}

@@ -1,0 +1,24 @@
+{
+  "app": {
+    "[project]/src/app/_not-found/page": [],
+    "[project]/src/app/dashboard/page": [],
+    "[project]/src/app/exercise/[id]/page": [],
+    "[project]/src/app/flashcards/[deckId]/page": [],
+    "[project]/src/app/game/page": [],
+    "[project]/src/app/learn/[id]/page": [],
+    "[project]/src/app/learn/page": [],
+    "[project]/src/app/login/page": [],
+    "[project]/src/app/page": [],
+    "[project]/src/app/pending/page": [],
+    "[project]/src/app/progress/page": [],
+    "[project]/src/app/register/page": [],
+    "[project]/src/app/styleguide/page": [],
+    "[project]/src/app/teacher/assignments/new/page": [],
+    "[project]/src/app/teacher/grading/page": [],
+    "[project]/src/app/teacher/lessons/new/page": [],
+    "[project]/src/app/teacher/page": []
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}
