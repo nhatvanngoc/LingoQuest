@@ -161,25 +161,30 @@ export default function LoginPage() {
           </Button>
         </motion.form>
 
-        {/* ===== Đăng nhập Google (OAuth2 PKCE) ===== */}
-        <div className="flex items-center gap-3 px-8 pt-1">
-          <span className="h-px flex-1 bg-slate-100" />
-          <span className="text-xs font-bold uppercase tracking-wide text-slate-400">hoặc</span>
-          <span className="h-px flex-1 bg-slate-100" />
-        </div>
-        <div className="px-8 pb-1 pt-3">
-          <Button
-            type="button"
-            variant="outline"
-            size="lg"
-            className="w-full"
-            onClick={loginWithGoogle}
-            disabled={busy}
-          >
-            <GoogleG className="h-4 w-4" />
-            Tiếp tục với Google
-          </Button>
-        </div>
+        {/* ===== Đăng nhập Google — tạm ẩn trên Vercel (cookie lq_oauth bị chặn) ===== */}
+        {/* Để bật lại: đặt NEXT_PUBLIC_ENABLE_GOOGLE=true và fix cookie */}
+        {process.env.NEXT_PUBLIC_ENABLE_GOOGLE === "true" && (
+          <>
+            <div className="flex items-center gap-3 px-8 pt-1">
+              <span className="h-px flex-1 bg-slate-100" />
+              <span className="text-xs font-bold uppercase tracking-wide text-slate-400">hoặc</span>
+              <span className="h-px flex-1 bg-slate-100" />
+            </div>
+            <div className="px-8 pb-1 pt-3">
+              <Button
+                type="button"
+                variant="outline"
+                size="lg"
+                className="w-full"
+                onClick={loginWithGoogle}
+                disabled={busy}
+              >
+                <GoogleG className="h-4 w-4" />
+                Tiếp tục với Google
+              </Button>
+            </div>
+          </>
+        )}
 
         <p className="px-8 pb-7 pt-4 text-center text-sm text-slate-500">
           Chưa có tài khoản?{" "}
