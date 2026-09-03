@@ -67,8 +67,11 @@ export default function GradingPage() {
   const sub = submissions.find((s) => s.id === active) ?? submissions[0];
 
   useEffect(() => {
-    if (!active && submissions.length > 0) setActive(submissions[0].id);
-  }, [active, submissions]);
+    if (!active && submissions.length > 0) {
+      // Set active submission khi có danh sách submissions - dùng requestAnimationFrame để tránh setState trong effect
+      requestAnimationFrame(() => setActive(submissions[0].id));
+    }
+  }, [submissions]);
 
   const submitGrade = async () => {
     if (!sub || busy) return;

@@ -39,7 +39,10 @@ export default function LoginPage() {
       google_email: "Tài khoản Google không cung cấp email.",
       google_exception: "Lỗi mạng khi gọi Google. Thử lại.",
     };
-    setError(reasons[e] ?? "Đăng nhập Google thất bại, thử lại.");
+    // Cập nhật error state dựa trên query param - chỉ chạy một lần sau mount
+    const newError = reasons[e] ?? "Đăng nhập Google thất bại, thử lại.";
+    // Dùng requestAnimationFrame để tránh setState trong effect body
+    requestAnimationFrame(() => setError(newError));
   }, []);
 
   const loginWithGoogle = () => {
