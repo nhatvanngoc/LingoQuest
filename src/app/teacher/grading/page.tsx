@@ -11,6 +11,7 @@ import {
   MessageSquare,
   Star,
   Loader2,
+  Sparkles,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -42,6 +43,7 @@ export default function GradingPage() {
   const [score, setScore] = useState(85);
   const [comment, setComment] = useState("");
   const [busy, setBusy] = useState(false);
+  const [isAiGrading, setIsAiGrading] = useState(false);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -72,6 +74,38 @@ export default function GradingPage() {
       requestAnimationFrame(() => setActive(submissions[0].id));
     }
   }, [submissions]);
+
+  const handleAiGrade = async () => {
+    if (!sub || isAiGrading) return;
+    setIsAiGrading(true);
+    try {
+      const res = await fetch("/api/teacher/grade-ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: sub.text,
+          prompt: sub.prompt,
+        }),
+      });
+      const d = await res.json();
+      if (d.ok) {
+        if (typeof d.score === "number") setScore(d.score);
+        if (typeof d.comment === "string") setComment(d.comment);
+        pushToast({
+          title: "AI đã chấm thử xong",
+          desc: `Điểm đề xuất: ${d.score}/100. Bạn có thể xem lại và điều chỉnh trước khi lưu.`,
+          icon: "⚡",
+          tone: "badge",
+        });
+      } else {
+        alert(d.error || "Không thể chấm bằng AI.");
+      }
+    } catch {
+      alert("Lỗi kết nối khi gọi trợ lý AI.");
+    } finally {
+      setIsAiGrading(false);
+    }
+  };
 
   const submitGrade = async () => {
     if (!sub || busy) return;
@@ -218,7 +252,27 @@ export default function GradingPage() {
                   </div>
                 ) : (
                   <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-soft">
-                    <h3 className="mb-3 font-extrabold text-slate-900">Tiêu chí & điểm</h3>
+                    <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                      <h3 className="font-extrabold text-slate-900">Tiêu chí & điểm</h3>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        disabled={isAiGrading}
+                        onClick={handleAiGrade}
+                        className="h-8 border-brand-200 bg-brand-50/70 text-brand hover:bg-brand-100 text-xs font-bold"
+                      >
+                        {isAiGrading ? (
+                          <>
+                            <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" /> AI đang chấm bài...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="h-3.5 w-3.5 mr-1.5 text-amber-500" /> ⚡ AI Chấm thử & Gợi ý nhận xét
+                          </>
+                        )}
+                      </Button>
+                    </div>
                     <div className="mb-4 flex flex-wrap gap-2">
                       {RUBRIC.map((r) => (
                         <span key={r} className="rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand">

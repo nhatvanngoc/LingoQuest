@@ -180,6 +180,65 @@ export default function UnifiedNewAssignmentPage() {
 
   const youtubeId = extractYoutubeId(videoUrl);
 
+  // Khôi phục dữ liệu bài tập khi bấm "Nhân bản" từ Dashboard
+  useEffect(() => {
+    const cloneStr = sessionStorage.getItem("lingoquest:clone-assignment");
+    if (cloneStr) {
+      try {
+        const data = JSON.parse(cloneStr);
+        sessionStorage.removeItem("lingoquest:clone-assignment");
+        if (data.title) setTitle(data.title);
+        if (data.description) setDescription(data.description);
+        if (data.videoUrl) setVideoUrl(data.videoUrl);
+        if (data.content) {
+          if (Array.isArray(data.content.vocabulary) && data.content.vocabulary.length > 0) {
+            setVocabList(
+              data.content.vocabulary.map((v: any, idx: number) => ({
+                id: v.id || `v-clone-${idx + 1}-${Date.now()}`,
+                word: v.word || "",
+                phonetic: v.phonetic || "",
+                meaning: v.meaning || "",
+                example: v.example || "",
+                exampleVi: v.exampleVi || "",
+              }))
+            );
+          }
+          if (Array.isArray(data.content.quizQuestions) && data.content.quizQuestions.length > 0) {
+            setQuizList(
+              data.content.quizQuestions.map((q: any, idx: number) => ({
+                id: q.id || `q-clone-${idx + 1}-${Date.now()}`,
+                question: q.question || "",
+                options: Array.isArray(q.options) && q.options.length === 4 ? q.options : ["A. ", "B. ", "C. ", "D. "],
+                answer: q.answer || "A",
+                explanation: q.explanation || "",
+              }))
+            );
+          }
+          if (Array.isArray(data.content.fillQuestions) && data.content.fillQuestions.length > 0) {
+            setFillList(
+              data.content.fillQuestions.map((f: any, idx: number) => ({
+                id: f.id || `f-clone-${idx + 1}-${Date.now()}`,
+                sentence: f.sentence || "",
+                answer: f.answer || "",
+                hint: f.hint || "",
+                explanation: f.explanation || "",
+              }))
+            );
+          }
+          if (data.content.writingPrompt && data.content.writingPrompt.prompt) {
+            setWritingPrompt({
+              prompt: data.content.writingPrompt.prompt,
+              minWords: data.content.writingPrompt.minWords || 80,
+              outline: Array.isArray(data.content.writingPrompt.outline) ? data.content.writingPrompt.outline : [],
+            });
+          }
+        }
+      } catch (e) {
+        console.error("Error restoring cloned assignment:", e);
+      }
+    }
+  }, []);
+
   // ===== AI Co-Pilot: Generate ALL 5-in-1 =====
   const handleGenerateAll = async () => {
     if (!aiTopic.trim()) {

@@ -39,7 +39,7 @@ export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number
   const done = statusKey === "done";
   const isUrgent = statusKey === "due" || statusKey === "overdue";
 
-  const href = a.type === "exercise" ? `/exercise/${a.id}` : `/flashcards/${(a as any).deckId || "deck-1"}`;
+  const href = done ? "/progress#submissions" : (a.type === "exercise" ? `/exercise/${a.id}` : `/flashcards/${(a as any).deckId || "deck-1"}`);
   const progressValue = typeof a.progress === "number" ? a.progress : done ? 100 : 0;
   const lessonTitle = a.lessonTitle || (a as any).description || "Bài tập rèn luyện";
   const dueLabel = a.dueLabel || ((a as any).dueAt ? `Hạn: ${new Date((a as any).dueAt).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit" })}` : "Còn hạn");

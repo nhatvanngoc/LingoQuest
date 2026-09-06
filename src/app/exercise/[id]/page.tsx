@@ -55,6 +55,16 @@ function extractYoutubeId(url: string): string {
   return match && match[2].length === 11 ? match[2] : "";
 }
 
+function speakWord(text: string) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  sound.playPop();
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-US";
+  utterance.rate = 0.9;
+  window.speechSynthesis.speak(utterance);
+}
+
 export default function UnifiedExercisePage() {
   const { id } = useParams<{ id: string }>();
   const { addXp, wordsLearned, streak, syncStats } = useApp();
@@ -62,6 +72,7 @@ export default function UnifiedExercisePage() {
   const [loading, setLoading] = useState(true);
   const [assignment, setAssignment] = useState<any>(null);
   const [stage, setStage] = useState<Stage>("video");
+  const [restoredDraft, setRestoredDraft] = useState(false);
 
   // Quiz states
   const [quizIdx, setQuizIdx] = useState(0);
@@ -87,6 +98,41 @@ export default function UnifiedExercisePage() {
 
   // Completion
   const [totalXpEarned, setTotalXpEarned] = useState(0);
+
+  // Auto-restore draft from localStorage
+  useEffect(() => {
+    if (!id || typeof window === "undefined") return;
+    try {
+      const raw = localStorage.getItem(`lingoquest:draft:${id}`);
+      if (raw) {
+        const d = JSON.parse(raw);
+        if (d.writingText) setWritingText(d.writingText);
+        if (typeof d.quizScore === "number") setQuizScore(d.quizScore);
+        if (typeof d.fillScore === "number") setFillScore(d.fillScore);
+        if (typeof d.knownCount === "number") setKnownCount(d.knownCount);
+        if (d.stage && d.stage !== "finish") setStage(d.stage);
+        setRestoredDraft(true);
+      }
+    } catch {}
+  }, [id]);
+
+  // Auto-save draft to localStorage
+  useEffect(() => {
+    if (!id || stage === "finish" || typeof window === "undefined") return;
+    try {
+      localStorage.setItem(
+        `lingoquest:draft:${id}`,
+        JSON.stringify({
+          writingText,
+          quizScore,
+          fillScore,
+          knownCount,
+          stage,
+          updatedAt: Date.now(),
+        })
+      );
+    } catch {}
+  }, [id, stage, writingText, quizScore, fillScore, knownCount]);
 
   useEffect(() => {
     if (!id) return;
@@ -264,6 +310,31 @@ export default function UnifiedExercisePage() {
           </div>
         )}
 
+        {/* Restored Draft Notice Banner */}
+        {restoredDraft && stage !== "finish" && (
+          <div className="mb-6 flex items-center justify-between rounded-2xl bg-amber-50 border border-amber-200 p-3.5 text-xs text-amber-900 shadow-xs">
+            <span className="flex items-center gap-1.5 font-medium">
+              <Sparkles className="h-4 w-4 text-amber-600" />
+              Đã khôi phục tiến trình làm bài dở của bạn từ phiên trước.
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                setRestoredDraft(false);
+                if (typeof window !== "undefined" && assignment?.id) {
+                  localStorage.removeItem(`lingoquest:draft:${assignment.id}`);
+                }
+                setWritingText("");
+                setQuizScore(0);
+                setFillScore(0);
+              }}
+              className="font-bold text-amber-800 underline hover:text-amber-950 ml-3"
+            >
+              Làm lại từ đầu
+            </button>
+          </div>
+        )}
+
         {/* ===== STAGE 1: VIDEO ===== */}
         {stage === "video" && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
@@ -320,7 +391,20 @@ export default function UnifiedExercisePage() {
                       /* Mặt trước: Tiếng Anh */
                       <div className="flex flex-col items-center justify-center flex-1 text-center">
                         <span className="text-xs font-bold uppercase tracking-wider text-brand mb-2">Từ vựng</span>
-                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">{currentCard.word}</h2>
+                        <div className="flex items-center justify-center gap-2">
+                          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">{currentCard.word}</h2>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              speakWord(currentCard.word);
+                            }}
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand hover:bg-brand-100 transition-colors shadow-xs"
+                            title="Nghe phát âm"
+                          >
+                            <Volume2 className="h-4 w-4" />
+                          </button>
+                        </div>
                         {currentCard.phonetic && (
                           <p className="mt-1 text-sm font-mono text-slate-400">{currentCard.phonetic}</p>
                         )}
@@ -333,7 +417,20 @@ export default function UnifiedExercisePage() {
                         <h3 className="text-2xl font-bold text-slate-900">{currentCard.meaning}</h3>
                         {currentCard.example && (
                           <div className="mt-4 rounded-xl bg-slate-50 p-3 text-left">
-                            <p className="text-xs font-semibold text-slate-700 italic">"{currentCard.example}"</p>
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="text-xs font-semibold text-slate-700 italic flex-1">"{currentCard.example}"</p>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  speakWord(currentCard.example);
+                                }}
+                                className="text-brand hover:text-brand-700 shrink-0 p-1"
+                                title="Nghe câu ví dụ"
+                              >
+                                <Volume2 className="h-3.5 w-3.5" />
+                              </button>
+                            </div>
                             {currentCard.exampleVi && (
                               <p className="text-[11px] text-slate-500 mt-1">→ {currentCard.exampleVi}</p>
                             )}
@@ -478,7 +575,8 @@ export default function UnifiedExercisePage() {
 
             {(() => {
               const currentF = fillList[fillIdx];
-              const isCorrect = fillInput.trim().toLowerCase() === currentF.answer.trim().toLowerCase();
+              const clean = (s: string) => s.trim().toLowerCase().replace(/[.,!?;:]+$/, "");
+              const isCorrect = clean(fillInput) === clean(currentF.answer);
 
               return (
                 <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -534,8 +632,8 @@ export default function UnifiedExercisePage() {
                     ) : (
                       <Button
                         onClick={() => {
-                          setFillChecked(false);
                           setFillInput("");
+                          setFillChecked(false);
                           if (fillIdx < fillList.length - 1) {
                             setFillIdx((i) => i + 1);
                           } else {
@@ -544,7 +642,7 @@ export default function UnifiedExercisePage() {
                         }}
                         className="bg-brand text-white font-bold"
                       >
-                        {fillIdx < fillList.length - 1 ? "Tiếp tục →" : "Sang phần tiếp theo →"}
+                        {fillIdx < fillList.length - 1 ? "Câu tiếp theo →" : "Chuyển sang phần tiếp →"}
                       </Button>
                     )}
                   </div>
@@ -573,6 +671,39 @@ export default function UnifiedExercisePage() {
                 </span>
                 <h2 className="text-lg font-bold text-slate-900">{writingPrompt.prompt}</h2>
               </div>
+
+              {/* Target Vocabulary Live Tracker */}
+              {vocabList.length > 0 && (
+                <div className="mb-4 rounded-2xl border border-purple-100 bg-purple-50/40 p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-bold text-purple-900 flex items-center gap-1.5">
+                      <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                      Từ vựng mục tiêu cần áp dụng vào bài viết:
+                    </span>
+                    <span className="text-[11px] font-bold text-purple-700">
+                      Đã áp dụng: {vocabList.filter((v: any) => writingText.toLowerCase().includes(v.word.toLowerCase().trim())).length}/{vocabList.length} từ
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {vocabList.map((v: any) => {
+                      const isUsed = writingText.toLowerCase().includes(v.word.toLowerCase().trim());
+                      return (
+                        <span
+                          key={v.id || v.word}
+                          className={cn(
+                            "inline-flex items-center gap-1 rounded-xl px-2.5 py-1 text-xs font-bold transition-all",
+                            isUsed
+                              ? "bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs"
+                              : "bg-white text-slate-500 border border-slate-200"
+                          )}
+                        >
+                          {isUsed ? "✓" : "○"} {v.word}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               {Array.isArray(writingPrompt.outline) && writingPrompt.outline.length > 0 && (
                 <div className="mb-4 rounded-2xl bg-purple-50/70 border border-purple-100 p-4 text-xs text-purple-900">

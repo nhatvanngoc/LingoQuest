@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -24,6 +25,8 @@ import {
   Edit3,
   BarChart3,
   RefreshCw,
+  Copy,
+  Download,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -44,6 +47,7 @@ interface TeacherAssignment {
   dueAt: string | null;
   createdAt: string;
   lessonTitle: string | null;
+  content?: any;
   vocabCount: number;
   quizCount: number;
   fillCount: number;
@@ -71,8 +75,10 @@ const CELL: Record<MatrixStatus, { cls: string; label: string }> = {
 };
 
 export default function TeacherPage() {
+  const router = useRouter();
   const { pushToast } = useApp();
   const [activeTab, setActiveTab] = useState<"assignments" | "lessons" | "matrix">("assignments");
+  const [exporting, setExporting] = useState(false);
 
   // Overview Data (stats & matrix)
   const [data, setData] = useState<{
@@ -144,6 +150,68 @@ export default function TeacherPage() {
     loadAssignments();
     loadLessons();
   }, [loadOverview, loadAssignments, loadLessons]);
+
+  // Nhân bản bài tập
+  const handleCloneAssignment = (a: TeacherAssignment) => {
+    const cloneData = {
+      title: `${a.title} (Bản sao)`,
+      description: a.description || "",
+      videoUrl: a.videoUrl || "",
+      content: a.content || null,
+    };
+    sessionStorage.setItem("lingoquest:clone-assignment", JSON.stringify(cloneData));
+    pushToast({
+      title: "Đã tạo bản sao bài tập",
+      desc: "Đang chuyển đến Studio để bạn chỉnh sửa và giao bài...",
+      icon: "📋",
+      tone: "info",
+    });
+    router.push("/teacher/assignments/new");
+  };
+
+  // Xuất danh sách & bảng điểm học sinh ra CSV
+  const handleExportRoster = async () => {
+    setExporting(true);
+    try {
+      const res = await fetch("/api/teacher/students");
+      const json = await res.json();
+      if (json.ok && Array.isArray(json.students) && json.students.length > 0) {
+        const headers = ["ID", "Họ và tên", "Email", "Cấp độ", "Kinh nghiệm (XP)", "Chuỗi học (Streak)", "Từ vựng đã thuộc", "Ngày đăng ký"];
+        const rows = json.students.map((s: any) => [
+          s.id,
+          `"${(s.name || "").replace(/"/g, '""')}"`,
+          `"${(s.email || "").replace(/"/g, '""')}"`,
+          s.level ?? 1,
+          s.xp ?? 0,
+          s.streak ?? 0,
+          s.wordsLearned ?? 0,
+          s.createdAt ? new Date(s.createdAt).toLocaleDateString("vi-VN") : "",
+        ]);
+        const csvContent = "\uFEFF" + [headers.join(","), ...rows.map((r: any[]) => r.join(","))].join("\r\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `LingoQuest_Danh_Sach_Hoc_Sinh_${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        pushToast({
+          title: "Xuất dữ liệu thành công",
+          desc: `Đã tải xuống file CSV danh sách ${json.students.length} học sinh (chuẩn UTF-8 mở trực tiếp bằng Excel).`,
+          icon: "📊",
+          tone: "info",
+        });
+      } else {
+        alert("Chưa có học sinh nào trong hệ thống để xuất file.");
+      }
+    } catch {
+      alert("Lỗi khi kết nối để xuất danh sách học sinh.");
+    } finally {
+      setExporting(false);
+    }
+  };
 
   // Xóa bài tập
   const handleDeleteAssignment = async (id: string, title: string) => {
@@ -386,7 +454,18 @@ export default function TeacherPage() {
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleExportRoster}
+                disabled={exporting}
+                className="text-slate-700 border-slate-200 hover:bg-slate-50"
+                title="Xuất bảng điểm & danh sách học sinh ra file CSV (chuẩn UTF-8 mở trực tiếp bằng Excel)"
+              >
+                <Download className="h-4 w-4 mr-1.5 text-emerald-600" />
+                {exporting ? "Đang xuất..." : "Xuất Excel / CSV"}
+              </Button>
               <Button
                 variant="ghost"
                 size="sm"
@@ -506,6 +585,17 @@ export default function TeacherPage() {
                             <Link href={`/exercise/${a.id}`} target="_blank">
                               <Eye className="h-3.5 w-3.5 mr-1 text-slate-500" /> Xem thử
                             </Link>
+                          </Button>
+
+                          {/* Nhân bản bài tập (Clone) */}
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleCloneAssignment(a)}
+                            className="h-9 text-indigo-600 border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300"
+                            title="Nhân bản bài tập này để chỉnh sửa hoặc giao lại"
+                          >
+                            <Copy className="h-3.5 w-3.5 mr-1" /> Nhân bản
                           </Button>
 
                           {/* Ẩn / Hiện toggle */}

@@ -17,6 +17,7 @@ import {
   UserCheck,
   Sparkles,
   ArrowUpDown,
+  Download,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -96,6 +97,34 @@ export default function TeacherStudentsPage() {
     }
   };
 
+  const exportToCsv = () => {
+    if (students.length === 0) {
+      alert("Không có học sinh nào để xuất danh sách.");
+      return;
+    }
+    const headers = ["ID", "Họ và tên", "Email", "Cấp độ", "Kinh nghiệm (XP)", "Chuỗi ngày học (Streak)", "Từ vựng đã thuộc", "Ngày tham gia"];
+    const rows = students.map((s) => [
+      s.id,
+      `"${(s.name || "").replace(/"/g, '""')}"`,
+      `"${(s.email || "").replace(/"/g, '""')}"`,
+      s.level ?? 1,
+      s.xp ?? 0,
+      s.streak ?? 0,
+      s.wordsLearned ?? 0,
+      s.createdAt ? new Date(s.createdAt).toLocaleDateString("vi-VN") : "",
+    ]);
+    const csvContent = "\uFEFF" + [headers.join(","), ...rows.map((r) => r.join(","))].join("\r\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `LingoQuest_Danh_Sach_Hoc_Sinh_${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <AppShell>
       <motion.div
@@ -128,7 +157,16 @@ export default function TeacherStudentsPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={exportToCsv}
+              className="gap-1.5 border-slate-200 text-slate-700 hover:bg-slate-50"
+              title="Xuất toàn bộ danh sách và điểm số học sinh ra file CSV (chuẩn UTF-8 mở trực tiếp bằng Excel)"
+            >
+              <Download className="h-4 w-4 text-emerald-600" /> Xuất Excel / CSV
+            </Button>
             <Link href="/teacher/assignments/new">
               <Button variant="outline" size="sm" className="gap-1.5 border-slate-200">
                 <ClipboardList className="h-4 w-4 text-brand" /> Giao bài
