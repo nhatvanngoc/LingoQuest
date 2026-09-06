@@ -60,6 +60,7 @@ BẮT BUỘC trả về duy nhất chuỗi JSON hợp lệ theo cấu trúc (kh�
         model,
         temperature: 0.2,
         max_tokens: 600,
+        reasoning_effort: "none",
         messages: [{ role: "user", content: prompt }],
       }),
     });

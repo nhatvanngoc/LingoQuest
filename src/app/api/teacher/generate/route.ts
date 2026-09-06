@@ -45,8 +45,9 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({
         model: process.env.GROQ_MODEL || "qwen/qwen3.6-27b",
-        temperature: 0.7,
-        max_tokens: 800,
+        temperature: 0.5,
+        max_tokens: 1000,
+        reasoning_effort: "none",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: userPrompt },
@@ -66,7 +67,7 @@ export async function POST(req: Request) {
     };
     let markdown = data.choices?.[0]?.message?.content?.trim() ?? "";
     // Strip <think>...</think> tags if Qwen/thinking models produce thinking process
-    markdown = markdown.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
+    markdown = markdown.replace(/<think>[\s\S]*?<\/think>/gi, "").replace(/<think>[\s\S]*/gi, "").trim();
     // Strip ```markdown fences if model wrapped
     markdown = markdown.replace(/^```markdown\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
 
