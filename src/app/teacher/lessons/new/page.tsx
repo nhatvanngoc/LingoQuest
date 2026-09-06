@@ -7,6 +7,7 @@ import { ChevronLeft, Video, Plus, Trash2, Sparkles, CheckCircle2, Wand2, Loader
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { Label, Input } from "@/components/ui/input";
+import { normalizeVideoUrl, resolveVideoEmbed } from "@/lib/video";
 
 /* Đăng bài học — dán link YouTube → preview → thêm từ vựng (động) → xuất bản */
 
@@ -25,12 +26,6 @@ const SAMPLE_ROWS: VocabRow[] = [
   { id: newId(), word: "hang out", meaning: "đi chơi", time: "0:52" },
 ];
 
-/** Rút trọn YouTube ID từ nhiều dạng link */
-function extractYouTubeId(url: string): string | null {
-  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
-  return m ? m[1] : null;
-}
-
 export default function NewLessonPage() {
   const [url, setUrl] = useState("https://www.youtube.com/watch?v=WUfv5FD-x2g");
   const [title, setTitle] = useState("Talking About Your Weekend");
@@ -39,7 +34,8 @@ export default function NewLessonPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const videoId = extractYouTubeId(url);
+  const videoEmbed = resolveVideoEmbed(url);
+  const videoId = videoEmbed.id;
 
   const publish = async () => {
     setBusy(true);
@@ -106,24 +102,32 @@ export default function NewLessonPage() {
         </h1>
 
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-6 flex flex-col gap-6">
-          {/* Link YouTube + preview */}
+          {/* Link Video (YouTube / Google Drive) + preview */}
           <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-soft">
             <h2 className="mb-4 flex items-center gap-2 font-extrabold text-slate-900">
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs text-white">1</span>
-              Dán link video YouTube
+              Dán link video bài học (YouTube / Google Drive)
             </h2>
             <Label>Tiêu đề bài học</Label>
             <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="VD: Ordering Food in English" className="mb-3" />
-            <Label>Đường dẫn YouTube</Label>
-            <Input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://youtube.com/watch?v=..." />
+            <Label>Đường dẫn video</Label>
+            <Input
+              value={url}
+              onChange={(e) => setUrl(normalizeVideoUrl(e.target.value))}
+              onBlur={(e) => setUrl(normalizeVideoUrl(e.target.value))}
+              placeholder="Dán link Google Drive hoặc YouTube..."
+            />
+            <p className="mt-1.5 text-[11px] text-slate-500">
+              💡 Tự động thêm đuôi <code>/preview</code> khi dán link chia sẻ Google Drive để phát trực tiếp.
+            </p>
 
             {/* Preview video */}
             <div className="mt-4">
-              {videoId ? (
+              {videoEmbed.type !== "none" && videoEmbed.embedUrl ? (
                 <div className="overflow-hidden rounded-2xl border border-slate-100 bg-black">
                   <iframe
                     className="aspect-video w-full"
-                    src={`https://www.youtube.com/embed/${videoId}`}
+                    src={videoEmbed.embedUrl}
                     title="Preview"
                     allow="encrypted-media; picture-in-picture"
                     allowFullScreen
@@ -131,7 +135,7 @@ export default function NewLessonPage() {
                 </div>
               ) : (
                 <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-slate-100 text-sm font-semibold text-slate-400">
-                  Nhập link YouTube hợp lệ để xem trước
+                  Nhập link Google Drive hoặc YouTube để xem trước
                 </div>
               )}
             </div>

@@ -28,11 +28,12 @@ import { Button } from "@/components/ui/button";
 import { Label, Input } from "@/components/ui/input";
 import { CLASS_OPTIONS } from "@/lib/mock/data";
 import { cn } from "@/lib/utils";
+import { normalizeVideoUrl, resolveVideoEmbed } from "@/lib/video";
 
 /* ============================================================
    Unified Co-Pilot Studio (5 trong 1)
    Gộp giao diện Thủ công & AI:
-   1. Video bài giảng (YouTube)
+   1. Video bài giảng (YouTube & Google Drive Preview)
    2. Bộ Flashcards từ vựng
    3. Câu hỏi Trắc nghiệm (Multiple Choice)
    4. Câu hỏi Điền vào chỗ trống (Fill-in-the-blank)
@@ -93,21 +94,10 @@ interface SyntaxItem {
   explanation: string;
 }
 
-function extractYoutubeId(url: string): string {
-  if (!url) return "";
-  const trimmed = url.trim();
-  if (trimmed.length === 11 && !trimmed.includes("/") && !trimmed.includes(".")) {
-    return trimmed;
-  }
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = trimmed.match(regExp);
-  return match && match[2].length === 11 ? match[2] : "";
-}
-
 export default function UnifiedNewAssignmentPage() {
   // ===== Co-Pilot AI State =====
   const [aiTopic, setAiTopic] = useState("");
-  const [aiLevel, setAiLevel] = useState("A2-B1");
+  const [aiLevel, setAiLevel] = useState("B1");
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [subAiLoading, setSubAiLoading] = useState<string | null>(null);
 
@@ -252,7 +242,7 @@ export default function UnifiedNewAssignmentPage() {
   const [createdId, setCreatedId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const youtubeId = extractYoutubeId(videoUrl);
+  const videoEmbed = resolveVideoEmbed(videoUrl);
 
   // Khôi phục dữ liệu bài tập khi bấm "Nhân bản" từ Dashboard
   useEffect(() => {
@@ -761,11 +751,17 @@ export default function UnifiedNewAssignmentPage() {
     setIsSubmitting(true);
     setError(null);
 
-    const targetXp = aiLevel.includes("C1") || aiLevel.includes("THPT") ? 150 : aiLevel.includes("B") ? 80 : 50;
+    const targetXp =
+      aiLevel.includes("C1") || aiLevel.includes("THPT") || aiLevel.includes("Phân hóa")
+        ? 120
+        : aiLevel.includes("B2")
+        ? 80
+        : 50;
 
     const payloadContent = {
       videoUrl: videoUrl.trim(),
-      youtubeId,
+      videoType: videoEmbed.type,
+      youtubeId: videoEmbed.id,
       difficultyLevel: aiLevel,
       targetXp,
       vocabulary: vocabList.filter((v) => v.word.trim()),
@@ -906,13 +902,17 @@ export default function UnifiedNewAssignmentPage() {
 
           {/* Difficulty Level Selector Pills */}
           <div className="mb-3 flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold text-slate-600 mr-1">Khung độ khó:</span>
+            <span className="text-xs font-bold text-slate-600 mr-1">Khung độ khó THPT:</span>
             {[
-              { key: "A1-A2", label: "A1-A2 Foundation (Căn bản · +50 XP)", color: "emerald" },
-              { key: "B1-B2", label: "B1-B2 Intermediate (Trung cấp · +80 XP)", color: "blue" },
-              { key: "C1 / THPTQG", label: "C1 / THPTQG & IELTS (Phân hóa cao · +150 XP)", color: "purple" },
+              { key: "B1", label: "B1: Lớp 10 (Nền tảng THPT · +50 XP)", color: "emerald" },
+              { key: "B2", label: "B2: Lớp 11-12 (Trọng tâm THPT · +80 XP)", color: "blue" },
+              { key: "B2+ / C1 Phân hóa", label: "B2+ / C1 Phân hóa (Luyện thi THPTQG 8.5+ · +120 XP)", color: "purple" },
             ].map((lvl) => {
-              const active = aiLevel === lvl.key || (lvl.key === "C1 / THPTQG" && (aiLevel === "C1" || aiLevel === "THPTQG" || aiLevel.includes("THPT")));
+              const active =
+                aiLevel === lvl.key ||
+                (lvl.key === "B2+ / C1 Phân hóa" && (aiLevel.includes("C1") || aiLevel.includes("THPT") || aiLevel.includes("Phân hóa"))) ||
+                (lvl.key === "B2" && (aiLevel === "B2" || aiLevel === "B1-B2")) ||
+                (lvl.key === "B1" && (aiLevel === "B1" || aiLevel === "A1-A2" || aiLevel === "A2-B1"));
               return (
                 <button
                   key={lvl.key}
@@ -1017,7 +1017,7 @@ export default function UnifiedNewAssignmentPage() {
               <div className="sm:col-span-2 rounded-xl border border-slate-100 bg-slate-50/70 p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                   <Label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                    <Video className="h-4 w-4 text-rose-500" /> Link Video YouTube bài giảng
+                    <Video className="h-4 w-4 text-rose-500" /> Link Video bài giảng (Google Drive / YouTube)
                   </Label>
                   {suggestedQuery && (
                     <span className="text-[11px] text-slate-400">
@@ -1027,20 +1027,46 @@ export default function UnifiedNewAssignmentPage() {
                 </div>
                 <Input
                   value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
-                  placeholder="Dán link YouTube (vd: https://www.youtube.com/watch?v=...)"
+                  onChange={(e) => {
+                    const raw = e.target.value;
+                    setVideoUrl(normalizeVideoUrl(raw));
+                  }}
+                  onBlur={(e) => {
+                    setVideoUrl(normalizeVideoUrl(e.target.value));
+                  }}
+                  placeholder="Dán link chia sẻ Google Drive hoặc link YouTube bài giảng..."
                   className="bg-white text-sm"
                 />
+                <p className="mt-1.5 text-[11px] text-slate-500 flex items-center gap-1">
+                  <span>💡</span> Hỗ trợ link chia sẻ Google Drive (hệ thống tự động thêm đuôi <code>/preview</code> để phát trực tiếp) hoặc link YouTube.
+                </p>
 
-                {youtubeId && (
-                  <div className="mt-3 aspect-video max-w-md mx-auto overflow-hidden rounded-xl border border-slate-200 bg-black shadow-sm">
-                    <iframe
-                      src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
-                      title="YouTube Preview"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="h-full w-full border-0"
-                    />
+                {videoEmbed.type !== "none" && videoEmbed.embedUrl && (
+                  <div className="mt-3 space-y-2">
+                    <div className="flex items-center gap-2">
+                      {videoEmbed.type === "drive" ? (
+                        <span className="inline-flex items-center gap-1 rounded-md bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700 border border-blue-200">
+                          <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" /> Google Drive Preview (tự động chuẩn hóa)
+                        </span>
+                      ) : videoEmbed.type === "youtube" ? (
+                        <span className="inline-flex items-center gap-1 rounded-md bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-700 border border-red-200">
+                          <span className="h-2 w-2 rounded-full bg-red-500" /> YouTube Player
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 rounded-md bg-slate-50 px-2 py-0.5 text-xs font-semibold text-slate-700 border border-slate-200">
+                          Video Player
+                        </span>
+                      )}
+                    </div>
+                    <div className="aspect-video max-w-md mx-auto overflow-hidden rounded-xl border border-slate-200 bg-black shadow-sm">
+                      <iframe
+                        src={videoEmbed.embedUrl}
+                        title="Video Preview"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="h-full w-full border-0"
+                      />
+                    </div>
                   </div>
                 )}
               </div>

@@ -1,47 +1,47 @@
 /* ============================================================
    prompt.ts — Prompt engineering preset cho Groq tạo bài tập LingoQuest
    Hỗ trợ Unified Assignment đa tầng (Video + Flashcards + Trắc nghiệm + Điền từ + Đọc hiểu + Ghép câu + Tự luận)
-   Phân cấp độ khó chuẩn CEFR: A1-A2, B1-B2, C1 / THPT Quốc Gia & IELTS
+   Thiết kế chuyên sâu cho Học sinh THPT Lớp 10, 11, 12 (Chuẩn GDPT mới & Đề thi THPT Quốc Gia)
+   Phân cấp độ khó: B1 (Lớp 10) -> B2 (Lớp 11-12) -> B2+/C1 (Phân hóa THPTQG 8.5+ & IELTS 6.5+)
    ============================================================ */
 
-export const UNIFIED_SYSTEM_PROMPT = `Bạn là chuyên gia sư phạm tiếng Anh hàng đầu, am hiểu sâu sắc chương trình GDPT Việt Nam, đề thi tốt nghiệp THPT Quốc Gia và chuẩn quốc tế CEFR (A1 -> C1) & IELTS.
-Nhiệm vụ: Tạo 1 bài tập hoàn chỉnh, chuẩn hóa sư phạm theo cấp độ được yêu cầu dưới định dạng JSON duy nhất.
+export const UNIFIED_SYSTEM_PROMPT = `Bạn là chuyên gia sư phạm tiếng Anh hàng đầu, am hiểu sâu sắc chương trình GDPT mới (bộ sách Global Success, Friends Global, Bright...) cho học sinh THPT Lớp 10, 11, 12 và cấu trúc ma trận đề thi Tốt nghiệp THPT Quốc Gia.
+Nhiệm vụ: Tạo 1 bài tập hoàn chỉnh, chuẩn hóa sư phạm bám sát kiến thức THPT theo cấp độ được yêu cầu dưới định dạng JSON duy nhất.
 
-CÁC CẤP ĐỘ ĐỘ KHÓ (CEFR & BENCHMARKS):
-1. "A1-A2" (Foundation / Căn bản - Mất gốc):
-   - Từ vựng thông dụng hằng ngày, phát âm rõ ràng, nghĩa tiếng Việt gần gũi.
-   - Ngữ pháp: Hiện tại đơn, Quá khứ đơn, câu đơn, từ nối cơ bản (and, but, because).
-   - Câu hỏi có gợi ý rõ ràng, giải thích tỉ mỉ.
+CÁC CẤP ĐỘ ĐỘ KHÓ (DÀNH CHO HỌC SINH THPT LỚP 10 - 12):
+1. "B1" (Lớp 10 · Nền tảng THPT):
+   - Đối tượng: Học sinh lớp 10 củng cố nền tảng, bám sát các chủ điểm SGK Global Success 10 (Family Life, Humans & The Environment, Music, For A Better Community, Inventions, Gender Equality, Viet Nam & International Organisations, New Ways to Learn, Protecting the Environment, Ecotourism).
+   - Ngữ pháp: Quá khứ đơn & Tiếp diễn, Hiện tại hoàn thành, Câu bị động (Passive voice), Động từ khuyết thiếu (Modals), Mệnh đề quan hệ xác định, Từ nối liên kết câu cơ bản.
+   - Độ dài bài đọc: 120-160 từ; đề bài tự luận: 80-100 từ.
 
-2. "B1-B2" (Intermediate / Giao tiếp & Học thuật Trung cấp):
-   - Từ vựng: Collocations, Phrasal verbs, từ vựng học đường & công việc.
-   - Ngữ pháp: Mệnh đề quan hệ, Hiện tại hoàn thành, Câu điều kiện (1, 2), Bị động.
-   - Đọc hiểu: Ngữ cảnh đời sống thực tế, câu hỏi kiểm tra ý chính và từ đồng nghĩa.
+2. "B2" (Lớp 11-12 · Trọng tâm THPT):
+   - Đối tượng: Học sinh lớp 11 và 12 ôn tập kiến thức trọng tâm (SGK 11-12: A Long and Healthy Life, The Generation Gap, Cities of the Future, ASEAN & Viet Nam, Global Warming, Preserving Our Heritage, Education Options, The World of Work, Career Paths, Artificial Intelligence).
+   - Ngữ pháp & Cấu trúc: Phrasal verbs phổ biến, Collocations thực tế, Mệnh đề phân từ (Participle clauses), Câu điều kiện loại 1, 2, 3 và hỗn hợp, Danh động từ & Động từ nguyên mẫu, So sánh kép (The more... the more...).
+   - Độ dài bài đọc: 180-240 từ; đề bài tự luận: 120-150 từ.
 
-3. "C1" hoặc "THPTQG" (Advanced / Chuyên sâu & Phân hóa cao):
-   - Từ vựng: C1/C2, Academic Word List, Idioms, Collocations nâng cao.
-   - Ngữ pháp: Đảo ngữ (Inversion), Thể giả định (Subjunctive), Rút gọn mệnh đề, Cleft sentences, Câu điều kiện hỗn hợp.
-   - Bẫy thi cử: Các phương án nhiễu (distractors) tinh vi, bài đọc học thuật phân tích tư duy phản biện (inference/tone).
-   - Đề bài viết nghị luận xã hội hoặc phân tích học thuật (150-250 từ).
+3. "B2+ / C1 Phân hóa" (Luyện thi THPTQG 8.5+ & IELTS 6.5+):
+   - LƯU Ý SƯ PHẠM CỐT LÕI: Dành cho học sinh chinh phục điểm 9+ và 10 trong kỳ thi tốt nghiệp THPTQG. "Không hẳn là C1 hàn lâm thuần túy hay triết học xa rời thực tế". Tuyệt đối KHÔNG ra các từ vựng C1 cổ ngữ, từ ngữ lý thuyết chuyên sâu không liên quan đến thi cử.
+   - Trọng tâm: Thành ngữ (Idioms) thông dụng thường gặp trong đề thi (take something for granted, burn the midnight oil, cost an arm and a leg, hit the books...), Collocations phân hóa cao (bear in mind, strike a balance, make allowance for...), Đảo ngữ (Inversion with negative adverbs: Not only..., Hardly/Scarcely...), Câu chẻ (Cleft sentences: It is... that...), Thể giả định (Subjunctive), Bẫy câu hỏi đọc hiểu suy luận hàm ý (Inference / Author's attitude).
+   - Độ dài bài đọc: 260-320 từ; đề bài tự luận: 150-200 từ.
 
 CẤU TRÚC JSON BẮT BUỘC:
 {
-  "title": "Tiêu đề bài tập ngắn gọn, cuốn hút bằng tiếng Việt",
-  "description": "Mô tả mục tiêu sư phạm 1-2 câu tiếng Việt (nêu rõ cấp độ)",
-  "difficultyLevel": "A1-A2 | B1-B2 | C1 / THPTQG",
-  "suggestedVideoQuery": "Từ khóa tìm kiếm video tiếng Anh chất lượng trên YouTube",
+  "title": "Tiêu đề bài tập ngắn gọn, cuốn hút bằng tiếng Việt (phù hợp học sinh THPT)",
+  "description": "Mô tả mục tiêu sư phạm 1-2 câu tiếng Việt (nêu rõ cấp độ và chủ điểm)",
+  "difficultyLevel": "B1 | B2 | B2+ / C1 Phân hóa",
+  "suggestedVideoQuery": "Từ khóa tìm kiếm video tiếng Anh chất lượng trên YouTube/Drive",
   "vocabulary": [
     {
-      "word": "từ tiếng Anh chuẩn",
+      "word": "từ hoặc cụm từ tiếng Anh chuẩn",
       "phonetic": "/phiên âm IPA/",
-      "meaning": "nghĩa tiếng Việt chính xác",
-      "example": "Câu ví dụ tiếng Anh tự nhiên",
+      "meaning": "nghĩa tiếng Việt chính xác bám sát ngữ cảnh",
+      "example": "Câu ví dụ tiếng Anh tự nhiên phù hợp lứa tuổi học sinh",
       "exampleVi": "Dịch nghĩa ví dụ tiếng Việt"
     }
   ],
   "quizQuestions": [
     {
-      "question": "Câu hỏi trắc nghiệm tiếng Anh (phù hợp độ khó)",
+      "question": "Câu hỏi trắc nghiệm tiếng Anh (phù hợp độ khó và ma trận đề THPT)",
       "options": ["A. Lựa chọn 1", "B. Lựa chọn 2", "C. Lựa chọn 3", "D. Lựa chọn 4"],
       "answer": "A",
       "explanation": "Giải thích chi tiết ngữ pháp/ngữ cảnh và lý do các câu khác sai bằng tiếng Việt"
@@ -57,14 +57,14 @@ CẤU TRÚC JSON BẮT BUỘC:
   ],
   "readingPassage": {
     "title": "Tiêu đề bài đọc tiếng Anh",
-    "passage": "Đoạn văn tiếng Anh (A1: 80-120 từ, B1-B2: 150-220 từ, C1/THPTQG: 250-350 từ)",
-    "levelTag": "A1-A2 Basic | B1-B2 Reading | THPTQG Academic",
+    "passage": "Đoạn văn tiếng Anh (B1: 120-160 từ, B2: 180-240 từ, B2+/C1: 260-320 từ)",
+    "levelTag": "B1 Foundation | B2 Intermediate | B2+/C1 Advanced",
     "questions": [
       {
         "question": "Câu hỏi đọc hiểu tiếng Anh",
         "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
         "answer": "A",
-        "explanation": "Dẫn chứng từ đoạn văn và giải thích bằng tiếng Việt"
+        "explanation": "Dẫn chứng cụ thể từ đoạn văn và giải thích bằng tiếng Việt"
       }
     ]
   },
@@ -85,22 +85,22 @@ CẤU TRÚC JSON BẮT BUỘC:
 
 QUY TẮC BẮT BUỘC:
 - Trả về DUY NHẤT 1 JSON object hợp lệ, tuyệt đối không bọc markdown block, không giải thích ngoài JSON.
-- vocabulary: 5 đến 7 từ.
-- quizQuestions: 3 đến 5 câu.
+- vocabulary: 5 đến 7 từ/cụm từ bám sát chủ điểm.
+- quizQuestions: 3 đến 5 câu có tính phân loại rõ ràng.
 - fillQuestions: 3 đến 5 câu.
-- readingPassage: 1 đoạn văn kèm 2 đến 3 câu hỏi đọc hiểu.
-- syntaxRearrange: 2 đến 3 câu luyện sắp xếp cấu trúc.
-- writingPrompt: 1 đề bài phù hợp cấp độ (A1: 60-80 từ, B1-B2: 100-140 từ, C1: 160-220 từ).`;
+- readingPassage: 1 đoạn văn kèm 2 đến 3 câu hỏi đọc hiểu (có câu hỏi suy luận ý chính/từ vựng).
+- syntaxRearrange: 2 đến 3 câu luyện sắp xếp cấu trúc trọng tâm (đảo ngữ, bị động, mệnh đề phân từ...).
+- writingPrompt: 1 đề bài phù hợp cấp độ (B1: 80-100 từ, B2: 120-150 từ, B2+/C1: 150-200 từ).`;
 
-export function buildUnifiedPrompt(input: string, level: string = "A2-B1"): string {
-  return `CHỦ ĐỀ / YÊU CẦU: ${input}
-TRÌNH ĐỘ MỤC TIÊU: ${level}
+export function buildUnifiedPrompt(input: string, level: string = "B1"): string {
+  return `CHỦ ĐỀ / CHỦ ĐIỂM BÀI HỌC: ${input}
+TRÌNH ĐỘ MỤC TIÊU: ${level} (Dành cho học sinh THPT Lớp 10, 11, 12 - không dùng C1 hàn lâm thuần túy)
 Hãy thiết kế gói bài tập toàn diện chuẩn hóa (Video query, Từ vựng, Trắc nghiệm, Điền từ khuyết, Bài đọc hiểu Reading Comprehension, Luyện cấu trúc câu Syntax Rearrange, và Viết tự luận) dưới dạng JSON chuẩn.`;
 }
 
-export function buildReadingPrompt(topic: string, level: string = "B1-B2"): string {
+export function buildReadingPrompt(topic: string, level: string = "B1"): string {
   return `CHỦ ĐỀ: ${topic}
-TRÌNH ĐỘ: ${level}
+TRÌNH ĐỘ: ${level} (Học sinh THPT Lớp 10-12)
 Hãy tạo 1 đoạn văn đọc hiểu (Reading Passage) kèm 3 câu hỏi đọc hiểu trắc nghiệm (có dẫn chứng giải thích). Trả về JSON:
 {
   "readingPassage": {
@@ -114,9 +114,9 @@ Hãy tạo 1 đoạn văn đọc hiểu (Reading Passage) kèm 3 câu hỏi đ�
 }`;
 }
 
-export function buildSyntaxPrompt(topic: string, level: string = "B1-B2", count: number = 3): string {
+export function buildSyntaxPrompt(topic: string, level: string = "B1", count: number = 3): string {
   return `CHỦ ĐỀ: ${topic}
-TRÌNH ĐỘ: ${level}
+TRÌNH ĐỘ: ${level} (Học sinh THPT Lớp 10-12)
 Hãy tạo ${count} câu luyện cấu trúc (sắp xếp từ bị xáo trộn). Trả về JSON:
 {
   "syntaxRearrange": [
@@ -130,9 +130,9 @@ Hãy tạo ${count} câu luyện cấu trúc (sắp xếp từ bị xáo trộn)
 }`;
 }
 
-export function buildMoreVocabPrompt(topic: string, level: string = "A2-B1", count: number = 4): string {
+export function buildMoreVocabPrompt(topic: string, level: string = "B1", count: number = 4): string {
   return `CHỦ ĐỀ: ${topic}
-TRÌNH ĐỘ: ${level}
+TRÌNH ĐỘ: ${level} (Học sinh THPT Lớp 10-12)
 Hãy gợi ý thêm ${count} từ vựng mới liên quan. Trả về JSON:
 {
   "vocabulary": [
@@ -141,9 +141,9 @@ Hãy gợi ý thêm ${count} từ vựng mới liên quan. Trả về JSON:
 }`;
 }
 
-export function buildMoreQuizPrompt(topic: string, vocab: string[], level: string = "A2-B1", count: number = 3): string {
+export function buildMoreQuizPrompt(topic: string, vocab: string[], level: string = "B1", count: number = 3): string {
   return `CHỦ ĐỀ: ${topic}
-TRÌNH ĐỘ: ${level}
+TRÌNH ĐỘ: ${level} (Học sinh THPT Lớp 10-12)
 CÁC TỪ VỰNG: ${vocab.join(", ")}
 Hãy tạo ${count} câu hỏi trắc nghiệm 4 lựa chọn có tính phân hóa phù hợp trình độ ${level}. Trả về JSON:
 {
@@ -153,9 +153,9 @@ Hãy tạo ${count} câu hỏi trắc nghiệm 4 lựa chọn có tính phân h�
 }`;
 }
 
-export function buildMoreFillPrompt(topic: string, vocab: string[], level: string = "A2-B1", count: number = 3): string {
+export function buildMoreFillPrompt(topic: string, vocab: string[], level: string = "B1", count: number = 3): string {
   return `CHỦ ĐỀ: ${topic}
-TRÌNH ĐỘ: ${level}
+TRÌNH ĐỘ: ${level} (Học sinh THPT Lớp 10-12)
 CÁC TỪ VỰNG: ${vocab.join(", ")}
 Hãy tạo ${count} câu hỏi điền từ khuyết [___]. Trả về JSON:
 {
@@ -165,11 +165,11 @@ Hãy tạo ${count} câu hỏi điền từ khuyết [___]. Trả về JSON:
 }`;
 }
 
-export function buildWritingPrompt(topic: string, level: string = "A2-B1"): string {
-  const minWords = level.includes("C1") || level.includes("THPT") ? 150 : level.includes("B") ? 100 : 70;
+export function buildWritingPrompt(topic: string, level: string = "B1"): string {
+  const minWords = level.includes("C1") || level.includes("THPT") ? 150 : level.includes("B2") ? 120 : 80;
   return `CHỦ ĐỀ: ${topic}
-TRÌNH ĐỘ: ${level}
-Hãy tạo 1 đề bài viết tự luận (khoảng ${minWords} từ) kích thích tư duy người học. Trả về JSON:
+TRÌNH ĐỘ: ${level} (Học sinh THPT Lớp 10-12)
+Hãy tạo 1 đề bài viết tự luận (khoảng ${minWords} từ) kích thích tư duy người học bám sát chương trình THPT. Trả về JSON:
 {
   "writingPrompt": {
     "prompt": "...",

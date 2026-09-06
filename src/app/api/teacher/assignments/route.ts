@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/session";
 import { createAssignment, createDeckWithCards } from "@/db/queries";
+import { normalizeVideoUrl } from "@/lib/video";
 
 export const dynamic = "force-dynamic";
 
@@ -23,9 +24,13 @@ export async function POST(req: Request) {
 
     const title = typeof body?.title === "string" ? body.title.trim() : "";
     const description = typeof body?.description === "string" ? body.description.trim() : "";
-    const videoUrl = typeof body?.videoUrl === "string" ? body.videoUrl.trim() : "";
+    const rawVideoUrl = typeof body?.videoUrl === "string" ? body.videoUrl.trim() : "";
+    const videoUrl = normalizeVideoUrl(rawVideoUrl);
     const prompt = typeof body?.prompt === "string" ? body.prompt.trim() : (body?.content?.writingPrompt?.prompt || "");
     const content = body?.content || null;
+    if (content && typeof content.videoUrl === "string") {
+      content.videoUrl = normalizeVideoUrl(content.videoUrl);
+    }
 
     if (!title) return NextResponse.json({ error: "Thiếu tiêu đề bài tập" }, { status: 400 });
 

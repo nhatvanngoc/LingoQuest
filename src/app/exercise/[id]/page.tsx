@@ -36,12 +36,13 @@ import { Mascot } from "@/components/brand/Mascot";
 import { useApp } from "@/lib/state/app-context";
 import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
+import { resolveVideoEmbed } from "@/lib/video";
 
 /* ============================================================
-   Unified Student Exercise Player (7 trong 1)
-   1. Video bài giảng
-   2. Bộ Flashcards từ vựng
-   3. Bài đọc hiểu văn bản (Reading Comprehension)
+   Unified Student Exercise Runner (7 hợp phần chuẩn GDPT THPT)
+   1. Video bài giảng (YouTube & Google Drive Preview)
+   2. Flashcards từ vựng
+   3. Đọc hiểu văn bản (Reading Comprehension)
    4. Luyện cấu trúc & Ghép câu (Syntax Builder)
    5. Trắc nghiệm (Multiple Choice)
    6. Điền từ (Fill in the blank)
@@ -49,17 +50,6 @@ import { cn } from "@/lib/utils";
    ============================================================ */
 
 type Stage = "video" | "vocab" | "reading" | "syntax" | "quiz" | "fill" | "write" | "finish";
-
-function extractYoutubeId(url: string): string {
-  if (!url) return "";
-  const trimmed = url.trim();
-  if (trimmed.length === 11 && !trimmed.includes("/") && !trimmed.includes(".")) {
-    return trimmed;
-  }
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = trimmed.match(regExp);
-  return match && match[2].length === 11 ? match[2] : "";
-}
 
 function speakWord(text: string) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -187,7 +177,7 @@ export default function UnifiedExercisePage() {
   const content = assignment?.content || {};
   const difficultyLevel = content.difficultyLevel || "A2-B1";
   const videoUrl = assignment?.videoUrl || content.videoUrl || "";
-  const youtubeId = extractYoutubeId(videoUrl);
+  const videoEmbed = resolveVideoEmbed(videoUrl);
   const vocabList: any[] = content.vocabulary || [];
   const readingPassage = content.readingPassage;
   const readingQuestions: any[] = readingPassage?.questions || [];
@@ -399,10 +389,10 @@ export default function UnifiedExercisePage() {
         {stage === "video" && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="overflow-hidden rounded-3xl border border-slate-200 bg-black shadow-lg">
-              {youtubeId ? (
+              {videoEmbed.type !== "none" && videoEmbed.embedUrl ? (
                 <div className="aspect-video w-full">
                   <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0`}
+                    src={videoEmbed.embedUrl}
                     title="Video bài học"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -418,7 +408,19 @@ export default function UnifiedExercisePage() {
 
             <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-slate-900 text-sm">Bước 1: Xem video hướng dẫn</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-bold text-slate-900 text-sm">Bước 1: Xem video hướng dẫn</h3>
+                  {videoEmbed.type === "drive" && (
+                    <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700 border border-blue-200">
+                      Google Drive Preview
+                    </span>
+                  )}
+                  {videoEmbed.type === "youtube" && (
+                    <span className="rounded-md bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-700 border border-red-200">
+                      YouTube
+                    </span>
+                  )}
+                </div>
                 <p className="text-xs text-slate-400 mt-0.5">Hãy xem kỹ bài giảng trước khi chuyển sang phần học từ vựng và làm bài tập.</p>
               </div>
               <Button onClick={goToNextStage} className="bg-brand text-white font-bold shrink-0">
