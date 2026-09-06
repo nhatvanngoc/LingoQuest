@@ -52,7 +52,6 @@ const NAV: Record<Role, NavItem[]> = {
     { href: "/teacher/grading", label: "Chấm bài", icon: ClipboardCheck },
     { href: "/teacher/assignments/new", label: "Giao bài", icon: ClipboardList },
     { href: "/teacher/lessons/new", label: "Đăng bài", icon: Video },
-    { href: "/progress", label: "Tiến độ", icon: BarChart3 },
   ],
   pending: [],
 };

@@ -1,14 +1,24 @@
 import { NextResponse } from "next/server";
-import { SYSTEM_PROMPT, buildUserPrompt } from "@/lib/ai/prompt";
-import { parseExerciseMarkdown, validateParsed } from "@/lib/ai/markdown-parser";
+import {
+  UNIFIED_SYSTEM_PROMPT,
+  buildUnifiedPrompt,
+  buildMoreVocabPrompt,
+  buildMoreQuizPrompt,
+  buildMoreFillPrompt,
+  buildWritingPrompt,
+} from "@/lib/ai/prompt";
 import { getCurrentUser } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
-/* POST /api/teacher/generate — Groq tạo markdown bài tập từ prompt giáo viên
-   Body: { input: string, level?: string, count?: number }
-   Output: { ok, markdown, parsed, usage? }
-   Yêu cầu: GROQ_API_KEY trong env, user là teacher
+/* POST /api/teacher/generate — Groq sinh nội dung bài tập Co-Pilot (5 trong 1)
+   Body: { 
+     action?: "all" | "vocab" | "quiz" | "fill" | "writing",
+     input: string, 
+     level?: string, 
+     vocab?: string[] 
+   }
+   Output: { ok: true, data: ... }
 */
 
 export async function POST(req: Request) {
@@ -17,10 +27,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Chỉ giáo viên mới được tạo bài tập" }, { status: 403 });
   }
 
-  const body = (await req.json().catch(() => null)) as { input?: string; level?: string; count?: number } | null;
+  const body = (await req.json().catch(() => null)) as {
+    action?: "all" | "vocab" | "quiz" | "fill" | "writing";
+    input?: string;
+    level?: string;
+    vocab?: string[];
+  } | null;
+
+  const action = body?.action || "all";
   const input = body?.input?.trim() ?? "";
   const level = body?.level ?? "A2-B1";
-  const count = body?.count ?? 6;
 
   if (!input || input.length < 3) {
     return NextResponse.json({ error: "Nhập chủ đề / yêu cầu (ít nhất 3 ký tự)" }, { status: 400 });
@@ -34,7 +50,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Thiếu GROQ_API_KEY trên server (Vercel Env)" }, { status: 500 });
   }
 
-  const userPrompt = buildUserPrompt(input, level, count);
+  let prompt = "";
+  if (action === "all") {
+    prompt = buildUnifiedPrompt(input, level);
+  } else if (action === "vocab") {
+    prompt = buildMoreVocabPrompt(input);
+  } else if (action === "quiz") {
+    prompt = buildMoreQuizPrompt(input, body?.vocab || []);
+  } else if (action === "fill") {
+    prompt = buildMoreFillPrompt(input, body?.vocab || []);
+  } else if (action === "writing") {
+    prompt = buildWritingPrompt(input);
+  }
 
   try {
     const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -45,12 +72,13 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({
         model: process.env.GROQ_MODEL || "qwen/qwen3.6-27b",
-        temperature: 0.5,
-        max_tokens: 1000,
+        temperature: 0.4,
+        max_tokens: 1200,
         reasoning_effort: "none",
+        response_format: { type: "json_object" },
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: userPrompt },
+          { role: "system", content: UNIFIED_SYSTEM_PROMPT },
+          { role: "user", content: prompt },
         ],
       }),
     });
@@ -65,26 +93,62 @@ export async function POST(req: Request) {
       choices?: { message?: { content?: string } }[];
       usage?: unknown;
     };
-    let markdown = data.choices?.[0]?.message?.content?.trim() ?? "";
-    // Strip <think>...</think> tags if Qwen/thinking models produce thinking process
-    markdown = markdown.replace(/<think>[\s\S]*?<\/think>/gi, "").replace(/<think>[\s\S]*/gi, "").trim();
-    // Strip ```markdown fences if model wrapped
-    markdown = markdown.replace(/^```markdown\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
+    let content = data.choices?.[0]?.message?.content?.trim() ?? "";
+    content = content.replace(/<think>[\s\S]*?<\/think>/gi, "").replace(/<think>[\s\S]*/gi, "").trim();
+    content = content.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
 
-    if (!markdown) {
-      return NextResponse.json({ error: "Groq trả về rỗng, thử lại" }, { status: 502 });
+    if (!content) {
+      return NextResponse.json({ error: "Groq trả về rỗng, vui lòng thử lại" }, { status: 502 });
     }
 
-    const parsed = parseExerciseMarkdown(markdown);
-    const err = validateParsed(parsed);
-    if (err) {
-      // Vẫn trả về markdown để giáo viên sửa tay, kèm warning
-      return NextResponse.json({ ok: true, markdown, parsed, warning: err, usage: data.usage });
+    let parsed: any;
+    try {
+      parsed = JSON.parse(content);
+    } catch {
+      // Cố gắng tìm khối JSON { ... }
+      const match = content.match(/\{[\s\S]*\}/);
+      if (match) {
+        parsed = JSON.parse(match[0]);
+      } else {
+        throw new Error("Không trích xuất được định dạng JSON từ phản hồi");
+      }
     }
 
-    return NextResponse.json({ ok: true, markdown, parsed, usage: data.usage });
+    // Đảm bảo ID ổn định cho các item
+    if (Array.isArray(parsed.vocabulary)) {
+      parsed.vocabulary = parsed.vocabulary.map((v: any, idx: number) => ({
+        id: v.id || `card-${Date.now().toString(36)}-${idx}`,
+        word: (v.word || "").trim(),
+        phonetic: (v.phonetic || "").trim(),
+        meaning: (v.meaning || "").trim(),
+        example: (v.example || "").trim(),
+        exampleVi: (v.exampleVi || "").trim(),
+      }));
+    }
+
+    if (Array.isArray(parsed.quizQuestions)) {
+      parsed.quizQuestions = parsed.quizQuestions.map((q: any, idx: number) => ({
+        id: q.id || `quiz-${Date.now().toString(36)}-${idx}`,
+        question: (q.question || "").trim(),
+        options: Array.isArray(q.options) ? q.options : [],
+        answer: (q.answer || "A").trim(),
+        explanation: (q.explanation || "").trim(),
+      }));
+    }
+
+    if (Array.isArray(parsed.fillQuestions)) {
+      parsed.fillQuestions = parsed.fillQuestions.map((f: any, idx: number) => ({
+        id: f.id || `fill-${Date.now().toString(36)}-${idx}`,
+        sentence: (f.sentence || "").trim(),
+        answer: (f.answer || "").trim(),
+        hint: (f.hint || "").trim(),
+        explanation: (f.explanation || "").trim(),
+      }));
+    }
+
+    return NextResponse.json({ ok: true, data: parsed, usage: data.usage });
   } catch (e) {
     console.error("[generate] exception", e);
-    return NextResponse.json({ error: "Lỗi mạng khi gọi Groq, thử lại" }, { status: 500 });
+    return NextResponse.json({ error: "Lỗi xử lý phản hồi từ AI, vui lòng thử lại" }, { status: 500 });
   }
 }

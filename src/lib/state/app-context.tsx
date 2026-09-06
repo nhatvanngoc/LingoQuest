@@ -92,6 +92,14 @@ interface AppStateValue {
   dailyTasks: DailyTask[];
   markLessonDone: () => void;
   recordGame: (score: number) => void;
+  syncStats: (delta: {
+    xp?: number;
+    wordsLearned?: number;
+    streak?: number;
+    minutes?: number;
+    lessonSlug?: string;
+    percent?: number;
+  }) => Promise<void>;
 }
 
 const AppContext = createContext<AppStateValue | null>(null);
@@ -100,7 +108,7 @@ let toastSeq = 1;
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [xp, setXp] = useState(SEED_XP);
-  const [streak] = useState(SEED_STREAK);
+  const [streak, setStreak] = useState(SEED_STREAK);
   const [wordsLearned, setWordsLearned] = useState(SEED_WORDS);
   const [srs, setSrs] = useState<SrsMap>(SEED_SRS);
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -178,6 +186,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     } catch {
       /* bỏ qua */
     }
+    // Đồng bộ số liệu thật từ server
+    fetch("/api/dashboard/overview")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.ok && d.stats) {
+          if (typeof d.stats.xp === "number" && d.stats.xp > 0) setXp(d.stats.xp);
+          if (typeof d.stats.wordsLearned === "number" && d.stats.wordsLearned > 0) setWordsLearned(d.stats.wordsLearned);
+          if (typeof d.stats.streak === "number" && d.stats.streak > 0) setStreak(d.stats.streak);
+        }
+      })
+      .catch(() => {});
     requestAnimationFrame(() => setHydrated(true));
   }, []);
 
@@ -193,6 +212,34 @@ export function AppProvider({ children }: { children: ReactNode }) {
       /* bỏ qua */
     }
   }, [xp, streak, wordsLearned, srs, tasks, taskDay, claimed, hydrated]);
+
+  const syncStats = useCallback(
+    async (delta: {
+      xp?: number;
+      wordsLearned?: number;
+      streak?: number;
+      minutes?: number;
+      lessonSlug?: string;
+      percent?: number;
+    }) => {
+      try {
+        const res = await fetch("/api/user/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(delta),
+        });
+        const data = await res.json();
+        if (data.ok && data.stats) {
+          if (typeof data.stats.xp === "number") setXp(data.stats.xp);
+          if (typeof data.stats.wordsLearned === "number") setWordsLearned(data.stats.wordsLearned);
+          if (typeof data.stats.streak === "number") setStreak(data.stats.streak);
+        }
+      } catch {
+        /* ignore */
+      }
+    },
+    [],
+  );
 
   const dismissToast = useCallback((id: number) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
@@ -345,8 +392,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       dailyTasks,
       markLessonDone,
       recordGame,
+      syncStats,
     }),
-    [xp, streak, wordsLearned, srs, toasts, level, xpIntoLevel, xpForNext, levelPct, hydrated, addXp, recordCard, needsReviewCount, deckLearnedCount, pushToast, dismissToast, dailyTasks, markLessonDone, recordGame],
+    [xp, streak, wordsLearned, srs, toasts, level, xpIntoLevel, xpForNext, levelPct, hydrated, addXp, recordCard, needsReviewCount, deckLearnedCount, pushToast, dismissToast, dailyTasks, markLessonDone, recordGame, syncStats],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

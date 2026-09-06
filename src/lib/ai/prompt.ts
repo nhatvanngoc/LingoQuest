@@ -1,55 +1,101 @@
 /* ============================================================
    prompt.ts — Prompt engineer preset cho Groq tạo bài tập LingoQuest
-   Output: 1 đoạn markdown duy nhất, web script sẽ decode thành bài tập hoàn chỉnh
+   Hỗ trợ Unified Assignment (Video + Flashcards + Trắc nghiệm + Điền từ + Tự luận)
    ============================================================ */
 
-export const SYSTEM_PROMPT = `Bạn là chuyên gia thiết kế bài tập tiếng Anh cho học sinh Việt Nam lớp 10-12 (CEFR A2-B1).
-Nhiệm vụ: từ CHỦ ĐỀ / YÊU CẦU của giáo viên, tạo 1 bài tập hoàn chỉnh dưới dạng MARKDOWN thuần túy.
+export const UNIFIED_SYSTEM_PROMPT = `Bạn là chuyên gia thiết kế bài học tiếng Anh cho học sinh Việt Nam lớp 10-12 (CEFR A2-B1).
+Nhiệm vụ: Tạo 1 bài tập hoàn chỉnh 5 trong 1 theo định dạng JSON hợp lệ duy nhất.
 
-QUY TẮC OUTPUT (BẮT BUỘC):
-- Chỉ trả về MARKDOWN, không thêm lời giải thích ngoài markdown.
-- Markdown phải tuân thủ cấu trúc dưới đây CHÍNH XÁC để parser web decode được:
-- Dùng tiếng Việt cho tiêu đề/phần hướng dẫn, tiếng Anh cho nội dung học.
+CẤU TRÚC JSON BẮT BUỘC:
+{
+  "title": "Tiêu đề bài tập ngắn gọn, cuốn hút bằng tiếng Việt",
+  "description": "Mô tả mục tiêu bài tập 1-2 câu tiếng Việt",
+  "suggestedVideoQuery": "Từ khóa tìm kiếm video tiếng Anh trên YouTube",
+  "vocabulary": [
+    {
+      "word": "từ tiếng Anh",
+      "phonetic": "/phiên âm IPA/",
+      "meaning": "nghĩa tiếng Việt",
+      "example": "Câu ví dụ tiếng Anh",
+      "exampleVi": "Dịch nghĩa ví dụ tiếng Việt"
+    }
+  ],
+  "quizQuestions": [
+    {
+      "question": "Câu hỏi trắc nghiệm tiếng Anh",
+      "options": ["A. Lựa chọn 1", "B. Lựa chọn 2", "C. Lựa chọn 3", "D. Lựa chọn 4"],
+      "answer": "A",
+      "explanation": "Giải thích ngắn gọn bằng tiếng Việt"
+    }
+  ],
+  "fillQuestions": [
+    {
+      "sentence": "Câu có vị trí khuyết [___] để học sinh điền từ",
+      "answer": "từ chính xác cần điền",
+      "hint": "Gợi ý dạng từ hoặc nghĩa",
+      "explanation": "Giải thích ngữ pháp/ngữ cảnh tiếng Việt"
+    }
+  ],
+  "writingPrompt": {
+    "prompt": "Đề bài viết đoạn văn ngắn (80-120 từ) bằng tiếng Việt",
+    "minWords": 80,
+    "outline": ["Gợi ý ý 1", "Gợi ý ý 2", "Gợi ý ý 3"]
+  }
+}
 
-CẤU TRÚC MARKDOWN CHUẨN:
-\`\`\`markdown
-# {Tiêu đề bài tập - ngắn gọn, hấp dẫn}
-> {Mô tả 1 câu: mục tiêu + trình độ}
+QUY TẮC:
+- Chỉ trả về duy nhất 1 JSON object hợp lệ, không bọc markdown fence, không kèm lời bình luận.
+- vocabulary: 6 đến 8 từ tiêu biểu.
+- quizQuestions: 3 đến 5 câu hỏi 4 lựa chọn (A, B, C, D).
+- fillQuestions: 3 đến 5 câu hỏi điền từ vào vị trí [___].
+- writingPrompt: 1 đề bài thực hành ứng dụng các từ vựng và cấu trúc trên.`;
 
-## VOCAB
-| word | phonetic | meaning | example | example_vi | start |
-|---|---|---|---|---|---|
-| relaxing | /rɪˈlæksɪŋ/ | thư giãn | I had a relaxing weekend. | Tôi đã có cuối tuần thư giãn. | 18 |
-| ... (6-10 từ, liên quan chủ đề) |
-
-## QUIZ
-### Q1: {Câu hỏi trắc nghiệm - tiếng Việt hoặc tiếng Anh}
-- A. {lựa chọn A}
-- B. {lựa chọn B}
-- C. {lựa chọn C}
-- D. {lựa chọn D}
-Answer: B
-Explain: {Giải thích ngắn gọn tiếng Việt}
-
-### Q2: ...
-(5-7 câu, phủ hết từ vựng, có 1-2 câu điền từ, 1 câu ngữ pháp)
-
-## WRITING
-Prompt: {Đề bài viết 1 câu tiếng Việt - yêu cầu 80-120 từ}
-Hint: {3 gợi ý từ vựng/cấu trúc nên dùng}
-\`\`\`
-
-RÀNG BUỘC:
-- VOCAB: 6-10 từ, có phonetic chuẩn IPA, example ngắn gọn A2-B1, start là giây gợi ý trong video (0, 18, 35...).
-- QUIZ: 5-7 câu, 4 lựa chọn, chỉ 1 đáp án đúng (A-D), Answer phải khớp 1 lựa chọn, Explain tiếng Việt 1 câu.
-- WRITING: 1 đề duy nhất, liên quan chủ đề.
-- Không dùng ký tự đặc biệt ngoài markdown trên.
-- Nếu giáo viên chỉ ghi chủ đề ngắn (vd "quá khứ đơn", "môi trường"), hãy tự suy ra từ vựng + bài tập phù hợp.
-`;
-
-export function buildUserPrompt(input: string, level: string = "A2-B1", count: number = 6): string {
+export function buildUnifiedPrompt(input: string, level: string = "A2-B1"): string {
   return `CHỦ ĐỀ / YÊU CẦU: ${input}
-TRÌNH ĐỘ: ${level}
-SỐ CÂU QUIZ MONG MUỐN: ${count}
-Hãy tạo markdown theo cấu trúc chuẩn trên. Chỉ trả về markdown, không thêm gì khác.`;
+TRÌNH ĐỘ MỤC TIÊU: ${level}
+Hãy tạo gói bài tập hoàn chỉnh 5 trong 1 (Video, Vocabulary, Quiz trắc nghiệm, Điền từ, Viết tự luận) dưới dạng JSON chuẩn.`;
+}
+
+export function buildMoreVocabPrompt(topic: string, count: number = 4): string {
+  return `CHỦ ĐỀ: ${topic}
+Hãy gợi ý thêm ${count} từ vựng mới liên quan. Trả về JSON:
+{
+  "vocabulary": [
+    { "word": "...", "phonetic": "/.../", "meaning": "...", "example": "...", "exampleVi": "..." }
+  ]
+}`;
+}
+
+export function buildMoreQuizPrompt(topic: string, vocab: string[], count: number = 3): string {
+  return `CHỦ ĐỀ: ${topic}
+CÁC TỪ VỰNG: ${vocab.join(", ")}
+Hãy tạo ${count} câu hỏi trắc nghiệm 4 lựa chọn. Trả về JSON:
+{
+  "quizQuestions": [
+    { "question": "...", "options": ["A. ...", "B. ...", "C. ...", "D. ..."], "answer": "A", "explanation": "..." }
+  ]
+}`;
+}
+
+export function buildMoreFillPrompt(topic: string, vocab: string[], count: number = 3): string {
+  return `CHỦ ĐỀ: ${topic}
+CÁC TỪ VỰNG: ${vocab.join(", ")}
+Hãy tạo ${count} câu hỏi điền từ khuyết [___]. Trả về JSON:
+{
+  "fillQuestions": [
+    { "sentence": "...", "answer": "...", "hint": "...", "explanation": "..." }
+  ]
+}`;
+}
+
+export function buildWritingPrompt(topic: string): string {
+  return `CHỦ ĐỀ: ${topic}
+Hãy tạo 1 đề bài viết tự luận (80-120 từ). Trả về JSON:
+{
+  "writingPrompt": {
+    "prompt": "...",
+    "minWords": 80,
+    "outline": ["...", "..."]
+  }
+}`;
 }

@@ -9,6 +9,7 @@ import {
   boolean,
   primaryKey,
   real,
+  jsonb,
 } from "drizzle-orm/pg-core";
 
 /* ============================================================
@@ -118,7 +119,41 @@ export const cards = pgTable("cards", {
   order: integer("order").default(0),
 });
 
-/** Bài tập được giao */
+/** Cấu trúc nội dung bài tập thống nhất (Unified Assignment: Video + Vocab + Quiz + Điền từ + Tự luận) */
+export interface UnifiedAssignmentContent {
+  videoUrl?: string;
+  youtubeId?: string;
+  vocabulary: {
+    id: string;
+    word: string;
+    phonetic: string;
+    meaning: string;
+    example: string;
+    exampleVi?: string;
+    start?: number;
+  }[];
+  quizQuestions: {
+    id: string;
+    question: string;
+    options: string[]; // 4 phương án [A, B, C, D]
+    answer: string;   // Đáp án đúng (vd "A" hoặc nội dung từ đúng)
+    explanation?: string;
+  }[];
+  fillQuestions: {
+    id: string;
+    sentence: string; // Câu có chứa vị trí trống [___]
+    answer: string;   // Từ cần điền
+    hint?: string;    // Gợi ý
+    explanation?: string;
+  }[];
+  writingPrompt?: {
+    prompt: string;
+    minWords?: number;
+    outline?: string[];
+  };
+}
+
+/** Bài tập được giao (chuẩn thống nhất 5 trong 1) */
 export const assignments = pgTable("assignments", {
   id: uuid("id").primaryKey().defaultRandom(),
   title: varchar("title", { length: 200 }).notNull(),
@@ -126,8 +161,10 @@ export const assignments = pgTable("assignments", {
   lessonId: uuid("lesson_id").references(() => lessons.id, { onDelete: "set null" }),
   deckId: uuid("deck_id").references(() => decks.id, { onDelete: "set null" }),
   classId: uuid("class_id").references(() => classes.id, { onDelete: "cascade" }),
+  videoUrl: text("video_url").default(""),
   description: text("description").default(""),
   prompt: text("prompt").default(""),
+  content: jsonb("content").$type<UnifiedAssignmentContent>(),
   dueAt: timestamp("due_at", { withTimezone: true }),
   createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),

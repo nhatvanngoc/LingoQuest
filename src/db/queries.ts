@@ -12,6 +12,8 @@ import {
   vocab,
   submissions,
   lessonProgress,
+  dailyActivity,
+  type UnifiedAssignmentContent,
 } from "./schema";
 import { and, eq, sql, desc, or } from "drizzle-orm";
 import { hashPassword } from "@/lib/auth/password";
@@ -204,14 +206,16 @@ export async function getWeeklyLeaderboard() {
    Hàm dành riêng Quản trị / Giáo viên — tạo / chấm bài, thống kê.
    ============================================================ */
 
-/** Tạo bài tập được giao (gắn vào lớp đầu tiên của hệ thống). */
+/** Tạo bài tập được giao (chuẩn thống nhất 5 trong 1). */
 export async function createAssignment(input: {
   title: string;
-  type: "exercise" | "deck";
+  type?: "exercise" | "deck";
   description?: string | null;
   prompt?: string | null;
   lessonId?: string | null;
   deckId?: string | null;
+  videoUrl?: string | null;
+  content?: UnifiedAssignmentContent | null;
   dueAt?: Date | null;
 }) {
   const classId = await getFirstClassId();
@@ -220,9 +224,11 @@ export async function createAssignment(input: {
     .insert(assignments)
     .values({
       title: input.title,
-      type: input.type,
+      type: input.type ?? "exercise",
       description: input.description ?? "",
       prompt: input.prompt ?? "",
+      videoUrl: input.videoUrl ?? "",
+      content: input.content ?? ({} as any),
       lessonId: input.lessonId ?? null,
       deckId: input.deckId ?? null,
       classId: classId ?? null,
@@ -281,6 +287,8 @@ export async function getAssignmentById(id: string) {
       type: assignments.type,
       description: assignments.description,
       prompt: assignments.prompt,
+      videoUrl: assignments.videoUrl,
+      content: assignments.content,
       lessonId: assignments.lessonId,
       deckId: assignments.deckId,
       dueAt: assignments.dueAt,
@@ -396,8 +404,23 @@ export async function getTeacherStats() {
     })
     .from(attempts);
 
+  const [statsRes] = await db
+    .select({
+      totalWordsLearned: sql<number>`coalesce(sum(${userStats.wordsLearned}), 0)::int`,
+      avgStreak: sql<number>`coalesce(round(avg(${userStats.streak})), 0)::int`,
+      totalXp: sql<number>`coalesce(sum(${userStats.xp}), 0)::int`,
+    })
+    .from(userStats);
+
   const completionRate = total ? Math.round((graded / total) * 100) : 0;
-  return { activeStudents, pendingGrading, completionRate };
+  return {
+    activeStudents,
+    pendingGrading,
+    completionRate,
+    totalWordsLearned: statsRes?.totalWordsLearned ?? 0,
+    avgStreak: statsRes?.avgStreak ?? 0,
+    totalXp: statsRes?.totalXp ?? 0,
+  };
 }
 
 /** Ma trận tiến độ: học sinh (hàng) × bài tập (cột) theo bảng attempts thật. */
@@ -528,6 +551,75 @@ export async function getStudentSubmissions(userId: string) {
   return rows;
 }
 
+/** Ghi nhận hoạt động học tập hôm nay vào bảng daily_activity */
+export async function recordDailyActivity(input: {
+  userId: string;
+  minutes?: number;
+  xp?: number;
+}) {
+  const now = new Date();
+  const dayStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
+  const minutesToAdd = input.minutes ?? 1;
+  const xpToAdd = input.xp ?? 0;
+
+  const existing = await db
+    .select()
+    .from(dailyActivity)
+    .where(and(eq(dailyActivity.userId, input.userId), eq(dailyActivity.day, dayStr)))
+    .limit(1);
+
+  if (existing.length === 0) {
+    await db.insert(dailyActivity).values({
+      userId: input.userId,
+      day: dayStr,
+      minutes: minutesToAdd,
+      xp: xpToAdd,
+    });
+  } else {
+    await db
+      .update(dailyActivity)
+      .set({
+        minutes: (existing[0].minutes ?? 0) + minutesToAdd,
+        xp: (existing[0].xp ?? 0) + xpToAdd,
+      })
+      .where(eq(dailyActivity.id, existing[0].id));
+  }
+}
+
+/** Lấy biểu đồ hoạt động 7 ngày gần nhất của học sinh từ database thật */
+export async function getUserWeeklyActivity(userId: string) {
+  const days: { day: string; date: string; minutes: number; xp: number }[] = [];
+  const DAY_LABELS = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+  const now = new Date();
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    const dateStr = d.toISOString().slice(0, 10);
+    const dayLabel = DAY_LABELS[d.getDay()];
+    days.push({ day: dayLabel, date: dateStr, minutes: 0, xp: 0 });
+  }
+
+  const rows = await db
+    .select()
+    .from(dailyActivity)
+    .where(eq(dailyActivity.userId, userId));
+
+  const rowMap = new Map<string, typeof rows[0]>();
+  for (const r of rows) {
+    rowMap.set(r.day, r);
+  }
+
+  return days.map((d) => {
+    const r = rowMap.get(d.date);
+    return {
+      day: d.day,
+      date: d.date,
+      minutes: r?.minutes ?? 0,
+      xp: r?.xp ?? 0,
+    };
+  });
+}
+
 /** Đồng bộ XP, chuỗi ngày học và tiến độ bài học của học sinh lên CSDL */
 export async function syncUserStats(input: {
   userId: string;
@@ -536,6 +628,7 @@ export async function syncUserStats(input: {
   wordsLearned?: number;
   lessonSlug?: string;
   percent?: number;
+  minutes?: number;
 }) {
   const current = await db
     .select()
@@ -543,8 +636,11 @@ export async function syncUserStats(input: {
     .where(eq(userStats.userId, input.userId))
     .limit(1);
 
+  const incomingStreak = input.streak ?? (input.wordsLearned || input.xp ? 1 : 0);
+  const currentStreak = current[0]?.streak ?? 0;
+  const newStreak = Math.max(incomingStreak, currentStreak);
+
   const newXp = Math.max(input.xp ?? 0, current[0]?.xp ?? 0);
-  const newStreak = Math.max(input.streak ?? 0, current[0]?.streak ?? 0);
   const newWords = Math.max(input.wordsLearned ?? 0, current[0]?.wordsLearned ?? 0);
   const newLevel = Math.max(1, Math.floor(newXp / 600) + 1);
 
@@ -568,6 +664,13 @@ export async function syncUserStats(input: {
       })
       .where(eq(userStats.userId, input.userId));
   }
+
+  // Tự động ghi nhận hoạt động vào daily_activity
+  await recordDailyActivity({
+    userId: input.userId,
+    minutes: input.minutes ?? 2,
+    xp: input.xp ? Math.min(input.xp, 50) : 10,
+  }).catch(() => {});
 
   if (input.lessonSlug) {
     const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(input.lessonSlug);

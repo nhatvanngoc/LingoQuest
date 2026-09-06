@@ -13,38 +13,39 @@ export async function POST(req: Request) {
 
     const body = (await req.json().catch(() => null)) as {
       title?: unknown;
-      type?: unknown;
       description?: unknown;
+      videoUrl?: unknown;
       prompt?: unknown;
       lessonId?: unknown;
-      deckId?: unknown;
       dueAt?: unknown;
-      customCards?: Array<{ front: string; back: string; phonetic?: string; example?: string; exampleVi?: string }>;
+      content?: any;
     } | null;
 
     const title = typeof body?.title === "string" ? body.title.trim() : "";
-    const type = body?.type === "deck" ? "deck" : "exercise";
     const description = typeof body?.description === "string" ? body.description.trim() : "";
-    const prompt = typeof body?.prompt === "string" ? body.prompt.trim() : "";
+    const videoUrl = typeof body?.videoUrl === "string" ? body.videoUrl.trim() : "";
+    const prompt = typeof body?.prompt === "string" ? body.prompt.trim() : (body?.content?.writingPrompt?.prompt || "");
+    const content = body?.content || null;
+
     if (!title) return NextResponse.json({ error: "Thiếu tiêu đề bài tập" }, { status: 400 });
 
-    let finalDeckId: string | null = typeof body?.deckId === "string" && body.deckId ? body.deckId : null;
+    let finalDeckId: string | null = null;
 
-    // Nếu giáo viên tự soạn danh sách thẻ flashcard thủ công
-    if (type === "deck" && Array.isArray(body?.customCards) && body.customCards.length > 0) {
-      const validCards = body.customCards
-        .filter((c) => typeof c.front === "string" && c.front.trim() && typeof c.back === "string" && c.back.trim())
-        .map((c) => ({
-          front: c.front.trim(),
-          back: c.back.trim(),
-          phonetic: c.phonetic?.trim() || "",
-          example: c.example?.trim() || "",
-          exampleVi: c.exampleVi?.trim() || "",
+    // Nếu có danh sách từ vựng trong content, tự động tạo bộ flashcard tương ứng
+    if (content && Array.isArray(content.vocabulary) && content.vocabulary.length > 0) {
+      const validCards = content.vocabulary
+        .filter((c: any) => typeof c.word === "string" && c.word.trim())
+        .map((c: any) => ({
+          front: c.word.trim(),
+          back: (c.meaning || "").trim(),
+          phonetic: (c.phonetic || "").trim(),
+          example: (c.example || "").trim(),
+          exampleVi: (c.exampleVi || "").trim(),
         }));
 
       if (validCards.length > 0) {
         const newDeck = await createDeckWithCards({
-          title,
+          title: `Từ vựng: ${title}`,
           createdBy: user.id,
           cards: validCards,
         });
@@ -54,9 +55,11 @@ export async function POST(req: Request) {
 
     const row = await createAssignment({
       title,
-      type,
+      type: "exercise",
       description,
       prompt,
+      videoUrl,
+      content,
       lessonId: typeof body?.lessonId === "string" && body.lessonId ? body.lessonId : null,
       deckId: finalDeckId,
       dueAt: typeof body?.dueAt === "string" && body.dueAt ? new Date(body.dueAt) : null,

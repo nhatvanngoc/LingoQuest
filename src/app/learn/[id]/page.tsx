@@ -257,7 +257,7 @@ function StepQuiz({
   lessonSlug?: string;
   onBack: () => void;
 }) {
-  const { addXp, markLessonDone } = useApp();
+  const { addXp, markLessonDone, wordsLearned, streak, syncStats } = useApp();
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -281,16 +281,15 @@ function StepQuiz({
         const earned = 30 + score * 10;
         addXp(earned, "Hoàn thành bài học");
         markLessonDone();
-        // Đồng bộ tiến độ 100% và XP lên PostgreSQL
-        fetch("/api/user/sync", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            xp: earned,
-            lessonSlug: lessonSlug || "",
-            percent: 100,
-          }),
-        }).catch(() => {});
+        // Đồng bộ tiến độ 100%, XP, từ vựng và streak lên PostgreSQL
+        syncStats({
+          xp: earned,
+          lessonSlug: lessonSlug || "",
+          percent: 100,
+          wordsLearned,
+          streak: Math.max(1, streak),
+          minutes: 5,
+        });
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);
       }

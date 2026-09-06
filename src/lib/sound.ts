@@ -167,6 +167,54 @@ class SoundSynthesizer {
       // Ignore
     }
   }
+
+  /** Error buzzer for incorrect answer */
+  public playBuzzer(): void {
+    this.playErrorTone();
+  }
+
+  /** Success fanfare for completing a section or submission */
+  public playSuccess(): void {
+    this.playChime();
+  }
+
+  /** Triumphant level up fanfare */
+  public playLevelUp(): void {
+    if (this.isMuted) return;
+    const ctx = this.initCtx();
+    if (!ctx) return;
+
+    try {
+      const now = ctx.currentTime;
+      const notes = [
+        { freq: 440, time: 0, dur: 0.12 },     // A4
+        { freq: 554.37, time: 0.1, dur: 0.12 },  // C#5
+        { freq: 659.25, time: 0.2, dur: 0.15 },  // E5
+        { freq: 880, time: 0.32, dur: 0.4 },     // A5
+      ];
+
+      notes.forEach(({ freq, time, dur }) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now + time);
+
+        gain.gain.setValueAtTime(0, now + time);
+        gain.gain.linearRampToValueAtTime(0.14, now + time + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + time + dur);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now + time);
+        osc.stop(now + time + dur);
+      });
+    } catch {
+      // Ignore
+    }
+  }
 }
 
 export const sound = new SoundSynthesizer();
+

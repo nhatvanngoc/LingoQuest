@@ -19,7 +19,7 @@ export default function FlashcardsPage() {
   const { deckId } = useParams<{ deckId: string }>();
   const [deck, setDeck] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const { srs, recordCard, deckLearnedCount, addXp } = useApp();
+  const { srs, recordCard, deckLearnedCount, addXp, wordsLearned, streak, syncStats } = useApp();
 
   useEffect(() => {
     let active = true;
@@ -73,11 +73,13 @@ export default function FlashcardsPage() {
           rewarded.current = true;
           const earned = orderedCards.length * 5;
           addXp(earned, "Ôn flashcard");
-          fetch("/api/user/sync", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ xp: earned }),
-          }).catch(() => {});
+          const totalKnown = Math.max(wordsLearned + (known ? 1 : 0), sessionKnown + (known ? 1 : 0));
+          syncStats({
+            xp: earned,
+            wordsLearned: totalKnown,
+            streak: Math.max(1, streak),
+            minutes: Math.max(1, Math.ceil(orderedCards.length * 0.5)),
+          });
         }
         setFinished(true);
         return;

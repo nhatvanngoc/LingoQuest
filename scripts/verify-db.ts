@@ -24,6 +24,18 @@ async function check() {
     `);
     console.log("=== TABLE COUNTS ===");
     console.table(countRes.rows);
+
+    const tablesRes = await pool.query(
+      "SELECT table_name FROM information_schema.tables WHERE table_schema='public'"
+    );
+    console.log("=== ALL PUBLIC TABLES ===");
+    console.log(tablesRes.rows.map((r) => r.table_name));
+
+    const assignCols = await pool.query(
+      "SELECT column_name, data_type FROM information_schema.columns WHERE table_name='assignments'"
+    );
+    console.log("=== ASSIGNMENTS COLUMNS ===");
+    console.table(assignCols.rows);
   } finally {
     await pool.end();
   }

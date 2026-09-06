@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   ChevronLeft,
@@ -25,8 +26,9 @@ import {
 import { AppShell } from "@/components/AppShell";
 import { ProgressBar, CircularProgress } from "@/components/ProgressBar";
 import { NumberTicker } from "@/components/magic/NumberTicker";
-import { WEEK_ACTIVITY, BADGES } from "@/lib/mock/data";
+import { BADGES } from "@/lib/mock/data";
 import { useApp } from "@/lib/state/app-context";
+import { useRole } from "@/lib/auth/role-context";
 import { cn } from "@/lib/utils";
 import { fadeUpReal, staggerContainer, viewportOnce } from "@/lib/motion";
 import type { LeaderRow } from "@/lib/types";
@@ -44,12 +46,30 @@ interface StudentSubmission {
 }
 
 export default function ProgressPage() {
+  const router = useRouter();
+  const { role } = useRole();
   const { xp, level, streak, wordsLearned, xpIntoLevel, xpForNext, levelPct } = useApp();
   const [leaderboard, setLeaderboard] = useState<LeaderRow[]>([]);
   const [submissions, setSubmissions] = useState<StudentSubmission[]>([]);
   const [loadingSubmissions, setLoadingSubmissions] = useState(true);
-  const maxMin = Math.max(...WEEK_ACTIVITY.map((d) => d.minutes), 1);
-  const totalMin = WEEK_ACTIVITY.reduce((s, d) => s + d.minutes, 0);
+  const [weeklyActivity, setWeeklyActivity] = useState<{ day: string; date: string; minutes: number; xp: number }[]>([
+    { day: "T2", date: "", minutes: 0, xp: 0 },
+    { day: "T3", date: "", minutes: 0, xp: 0 },
+    { day: "T4", date: "", minutes: 0, xp: 0 },
+    { day: "T5", date: "", minutes: 0, xp: 0 },
+    { day: "T6", date: "", minutes: 0, xp: 0 },
+    { day: "T7", date: "", minutes: 0, xp: 0 },
+    { day: "CN", date: "", minutes: 0, xp: 0 },
+  ]);
+
+  useEffect(() => {
+    if (role === "teacher") {
+      router.replace("/teacher");
+    }
+  }, [role, router]);
+
+  const maxMin = Math.max(...weeklyActivity.map((d) => d.minutes), 1);
+  const totalMin = weeklyActivity.reduce((s, d) => s + d.minutes, 0);
 
   useEffect(() => {
     let active = true;
@@ -60,6 +80,16 @@ export default function ProgressPage() {
         setLeaderboard((data.rows ?? []).map((r) => ({ ...r, me: false })));
       })
       .catch(() => { if (!active) setLeaderboard([]); });
+
+    fetch("/api/user/activity")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!active) return;
+        if (data.ok && Array.isArray(data.activity) && data.activity.length > 0) {
+          setWeeklyActivity(data.activity);
+        }
+      })
+      .catch(() => {});
 
     fetch("/api/submissions")
       .then((r) => r.json())
@@ -141,9 +171,9 @@ export default function ProgressPage() {
                 </p>
               )}
               <div className="mt-4 mb-6 h-56 flex items-stretch justify-between gap-2">
-                {WEEK_ACTIVITY.map((d, i) => {
+                {weeklyActivity.map((d, i) => {
                   const h = d.minutes === 0 ? 6 : (d.minutes / maxMin) * 100;
-                  const isToday = i === WEEK_ACTIVITY.length - 1;
+                  const isToday = i === weeklyActivity.length - 1;
                   return (
                     <div key={d.day} className="flex flex-1 flex-col items-center gap-2">
                       <div className="relative flex min-h-0 w-full flex-1 items-end justify-center">

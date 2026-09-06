@@ -11,6 +11,8 @@ import {
   CheckCircle2,
   Video,
   ArrowRight,
+  BookOpen,
+  Flame,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -29,7 +31,14 @@ const CELL: Record<MatrixStatus, { cls: string; label: string }> = {
 
 export default function TeacherPage() {
   const [data, setData] = useState<{
-    stats: { activeStudents: number; pendingGrading: number; completionRate: number };
+    stats: {
+      activeStudents: number;
+      pendingGrading: number;
+      completionRate: number;
+      totalWordsLearned?: number;
+      avgStreak?: number;
+      totalXp?: number;
+    };
     matrix: { students: string[]; assignments: string[]; matrix: MatrixStatus[][] };
   } | null>(null);
 
@@ -38,11 +47,21 @@ export default function TeacherPage() {
     fetch("/api/teacher/overview")
       .then((r) => r.json())
       .then((d: {
-        stats?: { activeStudents: number; pendingGrading: number; completionRate: number };
+        stats?: {
+          activeStudents: number;
+          pendingGrading: number;
+          completionRate: number;
+          totalWordsLearned?: number;
+          avgStreak?: number;
+          totalXp?: number;
+        };
         matrix?: { students: string[]; assignments: string[]; matrix: MatrixStatus[][] };
       }) => {
         if (!active) return;
-        setData({ stats: d.stats ?? { activeStudents: 0, pendingGrading: 0, completionRate: 0 }, matrix: d.matrix ?? { students: [], assignments: [], matrix: [] } });
+        setData({
+          stats: d.stats ?? { activeStudents: 0, pendingGrading: 0, completionRate: 0 },
+          matrix: d.matrix ?? { students: [], assignments: [], matrix: [] },
+        });
       })
       .catch(() => {});
     return () => {
@@ -75,10 +94,10 @@ export default function TeacherPage() {
         </motion.div>
 
         {/* ===== Thống kê tổng quan ===== */}
-        <motion.div variants={fadeUp} className="grid gap-4 sm:grid-cols-3">
+        <motion.div variants={fadeUp} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <StatCard
             icon={Users}
-            label="Học sinh hoạt động tuần này"
+            label="Học sinh hoạt động"
             value={`${students.length}`}
             sub={students.length === 0 ? "chưa có học sinh" : `trên ${students.length} học sinh`}
             tone="brand"
@@ -94,11 +113,29 @@ export default function TeacherPage() {
           </Link>
           <StatCard
             icon={CheckCircle2}
-            label="Tỉ lệ hoàn thành bài giao"
+            label="Tỉ lệ nộp bài"
             value={`${students.length === 0 ? 0 : stats?.completionRate ?? 0}%`}
             sub="toàn lớp"
             tone="success"
           />
+          <Link href="/teacher/students" className="block transition-transform hover:-translate-y-1">
+            <StatCard
+              icon={BookOpen}
+              label="Từ vựng cả lớp"
+              value={`${stats?.totalWordsLearned ?? 0}`}
+              sub="từ đã thuộc →"
+              tone="brand"
+            />
+          </Link>
+          <Link href="/teacher/students" className="block transition-transform hover:-translate-y-1">
+            <StatCard
+              icon={Flame}
+              label="Chuỗi trung bình"
+              value={`${stats?.avgStreak ?? 0} ngày`}
+              sub="phong độ lớp →"
+              tone="accent"
+            />
+          </Link>
         </motion.div>
 
         {/* ===== Ma trận tiến độ ===== */}
