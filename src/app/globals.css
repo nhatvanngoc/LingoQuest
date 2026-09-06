@@ -5,24 +5,25 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ===========================================================
-   LingoQuest — Design System v4 "Arcade"
-   Style: Playful, Duolingo-like energy, warm cream background
-   Palette: Cream #FBF7EF, Teal #0E8074, Brand gradient teal→green
-   Fonts: Baloo 2 (headings), Nunito (body)
-   Radius: cards 20-24px, pills 999px
-   Shadow: 0 12px 30px rgba(23,60,56,.12)
+   LingoQuest — Design System v5 "SOTA EdTech Modern"
+   Style: World-class, clean, focused, high-clarity typography
+   Palette: Clean Slate Canvas #F8FAFC, Emerald-Teal #0D9488, Pure Slate #0F172A
+   Fonts: Plus Jakarta Sans (Headings/Display), Be Vietnam Pro (Body & Vietnamese)
+   Radius: cards 16-24px, pills 999px
+   Shadow: Layered elevation and soft ambient glows
    =========================================================== */
 
 @theme {
-  --font-sans: "Nunito", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-heading: "Baloo 2", "Nunito", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "Be Vietnam Pro", "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: "Plus Jakarta Sans", "Be Vietnam Pro", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   /* ---- Background & Base ---- */
-  --color-cream: #FBF7EF;
+  --color-cream: #F8FAFC;
+  --color-canvas: #F8FAFC;
   
-  /* ---- Primary: Teal ---- */
-  --color-brand: #0E8074;
-  --color-brand-dark: #0B5D54;
+  /* ---- Primary: Emerald-Teal ---- */
+  --color-brand: #0D9488;
+  --color-brand-dark: #0F766E;
   --color-brand-50: #F0FDFA;
   --color-brand-100: #CCFBF1;
   --color-brand-200: #99F6E4;
@@ -33,44 +34,45 @@
   --color-brand-700: #0F766E;
   --color-brand-800: #115E59;
   
-  /* ---- Brand Gradient: Teal → Green ---- */
-  --gradient-brand: linear-gradient(90deg, #14B8A6 0%, #34D399 100%);
+  /* ---- Brand Gradient: Tech Teal → Vivid Emerald ---- */
+  --gradient-brand: linear-gradient(135deg, #0D9488 0%, #10B981 100%);
+  --gradient-subtle: linear-gradient(180deg, rgba(248, 250, 252, 0.8) 0%, #FFFFFF 100%);
   
-  /* ---- Accents: Arcade palette ---- */
-  --color-amber-accent: #F6A21E;
-  --color-coral: #FF6B6B;
-  --color-sky: #4CC3F7;
-  --color-lilac: #A78BFA;
+  /* ---- Accents: Refined EdTech palette ---- */
+  --color-amber-accent: #F59E0B;
+  --color-coral: #F43F5E;
+  --color-sky: #0EA5E9;
+  --color-lilac: #8B5CF6;
   
   /* ---- Surface & Text ---- */
-  --color-ink: #0B5D54;
-  --color-text-secondary: #57534E;
-  --color-text-muted: #78716C;
-  --color-border: #E7E5E4;
+  --color-ink: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748B;
+  --color-border: #E2E8F0;
 
   /* ---- Semantic ---- */
-  --color-success: #047857;
+  --color-success: #059669;
   --color-success-50: #ECFDF5;
   --color-success-100: #D1FAE5;
-  --color-danger: #DC2626;
-  --color-danger-50: #FEF2F2;
+  --color-danger: #E11D48;
+  --color-danger-50: #FFF1F2;
   --color-violet: #7C3AED;
   --color-violet-50: #F5F3FF;
   --color-violet-100: #EDE9FE;
 
   /* ---- Radii ---- */
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 20px;
-  --radius-xl: 24px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
   --radius-2xl: 28px;
   --radius-pill: 999px;
 
-  /* ---- Shadows — Arcade soft glow ---- */
-  --shadow-sm: 0 4px 12px rgba(23, 60, 56, 0.08);
-  --shadow-md: 0 8px 20px rgba(23, 60, 56, 0.1);
-  --shadow-lg: 0 12px 30px rgba(23, 60, 56, 0.12);
-  --shadow-glow: 0 0 20px rgba(20, 184, 166, 0.4);
+  /* ---- Shadows — Layered ambient elevation ---- */
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+  --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  --shadow-glow: 0 0 24px rgba(13, 148, 136, 0.22);
 
   /* ---- Animations ---- */
   --animate-float: float 3s ease-in-out infinite;
@@ -123,15 +125,31 @@ html {
 }
 
 body {
-  background-color: var(--color-cream);
+  background-color: var(--color-canvas);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ============================================================
    Utilities tùy chỉnh
    ============================================================ */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+}
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar {
   -ms-overflow-style: none;

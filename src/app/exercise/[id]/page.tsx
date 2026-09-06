@@ -261,7 +261,127 @@ export default function UnifiedExercisePage() {
     sound.playLevelUp();
   };
 
-  // Submit writing essay
+  // Keyboard Shortcuts for Flashcards, Quiz & Reading (Tier-1 Interactive UX)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger shortcuts when user is typing in inputs or textareas
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target as HTMLElement)?.isContentEditable
+      ) {
+        return;
+      }
+
+      // 1. Flashcards (vocab) shortcuts
+      if (stage === "vocab" && vocabList.length > 0) {
+        if (e.code === "Space") {
+          e.preventDefault();
+          setIsFlipped((v) => !v);
+        } else if (e.key === "ArrowRight" || e.key === "Enter") {
+          e.preventDefault();
+          sound.playChime();
+          setKnownCount((k) => k + 1);
+          if (cardIdx < vocabList.length - 1) {
+            setCardIdx((i) => i + 1);
+            setIsFlipped(false);
+          } else {
+            goToNextStage();
+          }
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          if (cardIdx > 0) {
+            setCardIdx((i) => i - 1);
+            setIsFlipped(false);
+          }
+        } else if (e.key.toLowerCase() === "p") {
+          e.preventDefault();
+          const currentCard = vocabList[cardIdx];
+          if (currentCard?.word) speakWord(currentCard.word);
+        }
+      }
+
+      // 2. Quiz (trắc nghiệm) shortcuts
+      if (stage === "quiz" && quizList.length > 0) {
+        const curQ = quizList[quizIdx];
+        if (!curQ) return;
+        if (selectedOpt === null) {
+          let letter: string | null = null;
+          if (e.key === "1" || e.key.toLowerCase() === "a") letter = "A";
+          if (e.key === "2" || e.key.toLowerCase() === "b") letter = "B";
+          if (e.key === "3" || e.key.toLowerCase() === "c") letter = "C";
+          if (e.key === "4" || e.key.toLowerCase() === "d") letter = "D";
+
+          if (letter) {
+            e.preventDefault();
+            setSelectedOpt(letter);
+            if (curQ.answer === letter) {
+              setQuizScore((s) => s + 1);
+              sound.playChime();
+            } else {
+              sound.playBuzzer();
+            }
+          }
+        } else if (e.key === "Enter" || e.key === "ArrowRight" || e.code === "Space") {
+          e.preventDefault();
+          setSelectedOpt(null);
+          if (quizIdx < quizList.length - 1) {
+            setQuizIdx((i) => i + 1);
+          } else {
+            goToNextStage();
+          }
+        }
+      }
+
+      // 3. Reading (đọc hiểu) shortcuts
+      if (stage === "reading" && readingQuestions.length > 0) {
+        const curQ = readingQuestions[readingQIdx];
+        if (!curQ) return;
+        if (readingSelectedOpt === null) {
+          let letter: string | null = null;
+          if (e.key === "1" || e.key.toLowerCase() === "a") letter = "A";
+          if (e.key === "2" || e.key.toLowerCase() === "b") letter = "B";
+          if (e.key === "3" || e.key.toLowerCase() === "c") letter = "C";
+          if (e.key === "4" || e.key.toLowerCase() === "d") letter = "D";
+
+          if (letter) {
+            e.preventDefault();
+            setReadingSelectedOpt(letter);
+            const isCorrect = curQ.answer === letter || curQ.answer === curQ.options[["A", "B", "C", "D"].indexOf(letter)];
+            if (isCorrect) {
+              setReadingScore((s) => s + 1);
+              sound.playChime();
+            } else {
+              sound.playBuzzer();
+            }
+          }
+        } else if (e.key === "Enter" || e.key === "ArrowRight") {
+          e.preventDefault();
+          setReadingSelectedOpt(null);
+          if (readingQIdx < readingQuestions.length - 1) {
+            setReadingQIdx((i) => i + 1);
+          } else {
+            goToNextStage();
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [
+    stage,
+    cardIdx,
+    vocabList,
+    quizIdx,
+    quizList,
+    selectedOpt,
+    readingQIdx,
+    readingQuestions,
+    readingSelectedOpt,
+    currentStageIndex,
+    availableStages.length,
+  ]);
   const handleSubmitWriting = async () => {
     const words = writingText.trim().split(/\s+/).filter(Boolean).length;
     if (words < 5) return;
@@ -324,15 +444,15 @@ export default function UnifiedExercisePage() {
         </div>
 
         <div className="mb-6">
-          <h1 className="text-2xl font-extrabold text-slate-900">{assignment.title}</h1>
+          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">{assignment.title}</h1>
           {assignment.description && (
             <p className="mt-1 text-sm text-slate-500">{assignment.description}</p>
           )}
         </div>
 
-        {/* Stepper Tabs */}
+        {/* Stepper Tabs (Segmented Frosted Bar) */}
         {stage !== "finish" && (
-          <div className="mb-8 flex overflow-x-auto rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm no-scrollbar">
+          <div className="mb-8 flex overflow-x-auto rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur-xl p-1.5 shadow-[0_2px_12px_rgba(15,23,42,0.04)] no-scrollbar">
             {availableStages.map((s, idx) => {
               const active = s.key === stage;
               const completed = currentStageIndex > idx;
@@ -343,12 +463,12 @@ export default function UnifiedExercisePage() {
                   type="button"
                   onClick={() => setStage(s.key)}
                   className={cn(
-                    "flex flex-1 min-w-[120px] items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-xs font-bold transition-all",
+                    "flex flex-1 min-w-[125px] items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-xs font-bold transition-all",
                     active
-                      ? "bg-brand text-white shadow-md"
+                      ? "bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-sm ring-1 ring-teal-700/20"
                       : completed
-                      ? "text-emerald-700 bg-emerald-50 hover:bg-emerald-100/70"
-                      : "text-slate-400 hover:text-slate-600 hover:bg-slate-50"
+                      ? "text-emerald-700 bg-emerald-50/80 hover:bg-emerald-100/60 border border-emerald-200/60"
+                      : "text-slate-400 hover:text-slate-700 hover:bg-slate-50"
                   )}
                 >
                   <Icon className="h-4 w-4 shrink-0" />
@@ -378,35 +498,38 @@ export default function UnifiedExercisePage() {
                 setQuizScore(0);
                 setFillScore(0);
               }}
-              className="font-bold text-amber-800 underline hover:text-amber-950 ml-3"
+              className="font-bold underline hover:text-amber-950"
             >
-              Làm lại từ đầu
+              Xóa bản nháp
             </button>
           </div>
         )}
 
-        {/* ===== STAGE 1: VIDEO ===== */}
+        {/* ===== STAGE 1: VIDEO (CINEMA FRAME) ===== */}
         {stage === "video" && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-black shadow-lg">
-              {videoEmbed.type !== "none" && videoEmbed.embedUrl ? (
-                <div className="aspect-video w-full">
-                  <iframe
-                    src={videoEmbed.embedUrl}
-                    title="Video bài học"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="h-full w-full border-0"
-                  />
-                </div>
-              ) : (
-                <div className="flex h-64 items-center justify-center text-slate-400 text-sm">
-                  Chưa có link video cho bài này.
-                </div>
-              )}
+            <div className="relative group">
+              <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-r from-teal-500/20 via-emerald-500/20 to-teal-500/20 blur-xl opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-slate-950 shadow-xl">
+                {videoEmbed.type !== "none" && videoEmbed.embedUrl ? (
+                  <div className="aspect-video w-full">
+                    <iframe
+                      src={videoEmbed.embedUrl}
+                      title="Video bài học"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="h-full w-full border-0"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-64 items-center justify-center text-slate-400 text-sm">
+                    Chưa có link video cho bài này.
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm flex items-center justify-between">
+            <div className="rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur-xl p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-slate-900 text-sm">Bước 1: Xem video hướng dẫn</h3>
@@ -417,20 +540,20 @@ export default function UnifiedExercisePage() {
                   )}
                   {videoEmbed.type === "youtube" && (
                     <span className="rounded-md bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-700 border border-red-200">
-                      YouTube
+                      YouTube HD
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-400 mt-0.5">Hãy xem kỹ bài giảng trước khi chuyển sang phần học từ vựng và làm bài tập.</p>
+                <p className="text-xs text-slate-500 mt-1">Hãy xem kỹ bài giảng trước khi chuyển sang phần học từ vựng và làm bài tập.</p>
               </div>
-              <Button onClick={goToNextStage} className="bg-brand text-white font-bold shrink-0">
+              <Button onClick={goToNextStage} className="bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-bold shadow-sm shrink-0">
                 Tiếp tục sang Từ vựng <ArrowRight className="ml-1.5 h-4 w-4" />
               </Button>
             </div>
           </motion.div>
         )}
 
-        {/* ===== STAGE 2: FLASHCARD VOCAB ===== */}
+        {/* ===== STAGE 2: FLASHCARD VOCAB (3D TACTILE) ===== */}
         {stage === "vocab" && vocabList.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
@@ -447,13 +570,13 @@ export default function UnifiedExercisePage() {
                     animate={{ rotateY: isFlipped ? 180 : 0 }}
                     transition={{ duration: 0.4 }}
                     onClick={() => setIsFlipped((v) => !v)}
-                    className="relative min-h-[260px] w-full cursor-pointer rounded-3xl border-2 border-brand-100 bg-gradient-to-br from-white via-brand-50/20 to-teal-50/30 p-8 shadow-md hover:shadow-lg transition-all flex flex-col justify-between [transform-style:preserve-3d]"
+                    className="relative min-h-[270px] w-full cursor-pointer rounded-3xl border-2 border-teal-100/80 bg-gradient-to-br from-white via-slate-50/50 to-teal-50/30 p-8 shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:shadow-xl transition-all flex flex-col justify-between [transform-style:preserve-3d]"
                   >
                     {!isFlipped ? (
                       /* Mặt trước: Tiếng Anh */
                       <div className="flex flex-col items-center justify-center flex-1 text-center">
-                        <span className="text-xs font-bold uppercase tracking-wider text-brand mb-2">Từ vựng</span>
-                        <div className="flex items-center justify-center gap-2">
+                        <span className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Từ vựng mục tiêu</span>
+                        <div className="flex items-center justify-center gap-2.5">
                           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">{currentCard.word}</h2>
                           <button
                             type="button"
@@ -461,16 +584,18 @@ export default function UnifiedExercisePage() {
                               e.stopPropagation();
                               speakWord(currentCard.word);
                             }}
-                            className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand hover:bg-brand-100 transition-colors shadow-xs"
-                            title="Nghe phát âm"
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors shadow-xs"
+                            title="Nghe phát âm (Phím P)"
                           >
                             <Volume2 className="h-4 w-4" />
                           </button>
                         </div>
                         {currentCard.phonetic && (
-                          <p className="mt-1 text-sm font-mono text-slate-400">{currentCard.phonetic}</p>
+                          <p className="mt-1 text-sm font-mono text-slate-500">{currentCard.phonetic}</p>
                         )}
-                        <p className="mt-6 text-xs font-bold text-slate-400">Nhấn vào thẻ để xem nghĩa & ví dụ ↺</p>
+                        <p className="mt-6 text-xs font-semibold text-slate-400 flex items-center gap-1.5">
+                          <span>Nhấn thẻ hoặc phím [Space] để xem nghĩa</span> ↺
+                        </p>
                       </div>
                     ) : (
                       /* Mặt sau: Nghĩa & Ví dụ */
@@ -478,16 +603,16 @@ export default function UnifiedExercisePage() {
                         <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Nghĩa tiếng Việt</span>
                         <h3 className="text-2xl font-bold text-slate-900">{currentCard.meaning}</h3>
                         {currentCard.example && (
-                          <div className="mt-4 rounded-xl bg-slate-50 p-3 text-left">
+                          <div className="mt-4 rounded-xl bg-slate-50/80 border border-slate-100 p-3.5 text-left">
                             <div className="flex items-start justify-between gap-2">
-                              <p className="text-xs font-semibold text-slate-700 italic flex-1">"{currentCard.example}"</p>
+                              <p className="text-xs font-semibold text-slate-800 italic flex-1">"{currentCard.example}"</p>
                               <button
                                 type="button"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   speakWord(currentCard.example);
                                 }}
-                                className="text-brand hover:text-brand-700 shrink-0 p-1"
+                                className="text-teal-700 hover:text-teal-900 shrink-0 p-1"
                                 title="Nghe câu ví dụ"
                               >
                                 <Volume2 className="h-3.5 w-3.5" />
@@ -520,7 +645,7 @@ export default function UnifiedExercisePage() {
                 }}
                 className="w-36 font-bold"
               >
-                Chưa nhớ
+                Chưa nhớ (←)
               </Button>
               <Button
                 onClick={() => {
@@ -533,10 +658,21 @@ export default function UnifiedExercisePage() {
                     goToNextStage();
                   }
                 }}
-                className="w-36 bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
+                className="w-36 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-bold shadow-sm"
               >
-                Đã nhớ ✓
+                Đã nhớ (→) ✓
               </Button>
+            </div>
+
+            {/* Keyboard shortcut guide */}
+            <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-semibold text-slate-400 pt-1">
+              <span className="rounded-md border border-slate-200/80 bg-white px-2 py-0.5 shadow-2xs text-slate-600">[Space] Lật thẻ</span>
+              <span>•</span>
+              <span className="rounded-md border border-slate-200/80 bg-white px-2 py-0.5 shadow-2xs text-slate-600">[→] / [Enter] Đã nhớ</span>
+              <span>•</span>
+              <span className="rounded-md border border-slate-200/80 bg-white px-2 py-0.5 shadow-2xs text-slate-600">[←] Thẻ trước</span>
+              <span>•</span>
+              <span className="rounded-md border border-slate-200/80 bg-white px-2 py-0.5 shadow-2xs text-slate-600">[P] Phát âm</span>
             </div>
           </motion.div>
         )}
@@ -607,7 +743,7 @@ export default function UnifiedExercisePage() {
                                 }
                               }}
                               className={cn(
-                                "w-full flex items-center gap-2.5 rounded-2xl border-2 p-3 text-left font-semibold text-xs transition-all",
+                                "group w-full flex items-center gap-2.5 rounded-2xl border-2 p-3 text-left font-semibold text-xs transition-all shadow-2xs hover:shadow-xs",
                                 readingSelectedOpt === null && "border-slate-200 hover:border-indigo-500 hover:bg-indigo-50/40",
                                 readingSelectedOpt !== null && isCorrect && "border-emerald-500 bg-emerald-50 text-emerald-800 font-bold",
                                 readingSelectedOpt !== null && isPicked && !isCorrect && "border-rose-500 bg-rose-50 text-rose-800",
@@ -616,13 +752,16 @@ export default function UnifiedExercisePage() {
                             >
                               <span
                                 className={cn(
-                                  "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+                                  "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-transform group-hover:scale-105",
                                   readingSelectedOpt !== null && isCorrect ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-600"
                                 )}
                               >
                                 {letter}
                               </span>
-                              <span>{optText.replace(/^[A-D]\.\s*/, "")}</span>
+                              <span className="flex-1">{optText.replace(/^[A-D]\.\s*/, "")}</span>
+                              <span className="ml-2 shrink-0 rounded border border-slate-200/80 bg-slate-50 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-slate-400 transition-colors group-hover:border-indigo-200 group-hover:text-indigo-600">
+                                {optIdx + 1}
+                              </span>
                             </button>
                           );
                         })}
@@ -645,9 +784,9 @@ export default function UnifiedExercisePage() {
                                   goToNextStage();
                                 }
                               }}
-                              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs"
+                              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs"
                             >
-                              {readingQIdx < readingQuestions.length - 1 ? "Câu đọc hiểu tiếp →" : "Chuyển sang phần tiếp →"}
+                              {readingQIdx < readingQuestions.length - 1 ? "Câu đọc hiểu tiếp → (Enter)" : "Chuyển sang phần tiếp → (Enter)"}
                             </Button>
                           </div>
                         </motion.div>
@@ -656,6 +795,13 @@ export default function UnifiedExercisePage() {
                   );
                 })()}
               </div>
+            </div>
+
+            {/* Reading Keyboard Shortcut Guide */}
+            <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-semibold text-slate-400 pt-1">
+              <span className="rounded-md border border-slate-200/80 bg-white px-2 py-0.5 shadow-2xs text-slate-600">[1-4] hoặc [A-D] Chọn đáp án</span>
+              <span>•</span>
+              <span className="rounded-md border border-slate-200/80 bg-white px-2 py-0.5 shadow-2xs text-slate-600">[Enter] / [→] Câu tiếp theo</span>
             </div>
           </motion.div>
         )}
@@ -895,8 +1041,8 @@ export default function UnifiedExercisePage() {
                             }
                           }}
                           className={cn(
-                            "flex items-center gap-3 rounded-2xl border-2 p-4 text-left font-semibold text-sm transition-all",
-                            selectedOpt === null && "border-slate-200 hover:border-brand hover:bg-brand-50/50",
+                            "group flex items-center gap-3 rounded-2xl border-2 p-4 text-left font-semibold text-sm transition-all shadow-2xs hover:shadow-xs",
+                            selectedOpt === null && "border-slate-200 hover:border-teal-500 hover:bg-teal-50/40",
                             selectedOpt !== null && isCorrect && "border-emerald-500 bg-emerald-50 text-emerald-800 font-bold",
                             selectedOpt !== null && isPicked && !isCorrect && "border-rose-500 bg-rose-50 text-rose-800",
                             selectedOpt !== null && !isPicked && !isCorrect && "border-slate-100 text-slate-400"
@@ -904,24 +1050,27 @@ export default function UnifiedExercisePage() {
                         >
                           <span
                             className={cn(
-                              "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+                              "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-transform group-hover:scale-105",
                               selectedOpt !== null && isCorrect ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-600"
                             )}
                           >
                             {letter}
                           </span>
-                          <span>{optText.replace(/^[A-D]\.\s*/, "")}</span>
+                          <span className="flex-1">{optText.replace(/^[A-D]\.\s*/, "")}</span>
+                          <span className="ml-2 shrink-0 rounded border border-slate-200/80 bg-slate-50 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-400 transition-colors group-hover:border-teal-200 group-hover:text-teal-700">
+                            {optIdx + 1}
+                          </span>
                         </button>
                       );
                     })}
                   </div>
 
                   {selectedOpt !== null && (
-                    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-5 rounded-2xl bg-slate-50 p-4 text-xs text-slate-600">
+                    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-5 rounded-2xl bg-teal-50/70 p-4 text-xs text-slate-700 border border-teal-100">
                       <p className="font-bold text-slate-800 mb-1">
                         {selectedOpt === currentQ.answer ? "🎉 Chính xác!" : "❌ Chưa chính xác!"}
                       </p>
-                      {currentQ.explanation && <p>{currentQ.explanation}</p>}
+                      {currentQ.explanation && <p className="text-slate-600">{currentQ.explanation}</p>}
 
                       <div className="mt-4 flex justify-end">
                         <Button
@@ -933,9 +1082,9 @@ export default function UnifiedExercisePage() {
                               goToNextStage();
                             }
                           }}
-                          className="bg-brand text-white font-bold text-xs"
+                          className="bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-xs"
                         >
-                          {quizIdx < quizList.length - 1 ? "Câu tiếp theo →" : "Chuyển sang phần tiếp →"}
+                          {quizIdx < quizList.length - 1 ? "Câu tiếp theo → (Enter / Space)" : "Chuyển sang phần tiếp → (Enter)"}
                         </Button>
                       </div>
                     </motion.div>
@@ -943,6 +1092,13 @@ export default function UnifiedExercisePage() {
                 </div>
               );
             })()}
+
+            {/* Quiz Keyboard Shortcut Guide */}
+            <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-semibold text-slate-400 pt-1">
+              <span className="rounded-md border border-slate-200/80 bg-white px-2 py-0.5 shadow-2xs text-slate-600">[1-4] hoặc [A-D] Chọn đáp án</span>
+              <span>•</span>
+              <span className="rounded-md border border-slate-200/80 bg-white px-2 py-0.5 shadow-2xs text-slate-600">[Enter] / [Space] Tiếp tục</span>
+            </div>
           </motion.div>
         )}
 

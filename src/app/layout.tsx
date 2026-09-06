@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-/* Nunito + Baloo 2 self-host qua @fontsource — rounded, friendly, arcade style */
-// Fallback stack: "Nunito", ui-sans-serif, system-ui (defined in globals.css --font-sans)
-// Headings: "Baloo 2", fallback Nunito (defined in globals.css --font-heading)
-import "@fontsource/nunito/400.css";
-import "@fontsource/nunito/600.css";
-import "@fontsource/nunito/700.css";
-import "@fontsource/baloo-2/400.css";
-import "@fontsource/baloo-2/600.css";
-import "@fontsource/baloo-2/700.css";
-import "@fontsource/baloo-2/800.css";
+/* Plus Jakarta Sans (Headings & International UI) + Be Vietnam Pro (Vietnamese diacritics & body) */
+import "@fontsource/plus-jakarta-sans/400.css";
+import "@fontsource/plus-jakarta-sans/500.css";
+import "@fontsource/plus-jakarta-sans/600.css";
+import "@fontsource/plus-jakarta-sans/700.css";
+import "@fontsource/plus-jakarta-sans/800.css";
+import "@fontsource/be-vietnam-pro/400.css";
+import "@fontsource/be-vietnam-pro/500.css";
+import "@fontsource/be-vietnam-pro/600.css";
+import "@fontsource/be-vietnam-pro/700.css";
 import "./globals.css";
 import { RoleProvider, type SessionUser } from "@/lib/auth/role-context";
 import { getCurrentUser } from "@/lib/auth/session";

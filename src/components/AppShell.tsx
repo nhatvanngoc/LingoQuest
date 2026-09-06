@@ -58,18 +58,24 @@ const NAV: Record<Role, NavItem[]> = {
 
 function Logo() {
   return (
-    <Link href="/" className="group flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 visited:opacity-90 active:opacity-80 active:scale-[0.98] transition-all">
+    <Link
+      href="/"
+      className="group flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 active:scale-[0.98] transition-all"
+    >
       <motion.span
-        whileHover={{ rotate: 12, scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand to-brand-700 text-white shadow-md"
+        whileHover={{ rotate: 6, scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-teal-600 via-emerald-600 to-teal-800 text-white shadow-sm ring-1 ring-white/20"
       >
-        <GraduationCap className="h-5 w-5 relative z-10" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <GraduationCap className="h-5 w-5 relative z-10 drop-shadow-xs" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </motion.span>
-      <span className="font-heading text-lg font-extrabold tracking-tight text-brand-dark">
-        Lingo<span className="text-gradient-brand">Quest</span>
-      </span>
+      <div className="flex flex-col">
+        <span className="font-heading text-lg font-extrabold tracking-tight text-slate-900 leading-none">
+          Lingo<span className="text-teal-600">Quest</span>
+        </span>
+        <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase mt-0.5">EdTech THPT</span>
+      </div>
     </Link>
   );
 }
@@ -122,13 +128,16 @@ export function AppShell({ children }: { children: ReactNode }) {
     .sort((a, b) => b.href.length - a.href.length)[0]?.href;
 
   return (
-    <div className="min-h-screen bg-cream relative">
+    <div className="min-h-screen bg-slate-50/70 text-slate-900 relative selection:bg-teal-500/20 selection:text-teal-900">
+      {/* Top subtle ambient mesh */}
+      <div className="pointer-events-none fixed inset-x-0 top-0 h-96 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(13,148,136,0.08),rgba(255,255,255,0))] -z-10" />
+
       {/* ===== Header ===== */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="sticky top-0 z-40 border-b border-brand-100/50 bg-cream/80 backdrop-blur-md"
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(15,23,42,0.03)]"
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo />
@@ -237,8 +246,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                     className={cn(
                       "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 active:scale-[0.98]",
                       active
-                        ? "bg-gradient-to-r from-brand-50 to-teal-50 text-brand font-bold"
-                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                        ? "bg-teal-50 text-teal-850 font-bold border border-teal-200/70 shadow-xs"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
                     )}
                   >
                     {active && (
@@ -302,7 +311,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 25 }}
-          className="fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur-sm lg:hidden"
+          className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200/80 bg-white/90 backdrop-blur-xl lg:hidden shadow-lg"
         >
           <div className="mx-auto flex max-w-md items-stretch justify-around px-2 py-1">
             {items.slice(0, 5).map((item) => {
