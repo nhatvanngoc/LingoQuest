@@ -95,71 +95,70 @@ export default function DashboardPage() {
       <div className="grid lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_350px] gap-8 items-start">
         {/* Main Feed Column */}
         <motion.div variants={staggerContainer} initial="hidden" animate="show" className="flex flex-col gap-6 min-w-0">
-          {/* ===== Greeting ===== */}
-          <motion.div variants={fadeUpReal} className="overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-md">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <motion.p
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-sm font-bold text-slate-500 flex items-center gap-1.5"
-                >
-                  <Sparkles className="h-4 w-4 text-brand" /> Chào {data?.user?.name || "bạn"}, chào mừng trở lại
-                </motion.p>
-                <motion.h1
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, ...SPRING_BOUNCY }}
-                  className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl"
-                >
+          {/* ===== Elite Bento Hero ===== */}
+          <motion.div
+            variants={fadeUpReal}
+            className="relative overflow-hidden rounded-3xl bento-hero p-6 sm:p-7 text-white"
+          >
+            {/* Ambient Lighting Orbs */}
+            <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-teal-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -left-12 -bottom-12 h-56 w-56 rounded-full bg-indigo-500/15 blur-3xl" />
+
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-6">
+              <div className="max-w-xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-teal-400/25 bg-teal-950/40 px-3 py-1 text-xs font-semibold text-teal-300 backdrop-blur-md mb-3">
+                  <Sparkles className="h-3.5 w-3.5 text-teal-400" />
+                  <span>Xin chào, {data?.user?.name || "bạn học"} · Chúc một ngày hiệu quả</span>
+                </div>
+
+                <h1 className="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
                   {isNewAccount ? (
                     <>
                       Bắt đầu hành trình{" "}
-                      <span className="bg-gradient-to-r from-brand to-brand-700 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-teal-300 via-emerald-300 to-teal-200 bg-clip-text text-transparent">
                         chinh phục tiếng Anh
-                      </span>{" "}
-                      thôi!
+                      </span>
                     </>
                   ) : (
                     <>
                       Sẵn sàng{" "}
-                      <span className="bg-gradient-to-r from-brand to-brand-700 bg-clip-text text-transparent">
-                        bứt phá
+                      <span className="bg-gradient-to-r from-teal-300 via-emerald-300 to-teal-200 bg-clip-text text-transparent">
+                        bứt phá kiến thức
                       </span>{" "}
-                      hôm nay chứ?
+                      hôm nay
                     </>
                   )}
-                </motion.h1>
+                </h1>
+
+                <p className="mt-2 text-sm text-slate-300 leading-relaxed max-w-lg">
+                  Luyện tập phản xạ từ vựng CEFR, xem bài giảng video tương tác và hoàn thành bài tập giao đúng hạn.
+                </p>
+
                 {!isNewAccount && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-3 flex flex-wrap items-center gap-3"
-                  >
-                    <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1 font-bold text-slate-600 border border-gray-100 shadow-sm">
-                      <Trophy className="h-3.5 w-3.5 text-amber-500" /> Level <NumberTicker value={level} />
+                  <div className="mt-4 flex flex-wrap items-center gap-2.5">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-bold text-amber-300 backdrop-blur-md">
+                      <Trophy className="h-3.5 w-3.5 text-amber-400" /> Level <NumberTicker value={level} />
                     </span>
-                    <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1 font-bold text-slate-600 border border-gray-100 shadow-sm">
-                      <BookOpen className="h-3.5 w-3.5 text-brand" /> {wordsLearned} từ
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-bold text-teal-300 backdrop-blur-md">
+                      <BookOpen className="h-3.5 w-3.5 text-teal-400" /> {wordsLearned} từ đã học
                     </span>
-                    <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1 font-bold text-amber-600 border border-gray-100 shadow-sm">
-                      <Flame className="h-3.5 w-3.5" /> Chuỗi {streak} ngày
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-bold text-orange-300 backdrop-blur-md">
+                      <Flame className="h-3.5 w-3.5 fill-orange-400 text-orange-400" /> Chuỗi {streak} ngày
                     </span>
-                  </motion.div>
+                  </div>
                 )}
               </div>
-              {isNewAccount && (
-                <motion.div
-                  initial={{ scale: 0, rotate: -10 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
-                  className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-violet-50 text-brand shadow-sm lg:flex"
-                >
-                  <Rocket className="h-8 w-8" />
-                </motion.div>
-              )}
+
+              <div className="hidden sm:flex flex-col items-end gap-3 shrink-0">
+                {recentLesson && (
+                  <Link
+                    href={`/learn/${recentLesson.slug}`}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-500 px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-teal-500/25 hover:from-teal-400 hover:to-emerald-400 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  >
+                    Vào học ngay <ArrowRight className="h-4 w-4" />
+                  </Link>
+                )}
+              </div>
             </div>
           </motion.div>
 
@@ -167,105 +166,85 @@ export default function DashboardPage() {
           {isNewAccount && (
             <motion.div
               variants={fadeUpReal}
-              className="overflow-hidden rounded-xl border border-brand-200 bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 p-[1px] shadow-md"
+              className="overflow-hidden rounded-3xl border border-teal-500/30 bg-gradient-to-br from-teal-600 to-emerald-700 p-6 text-white shadow-lg"
             >
-              <div className="rounded-xl bg-white p-5">
-                <div className="relative flex flex-wrap items-center gap-4">
-                  <motion.span
-                    animate={{ y: [0, -4, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-700 text-white shadow-md"
-                  >
-                    <PartyPopper className="h-6 w-6" />
-                  </motion.span>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-xl font-bold tracking-tight text-slate-900">Chào mừng đến với LingoQuest!</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-slate-500">
-                      Tài khoản của bạn đã sẵn sàng. Học bài, ôn tập thẻ flashcard để tích luỹ XP và rèn luyện mỗi ngày.
-                    </p>
-                  </div>
-                  {recentLesson && (
-                    <ShimmerButton asChild size="lg" className="shadow-md">
-                      <Link href={`/learn/${recentLesson.slug}`} className="flex items-center gap-2">
-                        Học bài đầu tiên <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </ShimmerButton>
-                  )}
+              <div className="flex flex-wrap items-center gap-4">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm backdrop-blur">
+                  <PartyPopper className="h-6 w-6" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-lg font-bold tracking-tight text-white">Chào mừng bạn đến với LingoQuest!</h3>
+                  <p className="mt-0.5 text-xs text-teal-100">
+                    Hệ thống đã chuẩn bị sẵn khoá học theo chuẩn CEFR & THPT. Bắt đầu với bài học đầu tiên ngay.
+                  </p>
                 </div>
+                {recentLesson && (
+                  <Link
+                    href={`/learn/${recentLesson.slug}`}
+                    className="rounded-xl bg-white px-4 py-2 text-xs font-bold text-teal-900 shadow-sm hover:bg-teal-50 transition-colors"
+                  >
+                    Bắt đầu học →
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}
 
-          {/* ===== Bài học hôm nay ===== */}
+          {/* ===== Bài học gần nhất (Cinema Card) ===== */}
           <motion.div variants={fadeUpReal}>
             {recentLesson ? (
-              <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md">
+              <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm hover:shadow-lg hover:border-teal-500/30 transition-all">
                 <div className="grid md:grid-cols-[1.1fr_0.9fr]">
                   <div className="relative h-56 md:h-auto min-h-[240px] overflow-hidden">
                     <SmartImage
                       src={recentLesson.thumbnail || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80"}
                       alt={recentLesson.title}
-                      className="h-full w-full object-cover"
-                      gradient="from-brand-100 to-violet-100"
+                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                      gradient="from-teal-100 to-emerald-100"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent md:bg-gradient-to-r md:from-slate-900/20 md:via-transparent md:to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-500/20 via-transparent to-violet-500/20 mix-blend-overlay" />
-                    <motion.span
-                      initial={{ scale: 0, y: -10 }}
-                      animate={{ scale: 1, y: 0 }}
-                      transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
-                      className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/90 px-3 py-1.5 text-xs font-bold text-brand backdrop-blur-sm"
-                    >
-                      <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                        <PlayCircle className="h-4 w-4 fill-brand text-brand" />
-                      </motion.div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/20 to-transparent" />
+                    
+                    <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-slate-950/60 backdrop-blur-md px-3 py-1 text-xs font-bold text-white">
+                      <PlayCircle className="h-3.5 w-3.5 text-teal-400" />
                       Bài học mới nhất
-                    </motion.span>
-                    <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 md:hidden">
-                      <span className="rounded-full bg-slate-900/70 px-2.5 py-1 text-xs font-bold text-white">
-                        {recentLesson.durationLabel || "Video"}
+                    </span>
+
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                      <span className="rounded-full bg-slate-950/70 backdrop-blur-md px-3 py-1 text-xs font-bold text-white border border-white/10">
+                        {recentLesson.durationLabel || "Video bài giảng"}
                       </span>
-                      <span className="rounded-full bg-white/90 px-2.5 py-1 text-xs font-bold text-brand">
+                      <span className="rounded-full bg-teal-500/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white">
                         {recentLesson.vocabCount} từ vựng
                       </span>
                     </div>
                   </div>
-                  <div className="relative flex flex-col justify-center gap-4 p-5 md:p-6 bg-white">
+
+                  <div className="relative flex flex-col justify-center gap-4 p-6 bg-white">
                     <div>
-                      <motion.h3
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-2xl font-bold leading-tight tracking-tight text-slate-900"
-                      >
+                      <span className="text-[11px] font-bold text-teal-700 uppercase tracking-wider">Bài giảng trực quan</span>
+                      <h3 className="font-heading text-xl font-bold leading-snug tracking-tight text-slate-900 mt-1">
                         {recentLesson.title}
-                      </motion.h3>
-                      <p className="mt-1.5 flex items-center gap-2 text-sm font-semibold text-slate-500">
-                        <span>{recentLesson.titleVi || recentLesson.description}</span>
-                        <span className="h-1 w-1 rounded-full bg-gray-300" />
-                        <span className="flex items-center gap-1">
-                          <BookOpen className="h-3.5 w-3.5" /> {recentLesson.vocabCount} từ vựng
-                        </span>
+                      </h3>
+                      <p className="mt-1 text-xs font-medium text-slate-500 line-clamp-2">
+                        {recentLesson.titleVi || recentLesson.description}
                       </p>
                     </div>
+
                     <div>
-                      <div className="mb-2 flex items-center justify-between text-xs font-bold tracking-wide">
-                        <span className="text-slate-400 uppercase">Tiến độ</span>
-                        <span className="flex items-center gap-1 text-brand">
-                          <NumberTicker value={0} />%
-                        </span>
+                      <div className="mb-1.5 flex items-center justify-between text-xs font-bold">
+                        <span className="text-slate-400">Tiến độ bài học</span>
+                        <span className="text-teal-700 font-bold">0%</span>
                       </div>
-                      <ProgressBar value={0} tone="gradient" height="h-3" />
+                      <ProgressBar value={0} tone="gradient" height="h-2" />
                     </div>
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="relative">
-                      <ShimmerButton asChild size="xl" className="w-full">
-                        <Link href={`/learn/${recentLesson.slug}`} className="flex items-center justify-center gap-2">
-                          Bắt đầu học <ArrowRight className="h-5 w-5" />
-                        </Link>
-                      </ShimmerButton>
-                    </motion.div>
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
-                      <Target className="h-3.5 w-3.5" /> Nhấn để vào luồng Video → Flashcard → Kiểm tra
+
+                    <div className="pt-1">
+                      <Link
+                        href={`/learn/${recentLesson.slug}`}
+                        className="w-full flex items-center justify-center gap-2 rounded-2xl bg-slate-900 hover:bg-teal-900 text-white font-bold py-3 text-sm shadow-sm transition-all"
+                      >
+                        Bắt đầu học ngay <ArrowRight className="h-4 w-4" />
+                      </Link>
                     </div>
                   </div>
                 </div>

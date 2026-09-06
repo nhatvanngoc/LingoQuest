@@ -10,7 +10,7 @@ export function DailyQuestsWidget() {
   const { dailyTasks } = useApp();
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
+    <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md hover:border-emerald-300/50 transition-all">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 shadow-sm">

@@ -167,8 +167,8 @@ export function AppShell({ children }: { children: ReactNode }) {
               title={muted ? "Bật âm thanh hiệu ứng" : "Tắt âm thanh hiệu ứng"}
               aria-label={muted ? "Bật âm thanh" : "Tắt âm thanh"}
               className={cn(
-                "relative flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white/90 shadow-sm backdrop-blur transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50",
-                muted ? "text-slate-400" : "text-brand"
+                "relative flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-white/90 shadow-2xs backdrop-blur transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50",
+                muted ? "text-slate-400" : "text-teal-700"
               )}
             >
               {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
@@ -183,12 +183,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                 onClick={() => setUserMenuOpen((v) => !v)}
                 aria-haspopup="menu"
                 aria-expanded={userMenuOpen}
-                className="group flex items-center gap-2 rounded-full border border-gray-200 bg-white py-1 pl-1 pr-2 shadow-sm backdrop-blur transition-all hover:shadow-md hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 active:scale-[0.98]"
+                className="group flex items-center gap-2 rounded-full border border-slate-200/80 bg-white py-1 pl-1 pr-3 shadow-2xs backdrop-blur transition-all hover:shadow-xs hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 focus-visible:ring-offset-2 active:scale-[0.98]"
               >
                 <Avatar name={user.name} color={user.avatarColor} />
                 <div className="hidden text-left leading-tight sm:block">
-                  <p className="text-sm font-bold text-slate-900 group-hover:text-brand transition-colors">{user.name}</p>
-                  <p className="text-[11px] text-slate-400">
+                  <p className="text-sm font-bold text-slate-900 group-hover:text-teal-700 transition-colors">{user.name}</p>
+                  <p className="text-[11px] font-semibold text-slate-400">
                     {role === "student" ? user.className : role === "teacher" ? "Giáo viên" : "Chờ duyệt"}
                   </p>
                 </div>
@@ -209,15 +209,15 @@ export function AppShell({ children }: { children: ReactNode }) {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 8, scale: 0.97 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-gray-200 bg-white p-1.5 shadow-lg"
+                      className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-1.5 shadow-xl"
                     >
-                      <div className="border-b border-gray-100 px-3 py-2">
+                      <div className="border-b border-slate-100 px-3 py-2">
                         <p className="truncate text-sm font-bold text-slate-900">{user.name}</p>
                         <p className="truncate text-[11px] text-slate-400">{user.email}</p>
                       </div>
                       <a
                         href="/api/auth/logout"
-                        className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-bold text-red-600 transition-colors hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 visited:text-red-700 active:bg-red-100 active:scale-[0.98]"
+                        className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-bold text-rose-600 transition-colors hover:bg-rose-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 focus-visible:ring-offset-2 active:bg-rose-100 active:scale-[0.98]"
                       >
                         <LogOut className="h-4 w-4" /> Đăng xuất
                       </a>
@@ -244,20 +244,20 @@ export function AppShell({ children }: { children: ReactNode }) {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 active:scale-[0.98]",
+                      "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 focus-visible:ring-offset-2 active:scale-[0.98]",
                       active
-                        ? "bg-teal-50 text-teal-850 font-bold border border-teal-200/70 shadow-xs"
+                        ? "bg-teal-50 text-teal-900 font-bold border border-teal-200/80 shadow-2xs"
                         : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
                     )}
                   >
                     {active && (
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-gradient-to-b from-brand to-brand-500" />
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-teal-600" />
                     )}
                     <span className="relative flex items-center gap-3">
                       <span
                         className={cn(
-                          "flex h-9 w-9 items-center justify-center rounded-xl transition-all",
-                          active ? "bg-gradient-to-br from-brand to-brand-700 text-white shadow-md" : "bg-white text-slate-400 group-hover:text-brand group-hover:bg-brand-50 shadow-sm"
+                          "flex h-8 w-8 items-center justify-center rounded-lg transition-all",
+                          active ? "bg-teal-600 text-white shadow-2xs" : "bg-white text-slate-400 group-hover:text-teal-700 group-hover:bg-teal-50 shadow-2xs border border-slate-100"
                         )}
                       >
                         <Icon className="h-4 w-4" />
@@ -269,8 +269,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                           animate={{ scale: 1 }}
                           className={cn(
                             "rounded-full px-2 py-0.5 text-[10px] font-bold",
-                            item.badge === "NEW" ? "bg-gradient-to-r from-brand to-brand-500 text-white" : "bg-amber-100 text-amber-700",
-                            active && "bg-gradient-to-r from-brand to-brand-500 text-white"
+                            item.badge === "NEW" ? "bg-teal-600 text-white" : "bg-amber-100 text-amber-800",
+                            active && "bg-teal-600 text-white"
                           )}
                         >
                           {item.badge}
@@ -287,7 +287,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  className="mt-6 rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50 to-teal-50 p-4 shadow-sm"
+                  className="mt-6 rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/80 to-emerald-50/80 p-4 shadow-2xs"
                 >
                   <div className="flex gap-2">
                     <Sparkles className="h-4 w-4 text-brand mt-0.5" />

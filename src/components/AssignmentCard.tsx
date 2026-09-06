@@ -53,30 +53,30 @@ export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ delay: index * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -2 }}
-      className="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-all"
+      className="group overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-2xs hover:shadow-md hover:border-teal-500/40 transition-all"
     >
-      <div className={cn("flex items-center gap-4 p-4", done && "bg-gray-50/50")}>
+      <div className={cn("flex items-center gap-4 p-4", done && "bg-slate-50/50")}>
         <motion.span
-          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileHover={{ scale: 1.05 }}
           className={cn(
-            "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-lg",
+            "relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl",
             done
-              ? "bg-gray-100 text-slate-400"
+              ? "bg-slate-100 text-slate-400"
               : isUrgent
-              ? "bg-gradient-to-br from-amber-100 to-orange-100 text-amber-600"
-              : "bg-gradient-to-br from-brand-50 to-brand-100 text-brand"
+              ? "bg-amber-50 text-amber-600 border border-amber-200/60"
+              : "bg-teal-50 text-teal-700 border border-teal-100"
           )}
         >
-          {done ? <CheckCircle2 className="h-6 w-6" /> : <Icon className="h-6 w-6" />}
+          {done ? <CheckCircle2 className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
         </motion.span>
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-1.5">
-            <h4 className="truncate font-bold text-slate-900 group-hover:text-brand transition-colors">{a.title || "Bài tập"}</h4>
+            <h4 className="truncate font-bold text-slate-900 group-hover:text-teal-700 transition-colors text-sm">{a.title || "Bài tập"}</h4>
             {difficultyLevel && (
               <span
                 className={cn(
-                  "rounded-full px-2 py-0.5 text-[10px] font-extrabold border",
+                  "rounded-full px-2 py-0.5 text-[10px] font-bold border",
                   difficultyLevel.includes("C1") || difficultyLevel.includes("THPT")
                     ? "bg-purple-50 text-purple-700 border-purple-200"
                     : difficultyLevel.includes("B")
@@ -89,7 +89,7 @@ export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number
             )}
             <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
             {targetXp && !done && (
-              <span className="rounded-full bg-amber-50 px-1.5 py-0.5 text-[10px] font-extrabold text-amber-700 border border-amber-200">
+              <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-700 border border-amber-200">
                 +{targetXp} XP
               </span>
             )}
@@ -101,30 +101,30 @@ export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number
               <ProgressBar
                 value={progressValue}
                 tone={done ? "success" : statusKey === "overdue" ? "danger" : statusKey === "due" ? "accent" : "gradient"}
-                height="h-2"
+                height="h-1.5"
               />
             </div>
-            <span className={cn("shrink-0 text-xs font-bold", isUrgent ? "text-amber-600" : "text-slate-400")}>
+            <span className={cn("shrink-0 text-xs font-semibold", isUrgent ? "text-amber-600 font-bold" : "text-slate-400")}>
               {dueLabel}
             </span>
           </div>
         </div>
 
-        <motion.div whileHover={{ scale: 1.1, x: 2 }} whileTap={{ scale: 0.9 }}>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link
             href={href}
             onClick={() => {
               if (!done) sound.playPop();
             }}
             className={cn(
-              "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all active:scale-95",
+              "relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all shadow-xs",
               done
-                ? "bg-gray-100 text-slate-400"
-                : "bg-gradient-to-br from-brand to-brand-700 text-white shadow-md hover:shadow-lg border-b-2 border-brand-800"
+                ? "bg-slate-100 text-slate-400"
+                : "bg-teal-600 hover:bg-teal-700 text-white"
             )}
             aria-label="Làm bài"
           >
-            <ArrowRight className="h-4 w-4 relative z-10" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>
       </div>

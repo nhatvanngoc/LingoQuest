@@ -68,7 +68,7 @@ const POEMS = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-cream overflow-hidden" data-lq-landing>
+    <div className="min-h-screen bg-[#F8FAFC] overflow-hidden" data-lq-landing>
       <noscript>
         <style>{`[data-lq-landing] [style]{opacity:1 !important;transform:none !important;filter:none !important}`}</style>
       </noscript>
@@ -78,29 +78,34 @@ export default function LandingPage() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: EASE_OUT }}
-        className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm"
+        className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(15,23,42,0.02)]"
       >
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 group">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2.5 group">
             <motion.span
-              whileHover={{ rotate: 15, scale: 1.1 }}
-              className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-md"
+              whileHover={{ rotate: 6, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-teal-600 via-emerald-600 to-teal-800 text-white shadow-sm ring-1 ring-white/20"
             >
               <Sparkles className="h-5 w-5 relative z-10" />
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </motion.span>
-            <span className="text-lg font-bold tracking-tight text-slate-900">
-              Lingo<span className="bg-gradient-to-r from-brand to-brand-700 bg-clip-text text-transparent">Quest</span>
-              <span className="ml-1.5 rounded-full bg-brand px-2 py-0.5 text-[10px] font-bold text-white">V2</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="font-heading text-lg font-extrabold tracking-tight text-slate-900 leading-none">
+                Lingo<span className="text-teal-600">Quest</span>
+              </span>
+              <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase mt-0.5">EdTech THPT</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 visited:text-violet-700 active:text-brand-700 active:scale-95">
-              <Link href="/learn" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 rounded-lg visited:text-violet-700 hover:underline underline-offset-4 active:text-brand-700">Khám phá</Link>
+          <div className="flex items-center gap-2.5">
+            <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex font-semibold text-slate-600 hover:text-teal-700">
+              <Link href="/learn">Khám phá bài học</Link>
             </Button>
-            <ShimmerButton asChild size="sm" className="hidden sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50">
-              <Link href="/dashboard" className="flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-brand rounded-lg visited:text-white/90 active:opacity-90 hover:underline underline-offset-4">Bắt đầu</Link>
-            </ShimmerButton>
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-teal-900 transition-colors"
+            >
+              Vào Dashboard
+            </Link>
           </div>
         </div>
       </motion.header>
@@ -110,25 +115,19 @@ export default function LandingPage() {
         <div className="mx-auto grid w-full max-w-7xl items-center gap-8 px-4 pt-8 pb-16 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:pt-12 lg:pb-20">
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
             <motion.div variants={fadeUpReal}>
-              <span className="group inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-4 py-2 text-sm font-bold text-brand shadow-sm hover:shadow-md transition-all hover:scale-105">
-                <motion.span animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 2, repeat: Infinity }}><Trophy className="h-4 w-4 text-amber" /></motion.span>
-                <AnimatedShinyText>Học tiếng Anh vui như chơi game</AnimatedShinyText>
-                <span className="h-1 w-1 rounded-full bg-brand-300" />
+              <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50/80 px-3.5 py-1.5 text-xs font-bold text-teal-800 shadow-2xs">
+                <Trophy className="h-3.5 w-3.5 text-amber-500" />
+                <span>Chuẩn CEFR A1 → C1 & THPT Quốc Gia</span>
               </span>
             </motion.div>
-            <motion.h1 variants={fadeUpReal} className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] lg:leading-[1.05]">
-              Chinh phục tiếng Anh cùng{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10 bg-gradient-to-r from-brand via-brand-700 to-brand bg-[length:200%_100%] bg-clip-text text-transparent">LingoQuest</span>
-                <motion.svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.2, delay: 0.8, ease: "easeInOut" }}>
-                  <path d="M2 9C50 3 150 3 198 9" stroke="url(#grad)" strokeWidth="4" strokeLinecap="round" />
-                  <defs><linearGradient id="grad" x1="0" x2="200" y1="0" y2="0"><stop offset="0%" stopColor="#0F766E"/><stop offset="50%" stopColor="#7C3AED"/><stop offset="100%" stopColor="#D97706"/></linearGradient></defs>
-                </motion.svg>
+            <motion.h1 variants={fadeUpReal} className="mt-5 font-heading text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem] xl:text-[3.8rem] lg:leading-[1.05]">
+              Hệ thống luyện tiếng Anh thông minh cho{" "}
+              <span className="bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-700 bg-clip-text text-transparent">
+                Học sinh THPT
               </span>
             </motion.h1>
-            <motion.p variants={fadeUpReal} className="mt-6 max-w-lg text-lg leading-relaxed text-slate-500">
-              Video tương tác 3D, flashcard tilt lật, bài tập kiểu game và mini-game Phaser Pro —
-              <span className="font-bold text-slate-800"> tất cả trong một nền tảng được giáo viên quản lý trực tiếp.</span>
+            <motion.p variants={fadeUpReal} className="mt-5 max-w-lg text-base leading-relaxed text-slate-600 font-normal">
+              Kết hợp video bài giảng trực quan, thẻ flashcard 3D phản xạ, bài đọc hiểu chuẩn đề thi và mini-game hấp dẫn — học sâu, nhớ lâu và bứt phá điểm số.
             </motion.p>
 
             <motion.div variants={fadeUpReal} className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -239,13 +238,13 @@ export default function LandingPage() {
               <motion.div key={f.title} variants={fadeUpReal} transition={{ delay: i * 0.1 } as any}>
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-lg transition-all duration-300"
+                  className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-2xs hover:shadow-lg hover:border-teal-500/30 transition-all duration-300"
                 >
                   <div className="relative aspect-[3/2] overflow-hidden">
-                    <SmartImage src={f.img} alt={f.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" gradient="from-brand-100 to-violet-100" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent" />
-                    <div className={`absolute left-4 top-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${f.color} text-white shadow-md`}>
-                      <Icon className="h-6 w-6" />
+                    <SmartImage src={f.img} alt={f.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" gradient="from-teal-100 to-emerald-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/15 to-transparent" />
+                    <div className={`absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${f.color} text-white shadow-md`}>
+                      <Icon className="h-5 w-5" />
                     </div>
                     
                     <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
@@ -253,12 +252,12 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <div className="p-5">
-                    <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900 group-hover:text-brand transition-colors">
+                    <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
                       {f.title}
-                      <Sparkles className="h-4 w-4 text-violet-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <Sparkles className="h-4 w-4 text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-500">{f.desc}</p>
-                    <div className="mt-4 flex items-center gap-2 text-xs font-bold text-brand">
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{f.desc}</p>
+                    <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-teal-700">
                       <span>Khám phá ngay</span><ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </div>
                   </div>

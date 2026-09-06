@@ -50,7 +50,7 @@ export function MiniLeaderboard() {
   const me = board.find((item) => item.me);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
+    <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md hover:border-amber-300/50 transition-all">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-500 shadow-sm">

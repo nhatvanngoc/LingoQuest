@@ -61,8 +61,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const sessionUser = await getCurrentUser();
 
   return (
-    <html lang="vi" className="font-sans">
-      <body className="bg-cream text-ink antialiased">
+    <html lang="vi">
+      <body className="bg-[#F8FAFC] text-slate-900 antialiased selection:bg-teal-500/20 selection:text-teal-900">
         <RoleProvider user={sessionUser ?? GUEST_USER} role={sessionUser?.role ?? "pending"}>
           <AppProvider>
             {children}
