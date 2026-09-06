@@ -229,7 +229,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <nav className="relative flex flex-col gap-1 py-4">
               {items.map((item) => {
                 const active = item.href === activeHref;
-                const Icon = item.icon;
+                const Icon = item?.icon;
                 return (
                   <Link
                     key={item.href}
@@ -308,7 +308,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="mx-auto flex max-w-md items-stretch justify-around px-2 py-1">
             {items.slice(0, 5).map((item) => {
               const active = item.href === activeHref;
-              const Icon = item.icon;
+              const Icon = item?.icon;
               return (
                 <Link
                   key={item.href}
@@ -323,7 +323,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                     <div className="absolute inset-1 rounded-lg bg-brand-50 border border-brand-100" />
                   )}
                   <span className="relative">
-                    <Icon className={cn("h-5 w-5", active && "scale-110")} />
+                    {Icon ? <Icon className={cn("h-5 w-5", active && "scale-110")} /> : null}
                     {item.badge && !active && (
                       <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-brand animate-pulse" />
                     )}

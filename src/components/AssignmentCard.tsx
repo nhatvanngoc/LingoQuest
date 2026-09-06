@@ -18,11 +18,31 @@ const STATUS: Record<AssignmentStatus, { variant: "success" | "accent" | "danger
 
 export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number }) {
   const Icon = a.type === "exercise" ? ClipboardList : Layers;
-  const done = a.status === "done";
+  
+  // Safe status calculation with fallbacks
+  const resolveStatus = (): AssignmentStatus => {
+    if (a.status && STATUS[a.status]) return a.status;
+    const dueAt = (a as any).dueAt;
+    if (dueAt) {
+      const now = Date.now();
+      const due = new Date(dueAt).getTime();
+      const diffHours = (due - now) / (1000 * 60 * 60);
+      if (diffHours < 0) return "overdue";
+      if (diffHours <= 48) return "due";
+    }
+    return "ontrack";
+  };
+
+  const statusKey = resolveStatus();
+  const statusInfo = STATUS[statusKey] || STATUS.ontrack;
+  const StatusIcon = statusInfo?.icon || Clock;
+  const done = statusKey === "done";
+  const isUrgent = statusKey === "due" || statusKey === "overdue";
+
   const href = a.type === "exercise" ? `/exercise/${a.id}` : `/flashcards/${(a as any).deckId || "deck-1"}`;
-  const statusInfo = STATUS[a.status];
-  const StatusIcon = statusInfo.icon;
-  const isUrgent = a.status === "due" || a.status === "overdue";
+  const progressValue = typeof a.progress === "number" ? a.progress : done ? 100 : 0;
+  const lessonTitle = a.lessonTitle || (a as any).description || "Bài tập rèn luyện";
+  const dueLabel = a.dueLabel || ((a as any).dueAt ? `Hạn: ${new Date((a as any).dueAt).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit" })}` : "Còn hạn");
 
   return (
     <motion.div
@@ -49,21 +69,21 @@ export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h4 className="truncate font-bold text-slate-900 group-hover:text-brand transition-colors">{a.title}</h4>
+            <h4 className="truncate font-bold text-slate-900 group-hover:text-brand transition-colors">{a.title || "Bài tập"}</h4>
             <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
           </div>
-          <p className="truncate text-xs text-slate-400 mt-0.5">{a.lessonTitle}</p>
+          <p className="truncate text-xs text-slate-400 mt-0.5">{lessonTitle}</p>
 
           <div className="mt-2.5 flex items-center gap-3">
             <div className="flex-1">
               <ProgressBar
-                value={a.progress}
-                tone={done ? "success" : a.status === "overdue" ? "danger" : a.status === "due" ? "accent" : "gradient"}
+                value={progressValue}
+                tone={done ? "success" : statusKey === "overdue" ? "danger" : statusKey === "due" ? "accent" : "gradient"}
                 height="h-2"
               />
             </div>
             <span className={cn("shrink-0 text-xs font-bold", isUrgent ? "text-amber-600" : "text-slate-400")}>
-              {a.dueLabel}
+              {dueLabel}
             </span>
           </div>
         </div>
