@@ -65,7 +65,10 @@ export default function DashboardPage() {
 
   useEffect(() => {
     let active = true;
-    fetch("/api/dashboard/overview")
+    fetch("/api/dashboard/overview", {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" },
+    })
       .then((r) => r.json())
       .then((d) => {
         if (!active) return;

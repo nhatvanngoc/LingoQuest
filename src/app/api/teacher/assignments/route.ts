@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth/session";
 import { createAssignment, createDeckWithCards } from "@/db/queries";
 import { normalizeVideoUrl } from "@/lib/video";
@@ -69,7 +70,19 @@ export async function POST(req: Request) {
       deckId: finalDeckId,
       dueAt: typeof body?.dueAt === "string" && body.dueAt ? new Date(body.dueAt) : null,
     });
-    return NextResponse.json({ ok: true, id: row.id, deckId: finalDeckId });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/teacher");
+    revalidatePath("/learn");
+
+    return NextResponse.json(
+      { ok: true, id: row.id, deckId: finalDeckId },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Create assignment error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });
@@ -85,7 +98,14 @@ export async function GET() {
 
     const { getTeacherAssignments } = await import("@/db/queries");
     const list = await getTeacherAssignments();
-    return NextResponse.json({ ok: true, assignments: list });
+    return NextResponse.json(
+      { ok: true, assignments: list },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Get teacher assignments error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });
@@ -105,7 +125,19 @@ export async function DELETE(req: Request) {
 
     const { deleteAssignment } = await import("@/db/queries");
     const deleted = await deleteAssignment(id);
-    return NextResponse.json({ ok: true, deleted });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/teacher");
+    revalidatePath("/learn");
+
+    return NextResponse.json(
+      { ok: true, deleted },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Delete assignment error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ khi xóa bài tập" }, { status: 500 });
@@ -125,7 +157,19 @@ export async function PATCH(req: Request) {
 
     const { toggleAssignmentStatus } = await import("@/db/queries");
     const updated = await toggleAssignmentStatus(id, status);
-    return NextResponse.json({ ok: true, assignment: updated });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/teacher");
+    revalidatePath("/learn");
+
+    return NextResponse.json(
+      { ok: true, assignment: updated },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Toggle assignment status error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ khi cập nhật trạng thái bài tập" }, { status: 500 });

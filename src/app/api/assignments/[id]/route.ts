@@ -18,7 +18,14 @@ export async function GET(
       return NextResponse.json({ error: "Không tìm thấy bài tập" }, { status: 404 });
     }
 
-    return NextResponse.json({ ok: true, assignment });
+    return NextResponse.json(
+      { ok: true, assignment },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (error) {
     console.error("Get assignment error:", error);
     return NextResponse.json({ error: "Lỗi tải bài tập" }, { status: 500 });

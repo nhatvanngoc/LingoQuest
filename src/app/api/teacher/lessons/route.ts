@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth/session";
 import { createLessonWithVocab } from "@/db/queries";
 
@@ -54,7 +55,18 @@ export async function POST(req: Request) {
       createdBy: user.id,
     });
 
-    return NextResponse.json({ ok: true, id: lesson.id, deckId: deck.id });
+    revalidatePath("/dashboard");
+    revalidatePath("/teacher");
+    revalidatePath("/learn");
+
+    return NextResponse.json(
+      { ok: true, id: lesson.id, deckId: deck.id },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Create lesson error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });
@@ -70,7 +82,14 @@ export async function GET() {
 
     const { getTeacherLessons } = await import("@/db/queries");
     const list = await getTeacherLessons();
-    return NextResponse.json({ ok: true, lessons: list });
+    return NextResponse.json(
+      { ok: true, lessons: list },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Get teacher lessons error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });
@@ -90,7 +109,19 @@ export async function DELETE(req: Request) {
 
     const { deleteLesson } = await import("@/db/queries");
     const deleted = await deleteLesson(id);
-    return NextResponse.json({ ok: true, deleted });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/teacher");
+    revalidatePath("/learn");
+
+    return NextResponse.json(
+      { ok: true, deleted },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Delete lesson error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ khi xóa bài học" }, { status: 500 });
@@ -110,7 +141,19 @@ export async function PATCH(req: Request) {
 
     const { toggleLessonStatus } = await import("@/db/queries");
     const updated = await toggleLessonStatus(id, status);
-    return NextResponse.json({ ok: true, lesson: updated });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/teacher");
+    revalidatePath("/learn");
+
+    return NextResponse.json(
+      { ok: true, lesson: updated },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Toggle lesson status error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ khi cập nhật trạng thái bài học" }, { status: 500 });

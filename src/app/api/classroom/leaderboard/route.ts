@@ -6,7 +6,14 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const rows = await getWeeklyLeaderboard();
-    return Response.json({ ok: true, rows });
+    return Response.json(
+      { ok: true, rows },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Get leaderboard error:", e);
     return Response.json({ ok: true, rows: [] });

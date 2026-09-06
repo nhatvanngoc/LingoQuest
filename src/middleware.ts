@@ -23,8 +23,18 @@ export async function middleware(req: NextRequest) {
     pathname === "/" || // trang chủ (landing page) là public
     pathname === "/login" ||
     pathname === "/register" ||
+    pathname === "/dashboard" ||
+    pathname === "/learn" ||
+    pathname.startsWith("/learn/") ||
+    pathname.startsWith("/exercise/") ||
+    pathname.startsWith("/flashcards/") ||
+    pathname.startsWith("/game") ||
     pathname.startsWith("/api/health") ||
-    pathname.startsWith("/api/auth") || // login/logout/google/register phải truy cập được khi chưa có session
+    pathname.startsWith("/api/auth") ||
+    pathname.startsWith("/api/dashboard") ||
+    pathname.startsWith("/api/classroom") ||
+    pathname.startsWith("/api/lessons") ||
+    pathname.startsWith("/api/assignments") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     pathname === "/favicon.ico";
@@ -36,8 +46,11 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Chưa đăng nhập mà vào route không public → /login.
+  // Chưa đăng nhập mà vào route không public: trả 401 JSON nếu là API, hoặc redirect về /login nếu là trang.
   if (!isAuthed && !isPublic) {
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json({ error: "Chưa đăng nhập" }, { status: 401 });
+    }
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);

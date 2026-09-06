@@ -9,23 +9,31 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Chưa đăng nhập" }, { status: 401 });
-    }
 
-    // Lấy thống kê của user hiện tại
-    const statsRows = await db
-      .select()
-      .from(userStats)
-      .where(eq(userStats.userId, user.id))
-      .limit(1);
-
-    const stats = statsRows[0] ?? {
+    // Lấy thống kê của user hiện tại (nếu đã đăng nhập)
+    let stats = {
       xp: 0,
       streak: 0,
       wordsLearned: 0,
       level: 1,
     };
+
+    if (user) {
+      const statsRows = await db
+        .select()
+        .from(userStats)
+        .where(eq(userStats.userId, user.id))
+        .limit(1);
+
+      if (statsRows[0]) {
+        stats = {
+          xp: statsRows[0].xp ?? 0,
+          streak: statsRows[0].streak ?? 0,
+          wordsLearned: statsRows[0].wordsLearned ?? 0,
+          level: statsRows[0].level ?? 1,
+        };
+      }
+    }
 
     // Lấy bài học mới nhất (chỉ bài đang published)
     const lessonRows = await db
@@ -78,7 +86,7 @@ export async function GET() {
       .limit(5);
 
     // Lấy attempts của user cho các assignments này
-    const attemptRows = assignmentRows.length > 0
+    const attemptRows = user && assignmentRows.length > 0
       ? await db
           .select({
             assignmentId: attempts.assignmentId,
@@ -148,19 +156,28 @@ export async function GET() {
       .orderBy(desc(decks.createdAt))
       .limit(5);
 
-    return NextResponse.json({
-      ok: true,
-      user,
-      stats: {
-        xp: stats.xp ?? 0,
-        streak: stats.streak ?? 0,
-        wordsLearned: stats.wordsLearned ?? 0,
-        level: stats.level ?? 1,
+    return NextResponse.json(
+      {
+        ok: true,
+        user: user ?? null,
+        stats: {
+          xp: stats.xp ?? 0,
+          streak: stats.streak ?? 0,
+          wordsLearned: stats.wordsLearned ?? 0,
+          level: stats.level ?? 1,
+        },
+        recentLesson,
+        assignments: formattedAssignments,
+        decks: deckRows,
       },
-      recentLesson,
-      assignments: formattedAssignments,
-      decks: deckRows,
-    });
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      }
+    );
   } catch (e) {
     console.error("Dashboard overview error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });

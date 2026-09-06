@@ -109,7 +109,10 @@ export default function TeacherPage() {
 
   // Load Overview Data
   const loadOverview = useCallback(() => {
-    fetch("/api/teacher/overview")
+    fetch("/api/teacher/overview", {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" },
+    })
       .then((r) => r.json())
       .then((d) => {
         setData({
@@ -123,7 +126,10 @@ export default function TeacherPage() {
   // Load Assignments
   const loadAssignments = useCallback(() => {
     setLoadingAssignments(true);
-    fetch("/api/teacher/assignments")
+    fetch("/api/teacher/assignments", {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" },
+    })
       .then((r) => r.json())
       .then((d) => {
         if (d.ok && Array.isArray(d.assignments)) {
@@ -137,7 +143,10 @@ export default function TeacherPage() {
   // Load Lessons
   const loadLessons = useCallback(() => {
     setLoadingLessons(true);
-    fetch("/api/teacher/lessons")
+    fetch("/api/teacher/lessons", {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" },
+    })
       .then((r) => r.json())
       .then((d) => {
         if (d.ok && Array.isArray(d.lessons)) {

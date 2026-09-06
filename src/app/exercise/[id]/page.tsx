@@ -145,7 +145,10 @@ export default function UnifiedExercisePage() {
 
   useEffect(() => {
     if (!id) return;
-    fetch(`/api/assignments/${id}`)
+    fetch(`/api/assignments/${id}`, {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" },
+    })
       .then((r) => r.json())
       .then((d) => {
         if (d.ok && d.assignment) {
