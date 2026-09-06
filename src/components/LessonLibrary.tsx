@@ -63,8 +63,24 @@ export function LessonLibrary({
         )}
       </motion.div>
 
-      <motion.div variants={staggerContainer} initial="hidden" animate="show" className="mt-8 grid gap-6 sm:grid-cols-2">
-        {lessons.map((l, idx) => {
+      {lessons.length === 0 ? (
+        <motion.div
+          variants={fadeUpReal}
+          initial="hidden"
+          animate="show"
+          className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center shadow-sm"
+        >
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-brand mb-4 shadow-soft">
+            <BookOpen className="h-8 w-8" />
+          </div>
+          <h3 className="text-xl font-bold text-slate-900">Chưa có bài học nào được đăng</h3>
+          <p className="mt-2 max-w-md text-sm text-slate-500">
+            Hệ thống đang sẵn sàng cho khoá học mới. Giáo viên và quản trị viên sẽ sớm cập nhật các bài giảng và bài tập!
+          </p>
+        </motion.div>
+      ) : (
+        <motion.div variants={staggerContainer} initial="hidden" animate="show" className="mt-8 grid gap-6 sm:grid-cols-2">
+          {lessons.map((l, idx) => {
           const done = l.progress >= 100;
           const inProgress = l.progress > 0 && l.progress < 100;
           return (
@@ -145,7 +161,8 @@ export function LessonLibrary({
             </motion.div>
           );
         })}
-      </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }

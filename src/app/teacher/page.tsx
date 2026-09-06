@@ -135,8 +135,14 @@ export default function TeacherPage() {
               <tbody>
                 {students.length === 0 ? (
                   <tr>
-                    <td colSpan={assignments.length + 1} className="p-6 text-center text-sm font-semibold text-slate-400">
-                      Chưa có học sinh trong lớp. Danh sách học sinh được lấy từ database do giáo viên tạo.
+                    <td colSpan={Math.max(assignments.length + 1, 1)} className="p-6 text-center text-sm font-semibold text-slate-400">
+                      Chưa có học sinh trong lớp. Danh sách học sinh sẽ hiển thị khi học sinh đăng ký tài khoản.
+                    </td>
+                  </tr>
+                ) : assignments.length === 0 ? (
+                  <tr>
+                    <td colSpan={2} className="p-6 text-center text-sm font-semibold text-slate-400">
+                      Đã có {students.length} học sinh ({students.join(", ")}). Chưa có bài tập nào được giao — hãy nhấn &quot;Giao bài&quot; ở trên để tạo bài tập đầu tiên!
                     </td>
                   </tr>
                 ) : (
@@ -145,7 +151,7 @@ export default function TeacherPage() {
                       <td className="sticky left-0 z-10 whitespace-nowrap rounded-xl bg-slate-50 p-2 text-left text-sm font-bold text-slate-700">
                         {name}
                       </td>
-                      {matrix[si].map((status, ai) => (
+                      {(matrix[si] || []).map((status, ai) => (
                         <td key={ai} className="p-0 text-center">
                           <div
                             className={cn(

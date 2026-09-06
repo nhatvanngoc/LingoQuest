@@ -44,9 +44,9 @@ export async function POST(req: Request) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: process.env.GROQ_MODEL || "qwen/qwen3.6-27b",
         temperature: 0.7,
-        max_tokens: 2500,
+        max_tokens: 800,
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: userPrompt },
@@ -65,6 +65,8 @@ export async function POST(req: Request) {
       usage?: unknown;
     };
     let markdown = data.choices?.[0]?.message?.content?.trim() ?? "";
+    // Strip <think>...</think> tags if Qwen/thinking models produce thinking process
+    markdown = markdown.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
     // Strip ```markdown fences if model wrapped
     markdown = markdown.replace(/^```markdown\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
 

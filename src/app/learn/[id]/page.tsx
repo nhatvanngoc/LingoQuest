@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,7 +12,6 @@ import { FlashCard } from "@/components/FlashCard";
 import { VideoTimestampList } from "@/components/VideoTimestampList";
 import { SpotlightCard } from "@/components/magic/SpotlightCard";
 import { ConfettiExplosion } from "@/components/magic/ConfettiExplosion";
-import { LESSONS, QUIZ_QUESTIONS, LESSON_QUIZZES } from "@/lib/mock/data";
 import { useApp } from "@/lib/state/app-context";
 import type { VocabItem, FlashCardData, QuizQuestion } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -26,10 +25,65 @@ const STEPS = [
 
 export default function LearnPage() {
   const { id } = useParams<{ id: string }>();
-  const lesson = LESSONS.find((l) => l.id === id) ?? LESSONS[0];
-  const questions = LESSON_QUIZZES[lesson.id] ?? QUIZ_QUESTIONS;
-
+  const [lesson, setLesson] = useState<any>(null);
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
   const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (!id) return;
+    let active = true;
+    setLoading(true);
+    setNotFound(false);
+    fetch(`/api/lessons/${id}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (!active) return;
+        if (d.ok && d.lesson) {
+          setLesson(d.lesson);
+          setQuestions(d.lesson.questions || []);
+        } else {
+          setNotFound(true);
+        }
+      })
+      .catch(() => {
+        if (active) setNotFound(true);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-5xl py-12 text-center">
+        <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-brand border-t-transparent mb-4" />
+        <p className="text-sm font-semibold text-slate-500">Đang tải nội dung bài học...</p>
+      </div>
+    );
+  }
+
+  if (notFound || !lesson) {
+    return (
+      <div className="mx-auto max-w-2xl py-12 text-center">
+        <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-8 shadow-sm">
+          <div className="text-5xl mb-3">📖</div>
+          <h2 className="text-xl font-bold text-slate-900">Không tìm thấy bài học này</h2>
+          <p className="mt-1 text-sm text-slate-500">Bài học có thể đã bị xóa hoặc đường dẫn không chính xác.</p>
+          <div className="mt-6">
+            <Button asChild>
+              <Link href="/learn">Quay lại Thư viện bài học</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -80,13 +134,13 @@ export default function LearnPage() {
       <AnimatePresence mode="wait">
         {step === 0 && <StepVideo key="video" lesson={lesson} onNext={() => setStep(1)} />}
         {step === 1 && <StepFlashcard key="flash" lessonId={lesson.id} vocab={lesson.vocab} onNext={() => setStep(2)} onBack={() => setStep(0)} />}
-        {step === 2 && <StepQuiz key="quiz" questions={questions} onBack={() => setStep(1)} />}
+        {step === 2 && <StepQuiz key="quiz" questions={questions} lessonSlug={lesson.slug} onBack={() => setStep(1)} />}
       </AnimatePresence>
     </div>
   );
 }
 
-function StepVideo({ lesson, onNext }: { lesson: (typeof LESSONS)[number]; onNext: () => void }) {
+function StepVideo({ lesson, onNext }: { lesson: any; onNext: () => void }) {
   const [startAt, setStartAt] = useState(0);
   const [activeId, setActiveId] = useState<string | undefined>();
   const [nonce, setNonce] = useState(0);
@@ -194,7 +248,15 @@ function StepFlashcard({ lessonId, vocab, onNext, onBack }: { lessonId: string; 
   );
 }
 
-function StepQuiz({ questions, onBack }: { questions: QuizQuestion[]; onBack: () => void }) {
+function StepQuiz({
+  questions,
+  lessonSlug,
+  onBack,
+}: {
+  questions: any[];
+  lessonSlug?: string;
+  onBack: () => void;
+}) {
   const { addXp, markLessonDone } = useApp();
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -216,8 +278,19 @@ function StepQuiz({ questions, onBack }: { questions: QuizQuestion[]; onBack: ()
       setDone(true);
       if (!rewarded.current) {
         rewarded.current = true;
-        addXp(30 + score * 10, "Hoàn thành bài học");
+        const earned = 30 + score * 10;
+        addXp(earned, "Hoàn thành bài học");
         markLessonDone();
+        // Đồng bộ tiến độ 100% và XP lên PostgreSQL
+        fetch("/api/user/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            xp: earned,
+            lessonSlug: lessonSlug || "",
+            percent: 100,
+          }),
+        }).catch(() => {});
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);
       }
@@ -268,7 +341,7 @@ function StepQuiz({ questions, onBack }: { questions: QuizQuestion[]; onBack: ()
       <SpotlightCard className="p-6">
         <motion.h2 key={current} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-lg font-extrabold leading-snug text-slate-900">{q.prompt}</motion.h2>
         <div className="mt-6 grid gap-3">
-          {q.options.map((opt, i) => {
+          {q.options.map((opt: string, i: number) => {
             const isAnswer = i === q.answer;
             const isPicked = i === selected;
             const reveal = selected !== null;

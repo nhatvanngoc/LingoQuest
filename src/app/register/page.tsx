@@ -66,9 +66,9 @@ export default function RegisterPage() {
         setError(data.error ?? "Đăng ký thất bại");
         return;
       }
-      if (data.role === "teacher") router.push("/teacher");
-      else if (data.role === "pending") router.push("/pending");
-      else router.push("/dashboard");
+      if (data.role === "teacher") window.location.href = "/teacher";
+      else if (data.role === "pending") window.location.href = "/pending";
+      else window.location.href = "/dashboard";
     } catch {
       setError("Lỗi mạng, thử lại sau");
     } finally {

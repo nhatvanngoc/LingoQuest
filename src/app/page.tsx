@@ -107,7 +107,7 @@ export default function LandingPage() {
 
       {/* ===== Hero ===== */}
       <BackgroundBeams className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
-        <div className="mx-auto grid w-full max-w-5xl items-center gap-8 px-4 pt-6 pb-12 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:pt-10 lg:pb-16">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-8 px-4 pt-8 pb-16 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:pt-12 lg:pb-20">
           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="relative z-10">
             <motion.div variants={fadeUpReal}>
               <span className="group inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-4 py-2 text-sm font-bold text-brand shadow-sm hover:shadow-md transition-all hover:scale-105">
@@ -167,42 +167,55 @@ export default function LandingPage() {
             </motion.div>
           </motion.div>
 
-          {/* Hero image — landscape 16:9 CỰC ĐẠI, tràn viền */}
-          <motion.div className="relative mx-auto w-full max-w-[820px] aspect-video overflow-hidden sm:aspect-video lg:mx-0 lg:max-w-[760px] xl:max-w-[880px] scale-[1.62] lg:scale-[1.78] origin-center lg:origin-left lg:-mr-16 xl:-mr-24">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.3 }}
-              className="absolute inset-0 overflow-hidden rounded-[2rem] border border-gray-200 shadow-lg"
-            >
-              <SmartImage src={IMG.hero} alt="Học sinh đang học tiếng Anh vui vẻ bên laptop" className="h-full w-full object-cover" gradient="from-brand-100 to-violet-100" priority sizes="(max-width: 1024px) 100vw, 50vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-slate-900/10 to-transparent" />
+          {/* Hero image & preview card — Clean, responsive, no scale clipping */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.2 }}
+            className="relative mx-auto w-full max-w-lg lg:max-w-none"
+          >
+            <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] w-full overflow-hidden rounded-[2.5rem] border border-gray-200 shadow-2xl">
+              <SmartImage
+                src={IMG.hero}
+                alt="Học sinh đang học tiếng Anh vui vẻ bên laptop"
+                className="h-full w-full object-cover"
+                gradient="from-brand-100 to-violet-100"
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-violet-500/20 mix-blend-overlay" />
-            </motion.div>
 
-            {/* Single floating card — simple, not cluttered */}
-            <motion.div
-              initial={{ opacity: 0, y: 20, x: -20 }}
-              animate={{ opacity: 1, y: 0, x: 0 }}
-              transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
-              className="absolute bottom-3 left-3 w-[min(16rem,78%)] rounded-xl border border-gray-200 bg-white/90 p-3 shadow-lg backdrop-blur-sm sm:-bottom-4 sm:-left-4 sm:w-64"
-            >
-              <div className="relative flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-brand-700 text-white shadow-md">
-                  <PlayCircle className="h-5 w-5" />
-                </span>
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-bold text-slate-900">Talking About Your Weekend</p>
-                  <p className="text-[11px] font-semibold text-slate-400">Bài học hôm nay · 8 phút</p>
+              {/* Single floating card — cleanly positioned inside the photo */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+                className="absolute bottom-5 left-5 right-5 sm:right-auto sm:w-80 rounded-2xl border border-white/30 bg-white/95 p-4 shadow-xl backdrop-blur-md z-20"
+              >
+                <div className="relative flex items-center gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-700 text-white shadow-md">
+                    <PlayCircle className="h-5 w-5" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-bold text-slate-900">Talking About Your Weekend</p>
+                    <p className="text-xs font-semibold text-slate-400">Bài học hôm nay · 8 phút</p>
+                  </div>
                 </div>
-              </div>
-              <div className="relative mt-2 h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
-                <motion.div initial={{ width: 0 }} animate={{ width: "65%" }} transition={{ delay: 1, duration: 1 }} className="h-full rounded-full bg-gradient-to-r from-brand to-brand-500" />
-              </div>
-              <div className="relative mt-1 flex items-center justify-between text-[10px] font-bold text-slate-400">
-                <span>65% hoàn thành</span><span className="text-brand">+30 XP</span>
-              </div>
-            </motion.div>
+                <div className="relative mt-3 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: "65%" }}
+                    transition={{ delay: 0.8, duration: 1 }}
+                    className="h-full rounded-full bg-gradient-to-r from-brand to-brand-500"
+                  />
+                </div>
+                <div className="relative mt-2 flex items-center justify-between text-xs font-bold text-slate-500">
+                  <span>65% hoàn thành</span>
+                  <span className="text-brand font-extrabold">+30 XP</span>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </BackgroundBeams>

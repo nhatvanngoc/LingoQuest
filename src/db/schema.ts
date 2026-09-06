@@ -126,6 +126,8 @@ export const assignments = pgTable("assignments", {
   lessonId: uuid("lesson_id").references(() => lessons.id, { onDelete: "set null" }),
   deckId: uuid("deck_id").references(() => decks.id, { onDelete: "set null" }),
   classId: uuid("class_id").references(() => classes.id, { onDelete: "cascade" }),
+  description: text("description").default(""),
+  prompt: text("prompt").default(""),
   dueAt: timestamp("due_at", { withTimezone: true }),
   createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),

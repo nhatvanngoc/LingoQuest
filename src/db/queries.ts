@@ -13,247 +13,70 @@ import {
   submissions,
   lessonProgress,
 } from "./schema";
-import { and, eq, sql, desc } from "drizzle-orm";
-import {
-  LESSONS,
-  DECKS,
-  ASSIGNMENTS,
-  USERS as MOCK_USERS,
-} from "@/lib/mock/data";
+import { and, eq, sql, desc, or } from "drizzle-orm";
 import { hashPassword } from "@/lib/auth/password";
 import type { MatrixStatus, Role } from "@/lib/types";
 
 /* ============================================================
-   Lớp truy vấn + seed cho LingoQuest.
-   - seedIfEmpty(): nạp dữ liệu mẫu vào CSDL (chạy 1 lần nếu trống).
-   - getLessonsWithVocab(): danh sách bài học kèm từ vựng.
-   - getOverview(): số liệu tổng cho badge trạng thái CSDL.
+   Lớp truy vấn cho LingoQuest (Production-Ready).
+   - seedAdminIfEmpty(): Đảm bảo tài khoản Admin duy nhất tồn tại.
+   - getLessonsWithVocab(): Danh sách bài học thật kèm từ vựng từ PostgreSQL.
+   - getOverview(): Số liệu tổng quan thật cho hệ thống.
+   - Không chứa bất kỳ dữ liệu demo hoặc tài khoản mẫu nào.
    ============================================================ */
 
 export type LessonRow = Awaited<ReturnType<typeof getLessonsWithVocab>>[number];
 
-/** Đảm bảo CSDL có đủ dữ liệu mẫu (thêm bài/thẻ thiếu, không ghi đè) */
-/** Đảm bảo user demo tồn tại + đặt mật khẩu (idempotent). */
-async function ensureUser(mock: (typeof MOCK_USERS)[keyof typeof MOCK_USERS], pw: string) {
-  const email = mock.email.toLowerCase();
-  const rows = await db.select().from(users).where(eq(users.email, email)).limit(1);
-  if (rows.length > 0) {
-    const u = rows[0];
-    // Chỉ set mật khẩu nếu demo chưa có (để không ghi đè mật khẩu thật sau này).
-    if (!u.password) {
-      await db.update(users).set({ password: hashPassword(pw) }).where(eq(users.id, u.id));
-    }
-    return u;
-  }
-  const [u] = await db
-    .insert(users)
-    .values({
-      name: mock.name,
-      email,
-      role: mock.role as Role,
-      avatarColor: mock.avatarColor,
-      password: hashPassword(pw),
-    })
-    .returning();
-  return u;
-}
+/**
+ * Đảm bảo tài khoản Admin duy nhất và Lớp học mặc định tồn tại trong CSDL.
+ * Tuyệt đối không tạo dữ liệu giả mạo hay tài khoản demo.
+ */
+export async function seedAdminIfEmpty() {
+  const adminEmail = "admin@lingoquest.app";
+  const existing = await db.select().from(users).where(eq(users.email, adminEmail)).limit(1);
 
-/** Đảm bảo học sinh thuộc lớp (idempotent). */
-async function ensureClassMember(classId: string, userId: string) {
-  const rows = await db
-    .select()
-    .from(classMembers)
-    .where(and(eq(classMembers.classId, classId), eq(classMembers.userId, userId)))
-    .limit(1);
-  if (rows.length === 0) {
-    await db.insert(classMembers).values({ classId, userId });
-  }
-}
-
-export async function seedIfEmpty() {
-  const existing = await db.select().from(lessons);
-  const seededSlugs = new Set(existing.map((l) => l.slug));
-
-  // --- 3 user demo (teacher / pending / student) + mật khẩu Pass1234 ---
-  const teacher = await ensureUser(MOCK_USERS.teacher, "Pass1234");
-  await ensureUser(MOCK_USERS.pending, "Pass1234");
-  const student = await ensureUser(MOCK_USERS.student, "Pass1234");
-  const teacherId = teacher.id;
-
-  // --- Lớp học (1 lớp) + thêm học sinh vào lớp ---
-  let classRow = await db.select().from(classes).limit(1);
-  let classId: string;
-  if (classRow.length === 0) {
-    const [cls] = await db
-      .insert(classes)
-      .values({ name: "Tiếng Anh 10 — 10A1", teacherId })
-      .returning();
-    classId = cls.id;
-  } else {
-    classId = classRow[0].id;
-  }
-  await ensureClassMember(classId, student.id);
-
-  // --- Bài học + từ vựng (slug = id của mock; bỏ qua bài đã có) ---
-  for (const l of LESSONS) {
-    if (seededSlugs.has(l.id)) continue;
-    const [lesson] = await db
-      .insert(lessons)
+  let adminId: string;
+  if (existing.length === 0) {
+    const adminPass = "Admin@123456";
+    const [admin] = await db
+      .insert(users)
       .values({
-        slug: l.id,
-        title: l.title,
-        titleVi: l.titleVi,
-        description: l.description,
-        youtubeId: l.youtubeId,
-        thumbnail: l.thumbnail,
-        durationLabel: l.durationLabel,
-        createdBy: teacherId,
+        name: "Quản trị viên",
+        email: adminEmail,
+        role: "teacher",
+        avatarColor: "#2563EB",
+        password: hashPassword(adminPass),
       })
       .returning();
-    if (l.vocab.length > 0) {
-      await db.insert(vocab).values(
-        l.vocab.map((v, i) => ({
-          lessonId: lesson.id,
-          word: v.word,
-          phonetic: v.phonetic,
-          meaning: v.meaning,
-          example: v.example,
-          exampleVi: v.exampleVi,
-          start: v.start,
-          order: i,
-        })),
-      );
-    }
-  }
+    adminId = admin.id;
 
-  // --- Bộ flashcard + thẻ (slug = id mock; bỏ qua bộ đã có) ---
-  const lessonRows = await db.select().from(lessons);
-  const existingDecks = await db.select().from(decks);
-  const seededDeckSlugs = new Set(existingDecks.map((d) => d.slug));
-  for (const d of DECKS) {
-    if (seededDeckSlugs.has(d.id)) continue;
-    const linked = lessonRows.find((lr) => lr.slug === d.id.replace("deck", "lesson"));
-    const [deck] = await db
-      .insert(decks)
-      .values({ slug: d.id, title: d.title, lessonId: linked?.id ?? null, createdBy: teacherId })
-      .returning();
-    if (d.cards.length > 0) {
-      await db.insert(cards).values(
-        d.cards.map((c, i) => ({
-          deckId: deck.id,
-          front: c.front,
-          phonetic: c.phonetic,
-          back: c.back,
-          example: c.example,
-          exampleVi: c.exampleVi,
-          order: i,
-        })),
-      );
-    }
-  }
-
-  // --- Bài tập được giao: chỉ seed khi chưa có (tránh trùng lặp) ---
-  const existingAssignments = await db.select().from(assignments);
-  if (existingAssignments.length === 0) {
-    const deckRows = await db.select().from(decks);
-    for (const a of ASSIGNMENTS) {
-      const linkedDeck = a.type === "deck" ? deckRows[0] : undefined;
-      await db.insert(assignments).values({
-        title: a.title,
-        type: a.type,
-        lessonId: lessonRows[0]?.id,
-        deckId: linkedDeck?.id,
-        classId,
-        dueAt: a.status === "overdue" ? new Date(Date.now() - 86400000) : new Date(Date.now() + 3 * 86400000),
-        createdBy: teacherId,
-      });
-    }
-  }
-
-  // --- Thống kê học sinh (xp/streak...) ---
-  const stats = await db.select().from(userStats).where(eq(userStats.userId, student.id)).limit(1);
-  if (stats.length === 0) {
     await db.insert(userStats).values({
-      userId: student.id,
-      xp: 2480,
-      streak: 12,
-      wordsLearned: 120,
-      level: 7,
+      userId: adminId,
+      xp: 0,
+      streak: 0,
+      wordsLearned: 0,
+      level: 1,
+    });
+  } else {
+    adminId = existing[0].id;
+  }
+
+  // Đảm bảo có 1 lớp học mặc định gắn với Admin
+  const classRow = await db.select().from(classes).limit(1);
+  if (classRow.length === 0) {
+    await db.insert(classes).values({
+      name: "Tiếng Anh Toàn Diện — Lớp Chính Thức",
+      teacherId: adminId,
     });
   }
 
-  // --- Tiến độ bài học của học sinh ---
-  const progress = await db
-    .select()
-    .from(lessonProgress)
-    .where(eq(lessonProgress.userId, student.id))
-    .limit(1);
-  if (progress.length === 0 && lessonRows.length > 0) {
-    await db.insert(lessonProgress).values(
-      lessonRows.map((l, i) => ({
-        userId: student.id,
-        lessonId: l.id,
-        percent: [100, 60, 0, 0, 0][i] ?? 0,
-      })),
-    );
-  }
-
-  // --- Bài viết chờ chấm (submissions) ---
-  const subs = await db.select().from(submissions).where(eq(submissions.userId, student.id)).limit(1);
-  if (subs.length === 0) {
-    const firstAssign = await db.select().from(assignments).limit(1);
-    await db.insert(submissions).values([
-      {
-        userId: student.id,
-        assignmentId: firstAssign[0]?.id ?? null,
-        lessonTitle: "Writing Practice",
-        prompt: "Kể về kỳ nghỉ hè của bạn (tối thiểu 80 từ)",
-        text:
-          "Last summer, I had a wonderful holiday with my family in Da Nang. First of all, we went to My Khe beach and swam in the sea. The water was very clear and the weather was relaxing. After that, we tried delicious seafood at a restaurant near the beach. My favorite dish was grilled squid. In the evening, we walked along the bridge and took many photos. Finally, I felt a bit exhausted but very happy. It was an amazing adventure that I will never forget.",
-        words: 84,
-        status: "submitted",
-        submittedAt: "2 giờ trước",
-      },
-      {
-        userId: student.id,
-        assignmentId: firstAssign[0]?.id ?? null,
-        lessonTitle: "Writing Practice",
-        prompt: "Miêu tả một người bạn thân",
-        text:
-          "My best friend is Linh. We have known each other since primary school. She is tall and has long black hair. Linh is very kind and always helps me with my homework. After school, we usually hang out at the park and ride our bicycles. She is also funny and makes me laugh every day. I hope we will be friends forever.",
-        words: 62,
-        status: "submitted",
-        submittedAt: "5 giờ trước",
-      },
-    ]);
-  }
-
-  // --- Lượt làm bài (attempts) cho ma trận tiến độ ---
-  const att = await db.select().from(attempts).where(eq(attempts.userId, student.id)).limit(1);
-  if (att.length === 0) {
-    const assigns = await db.select().from(assignments);
-    const seq: Array<{ status: "none" | "doing" | "submitted" | "graded"; score: number }> = [
-      { status: "graded", score: 90 },
-      { status: "submitted", score: 0 },
-      { status: "doing", score: 0 },
-      { status: "none", score: 0 },
-    ];
-    for (const a of assigns) {
-      const s = seq[assigns.indexOf(a) % seq.length];
-      await db.insert(attempts).values({
-        userId: student.id,
-        assignmentId: a.id,
-        status: s.status,
-        score: s.score,
-        total: 100,
-      });
-    }
-  }
-
-  return { seeded: true, count: LESSONS.length };
+  return { seeded: true, adminEmail };
 }
 
-/** Lấy danh sách bài học + số từ vựng mỗi bài */
+/** Alias cho backward compatibility */
+export const seedIfEmpty = seedAdminIfEmpty;
+
+/** Lấy danh sách bài học + số từ vựng mỗi bài từ DB thật */
 export async function getLessonsWithVocab() {
   const rows = await db.select().from(lessons).orderBy(lessons.createdAt);
   const result = await Promise.all(
@@ -278,56 +101,115 @@ export async function getLessonsWithVocab() {
   return result;
 }
 
-/** Tổng quan số liệu CSDL (cho badge trạng thái) */
+/** Chi tiết bài học kèm từ vựng theo slug hoặc ID */
+export async function getLessonBySlugOrId(slugOrId: string) {
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slugOrId);
+  const condition = isUuid
+    ? or(eq(lessons.slug, slugOrId), eq(lessons.id, slugOrId))
+    : eq(lessons.slug, slugOrId);
+
+  const row = await db
+    .select()
+    .from(lessons)
+    .where(condition)
+    .limit(1);
+  if (!row[0]) return null;
+  const l = row[0];
+  const vocabRows = await db
+    .select()
+    .from(vocab)
+    .where(eq(vocab.lessonId, l.id))
+    .orderBy(vocab.order);
+  return {
+    ...l,
+    vocab: vocabRows,
+  };
+}
+
+/** Chi tiết bộ flashcard kèm thẻ theo slug hoặc ID */
+export async function getDeckBySlugOrId(slugOrId: string) {
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slugOrId);
+  const condition = isUuid
+    ? or(eq(decks.slug, slugOrId), eq(decks.id, slugOrId))
+    : eq(decks.slug, slugOrId);
+
+  const row = await db
+    .select()
+    .from(decks)
+    .where(condition)
+    .limit(1);
+  if (!row[0]) return null;
+  const d = row[0];
+  const cardRows = await db
+    .select()
+    .from(cards)
+    .where(eq(cards.deckId, d.id))
+    .orderBy(cards.order);
+  return {
+    ...d,
+    cards: cardRows,
+  };
+}
+
+/** Tổng quan số liệu CSDL thật (cho badge trạng thái) */
 export async function getOverview() {
   const [l] = await db.select({ c: sql<number>`count(*)::int` }).from(lessons);
   const [v] = await db.select({ c: sql<number>`count(*)::int` }).from(vocab);
   const [d] = await db.select({ c: sql<number>`count(*)::int` }).from(decks);
   const [u] = await db.select({ c: sql<number>`count(*)::int` }).from(users);
   const [a] = await db.select({ c: sql<number>`count(*)::int` }).from(assignments);
-  return { lessons: l?.c ?? 0, vocab: v?.c ?? 0, decks: d?.c ?? 0, users: u?.c ?? 0, assignments: a?.c ?? 0 };
+  return {
+    lessons: l?.c ?? 0,
+    vocab: v?.c ?? 0,
+    decks: d?.c ?? 0,
+    users: u?.c ?? 0,
+    assignments: a?.c ?? 0,
+  };
 }
 
-/** Lấy lớp đầu tiên của hệ thống (template 1 lớp) */
+/** Lấy lớp đầu tiên của hệ thống */
 export async function getFirstClassId() {
   const row = await db.select({ id: classes.id }).from(classes).limit(1);
   return row[0]?.id ?? null;
 }
 
-/** Danh sách học sinh do giáo viên tạo và thêm vào lớp */
+/** Danh sách học sinh thật trong hệ thống */
 export async function getClassStudents() {
-  const classId = await getFirstClassId();
-  if (!classId) return [];
   const rows = await db
-    .select({ id: users.id, name: users.name, email: users.email, avatarColor: users.avatarColor })
-    .from(classMembers)
-    .innerJoin(users, eq(users.id, classMembers.userId))
-    .where(and(eq(classMembers.classId, classId), eq(users.role, "student")));
+    .select({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+      avatarColor: users.avatarColor,
+      createdAt: users.createdAt,
+    })
+    .from(users)
+    .where(eq(users.role, "student"))
+    .orderBy(desc(users.createdAt));
   return rows;
 }
 
-/** Bảng xếp hạng tuần (từ user_stats + class_members); rỗng nếu chưa có học sinh */
+/** Bảng xếp hạng tuần từ user_stats của học sinh thật */
 export async function getWeeklyLeaderboard() {
-  const classId = await getFirstClassId();
-  if (!classId) return [];
   const rows = await db
     .select({ id: users.id, name: users.name, xp: userStats.xp })
-    .from(classMembers)
-    .innerJoin(users, eq(users.id, classMembers.userId))
+    .from(users)
     .leftJoin(userStats, eq(userStats.userId, users.id))
-    .where(and(eq(classMembers.classId, classId), eq(users.role, "student")))
+    .where(eq(users.role, "student"))
     .orderBy(desc(userStats.xp), users.name);
   return rows.map((r) => ({ id: r.id, name: r.name, xp: r.xp ?? 0 }));
 }
 
 /* ============================================================
-   Hàm dành riêng Giáo viên — tạo / chấm bài, thống kê, ma trận.
+   Hàm dành riêng Quản trị / Giáo viên — tạo / chấm bài, thống kê.
    ============================================================ */
 
 /** Tạo bài tập được giao (gắn vào lớp đầu tiên của hệ thống). */
 export async function createAssignment(input: {
   title: string;
   type: "exercise" | "deck";
+  description?: string | null;
+  prompt?: string | null;
   lessonId?: string | null;
   deckId?: string | null;
   dueAt?: Date | null;
@@ -339,6 +221,8 @@ export async function createAssignment(input: {
     .values({
       title: input.title,
       type: input.type,
+      description: input.description ?? "",
+      prompt: input.prompt ?? "",
       lessonId: input.lessonId ?? null,
       deckId: input.deckId ?? null,
       classId: classId ?? null,
@@ -347,6 +231,67 @@ export async function createAssignment(input: {
     })
     .returning();
   return row;
+}
+
+/** Tạo bộ flashcard mới kèm danh sách thẻ từ vựng */
+export async function createDeckWithCards(input: {
+  title: string;
+  createdBy?: string | null;
+  cards: {
+    front: string;
+    back: string;
+    phonetic?: string;
+    example?: string;
+    exampleVi?: string;
+  }[];
+}) {
+  const slug = `deck-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`;
+  const [deck] = await db
+    .insert(decks)
+    .values({
+      title: input.title,
+      slug,
+      createdBy: input.createdBy ?? null,
+    })
+    .returning();
+
+  if (input.cards.length > 0) {
+    await db.insert(cards).values(
+      input.cards.map((c, idx) => ({
+        deckId: deck.id,
+        front: c.front.trim(),
+        back: c.back.trim(),
+        phonetic: c.phonetic?.trim() || "",
+        example: c.example?.trim() || "",
+        exampleVi: c.exampleVi?.trim() || "",
+        order: idx,
+      }))
+    );
+  }
+
+  return deck;
+}
+
+/** Lấy thông tin chi tiết bài tập theo ID */
+export async function getAssignmentById(id: string) {
+  const [row] = await db
+    .select({
+      id: assignments.id,
+      title: assignments.title,
+      type: assignments.type,
+      description: assignments.description,
+      prompt: assignments.prompt,
+      lessonId: assignments.lessonId,
+      deckId: assignments.deckId,
+      dueAt: assignments.dueAt,
+      createdAt: assignments.createdAt,
+      lessonTitle: lessons.title,
+    })
+    .from(assignments)
+    .leftJoin(lessons, eq(lessons.id, assignments.lessonId))
+    .where(eq(assignments.id, id))
+    .limit(1);
+  return row ?? null;
 }
 
 /** Đăng bài học video + từ vựng + tự động tạo bộ flashcard từ vựng. */
@@ -432,16 +377,12 @@ export async function gradeSubmission(id: string, score: number, comment: string
   return row;
 }
 
-/** Thống kê bảng điều khiển giáo viên. */
+/** Thống kê bảng điều khiển giáo viên từ DB thật. */
 export async function getTeacherStats() {
-  const classId = await getFirstClassId();
-  if (!classId) return { activeStudents: 0, pendingGrading: 0, completionRate: 0 };
-
   const [{ c: activeStudents }] = await db
     .select({ c: sql<number>`count(*)::int` })
-    .from(classMembers)
-    .innerJoin(users, eq(users.id, classMembers.userId))
-    .where(and(eq(classMembers.classId, classId), eq(users.role, "student")));
+    .from(users)
+    .where(eq(users.role, "student"));
 
   const [{ c: pendingGrading }] = await db
     .select({ c: sql<number>`count(*)::int` })
@@ -459,15 +400,11 @@ export async function getTeacherStats() {
   return { activeStudents, pendingGrading, completionRate };
 }
 
-/** Ma trận tiến độ: học sinh (hàng) × bài tập (cột) theo bảng attempts. */
+/** Ma trận tiến độ: học sinh (hàng) × bài tập (cột) theo bảng attempts thật. */
 export async function getProgressMatrix() {
-  const classId = await getFirstClassId();
-  if (!classId) return { students: [], assignments: [], matrix: [] as MatrixStatus[][] };
-
   const studentRows = await db
     .select({ id: users.id, name: users.name })
-    .from(classMembers)
-    .innerJoin(users, eq(users.id, classMembers.userId))
+    .from(users)
     .where(eq(users.role, "student"))
     .orderBy(users.name);
 
@@ -475,6 +412,14 @@ export async function getProgressMatrix() {
     .select({ id: assignments.id, title: assignments.title })
     .from(assignments)
     .orderBy(assignments.createdAt);
+
+  if (studentRows.length === 0 || assignRows.length === 0) {
+    return {
+      students: studentRows.map((s) => s.name),
+      assignments: assignRows.map((a) => a.title),
+      matrix: studentRows.map(() => [] as MatrixStatus[]),
+    };
+  }
 
   const attRows = await db
     .select({ userId: attempts.userId, assignmentId: attempts.assignmentId, status: attempts.status })
@@ -506,5 +451,201 @@ export async function getLessonsForSelect() {
 /** Danh sách bộ flashcard (cho form giao bài loại deck). */
 export async function getDecksForSelect() {
   return db.select({ id: decks.id, title: decks.title }).from(decks).orderBy(decks.createdAt);
+}
+
+/** Học sinh nộp bài viết vào CSDL */
+export async function submitWriting(input: {
+  userId: string;
+  assignmentId?: string | null;
+  lessonTitle: string;
+  prompt: string;
+  text: string;
+  words: number;
+}) {
+  const isUuid = input.assignmentId
+    ? /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(input.assignmentId)
+    : false;
+  const validAssignmentId = isUuid ? input.assignmentId : null;
+
+  const [sub] = await db
+    .insert(submissions)
+    .values({
+      userId: input.userId,
+      assignmentId: validAssignmentId,
+      lessonTitle: input.lessonTitle,
+      prompt: input.prompt,
+      text: input.text,
+      words: input.words,
+      status: "submitted",
+      submittedAt: "Vừa xong",
+    })
+    .returning();
+
+  if (validAssignmentId) {
+    const existingAttempt = await db
+      .select({ id: attempts.id })
+      .from(attempts)
+      .where(and(eq(attempts.userId, input.userId), eq(attempts.assignmentId, validAssignmentId)))
+      .limit(1);
+
+    if (existingAttempt.length === 0) {
+      await db.insert(attempts).values({
+        userId: input.userId,
+        assignmentId: validAssignmentId,
+        status: "submitted",
+        score: 0,
+        total: 100,
+      });
+    } else {
+      await db
+        .update(attempts)
+        .set({ status: "submitted" })
+        .where(eq(attempts.id, existingAttempt[0].id));
+    }
+  }
+
+  return sub;
+}
+
+/** Lấy danh sách bài nộp của học sinh (kèm điểm số và nhận xét từ giáo viên) */
+export async function getStudentSubmissions(userId: string) {
+  const rows = await db
+    .select({
+      id: submissions.id,
+      lessonTitle: submissions.lessonTitle,
+      prompt: submissions.prompt,
+      text: submissions.text,
+      words: submissions.words,
+      status: submissions.status,
+      score: submissions.score,
+      comment: submissions.comment,
+      submittedAt: submissions.submittedAt,
+      createdAt: submissions.createdAt,
+    })
+    .from(submissions)
+    .where(eq(submissions.userId, userId))
+    .orderBy(desc(submissions.createdAt));
+  return rows;
+}
+
+/** Đồng bộ XP, chuỗi ngày học và tiến độ bài học của học sinh lên CSDL */
+export async function syncUserStats(input: {
+  userId: string;
+  xp?: number;
+  streak?: number;
+  wordsLearned?: number;
+  lessonSlug?: string;
+  percent?: number;
+}) {
+  const current = await db
+    .select()
+    .from(userStats)
+    .where(eq(userStats.userId, input.userId))
+    .limit(1);
+
+  const newXp = Math.max(input.xp ?? 0, current[0]?.xp ?? 0);
+  const newStreak = Math.max(input.streak ?? 0, current[0]?.streak ?? 0);
+  const newWords = Math.max(input.wordsLearned ?? 0, current[0]?.wordsLearned ?? 0);
+  const newLevel = Math.max(1, Math.floor(newXp / 600) + 1);
+
+  if (current.length === 0) {
+    await db.insert(userStats).values({
+      userId: input.userId,
+      xp: newXp,
+      streak: newStreak,
+      wordsLearned: newWords,
+      level: newLevel,
+    });
+  } else {
+    await db
+      .update(userStats)
+      .set({
+        xp: newXp,
+        streak: newStreak,
+        wordsLearned: newWords,
+        level: newLevel,
+        updatedAt: new Date(),
+      })
+      .where(eq(userStats.userId, input.userId));
+  }
+
+  if (input.lessonSlug) {
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(input.lessonSlug);
+    const condition = isUuid
+      ? or(eq(lessons.slug, input.lessonSlug), eq(lessons.id, input.lessonSlug))
+      : eq(lessons.slug, input.lessonSlug);
+
+    const l = await db
+      .select({ id: lessons.id })
+      .from(lessons)
+      .where(condition)
+      .limit(1);
+
+    if (l[0]) {
+      const existingProg = await db
+        .select()
+        .from(lessonProgress)
+        .where(
+          and(
+            eq(lessonProgress.userId, input.userId),
+            eq(lessonProgress.lessonId, l[0].id)
+          )
+        )
+        .limit(1);
+
+      const pct = Math.min(100, Math.max(input.percent ?? 100, existingProg[0]?.percent ?? 0));
+      if (existingProg.length === 0) {
+        await db.insert(lessonProgress).values({
+          userId: input.userId,
+          lessonId: l[0].id,
+          percent: pct,
+        });
+      } else {
+        await db
+          .update(lessonProgress)
+          .set({ percent: pct, updatedAt: new Date() })
+          .where(
+            and(
+              eq(lessonProgress.userId, input.userId),
+              eq(lessonProgress.lessonId, l[0].id)
+            )
+          );
+      }
+    }
+  }
+
+  return { xp: newXp, streak: newStreak, wordsLearned: newWords, level: newLevel };
+}
+
+/** Danh sách học sinh đầy đủ kèm số liệu học tập (cho màn hình Giáo viên) */
+export async function getTeacherStudentsWithStats() {
+  const rows = await db
+    .select({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+      avatarColor: users.avatarColor,
+      createdAt: users.createdAt,
+      xp: userStats.xp,
+      streak: userStats.streak,
+      wordsLearned: userStats.wordsLearned,
+      level: userStats.level,
+    })
+    .from(users)
+    .leftJoin(userStats, eq(userStats.userId, users.id))
+    .where(eq(users.role, "student"))
+    .orderBy(desc(userStats.xp), desc(users.createdAt));
+
+  return rows.map((r) => ({
+    id: r.id,
+    name: r.name,
+    email: r.email,
+    avatarColor: r.avatarColor,
+    createdAt: r.createdAt,
+    xp: r.xp ?? 0,
+    streak: r.streak ?? 0,
+    wordsLearned: r.wordsLearned ?? 0,
+    level: r.level ?? 1,
+  }));
 }
 

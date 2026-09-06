@@ -5,9 +5,11 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Volume2, Check, X, RotateCw, Sparkles } from "lucide-react";
 import type { FlashCardData } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { sound } from "@/lib/sound";
 
 function speak(text: string) {
   if (typeof window === "undefined") return;
+  sound.playPop();
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang = "en-US";
   utter.rate = 0.9;
@@ -58,7 +60,7 @@ export function FlashCard({
   };
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <div className="flex flex-col items-center gap-4 w-full">
       <div className={cn("perspective w-full", compact ? "max-w-sm" : "max-w-md")}>
         <motion.div
           ref={ref}
@@ -230,28 +232,37 @@ export function FlashCard({
           className="flex w-full max-w-md items-center justify-center gap-3"
         >
           <motion.button
-            whileHover={{ scale: 1.02, y: -2 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.96 }}
-            onClick={onUnknown}
-            className="group relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-2xl border-2 border-danger-100 bg-gradient-to-br from-danger-50 to-red-50 py-3.5 font-extrabold text-danger transition-all hover:shadow-glow-success/20 hover:border-danger-200"
+            onClick={() => {
+              sound.playErrorTone();
+              onUnknown?.();
+            }}
+            className="group relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-2xl border-2 border-rose-200 border-b-4 border-b-rose-400 bg-gradient-to-br from-rose-50 to-red-50 py-3.5 font-extrabold text-rose-600 transition-all active:border-b-2 active:translate-y-0.5 hover:brightness-105 select-none cursor-pointer"
           >
             <X className="h-5 w-5" /> Chưa nhớ
             <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-[shimmer_0.6s_ease-out]" />
           </motion.button>
           <motion.button
-            whileHover={{ scale: 1.1, rotate: 90 }}
+            whileHover={{ scale: 1.08, rotate: 90 }}
             whileTap={{ scale: 0.9 }}
-            onClick={onFlip}
-            className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl border-2 border-slate-200 bg-white text-slate-500 shadow-soft hover:border-brand-200 hover:text-brand transition-all"
+            onClick={() => {
+              sound.playWhoosh();
+              onFlip();
+            }}
+            className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl border-2 border-slate-200 border-b-4 border-b-slate-400 bg-white text-slate-600 shadow-soft hover:border-brand-300 hover:text-brand transition-all active:border-b-2 active:translate-y-0.5 select-none cursor-pointer"
             aria-label="Lật lại"
           >
             <RotateCw className="h-5 w-5" />
           </motion.button>
           <motion.button
-            whileHover={{ scale: 1.02, y: -2 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.96 }}
-            onClick={onKnown}
-            className="group relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-br from-success to-emerald-600 py-3.5 font-extrabold text-white shadow-glow-success hover:shadow-glow-success"
+            onClick={() => {
+              sound.playChime();
+              onKnown?.();
+            }}
+            className="group relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-2xl border-b-4 border-emerald-700 bg-gradient-to-br from-emerald-500 to-emerald-600 py-3.5 font-extrabold text-white shadow-md hover:brightness-105 transition-all active:border-b-0 active:translate-y-1 select-none cursor-pointer"
           >
             <Check className="h-5 w-5" /> Đã nhớ
             <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_0.6s_ease-out]" />

@@ -68,7 +68,7 @@ export default function LoginPage() {
         setError(data.error ?? "Đăng nhập thất bại");
         return false;
       }
-      router.push(data.role === "teacher" ? "/teacher" : "/dashboard");
+      window.location.href = data.role === "teacher" ? "/teacher" : "/dashboard";
       return true;
     } catch {
       setError("Lỗi mạng, thử lại sau");

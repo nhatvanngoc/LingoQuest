@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/session";
-import { createAssignment } from "@/db/queries";
+import { createAssignment, createDeckWithCards } from "@/db/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -14,23 +14,54 @@ export async function POST(req: Request) {
     const body = (await req.json().catch(() => null)) as {
       title?: unknown;
       type?: unknown;
+      description?: unknown;
+      prompt?: unknown;
       lessonId?: unknown;
       deckId?: unknown;
       dueAt?: unknown;
+      customCards?: Array<{ front: string; back: string; phonetic?: string; example?: string; exampleVi?: string }>;
     } | null;
 
     const title = typeof body?.title === "string" ? body.title.trim() : "";
     const type = body?.type === "deck" ? "deck" : "exercise";
+    const description = typeof body?.description === "string" ? body.description.trim() : "";
+    const prompt = typeof body?.prompt === "string" ? body.prompt.trim() : "";
     if (!title) return NextResponse.json({ error: "Thiếu tiêu đề bài tập" }, { status: 400 });
+
+    let finalDeckId: string | null = typeof body?.deckId === "string" && body.deckId ? body.deckId : null;
+
+    // Nếu giáo viên tự soạn danh sách thẻ flashcard thủ công
+    if (type === "deck" && Array.isArray(body?.customCards) && body.customCards.length > 0) {
+      const validCards = body.customCards
+        .filter((c) => typeof c.front === "string" && c.front.trim() && typeof c.back === "string" && c.back.trim())
+        .map((c) => ({
+          front: c.front.trim(),
+          back: c.back.trim(),
+          phonetic: c.phonetic?.trim() || "",
+          example: c.example?.trim() || "",
+          exampleVi: c.exampleVi?.trim() || "",
+        }));
+
+      if (validCards.length > 0) {
+        const newDeck = await createDeckWithCards({
+          title,
+          createdBy: user.id,
+          cards: validCards,
+        });
+        finalDeckId = newDeck.id;
+      }
+    }
 
     const row = await createAssignment({
       title,
       type,
-      lessonId: typeof body?.lessonId === "string" ? body.lessonId : null,
-      deckId: typeof body?.deckId === "string" ? body.deckId : null,
+      description,
+      prompt,
+      lessonId: typeof body?.lessonId === "string" && body.lessonId ? body.lessonId : null,
+      deckId: finalDeckId,
       dueAt: typeof body?.dueAt === "string" && body.dueAt ? new Date(body.dueAt) : null,
     });
-    return NextResponse.json({ ok: true, id: row.id });
+    return NextResponse.json({ ok: true, id: row.id, deckId: finalDeckId });
   } catch (e) {
     console.error("Create assignment error:", e);
     return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });

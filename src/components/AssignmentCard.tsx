@@ -6,6 +6,7 @@ import { ClipboardList, Layers, ArrowRight, CheckCircle2, Clock, Flame } from "l
 import type { Assignment, AssignmentStatus } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ProgressBar";
+import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 
 const STATUS: Record<AssignmentStatus, { variant: "success" | "accent" | "danger" | "neutral"; label: string; icon: typeof Clock }> = {
@@ -18,7 +19,7 @@ const STATUS: Record<AssignmentStatus, { variant: "success" | "accent" | "danger
 export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number }) {
   const Icon = a.type === "exercise" ? ClipboardList : Layers;
   const done = a.status === "done";
-  const href = a.type === "exercise" ? `/exercise/${a.id}` : `/flashcards/deck-1`;
+  const href = a.type === "exercise" ? `/exercise/${a.id}` : `/flashcards/${(a as any).deckId || "deck-1"}`;
   const statusInfo = STATUS[a.status];
   const StatusIcon = statusInfo.icon;
   const isUrgent = a.status === "due" || a.status === "overdue";
@@ -70,11 +71,14 @@ export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number
         <motion.div whileHover={{ scale: 1.1, x: 2 }} whileTap={{ scale: 0.9 }}>
           <Link
             href={href}
+            onClick={() => {
+              if (!done) sound.playPop();
+            }}
             className={cn(
-              "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all",
+              "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all active:scale-95",
               done
                 ? "bg-gray-100 text-slate-400"
-                : "bg-gradient-to-br from-brand to-brand-700 text-white shadow-md hover:shadow-lg"
+                : "bg-gradient-to-br from-brand to-brand-700 text-white shadow-md hover:shadow-lg border-b-2 border-brand-800"
             )}
             aria-label="Làm bài"
           >

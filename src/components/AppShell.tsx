@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
@@ -18,11 +18,15 @@ import {
   Sparkles,
   LogOut,
   ChevronDown,
+  Volume2,
+  VolumeX,
+  Users,
 } from "lucide-react";
 import { useRole } from "@/lib/auth/role-context";
 import { useApp } from "@/lib/state/app-context";
 import { StreakBadge, XPCounter, LevelBadge } from "@/components/StreakBadge";
 import { Notifications } from "@/components/Notifications";
+import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 import type { Role } from "@/lib/types";
 import { SPRING_SNAPPY } from "@/lib/motion";
@@ -44,6 +48,7 @@ const NAV: Record<Role, NavItem[]> = {
   ],
   teacher: [
     { href: "/teacher", label: "Bảng điều khiển", icon: LayoutDashboard },
+    { href: "/teacher/students", label: "Học sinh", icon: Users },
     { href: "/teacher/grading", label: "Chấm bài", icon: ClipboardCheck },
     { href: "/teacher/assignments/new", label: "Giao bài", icon: ClipboardList },
     { href: "/teacher/lessons/new", label: "Đăng bài", icon: Video },
@@ -94,6 +99,24 @@ export function AppShell({ children }: { children: ReactNode }) {
   const items = NAV[role];
   const { xp, streak, level } = useApp();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [muted, setMuted] = useState(false);
+
+  useEffect(() => {
+    setMuted(sound.getMuted());
+    const onToggle = (e: Event) => {
+      const custom = e as CustomEvent<{ muted: boolean }>;
+      if (custom.detail) {
+        setMuted(custom.detail.muted);
+      }
+    };
+    window.addEventListener("lingoquest:sound-toggle", onToggle);
+    return () => window.removeEventListener("lingoquest:sound-toggle", onToggle);
+  }, []);
+
+  const handleToggleSound = () => {
+    const next = sound.toggleMute();
+    setMuted(next);
+  };
 
   const activeHref = items
     .filter((i) => pathname === i.href || pathname.startsWith(i.href + "/"))
@@ -108,7 +131,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="sticky top-0 z-40 border-b border-brand-100/50 bg-cream/80 backdrop-blur-md"
       >
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo />
 
           <div className="flex items-center gap-2 sm:gap-3">
@@ -126,6 +149,22 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               </>
             )}
+
+            {/* Audio haptic toggle */}
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.92 }}
+              onClick={handleToggleSound}
+              title={muted ? "Bật âm thanh hiệu ứng" : "Tắt âm thanh hiệu ứng"}
+              aria-label={muted ? "Bật âm thanh" : "Tắt âm thanh"}
+              className={cn(
+                "relative flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white/90 shadow-sm backdrop-blur transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50",
+                muted ? "text-slate-400" : "text-brand"
+              )}
+            >
+              {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            </motion.button>
 
             <Notifications />
 
@@ -183,7 +222,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       </motion.header>
 
-      <div className="mx-auto flex max-w-5xl gap-6 px-4 pb-28 sm:px-6 lg:px-8 lg:pb-10 relative z-10">
+      <div className="mx-auto flex max-w-7xl gap-6 px-4 pb-28 sm:px-6 lg:px-8 lg:pb-10 relative z-10">
         {/* Sidebar desktop */}
         {items.length > 0 && (
           <aside className="sticky top-[88px] hidden h-[calc(100vh-112px)] w-60 shrink-0 lg:block">

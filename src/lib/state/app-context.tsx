@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import type { DailyTask } from "@/lib/types";
+import { sound } from "@/lib/sound";
 
 /* ============================================================
    Nhiệm vụ hằng ngày — tự đếm theo hoạt động thật (không tự tick).
@@ -213,6 +214,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const oldLevel = Math.floor(prev / XP_PER_LEVEL) + 1;
       const newLevel = Math.floor(next / XP_PER_LEVEL) + 1;
       setXp(next);
+      sound.playChime();
       pushToast({ title: `+${amount} XP`, desc: reason, icon: "⚡", tone: "xp" });
       if (newLevel > oldLevel) {
         pushToast({ title: `Lên cấp ${newLevel}!`, desc: "Tiếp tục phát huy nhé!", icon: "🎉", tone: "badge" });

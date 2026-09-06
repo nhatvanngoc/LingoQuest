@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Confetti } from "@/components/Confetti";
 import { Mascot } from "@/components/brand/Mascot";
-import { QUIZ_QUESTIONS, ASSIGNMENTS } from "@/lib/mock/data";
+import { QUIZ_QUESTIONS } from "@/lib/mock/data";
 import { useApp } from "@/lib/state/app-context";
 import { cn } from "@/lib/utils";
 
@@ -35,15 +35,42 @@ type Result = { type: Tab; score: number; total: number } | null;
 export default function ExercisePage() {
   const { id } = useParams<{ id: string }>();
   const { addXp } = useApp();
-  const assignment = ASSIGNMENTS.find((a) => a.id === id);
   const [tab, setTab] = useState<Tab>("quiz");
   const [result, setResult] = useState<Result>(null);
+  const [assignment, setAssignment] = useState<{
+    id: string;
+    title: string;
+    prompt?: string | null;
+    description?: string | null;
+    lessonTitle?: string | null;
+  } | null>(null);
 
-  // Kết thúc bài → cộng XP đúng 1 lần (theo tỉ lệ đúng)
+  useEffect(() => {
+    if (!id) return;
+    fetch(`/api/assignments/${id}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.ok && d.assignment) {
+          setAssignment(d.assignment);
+          if (d.assignment.prompt) {
+            setTab("write");
+          }
+        }
+      })
+      .catch(() => {});
+  }, [id]);
+
+  // Kết thúc bài → cộng XP và đồng bộ lên server
   const finish = (r: NonNullable<Result>) => {
     setResult(r);
     const pct = Math.round((r.score / r.total) * 100);
-    addXp(Math.round(pct * 0.5), r.type === "quiz" ? "Hoàn thành bài trắc nghiệm" : "Nộp bài viết");
+    const earnedXp = Math.round(pct * 0.5);
+    addXp(earnedXp, r.type === "quiz" ? "Hoàn thành bài trắc nghiệm" : "Nộp bài viết");
+    fetch("/api/user/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ xp: earnedXp }),
+    }).catch(() => {});
   };
 
   return (
@@ -61,8 +88,14 @@ export default function ExercisePage() {
             <ResultScreen key="result" result={result} onRetry={() => { setResult(null); setTab(result.type); }} />
           ) : (
             <motion.div key="exercise" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <h1 className="text-xl font-extrabold text-slate-900">{assignment?.title ?? "Bài tập"}</h1>
-              <p className="mb-4 text-sm text-slate-500">{assignment?.lessonTitle}</p>
+              <h1 className="text-xl font-extrabold text-slate-900">
+                {assignment?.title || "Bài tập thực hành"}
+              </h1>
+              <p className="mb-4 text-sm text-slate-500">
+                {assignment?.prompt
+                  ? "Bài tập tự luận do giáo viên giao riêng cho bạn"
+                  : "Luyện tập từ vựng, ngữ pháp và kỹ năng viết đoạn văn"}
+              </p>
 
               {/* Segmented control */}
               <div className="mb-6 inline-flex rounded-2xl bg-slate-100 p-1">
@@ -73,7 +106,13 @@ export default function ExercisePage() {
               {tab === "quiz" ? (
                 <QuizMode onFinish={(score, total) => finish({ type: "quiz", score, total })} />
               ) : (
-                <WriteMode onFinish={(score, total) => finish({ type: "write", score, total })} />
+                <WriteMode
+                  assignmentId={id}
+                  customTitle={assignment?.title}
+                  customPrompt={assignment?.prompt || undefined}
+                  customDescription={assignment?.description || undefined}
+                  onFinish={(score, total) => finish({ type: "write", score, total })}
+                />
               )}
             </motion.div>
           )}
@@ -210,18 +249,65 @@ function QuizMode({ onFinish }: { onFinish: (score: number, total: number) => vo
   );
 }
 
-/* ---------------- Bài viết: khung soạn thảo + gợi ý ---------------- */
-function WriteMode({ onFinish }: { onFinish: (score: number, total: number) => void }) {
+/* ---------------- Bài viết: khung soạn thảo + gửi về server ---------------- */
+function WriteMode({
+  assignmentId,
+  customTitle,
+  customPrompt,
+  customDescription,
+  onFinish,
+}: {
+  assignmentId?: string;
+  customTitle?: string;
+  customPrompt?: string;
+  customDescription?: string;
+  onFinish: (score: number, total: number) => void;
+}) {
   const [text, setText] = useState("");
-  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const words = text.trim() ? text.trim().split(/\s+/).filter(Boolean).length : 0;
   const usedWords = RECOMMEND_WORDS.filter((w) => text.toLowerCase().includes(w.toLowerCase()));
+
+  const promptText = customPrompt || "Kể về kỳ nghỉ hè của bạn (hoặc trải nghiệm đáng nhớ)";
+  const titleText = customTitle || "Bài tập luyện viết";
+
+  async function handleSend() {
+    if (words < 5) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/submissions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          assignmentId: assignmentId || null,
+          lessonTitle: titleText,
+          prompt: promptText,
+          text,
+          words,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setError(data.error || "Không thể nộp bài, thử lại sau");
+        return;
+      }
+      onFinish(85, 100);
+    } catch {
+      setError("Lỗi mạng khi nộp bài");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div className="grid gap-5 md:grid-cols-[1.5fr_1fr]">
       {/* Khung soạn thảo */}
       <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-soft">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-extrabold text-slate-900">Đề bài: Kể về kỳ nghỉ hè của bạn</h2>
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-extrabold text-slate-900">Đề bài: {promptText}</h2>
           <span className={cn("rounded-full px-3 py-1 text-xs font-extrabold", words >= 80 ? "bg-success-50 text-success" : "bg-slate-100 text-slate-500")}>
             {words} từ
           </span>
@@ -231,15 +317,28 @@ function WriteMode({ onFinish }: { onFinish: (score: number, total: number) => v
           onChange={(e) => setText(e.target.value)}
           placeholder="Viết bài của bạn tại đây... (khuyến nghị tối thiểu 80 từ)"
           className="min-h-[280px] w-full resize-y rounded-2xl border-2 border-slate-200 p-4 text-[15px] leading-relaxed text-slate-900 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15"
+          disabled={submitting}
         />
-        <Button className="mt-4 w-full" onClick={() => onFinish(85, 100)} disabled={words < 10}>
-          Nộp bài
+        {error && <p className="mt-2 text-xs font-bold text-danger">{error}</p>}
+        <Button className="mt-4 w-full" onClick={handleSend} disabled={words < 5 || submitting}>
+          {submitting ? "Đang gửi bài..." : "Nộp bài cho giáo viên"}
         </Button>
-        {words < 10 && <p className="mt-2 text-center text-xs font-semibold text-slate-400">Viết ít nhất 10 từ để nộp bài</p>}
+        {words < 5 && <p className="mt-2 text-center text-xs font-semibold text-slate-400">Viết ít nhất 5 từ để nộp bài</p>}
       </div>
 
       {/* Panel gợi ý */}
       <div className="flex flex-col gap-4">
+        {customDescription ? (
+          <div className="rounded-3xl border border-brand-100 bg-brand-50/50 p-5 shadow-soft">
+            <h3 className="mb-2 flex items-center gap-2 text-sm font-extrabold text-brand-900">
+              <PenLine className="h-4 w-4 text-brand" /> Hướng dẫn & Dàn ý của giáo viên
+            </h3>
+            <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+              {customDescription}
+            </p>
+          </div>
+        ) : null}
+
         <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-soft">
           <h3 className="mb-3 flex items-center gap-2 text-sm font-extrabold text-slate-900">
             <ListChecks className="h-4 w-4 text-brand" /> Từ vựng nên dùng
@@ -262,19 +361,21 @@ function WriteMode({ onFinish }: { onFinish: (score: number, total: number) => v
           </div>
         </div>
 
-        <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-soft">
-          <h3 className="mb-3 flex items-center gap-2 text-sm font-extrabold text-slate-900">
-            <PenLine className="h-4 w-4 text-accent" /> Gợi ý dàn ý
-          </h3>
-          <ol className="flex flex-col gap-2">
-            {OUTLINE.map((o, i) => (
-              <li key={i} className="flex gap-2 text-sm text-slate-600">
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-100 text-xs font-extrabold text-amber-700">{i + 1}</span>
-                {o}
-              </li>
-            ))}
-          </ol>
-        </div>
+        {!customDescription && (
+          <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-soft">
+            <h3 className="mb-3 flex items-center gap-2 text-sm font-extrabold text-slate-900">
+              <PenLine className="h-4 w-4 text-accent" /> Gợi ý dàn ý mẫu
+            </h3>
+            <ol className="flex flex-col gap-2">
+              {OUTLINE.map((o, i) => (
+                <li key={i} className="flex gap-2 text-sm text-slate-600">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-100 text-xs font-extrabold text-amber-700">{i + 1}</span>
+                  {o}
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
     </div>
   );

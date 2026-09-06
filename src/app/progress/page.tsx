@@ -15,6 +15,12 @@ import {
   Target,
   Sparkles,
   Trophy,
+  FileText,
+  CheckCircle2,
+  Clock,
+  MessageSquareQuote,
+  PenTool,
+  ArrowRight,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { ProgressBar, CircularProgress } from "@/components/ProgressBar";
@@ -25,9 +31,23 @@ import { cn } from "@/lib/utils";
 import { fadeUpReal, staggerContainer, viewportOnce } from "@/lib/motion";
 import type { LeaderRow } from "@/lib/types";
 
+interface StudentSubmission {
+  id: string;
+  lessonTitle: string;
+  prompt: string;
+  text: string;
+  words: number;
+  status: "submitted" | "graded";
+  score: number | null;
+  comment: string | null;
+  createdAt: string;
+}
+
 export default function ProgressPage() {
   const { xp, level, streak, wordsLearned, xpIntoLevel, xpForNext, levelPct } = useApp();
   const [leaderboard, setLeaderboard] = useState<LeaderRow[]>([]);
+  const [submissions, setSubmissions] = useState<StudentSubmission[]>([]);
+  const [loadingSubmissions, setLoadingSubmissions] = useState(true);
   const maxMin = Math.max(...WEEK_ACTIVITY.map((d) => d.minutes), 1);
   const totalMin = WEEK_ACTIVITY.reduce((s, d) => s + d.minutes, 0);
 
@@ -40,6 +60,20 @@ export default function ProgressPage() {
         setLeaderboard((data.rows ?? []).map((r) => ({ ...r, me: false })));
       })
       .catch(() => { if (!active) setLeaderboard([]); });
+
+    fetch("/api/submissions")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!active) return;
+        if (data.ok && Array.isArray(data.submissions)) {
+          setSubmissions(data.submissions);
+        }
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (active) setLoadingSubmissions(false);
+      });
+
     return () => { active = false; };
   }, []);
 
@@ -171,6 +205,103 @@ export default function ProgressPage() {
             </div>
           </motion.div>
         </div>
+
+        {/* Bài tập & Nhận xét của giáo viên */}
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="mt-6">
+          <div className="overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-md">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="flex items-center gap-2 font-bold text-slate-900">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+                  <FileText className="h-4 w-4" />
+                </span>
+                Bài tập & Nhận xét của giáo viên
+              </h2>
+              <Link
+                href="/exercise/exercise-writing"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-brand hover:text-brand-700 transition-colors"
+              >
+                <PenTool className="h-3.5 w-3.5" /> Luyện viết thêm <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+
+            {loadingSubmissions ? (
+              <div className="py-8 text-center text-sm font-semibold text-slate-400">
+                Đang tải dữ liệu bài làm...
+              </div>
+            ) : submissions.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50/50 p-6 text-center">
+                <PenTool className="mx-auto h-8 w-8 text-slate-300" />
+                <p className="mt-2 text-sm font-bold text-slate-700">Chưa có bài viết nào được nộp</p>
+                <p className="mt-1 text-xs text-slate-400">
+                  Hãy hoàn thành bài tập luyện viết để nhận điểm số và nhận xét chi tiết trực tiếp từ giáo viên.
+                </p>
+                <Link
+                  href="/exercise/exercise-writing"
+                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-brand-600 transition-colors"
+                >
+                  <PenTool className="h-3.5 w-3.5" /> Làm bài viết ngay
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {submissions.map((sub) => {
+                  const isGraded = sub.status === "graded";
+                  return (
+                    <div
+                      key={sub.id}
+                      className="rounded-xl border border-slate-100 bg-slate-50/70 p-4 transition-all hover:bg-white hover:shadow-sm"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <h3 className="text-sm font-bold text-slate-900">{sub.lessonTitle}</h3>
+                          <p className="mt-0.5 text-xs text-slate-500">Đề bài: {sub.prompt}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {isGraded ? (
+                            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700 border border-emerald-200">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" /> Đã chấm
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700 border border-amber-200">
+                              <Clock className="h-3.5 w-3.5 text-amber-500 animate-pulse" /> Đang chờ chấm
+                            </span>
+                          )}
+                          {isGraded && typeof sub.score === "number" && (
+                            <span className="rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-black text-white shadow-xs">
+                              {sub.score}/100 điểm
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Nội dung bài viết của học sinh */}
+                      <div className="mt-3 rounded-lg border border-slate-200 bg-white p-3 text-xs text-slate-700 leading-relaxed italic">
+                        "{sub.text}"
+                        <div className="mt-1 flex items-center justify-between text-[11px] not-italic text-slate-400">
+                          <span>{sub.words} từ</span>
+                          <span>{new Date(sub.createdAt).toLocaleDateString("vi-VN")}</span>
+                        </div>
+                      </div>
+
+                      {/* Nhận xét của giáo viên */}
+                      {isGraded && sub.comment && (
+                        <div className="mt-3 rounded-lg border-l-4 border-emerald-500 bg-emerald-50/70 p-3">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-900">
+                            <MessageSquareQuote className="h-4 w-4 text-emerald-600" />
+                            Nhận xét từ giáo viên:
+                          </div>
+                          <p className="mt-1 text-xs text-emerald-800 leading-relaxed font-medium">
+                            {sub.comment}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </motion.div>
 
         {/* Leaderboard */}
         {leaderboard.length > 0 && (

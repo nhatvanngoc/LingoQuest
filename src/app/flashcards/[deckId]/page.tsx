@@ -8,7 +8,6 @@ import { ChevronLeft, Keyboard, RotateCcw, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ProgressBar";
 import { FlashCard } from "@/components/FlashCard";
-import { DECKS } from "@/lib/mock/data";
 import { AppShell } from "@/components/AppShell";
 import { useApp, cardKey } from "@/lib/state/app-context";
 
@@ -18,16 +17,40 @@ import { useApp, cardKey } from "@/lib/state/app-context";
 
 export default function FlashcardsPage() {
   const { deckId } = useParams<{ deckId: string }>();
-  const deck = DECKS.find((d) => d.id === deckId) ?? DECKS[0];
+  const [deck, setDeck] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const { srs, recordCard, deckLearnedCount, addXp } = useApp();
+
+  useEffect(() => {
+    let active = true;
+    fetch(`/api/flashcards/${deckId}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (!active) return;
+        if (d.ok && d.deck) {
+          setDeck(d.deck);
+        }
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [deckId]);
+
+  const cardsList = deck?.cards || [];
 
   // Sắp xếp: thẻ chưa thuộc trước (box thấp → cao) để ôn ưu tiên
   const orderedCards = useMemo(() => {
-    return [...deck.cards].sort((a, b) => (srs[cardKey(deck.id, a.id)] ?? 0) - (srs[cardKey(deck.id, b.id)] ?? 0));
+    if (!deck) return [];
+    return [...cardsList].sort((a, b) => (srs[cardKey(deck.id, a.id)] ?? 0) - (srs[cardKey(deck.id, b.id)] ?? 0));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deck.id]);
+  }, [deck, cardsList]);
 
-  const cardKeys = useMemo(() => deck.cards.map((c) => cardKey(deck.id, c.id)), [deck.id]);
+  const cardKeys = useMemo(() => cardsList.map((c: any) => cardKey(deck?.id, c.id)), [deck, cardsList]);
   const learned = deckLearnedCount(cardKeys);
 
   const [index, setIndex] = useState(0);
@@ -41,20 +64,27 @@ export default function FlashcardsPage() {
 
   const mark = useCallback(
     (known: boolean) => {
+      if (!deck || !card) return;
       recordCard(deck.id, card.id, known);
       if (known) setSessionKnown((s) => s + 1);
       setFlipped(false);
       if (isLast) {
         if (!rewarded.current) {
           rewarded.current = true;
-          addXp(orderedCards.length * 5, "Ôn flashcard");
+          const earned = orderedCards.length * 5;
+          addXp(earned, "Ôn flashcard");
+          fetch("/api/user/sync", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ xp: earned }),
+          }).catch(() => {});
         }
         setFinished(true);
         return;
       }
       setIndex((i) => i + 1);
     },
-    [card, deck.id, isLast, orderedCards.length, recordCard, addXp],
+    [card, deck, isLast, orderedCards.length, recordCard, addXp],
   );
 
   const flip = useCallback(() => setFlipped((f) => !f), []);
@@ -81,6 +111,17 @@ export default function FlashcardsPage() {
     setFinished(false);
   };
 
+  if (loading) {
+    return (
+      <AppShell>
+        <div className="mx-auto max-w-2xl py-16 text-center">
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-brand border-t-transparent mb-4" />
+          <p className="text-sm font-semibold text-slate-500">Đang tải bộ thẻ...</p>
+        </div>
+      </AppShell>
+    );
+  }
+
   if (orderedCards.length === 0) {
     return (
       <AppShell>
@@ -94,9 +135,9 @@ export default function FlashcardsPage() {
           <div className="rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-card">
             <div className="text-5xl">🃏</div>
             <h2 className="mt-3 text-2xl font-extrabold text-slate-900">
-              Bộ thẻ “{deck.title}” chưa có từ vựng
+              Bộ thẻ “{deck?.title || "Flashcards"}” chưa có từ vựng
             </h2>
-            <p className="mt-1 text-slate-500">Quay lại sau khi giáo viên thêm thẻ vào bộ này.</p>
+            <p className="mt-1 text-slate-500">Quay lại sau khi giáo viên thêm từ vựng vào bài học này.</p>
           </div>
         </div>
       </AppShell>
@@ -113,15 +154,28 @@ export default function FlashcardsPage() {
           <ChevronLeft className="h-4 w-4" /> Quay lại
         </Link>
 
-        <div className="mb-2 flex items-center justify-between">
-          <h1 className="text-xl font-extrabold text-slate-900">{deck.title}</h1>
-          <span className="rounded-full bg-success-50 px-3 py-1 text-sm font-extrabold text-success">
-            Đã thuộc {learned}/{deck.total} từ
-          </span>
+        <div className="mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <h1 className="text-xl font-extrabold text-slate-900">{deck.title}</h1>
+            <div className="flex items-center gap-2">
+              <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-extrabold text-brand border border-brand-200/60">
+                ⚡ +{sessionKnown * 5} XP
+              </span>
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-700 border border-emerald-200/60">
+                Đã thuộc {learned}/{deck.total} từ
+              </span>
+            </div>
+          </div>
+          {/* Thanh tiến độ phiên học: thẻ index+1 / tổng */}
+          <div className="flex items-center gap-3">
+            <div className="flex-1">
+              <ProgressBar value={((index + 1) / orderedCards.length) * 100} tone="gradient" height="h-2.5" />
+            </div>
+            <span className="text-xs font-bold text-slate-500 tabular-nums shrink-0">
+              Thẻ {index + 1}/{orderedCards.length}
+            </span>
+          </div>
         </div>
-        {/* Thanh tiến độ = mức độ thuộc (số từ đã thuộc / tổng), khớp với badge "Đã thuộc X/12".
-            "Đã nhớ" → tăng, "Chưa nhớ" → giữ nguyên hoặc giảm (không bao giờ tăng). */}
-        <ProgressBar value={(learned / deck.total) * 100} tone="success" className="mb-6" />
 
         {finished ? (
           <motion.div
@@ -146,9 +200,6 @@ export default function FlashcardsPage() {
           </motion.div>
         ) : (
           <>
-            <div className="mb-4 text-center text-sm font-bold text-slate-400">
-              Thẻ {index + 1}/{orderedCards.length}
-            </div>
             <FlashCard card={card} flipped={flipped} onFlip={flip} onKnown={() => mark(true)} onUnknown={() => mark(false)} />
 
             {/* Gợi ý phím tắt */}
