@@ -789,13 +789,19 @@ export async function getTeacherAssignments() {
     const vocabCount = c?.vocabulary?.length ?? 0;
     const quizCount = c?.quizQuestions?.length ?? 0;
     const fillCount = c?.fillQuestions?.length ?? 0;
+    const readingCount = c?.readingPassage?.questions?.length ?? (c?.readingPassage ? 1 : 0);
+    const syntaxCount = c?.syntaxRearrange?.length ?? 0;
     const hasWriting = Boolean(c?.writingPrompt?.prompt);
+    const difficultyLevel = c?.difficultyLevel ?? "A2-B1";
     return {
       ...r,
       status: (r.status as string) || "published",
+      difficultyLevel,
       vocabCount,
       quizCount,
       fillCount,
+      readingCount,
+      syntaxCount,
       hasWriting,
       submissionCount: subMap.get(r.id) ?? 0,
     };

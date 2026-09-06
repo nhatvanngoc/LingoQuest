@@ -5,15 +5,17 @@ import {
   buildMoreVocabPrompt,
   buildMoreQuizPrompt,
   buildMoreFillPrompt,
+  buildReadingPrompt,
+  buildSyntaxPrompt,
   buildWritingPrompt,
 } from "@/lib/ai/prompt";
 import { getCurrentUser } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
-/* POST /api/teacher/generate — Groq sinh nội dung bài tập Co-Pilot (5 trong 1)
+/* POST /api/teacher/generate — Groq sinh nội dung bài tập Co-Pilot toàn diện
    Body: { 
-     action?: "all" | "vocab" | "quiz" | "fill" | "writing",
+     action?: "all" | "vocab" | "quiz" | "fill" | "reading" | "syntax" | "writing",
      input: string, 
      level?: string, 
      vocab?: string[] 
@@ -28,7 +30,7 @@ export async function POST(req: Request) {
   }
 
   const body = (await req.json().catch(() => null)) as {
-    action?: "all" | "vocab" | "quiz" | "fill" | "writing";
+    action?: "all" | "vocab" | "quiz" | "fill" | "reading" | "syntax" | "writing";
     input?: string;
     level?: string;
     vocab?: string[];
@@ -41,8 +43,8 @@ export async function POST(req: Request) {
   if (!input || input.length < 3) {
     return NextResponse.json({ error: "Nhập chủ đề / yêu cầu (ít nhất 3 ký tự)" }, { status: 400 });
   }
-  if (input.length > 2000) {
-    return NextResponse.json({ error: "Yêu cầu quá dài (tối đa 2000 ký tự)" }, { status: 400 });
+  if (input.length > 2500) {
+    return NextResponse.json({ error: "Yêu cầu quá dài (tối đa 2500 ký tự)" }, { status: 400 });
   }
 
   const apiKey = process.env.GROQ_API_KEY;
@@ -54,13 +56,17 @@ export async function POST(req: Request) {
   if (action === "all") {
     prompt = buildUnifiedPrompt(input, level);
   } else if (action === "vocab") {
-    prompt = buildMoreVocabPrompt(input);
+    prompt = buildMoreVocabPrompt(input, level);
   } else if (action === "quiz") {
-    prompt = buildMoreQuizPrompt(input, body?.vocab || []);
+    prompt = buildMoreQuizPrompt(input, body?.vocab || [], level);
   } else if (action === "fill") {
-    prompt = buildMoreFillPrompt(input, body?.vocab || []);
+    prompt = buildMoreFillPrompt(input, body?.vocab || [], level);
+  } else if (action === "reading") {
+    prompt = buildReadingPrompt(input, level);
+  } else if (action === "syntax") {
+    prompt = buildSyntaxPrompt(input, level);
   } else if (action === "writing") {
-    prompt = buildWritingPrompt(input);
+    prompt = buildWritingPrompt(input, level);
   }
 
   try {
@@ -73,7 +79,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: process.env.GROQ_MODEL || "qwen/qwen3.6-27b",
         temperature: 0.4,
-        max_tokens: 1200,
+        max_tokens: 2200,
         reasoning_effort: "none",
         response_format: { type: "json_object" },
         messages: [
@@ -114,6 +120,9 @@ export async function POST(req: Request) {
       }
     }
 
+    // Đảm bảo mức độ khó được lưu vào kết quả
+    parsed.difficultyLevel = parsed.difficultyLevel || level;
+
     // Đảm bảo ID ổn định cho các item
     if (Array.isArray(parsed.vocabulary)) {
       parsed.vocabulary = parsed.vocabulary.map((v: any, idx: number) => ({
@@ -143,6 +152,34 @@ export async function POST(req: Request) {
         answer: (f.answer || "").trim(),
         hint: (f.hint || "").trim(),
         explanation: (f.explanation || "").trim(),
+      }));
+    }
+
+    if (parsed.readingPassage && typeof parsed.readingPassage === "object") {
+      const rp = parsed.readingPassage;
+      parsed.readingPassage = {
+        title: (rp.title || "Reading Comprehension").trim(),
+        passage: (rp.passage || "").trim(),
+        levelTag: (rp.levelTag || level).trim(),
+        questions: Array.isArray(rp.questions)
+          ? rp.questions.map((q: any, idx: number) => ({
+              id: q.id || `rq-${Date.now().toString(36)}-${idx}`,
+              question: (q.question || "").trim(),
+              options: Array.isArray(q.options) ? q.options : [],
+              answer: (q.answer || "A").trim(),
+              explanation: (q.explanation || "").trim(),
+            }))
+          : [],
+      };
+    }
+
+    if (Array.isArray(parsed.syntaxRearrange)) {
+      parsed.syntaxRearrange = parsed.syntaxRearrange.map((s: any, idx: number) => ({
+        id: s.id || `syntax-${Date.now().toString(36)}-${idx}`,
+        promptVi: (s.promptVi || "").trim(),
+        words: Array.isArray(s.words) ? s.words.map((w: any) => String(w).trim()).filter(Boolean) : [],
+        correctSentence: (s.correctSentence || "").trim(),
+        explanation: (s.explanation || "").trim(),
       }));
     }
 

@@ -48,9 +48,12 @@ interface TeacherAssignment {
   createdAt: string;
   lessonTitle: string | null;
   content?: any;
+  difficultyLevel?: string;
   vocabCount: number;
   quizCount: number;
   fillCount: number;
+  readingCount?: number;
+  syntaxCount?: number;
   hasWriting: boolean;
   submissionCount: number;
 }
@@ -529,6 +532,21 @@ export default function TeacherPage() {
                               {isHidden ? "Đã ẩn" : "Đang mở"}
                             </span>
 
+                            {a.difficultyLevel && (
+                              <span
+                                className={cn(
+                                  "rounded-md px-2 py-0.5 text-xs font-extrabold border shadow-2xs",
+                                  a.difficultyLevel.includes("C1") || a.difficultyLevel.includes("THPT")
+                                    ? "bg-purple-50 text-purple-700 border-purple-200"
+                                    : a.difficultyLevel.includes("B")
+                                    ? "bg-blue-50 text-blue-700 border-blue-200"
+                                    : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                )}
+                              >
+                                {a.difficultyLevel}
+                              </span>
+                            )}
+
                             <h3 className="font-extrabold text-slate-900 text-base">
                               {a.title}
                             </h3>
@@ -548,6 +566,16 @@ export default function TeacherPage() {
                             {a.vocabCount > 0 && (
                               <span className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-2 py-1 font-bold text-blue-600">
                                 <Layers className="h-3.5 w-3.5" /> {a.vocabCount} thẻ từ vựng
+                              </span>
+                            )}
+                            {(a.readingCount ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 rounded-lg bg-indigo-50 px-2 py-1 font-bold text-indigo-700">
+                                <BookOpen className="h-3.5 w-3.5" /> {a.readingCount} bài đọc hiểu
+                              </span>
+                            )}
+                            {(a.syntaxCount ?? 0) > 0 && (
+                              <span className="inline-flex items-center gap-1 rounded-lg bg-teal-50 px-2 py-1 font-bold text-teal-700">
+                                <CheckCircle2 className="h-3.5 w-3.5" /> {a.syntaxCount} câu ghép cấu trúc
                               </span>
                             )}
                             {a.quizCount > 0 && (

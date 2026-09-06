@@ -66,6 +66,7 @@ export async function GET() {
         deckId: assignments.deckId,
         description: assignments.description,
         prompt: assignments.prompt,
+        content: assignments.content,
         dueAt: assignments.dueAt,
         createdAt: assignments.createdAt,
         lessonTitle: lessons.title,
@@ -125,9 +126,15 @@ export async function GET() {
         }
       }
 
+      const contentObj = (a.content as any) || {};
+      const difficultyLevel = contentObj.difficultyLevel || "A2-B1";
+      const targetXp = contentObj.targetXp || (difficultyLevel.includes("C1") || difficultyLevel.includes("THPT") ? 150 : difficultyLevel.includes("B") ? 80 : 50);
+
       return {
         ...a,
         status,
+        difficultyLevel,
+        targetXp,
         progress: isDone ? 100 : 0,
         dueLabel,
         lessonTitle: a.lessonTitle || a.description || "Bài tập rèn luyện",

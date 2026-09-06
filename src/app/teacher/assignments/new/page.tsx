@@ -70,6 +70,29 @@ interface WritingItem {
   outline: string[];
 }
 
+interface ReadingQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  answer: string;
+  explanation: string;
+}
+
+interface ReadingPassageData {
+  title: string;
+  passage: string;
+  levelTag: string;
+  questions: ReadingQuestion[];
+}
+
+interface SyntaxItem {
+  id: string;
+  promptVi: string;
+  words: string[];
+  correctSentence: string;
+  explanation: string;
+}
+
 function extractYoutubeId(url: string): string {
   if (!url) return "";
   const trimmed = url.trim();
@@ -162,7 +185,58 @@ export default function UnifiedNewAssignmentPage() {
     },
   ]);
 
-  // ===== 5. Writing Prompt =====
+  // ===== 5. Reading Comprehension (Đọc hiểu văn bản) =====
+  const [readingPassage, setReadingPassage] = useState<ReadingPassageData>({
+    title: "A Weekend in Da Lat",
+    passage: "Last summer, Nam and his family took a three-day trip to Da Lat, known as the City of Eternal Spring. They rented a small wooden cabin surrounded by pine trees. In the morning, the temperature dropped to around 16 degrees Celsius, creating a gentle fog over Xuan Huong Lake. Nam was especially fascinated by the vibrant colors of hydrangeas in the flower valley. He also sampled delicious street snacks like grilled rice paper and hot soy milk at the night market. The peaceful atmosphere made it an unforgettable journey for him.",
+    levelTag: "A2-B1",
+    questions: [
+      {
+        id: "rq-1",
+        question: "Why is Da Lat referred to as the City of Eternal Spring?",
+        options: [
+          "A. Because of its cool climate and blooming flowers year-round",
+          "B. Because it only rains in the spring season",
+          "C. Because tourists only visit during the springtime",
+          "D. Because it has the largest night market in Vietnam",
+        ],
+        answer: "A",
+        explanation: "Khí hậu mát mẻ quanh năm cùng muôn hoa khoe sắc khiến Đà Lạt được gọi là Thành phố mùa xuân vĩnh cửu.",
+      },
+      {
+        id: "rq-2",
+        question: "What did Nam enjoy doing at the night market?",
+        options: [
+          "A. Renting a wooden cabin",
+          "B. Planting hydrangeas",
+          "C. Tasting local street snacks like grilled rice paper",
+          "D. Swimming in Xuan Huong Lake",
+        ],
+        answer: "C",
+        explanation: "Bài đọc nêu rõ Nam đã thưởng thức món bánh tráng nướng và sữa đậu nành nóng ở chợ đêm.",
+      },
+    ],
+  });
+
+  // ===== 6. Syntax Builder (Luyện sắp xếp cấu trúc câu) =====
+  const [syntaxList, setSyntaxList] = useState<SyntaxItem[]>([
+    {
+      id: "syn-1",
+      promptVi: "Họ đã đi thám hiểm hang động nổi tiếng vào cuối tuần trước.",
+      words: ["They", "explored", "the", "famous", "cave", "last", "weekend."],
+      correctSentence: "They explored the famous cave last weekend.",
+      explanation: "Trật tự câu: Chủ ngữ (They) + Động từ quá khứ (explored) + Tân ngữ (the famous cave) + Trạng từ thời gian (last weekend).",
+    },
+    {
+      id: "syn-2",
+      promptVi: "Thời tiết ở Đà Lạt rất mát mẻ và trong lành.",
+      words: ["The", "weather", "in", "Da Lat", "was", "very", "cool", "and", "fresh."],
+      correctSentence: "The weather in Da Lat was very cool and fresh.",
+      explanation: "Chủ ngữ (The weather in Da Lat) + to be quá khứ (was) + tính từ mô tả (very cool and fresh).",
+    },
+  ]);
+
+  // ===== 7. Writing Prompt =====
   const [writingPrompt, setWritingPrompt] = useState<WritingItem>({
     prompt: "Viết một đoạn văn ngắn (80-120 từ) bằng tiếng Anh kể về kỳ nghỉ hoặc một hoạt động cuối tuần đáng nhớ của em.",
     minWords: 80,
@@ -191,6 +265,7 @@ export default function UnifiedNewAssignmentPage() {
         if (data.description) setDescription(data.description);
         if (data.videoUrl) setVideoUrl(data.videoUrl);
         if (data.content) {
+          if (data.content.difficultyLevel) setAiLevel(data.content.difficultyLevel);
           if (Array.isArray(data.content.vocabulary) && data.content.vocabulary.length > 0) {
             setVocabList(
               data.content.vocabulary.map((v: any, idx: number) => ({
@@ -222,6 +297,33 @@ export default function UnifiedNewAssignmentPage() {
                 answer: f.answer || "",
                 hint: f.hint || "",
                 explanation: f.explanation || "",
+              }))
+            );
+          }
+          if (data.content.readingPassage && data.content.readingPassage.passage) {
+            setReadingPassage({
+              title: data.content.readingPassage.title || "Reading Passage",
+              passage: data.content.readingPassage.passage,
+              levelTag: data.content.readingPassage.levelTag || "B1-B2",
+              questions: Array.isArray(data.content.readingPassage.questions)
+                ? data.content.readingPassage.questions.map((rq: any, idx: number) => ({
+                    id: rq.id || `rq-clone-${idx + 1}-${Date.now()}`,
+                    question: rq.question || "",
+                    options: Array.isArray(rq.options) && rq.options.length === 4 ? rq.options : ["A. ", "B. ", "C. ", "D. "],
+                    answer: rq.answer || "A",
+                    explanation: rq.explanation || "",
+                  }))
+                : [],
+            });
+          }
+          if (Array.isArray(data.content.syntaxRearrange) && data.content.syntaxRearrange.length > 0) {
+            setSyntaxList(
+              data.content.syntaxRearrange.map((s: any, idx: number) => ({
+                id: s.id || `syn-clone-${idx + 1}-${Date.now()}`,
+                promptVi: s.promptVi || "",
+                words: Array.isArray(s.words) && s.words.length > 0 ? s.words : (s.correctSentence || "").split(/\s+/).filter(Boolean),
+                correctSentence: s.correctSentence || "",
+                explanation: s.explanation || "",
               }))
             );
           }
@@ -267,6 +369,7 @@ export default function UnifiedNewAssignmentPage() {
       const data = json.data;
       if (data.title) setTitle(data.title);
       if (data.description) setDescription(data.description);
+      if (data.difficultyLevel) setAiLevel(data.difficultyLevel);
       if (data.suggestedVideoQuery) {
         setSuggestedQuery(data.suggestedVideoQuery);
       }
@@ -281,6 +384,35 @@ export default function UnifiedNewAssignmentPage() {
 
       if (Array.isArray(data.fillQuestions) && data.fillQuestions.length > 0) {
         setFillList(data.fillQuestions);
+      }
+
+      if (data.readingPassage && data.readingPassage.passage) {
+        setReadingPassage({
+          title: data.readingPassage.title || "Reading Passage",
+          passage: data.readingPassage.passage,
+          levelTag: data.readingPassage.levelTag || aiLevel,
+          questions: Array.isArray(data.readingPassage.questions)
+            ? data.readingPassage.questions.map((q: any, idx: number) => ({
+                id: q.id || `rq-${idx + 1}-${Date.now()}`,
+                question: q.question || "",
+                options: Array.isArray(q.options) && q.options.length === 4 ? q.options : ["A. ", "B. ", "C. ", "D. "],
+                answer: q.answer || "A",
+                explanation: q.explanation || "",
+              }))
+            : [],
+        });
+      }
+
+      if (Array.isArray(data.syntaxRearrange) && data.syntaxRearrange.length > 0) {
+        setSyntaxList(
+          data.syntaxRearrange.map((s: any, idx: number) => ({
+            id: s.id || `syn-${idx + 1}-${Date.now()}`,
+            promptVi: s.promptVi || "",
+            words: Array.isArray(s.words) && s.words.length > 0 ? s.words : (s.correctSentence || "").split(/\s+/).filter(Boolean),
+            correctSentence: s.correctSentence || "",
+            explanation: s.explanation || "",
+          }))
+        );
       }
 
       if (data.writingPrompt && data.writingPrompt.prompt) {
@@ -327,7 +459,7 @@ export default function UnifiedNewAssignmentPage() {
       const res = await fetch("/api/teacher/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "quiz", input: topic, vocab: words }),
+        body: JSON.stringify({ action: "quiz", input: topic, vocab: words, level: aiLevel }),
       });
       const json = await res.json();
       if (json.ok && Array.isArray(json.data?.quizQuestions)) {
@@ -348,11 +480,74 @@ export default function UnifiedNewAssignmentPage() {
       const res = await fetch("/api/teacher/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "fill", input: topic, vocab: words }),
+        body: JSON.stringify({ action: "fill", input: topic, vocab: words, level: aiLevel }),
       });
       const json = await res.json();
       if (json.ok && Array.isArray(json.data?.fillQuestions)) {
         setFillList((prev) => [...prev, ...json.data.fillQuestions]);
+      }
+    } catch {
+      /* ignore */
+    } finally {
+      setSubAiLoading(null);
+    }
+  };
+
+  const handleAddMoreReading = async () => {
+    const topic = aiTopic || title || "English Reading Comprehension";
+    setSubAiLoading("reading");
+    try {
+      const res = await fetch("/api/teacher/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "reading", input: topic, level: aiLevel }),
+      });
+      const json = await res.json();
+      if (json.ok && json.data?.readingPassage?.passage) {
+        const rp = json.data.readingPassage;
+        setReadingPassage({
+          title: rp.title || "Reading Passage",
+          passage: rp.passage,
+          levelTag: rp.levelTag || aiLevel,
+          questions: Array.isArray(rp.questions)
+            ? rp.questions.map((q: any, idx: number) => ({
+                id: q.id || `rq-${idx + 1}-${Date.now()}`,
+                question: q.question || "",
+                options: Array.isArray(q.options) && q.options.length === 4 ? q.options : ["A. ", "B. ", "C. ", "D. "],
+                answer: q.answer || "A",
+                explanation: q.explanation || "",
+              }))
+            : [],
+        });
+      }
+    } catch {
+      /* ignore */
+    } finally {
+      setSubAiLoading(null);
+    }
+  };
+
+  const handleAddMoreSyntax = async () => {
+    const topic = aiTopic || title || "English Syntax Patterns";
+    setSubAiLoading("syntax");
+    try {
+      const res = await fetch("/api/teacher/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "syntax", input: topic, level: aiLevel }),
+      });
+      const json = await res.json();
+      if (json.ok && Array.isArray(json.data?.syntaxRearrange)) {
+        setSyntaxList((prev) => [
+          ...prev,
+          ...json.data.syntaxRearrange.map((s: any, idx: number) => ({
+            id: s.id || `syn-${idx + 1}-${Date.now()}`,
+            promptVi: s.promptVi || "",
+            words: Array.isArray(s.words) && s.words.length > 0 ? s.words : (s.correctSentence || "").split(/\s+/).filter(Boolean),
+            correctSentence: s.correctSentence || "",
+            explanation: s.explanation || "",
+          })),
+        ]);
       }
     } catch {
       /* ignore */
@@ -368,7 +563,7 @@ export default function UnifiedNewAssignmentPage() {
       const res = await fetch("/api/teacher/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "writing", input: topic }),
+        body: JSON.stringify({ action: "writing", input: topic, level: aiLevel }),
       });
       const json = await res.json();
       if (json.ok && json.data?.writingPrompt?.prompt) {
@@ -494,6 +689,67 @@ export default function UnifiedNewAssignmentPage() {
     }));
   };
 
+  // ===== Reading Comprehension Handlers =====
+  const addReadingQuestion = () => {
+    setReadingPassage((prev) => ({
+      ...prev,
+      questions: [
+        ...prev.questions,
+        {
+          id: `rq-${Date.now()}`,
+          question: "",
+          options: ["A. ", "B. ", "C. ", "D. "],
+          answer: "A",
+          explanation: "",
+        },
+      ],
+    }));
+  };
+
+  const updateReadingQuestion = (idx: number, field: keyof ReadingQuestion, val: any) => {
+    setReadingPassage((prev) => {
+      const copy = [...prev.questions];
+      copy[idx] = { ...copy[idx], [field]: val };
+      return { ...prev, questions: copy };
+    });
+  };
+
+  const removeReadingQuestion = (idx: number) => {
+    setReadingPassage((prev) => ({
+      ...prev,
+      questions: prev.questions.filter((_, i) => i !== idx),
+    }));
+  };
+
+  // ===== Syntax Builder Handlers =====
+  const addSyntaxItem = () => {
+    setSyntaxList((prev) => [
+      ...prev,
+      {
+        id: `syn-${Date.now()}`,
+        promptVi: "",
+        words: [],
+        correctSentence: "",
+        explanation: "",
+      },
+    ]);
+  };
+
+  const updateSyntaxItem = (idx: number, field: keyof SyntaxItem, val: any) => {
+    setSyntaxList((prev) => {
+      const copy = [...prev];
+      copy[idx] = { ...copy[idx], [field]: val };
+      if (field === "correctSentence") {
+        copy[idx].words = String(val).split(/\s+/).filter(Boolean);
+      }
+      return copy;
+    });
+  };
+
+  const removeSyntaxItem = (idx: number) => {
+    setSyntaxList((prev) => prev.filter((_, i) => i !== idx));
+  };
+
   // ===== Publish Assignment =====
   const handleSubmitAssignment = async () => {
     if (!title.trim()) {
@@ -505,12 +761,18 @@ export default function UnifiedNewAssignmentPage() {
     setIsSubmitting(true);
     setError(null);
 
+    const targetXp = aiLevel.includes("C1") || aiLevel.includes("THPT") ? 150 : aiLevel.includes("B") ? 80 : 50;
+
     const payloadContent = {
       videoUrl: videoUrl.trim(),
       youtubeId,
+      difficultyLevel: aiLevel,
+      targetXp,
       vocabulary: vocabList.filter((v) => v.word.trim()),
       quizQuestions: quizList.filter((q) => q.question.trim()),
       fillQuestions: fillList.filter((f) => f.sentence.trim()),
+      readingPassage: readingPassage.passage.trim() && readingPassage.questions.length > 0 ? readingPassage : undefined,
+      syntaxRearrange: syntaxList.filter((s) => s.correctSentence.trim()).length > 0 ? syntaxList : undefined,
       writingPrompt: writingPrompt.prompt.trim() ? writingPrompt : undefined,
     };
 
@@ -621,52 +883,76 @@ export default function UnifiedNewAssignmentPage() {
         )}
 
         {/* ===== AI Co-Pilot Master Bar ===== */}
-        <div className="mb-8 rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50/70 via-white to-teal-50/50 p-5 shadow-soft">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-white shadow-sm">
-              <Sparkles className="h-4 w-4" />
-            </span>
-            <h2 className="font-extrabold text-slate-900 text-base">Trợ lý AI Co-Pilot (Tạo nhanh 5 trong 1)</h2>
-            <span className="rounded-full bg-brand-100 px-2.5 py-0.5 text-[11px] font-bold text-brand ml-auto">
-              Qwen Powered
-            </span>
+        <div className="mb-8 rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50/80 via-white to-teal-50/60 p-5 shadow-soft">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-white shadow-sm">
+                <Sparkles className="h-4 w-4" />
+              </span>
+              <h2 className="font-extrabold text-slate-900 text-base">Trợ lý AI Co-Pilot Sư phạm (Hệ thống 7 trong 1)</h2>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="rounded-full bg-brand-100 px-2.5 py-0.5 text-[11px] font-bold text-brand">
+                Qwen SOTA
+              </span>
+              <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-[11px] font-bold text-amber-800">
+                Chuẩn GDPT & CEFR
+              </span>
+            </div>
           </div>
           <p className="text-xs text-slate-500 mb-3">
-            Nhập chủ đề bài học để AI tự động soạn trước Tiêu đề, Video gợi ý, Từ vựng, Trắc nghiệm, Điền từ và Đề bài tự luận. Bạn có thể tự do sửa lại bất kỳ mục nào sau đó!
+            AI tự động thiết kế đồng bộ 7 hợp phần: <strong>Video bài giảng, Bộ flashcards, Trắc nghiệm, Điền từ khuyết, Đọc hiểu học thuật, Luyện ghép cấu trúc câu, và Đề bài viết</strong> theo đúng chuẩn độ khó đã chọn.
           </p>
+
+          {/* Difficulty Level Selector Pills */}
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="text-xs font-bold text-slate-600 mr-1">Khung độ khó:</span>
+            {[
+              { key: "A1-A2", label: "A1-A2 Foundation (Căn bản · +50 XP)", color: "emerald" },
+              { key: "B1-B2", label: "B1-B2 Intermediate (Trung cấp · +80 XP)", color: "blue" },
+              { key: "C1 / THPTQG", label: "C1 / THPTQG & IELTS (Phân hóa cao · +150 XP)", color: "purple" },
+            ].map((lvl) => {
+              const active = aiLevel === lvl.key || (lvl.key === "C1 / THPTQG" && (aiLevel === "C1" || aiLevel === "THPTQG" || aiLevel.includes("THPT")));
+              return (
+                <button
+                  key={lvl.key}
+                  type="button"
+                  onClick={() => setAiLevel(lvl.key)}
+                  className={cn(
+                    "rounded-xl px-3 py-1.5 text-xs font-bold transition-all border",
+                    active
+                      ? "bg-slate-900 text-white border-slate-900 shadow-sm ring-2 ring-slate-900/10"
+                      : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300"
+                  )}
+                >
+                  {lvl.label}
+                </button>
+              );
+            })}
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-2.5">
             <Input
               value={aiTopic}
               onChange={(e) => setAiTopic(e.target.value)}
-              placeholder="Ví dụ: Simple Past Tense - Weekend Activities, IELTS Environment, Lớp 10..."
+              placeholder="Ví dụ: Passive Voice in Daily Life, Climate Change, Chuyên đề Đảo ngữ THPTQG..."
               className="flex-1 bg-white border-slate-200 text-sm"
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleGenerateAll();
               }}
             />
-            <select
-              value={aiLevel}
-              onChange={(e) => setAiLevel(e.target.value)}
-              aria-label="Chọn trình độ CEFR bài học"
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand"
-            >
-              <option value="A1-A2">Trình độ A1-A2 (Cơ bản)</option>
-              <option value="A2-B1">Trình độ A2-B1 (Lớp 10-11)</option>
-              <option value="B1-B2">Trình độ B1-B2 (Nâng cao)</option>
-            </select>
             <Button
               onClick={handleGenerateAll}
               disabled={isGeneratingAll}
-              className="bg-brand hover:bg-brand-600 text-white font-bold shrink-0"
+              className="bg-brand hover:bg-brand-600 text-white font-bold shrink-0 shadow-sm"
             >
               {isGeneratingAll ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> AI đang thiết kế...
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> AI đang thiết kế 7 hợp phần...
                 </>
               ) : (
                 <>
-                  <Wand2 className="mr-2 h-4 w-4" /> AI Soạn toàn bộ
+                  <Wand2 className="mr-2 h-4 w-4" /> AI Soạn trọn bộ theo cấp độ
                 </>
               )}
             </Button>
@@ -1085,12 +1371,251 @@ export default function UnifiedNewAssignmentPage() {
             </div>
           </div>
 
-          {/* ===== SECTION 5: Bài viết Tự luận (Writing Essay) ===== */}
+          {/* ===== SECTION 5: Bài đọc hiểu văn bản (Reading Comprehension) ===== */}
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <div>
                 <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-50 text-purple-600 text-xs font-black">5</span>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 text-xs font-black">5</span>
+                  Bài đọc hiểu văn bản (Reading Comprehension)
+                </h2>
+                <p className="text-xs text-slate-400">Rèn luyện kỹ năng đọc lướt (skimming), đọc quét (scanning) và suy luận ngữ cảnh (inference).</p>
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleAddMoreReading}
+                  disabled={subAiLoading === "reading"}
+                  className="text-xs font-bold text-indigo-700 hover:bg-indigo-50"
+                >
+                  {subAiLoading === "reading" ? (
+                    <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Sparkles className="mr-1.5 h-3.5 w-3.5" />
+                  )}
+                  AI tạo bài đọc & câu hỏi
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={addReadingQuestion}
+                  className="text-xs font-bold"
+                >
+                  <Plus className="mr-1.5 h-3.5 w-3.5" /> Thêm câu hỏi
+                </Button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <Label className="text-xs font-bold text-slate-600 mb-1.5 block">Tiêu đề bài đọc</Label>
+                <Input
+                  value={readingPassage.title}
+                  onChange={(e) => setReadingPassage((prev) => ({ ...prev, title: e.target.value }))}
+                  placeholder="Ví dụ: The Secret of Sustainable Living"
+                  className="bg-white font-semibold text-sm"
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <Label className="text-xs font-bold text-slate-600">Đoạn văn đọc hiểu (English Passage)</Label>
+                  <span className="text-[11px] font-bold text-slate-400">
+                    {readingPassage.passage.trim().split(/\s+/).filter(Boolean).length} từ
+                  </span>
+                </div>
+                <textarea
+                  rows={6}
+                  value={readingPassage.passage}
+                  onChange={(e) => setReadingPassage((prev) => ({ ...prev, passage: e.target.value }))}
+                  placeholder="Nhập hoặc để AI sinh đoạn văn đọc hiểu tại đây..."
+                  className="w-full rounded-xl border border-slate-200 p-3.5 text-sm font-medium leading-relaxed text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand"
+                />
+              </div>
+
+              {/* Danh sách câu hỏi đọc hiểu */}
+              <div className="space-y-3 pt-2">
+                <Label className="text-xs font-bold text-slate-700 block">Các câu hỏi đọc hiểu ({readingPassage.questions.length} câu)</Label>
+                {readingPassage.questions.map((q, qIdx) => (
+                  <div key={q.id || qIdx} className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 space-y-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-bold text-indigo-700 uppercase tracking-wide">
+                        Câu hỏi #{qIdx + 1}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeReadingQuestion(qIdx)}
+                        className="text-slate-400 hover:text-red-600 transition-colors"
+                        title="Xóa câu hỏi này"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+
+                    <Input
+                      value={q.question}
+                      onChange={(e) => updateReadingQuestion(qIdx, "question", e.target.value)}
+                      placeholder="Nhập câu hỏi tiếng Anh..."
+                      className="bg-white text-sm font-semibold"
+                    />
+
+                    <div className="grid gap-2 sm:grid-cols-2">
+                      {["A", "B", "C", "D"].map((letter, optIdx) => {
+                        const optVal = q.options[optIdx] || `${letter}. `;
+                        const isAnswer = q.answer === letter || q.answer === optVal;
+                        return (
+                          <div key={letter} className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => updateReadingQuestion(qIdx, "answer", letter)}
+                              className={cn(
+                                "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-bold border transition-all",
+                                isAnswer
+                                  ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                                  : "bg-white text-slate-500 border-slate-200 hover:bg-slate-100"
+                              )}
+                              title="Chọn làm đáp án đúng"
+                            >
+                              {letter}
+                            </button>
+                            <Input
+                              value={optVal}
+                              onChange={(e) => {
+                                const copyOpts = [...(q.options || ["A. ", "B. ", "C. ", "D. "])];
+                                copyOpts[optIdx] = e.target.value;
+                                updateReadingQuestion(qIdx, "options", copyOpts);
+                              }}
+                              className="bg-white text-xs"
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <Input
+                      value={q.explanation}
+                      onChange={(e) => updateReadingQuestion(qIdx, "explanation", e.target.value)}
+                      placeholder="Dẫn chứng từ đoạn văn và giải thích bằng tiếng Việt..."
+                      className="bg-white text-xs text-slate-600"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* ===== SECTION 6: Luyện cấu trúc & Sắp xếp câu (Syntax Builder) ===== */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-50 text-teal-600 text-xs font-black">6</span>
+                  Luyện cấu trúc & Sắp xếp câu (Syntax Builder)
+                </h2>
+                <p className="text-xs text-slate-400">Người học bấm chọn ngân hàng từ xáo trộn để lắp ráp thành câu chuẩn ngữ pháp tiếng Anh.</p>
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleAddMoreSyntax}
+                  disabled={subAiLoading === "syntax"}
+                  className="text-xs font-bold text-teal-700 hover:bg-teal-50"
+                >
+                  {subAiLoading === "syntax" ? (
+                    <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Sparkles className="mr-1.5 h-3.5 w-3.5" />
+                  )}
+                  AI tạo câu cấu trúc
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={addSyntaxItem}
+                  className="text-xs font-bold"
+                >
+                  <Plus className="mr-1.5 h-3.5 w-3.5" /> Thêm câu
+                </Button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {syntaxList.map((s, sIdx) => (
+                <div key={s.id || sIdx} className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-bold text-teal-700 uppercase tracking-wide">
+                      Cấu trúc câu #{sIdx + 1}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removeSyntaxItem(sIdx)}
+                      className="text-slate-400 hover:text-red-600 transition-colors"
+                      title="Xóa câu này"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+
+                  <div>
+                    <Label className="text-[11px] font-bold text-slate-500 mb-1 block">Nghĩa tiếng Việt của câu *</Label>
+                    <Input
+                      value={s.promptVi}
+                      onChange={(e) => updateSyntaxItem(sIdx, "promptVi", e.target.value)}
+                      placeholder="Ví dụ: Họ đã đi thám hiểm hang động nổi tiếng vào cuối tuần trước."
+                      className="bg-white text-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="text-[11px] font-bold text-slate-500 mb-1 block">Câu tiếng Anh hoàn chỉnh chuẩn xác *</Label>
+                    <Input
+                      value={s.correctSentence}
+                      onChange={(e) => updateSyntaxItem(sIdx, "correctSentence", e.target.value)}
+                      placeholder="Ví dụ: They explored the famous cave last weekend."
+                      className="bg-white font-bold text-slate-900 text-sm"
+                    />
+                  </div>
+
+                  {/* Word Bank Preview */}
+                  <div>
+                    <Label className="text-[11px] font-bold text-slate-500 mb-1.5 block">Ngân hàng thẻ từ tương tác (Word Bank Chips):</Label>
+                    <div className="flex flex-wrap gap-1.5 p-2 rounded-xl bg-white border border-slate-200 min-h-[36px] items-center">
+                      {(s.words && s.words.length > 0 ? s.words : s.correctSentence.split(/\s+/).filter(Boolean)).map((word, wIdx) => (
+                        <span key={wIdx} className="rounded-lg bg-teal-50 border border-teal-200 px-2.5 py-1 text-xs font-bold text-teal-800">
+                          {word}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label className="text-[11px] font-bold text-slate-500 mb-1 block">Giải thích quy tắc ngữ pháp</Label>
+                    <Input
+                      value={s.explanation}
+                      onChange={(e) => updateSyntaxItem(sIdx, "explanation", e.target.value)}
+                      placeholder="Chủ ngữ + Động từ quá khứ + Tân ngữ..."
+                      className="bg-white text-xs text-slate-600"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ===== SECTION 7: Bài viết Tự luận (Writing Essay) ===== */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-50 text-purple-600 text-xs font-black">7</span>
                   Đề bài Viết tự luận (Writing Essay)
                 </h2>
                 <p className="text-xs text-slate-400">Học sinh nộp bài viết để giáo viên chấm điểm và nhận xét.</p>

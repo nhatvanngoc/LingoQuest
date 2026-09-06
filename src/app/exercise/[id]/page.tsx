@@ -23,6 +23,10 @@ import {
   Volume2,
   FileQuestion,
   HelpCircle,
+  BookOpen,
+  Puzzle,
+  Undo2,
+  Flame,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -34,15 +38,17 @@ import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 
 /* ============================================================
-   Unified Student Exercise Player (5 trong 1)
+   Unified Student Exercise Player (7 trong 1)
    1. Video bài giảng
    2. Bộ Flashcards từ vựng
-   3. Trắc nghiệm (Multiple Choice)
-   4. Điền từ (Fill in the blank)
-   5. Viết tự luận (Writing Essay)
+   3. Bài đọc hiểu văn bản (Reading Comprehension)
+   4. Luyện cấu trúc & Ghép câu (Syntax Builder)
+   5. Trắc nghiệm (Multiple Choice)
+   6. Điền từ (Fill in the blank)
+   7. Viết tự luận (Writing Essay)
    ============================================================ */
 
-type Stage = "video" | "vocab" | "quiz" | "fill" | "write" | "finish";
+type Stage = "video" | "vocab" | "reading" | "syntax" | "quiz" | "fill" | "write" | "finish";
 
 function extractYoutubeId(url: string): string {
   if (!url) return "";
@@ -73,6 +79,19 @@ export default function UnifiedExercisePage() {
   const [assignment, setAssignment] = useState<any>(null);
   const [stage, setStage] = useState<Stage>("video");
   const [restoredDraft, setRestoredDraft] = useState(false);
+
+  // Reading states
+  const [readingQIdx, setReadingQIdx] = useState(0);
+  const [readingSelectedOpt, setReadingSelectedOpt] = useState<string | null>(null);
+  const [readingScore, setReadingScore] = useState(0);
+
+  // Syntax Builder states
+  const [syntaxIdx, setSyntaxIdx] = useState(0);
+  const [assembledWords, setAssembledWords] = useState<string[]>([]);
+  const [availableWords, setAvailableWords] = useState<{ id: string; word: string }[]>([]);
+  const [syntaxChecked, setSyntaxChecked] = useState(false);
+  const [syntaxIsCorrect, setSyntaxIsCorrect] = useState(false);
+  const [syntaxScore, setSyntaxScore] = useState(0);
 
   // Quiz states
   const [quizIdx, setQuizIdx] = useState(0);
@@ -148,6 +167,10 @@ export default function UnifiedExercisePage() {
             setStage("video");
           } else if (content?.vocabulary?.length > 0) {
             setStage("vocab");
+          } else if (content?.readingPassage?.passage) {
+            setStage("reading");
+          } else if (content?.syntaxRearrange?.length > 0) {
+            setStage("syntax");
           } else if (content?.quizQuestions?.length > 0) {
             setStage("quiz");
           } else if (content?.fillQuestions?.length > 0) {
@@ -160,6 +183,34 @@ export default function UnifiedExercisePage() {
       .catch((e) => console.error("Error loading assignment:", e))
       .finally(() => setLoading(false));
   }, [id]);
+
+  const content = assignment?.content || {};
+  const difficultyLevel = content.difficultyLevel || "A2-B1";
+  const videoUrl = assignment?.videoUrl || content.videoUrl || "";
+  const youtubeId = extractYoutubeId(videoUrl);
+  const vocabList: any[] = content.vocabulary || [];
+  const readingPassage = content.readingPassage;
+  const readingQuestions: any[] = readingPassage?.questions || [];
+  const syntaxList: any[] = content.syntaxRearrange || [];
+  const quizList: any[] = content.quizQuestions || [];
+  const fillList: any[] = content.fillQuestions || [];
+  const writingPrompt = content.writingPrompt || (assignment?.prompt ? { prompt: assignment.prompt, minWords: 80, outline: [] } : null);
+
+  // Shuffle syntax words when question changes
+  useEffect(() => {
+    if (!syntaxList.length) return;
+    const cur = syntaxList[syntaxIdx];
+    if (!cur) return;
+    const wordsList: string[] = Array.isArray(cur.words) && cur.words.length > 0 
+      ? cur.words 
+      : (cur.correctSentence || "").split(/\s+/).filter(Boolean);
+    const items = wordsList.map((w: string, idx: number) => ({ id: `w-${idx}-${w}`, word: w }));
+    const shuffled = [...items].sort(() => 0.5 - Math.random());
+    setAvailableWords(shuffled);
+    setAssembledWords([]);
+    setSyntaxChecked(false);
+    setSyntaxIsCorrect(false);
+  }, [assignment, syntaxIdx]);
 
   if (loading) {
     return (
@@ -184,18 +235,12 @@ export default function UnifiedExercisePage() {
     );
   }
 
-  const content = assignment.content || {};
-  const videoUrl = assignment.videoUrl || content.videoUrl || "";
-  const youtubeId = extractYoutubeId(videoUrl);
-  const vocabList: any[] = content.vocabulary || [];
-  const quizList: any[] = content.quizQuestions || [];
-  const fillList: any[] = content.fillQuestions || [];
-  const writingPrompt = content.writingPrompt || (assignment.prompt ? { prompt: assignment.prompt, minWords: 80, outline: [] } : null);
-
   // Available stages list
   const availableStages: { key: Stage; label: string; icon: any }[] = [];
   if (videoUrl) availableStages.push({ key: "video", label: "Video bài giảng", icon: Video });
   if (vocabList.length > 0) availableStages.push({ key: "vocab", label: `Từ vựng (${vocabList.length})`, icon: Layers });
+  if (readingPassage && readingPassage.passage) availableStages.push({ key: "reading", label: `Đọc hiểu (${readingQuestions.length || 1})`, icon: BookOpen });
+  if (syntaxList.length > 0) availableStages.push({ key: "syntax", label: `Ghép câu (${syntaxList.length})`, icon: Puzzle });
   if (quizList.length > 0) availableStages.push({ key: "quiz", label: `Trắc nghiệm (${quizList.length})`, icon: ListChecks });
   if (fillList.length > 0) availableStages.push({ key: "fill", label: `Điền từ (${fillList.length})`, icon: FileQuestion });
   if (writingPrompt) availableStages.push({ key: "write", label: "Viết tự luận", icon: PenTool });
@@ -212,14 +257,15 @@ export default function UnifiedExercisePage() {
   };
 
   const finishAll = () => {
-    const earned = 60 + quizScore * 10 + fillScore * 10;
+    const baseReward = content.targetXp || (difficultyLevel.includes("C1") || difficultyLevel.includes("THPT") ? 150 : difficultyLevel.includes("B") ? 80 : 50);
+    const earned = baseReward + quizScore * 5 + fillScore * 5 + readingScore * 10 + syntaxScore * 10;
     setTotalXpEarned(earned);
-    addXp(earned, "Hoàn thành bài tập toàn diện");
+    addXp(earned, `Hoàn thành bài tập ${difficultyLevel}`);
     syncStats({
       xp: earned,
       wordsLearned: wordsLearned + knownCount,
       streak: Math.max(1, streak),
-      minutes: 15,
+      minutes: 18,
     });
     setStage("finish");
     sound.playLevelUp();
@@ -268,9 +314,23 @@ export default function UnifiedExercisePage() {
           >
             <ChevronLeft className="h-4 w-4" /> Quay lại Dashboard
           </Link>
-          <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand border border-brand-100">
-            Bài tập 5 trong 1
-          </span>
+          <div className="flex items-center gap-2">
+            <span
+              className={cn(
+                "rounded-full px-3 py-1 text-xs font-bold border shadow-xs",
+                difficultyLevel.includes("C1") || difficultyLevel.includes("THPT")
+                  ? "bg-purple-50 text-purple-700 border-purple-200"
+                  : difficultyLevel.includes("B")
+                  ? "bg-blue-50 text-blue-700 border-blue-200"
+                  : "bg-emerald-50 text-emerald-700 border-emerald-200"
+              )}
+            >
+              {difficultyLevel}
+            </span>
+            <span className="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700 border border-amber-200">
+              ⚡ +{content.targetXp || (difficultyLevel.includes("C1") || difficultyLevel.includes("THPT") ? 150 : difficultyLevel.includes("B") ? 80 : 50)} XP
+            </span>
+          </div>
         </div>
 
         <div className="mb-6">
@@ -476,6 +536,325 @@ export default function UnifiedExercisePage() {
                 Đã nhớ ✓
               </Button>
             </div>
+          </motion.div>
+        )}
+
+        {/* ===== STAGE: READING COMPREHENSION (ĐỌC HIỂU) ===== */}
+        {stage === "reading" && readingPassage && readingPassage.passage && (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
+              <span className="flex items-center gap-1.5 text-indigo-700">
+                <BookOpen className="h-4 w-4" /> Đọc hiểu văn bản ({readingQIdx + 1}/{readingQuestions.length || 1})
+              </span>
+              <span className="text-emerald-600 font-bold">Đúng: {readingScore} câu</span>
+            </div>
+
+            <div className="grid lg:grid-cols-12 gap-6 items-start">
+              {/* Cột bài đọc bên trái */}
+              <div className="lg:col-span-7 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
+                  <h3 className="font-extrabold text-slate-900 text-base">{readingPassage.title || "Reading Passage"}</h3>
+                  <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-bold text-indigo-700 border border-indigo-100">
+                    {readingPassage.levelTag || difficultyLevel}
+                  </span>
+                </div>
+                <div className="prose prose-slate max-w-none text-sm font-medium leading-relaxed text-slate-700 whitespace-pre-line select-text">
+                  {readingPassage.passage}
+                </div>
+              </div>
+
+              {/* Cột câu hỏi bên phải */}
+              <div className="lg:col-span-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
+                {(() => {
+                  const curQ = readingQuestions[readingQIdx] || {
+                    question: "Đoạn văn trên chủ yếu nói về điều gì?",
+                    options: ["A. Nội dung 1", "B. Nội dung 2", "C. Nội dung 3", "D. Nội dung 4"],
+                    answer: "A",
+                    explanation: "Dựa vào câu chủ đề của đoạn văn.",
+                  };
+
+                  return (
+                    <div>
+                      <div className="mb-4">
+                        <span className="text-xs font-bold text-indigo-600 uppercase tracking-wide block mb-1">
+                          Câu hỏi {readingQIdx + 1}
+                        </span>
+                        <h4 className="text-base font-bold text-slate-900 leading-snug">
+                          {curQ.question}
+                        </h4>
+                      </div>
+
+                      <div className="space-y-2.5">
+                        {["A", "B", "C", "D"].map((letter, optIdx) => {
+                          const optText = curQ.options[optIdx] ?? "";
+                          const isPicked = readingSelectedOpt === letter;
+                          const isCorrect = curQ.answer === letter || curQ.answer === optText;
+
+                          return (
+                            <button
+                              key={letter}
+                              type="button"
+                              disabled={readingSelectedOpt !== null}
+                              onClick={() => {
+                                setReadingSelectedOpt(letter);
+                                if (isCorrect) {
+                                  setReadingScore((s) => s + 1);
+                                  sound.playChime();
+                                } else {
+                                  sound.playBuzzer();
+                                }
+                              }}
+                              className={cn(
+                                "w-full flex items-center gap-2.5 rounded-2xl border-2 p-3 text-left font-semibold text-xs transition-all",
+                                readingSelectedOpt === null && "border-slate-200 hover:border-indigo-500 hover:bg-indigo-50/40",
+                                readingSelectedOpt !== null && isCorrect && "border-emerald-500 bg-emerald-50 text-emerald-800 font-bold",
+                                readingSelectedOpt !== null && isPicked && !isCorrect && "border-rose-500 bg-rose-50 text-rose-800",
+                                readingSelectedOpt !== null && !isPicked && !isCorrect && "border-slate-100 text-slate-400"
+                              )}
+                            >
+                              <span
+                                className={cn(
+                                  "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+                                  readingSelectedOpt !== null && isCorrect ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-600"
+                                )}
+                              >
+                                {letter}
+                              </span>
+                              <span>{optText.replace(/^[A-D]\.\s*/, "")}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {readingSelectedOpt !== null && (
+                        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 rounded-2xl bg-indigo-50/70 p-3.5 text-xs text-slate-700 border border-indigo-100">
+                          <p className="font-bold text-slate-800 mb-1">
+                            {readingSelectedOpt === curQ.answer ? "🎉 Chính xác!" : "❌ Chưa chính xác!"}
+                          </p>
+                          {curQ.explanation && <p className="text-slate-600">{curQ.explanation}</p>}
+
+                          <div className="mt-3 flex justify-end">
+                            <Button
+                              onClick={() => {
+                                setReadingSelectedOpt(null);
+                                if (readingQIdx < readingQuestions.length - 1) {
+                                  setReadingQIdx((i) => i + 1);
+                                } else {
+                                  goToNextStage();
+                                }
+                              }}
+                              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs"
+                            >
+                              {readingQIdx < readingQuestions.length - 1 ? "Câu đọc hiểu tiếp →" : "Chuyển sang phần tiếp →"}
+                            </Button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ===== STAGE: SYNTAX BUILDER (GHÉP CÂU) ===== */}
+        {stage === "syntax" && syntaxList.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
+              <span className="flex items-center gap-1.5 text-teal-700">
+                <Puzzle className="h-4 w-4" /> Luyện phản xạ cấu trúc ({syntaxIdx + 1}/{syntaxList.length})
+              </span>
+              <span className="text-teal-600 font-bold">Đúng: {syntaxScore} câu</span>
+            </div>
+
+            {(() => {
+              const curS = syntaxList[syntaxIdx];
+              const cleanSentence = (str: string) => str.trim().toLowerCase().replace(/[.,!?;:]+/g, "");
+
+              const handleAddWordToSentence = (item: { id: string; word: string }) => {
+                if (syntaxChecked) return;
+                sound.playPop();
+                setAssembledWords((prev) => [...prev, item.word]);
+                setAvailableWords((prev) => prev.filter((w) => w.id !== item.id));
+              };
+
+              const handleRemoveWordFromSentence = (word: string, index: number) => {
+                if (syntaxChecked) return;
+                sound.playPop();
+                setAssembledWords((prev) => prev.filter((_, i) => i !== index));
+                setAvailableWords((prev) => [...prev, { id: `w-${Date.now()}-${word}`, word }]);
+              };
+
+              const handleResetSentence = () => {
+                if (syntaxChecked) return;
+                const wordsList: string[] = Array.isArray(curS.words) && curS.words.length > 0 
+                  ? curS.words 
+                  : (curS.correctSentence || "").split(/\s+/).filter(Boolean);
+                const items = wordsList.map((w: string, idx: number) => ({ id: `w-${idx}-${w}`, word: w }));
+                setAvailableWords([...items].sort(() => 0.5 - Math.random()));
+                setAssembledWords([]);
+              };
+
+              const handleCheckSyntax = () => {
+                const builtStr = assembledWords.join(" ");
+                const isCorrect = cleanSentence(builtStr) === cleanSentence(curS.correctSentence);
+                setSyntaxChecked(true);
+                setSyntaxIsCorrect(isCorrect);
+                if (isCorrect) {
+                  setSyntaxScore((s) => s + 1);
+                  sound.playSuccess();
+                  speakWord(curS.correctSentence);
+                } else {
+                  sound.playBuzzer();
+                }
+              };
+
+              return (
+                <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-6">
+                  <div>
+                    <span className="text-xs font-bold text-teal-600 uppercase tracking-wide block mb-1">
+                      Nghĩa tiếng Việt cần diễn đạt:
+                    </span>
+                    <h3 className="text-lg font-bold text-slate-900 leading-relaxed">
+                      “{curS.promptVi}”
+                    </h3>
+                  </div>
+
+                  {/* Vùng lắp ráp câu (Assembled Words Box) */}
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-bold text-slate-400">Câu em đang lắp ghép (bấm từ để gỡ):</span>
+                      {assembledWords.length > 0 && !syntaxChecked && (
+                        <button
+                          type="button"
+                          onClick={handleResetSentence}
+                          className="inline-flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-slate-700 transition-colors"
+                        >
+                          <Undo2 className="h-3.5 w-3.5" /> Xếp lại từ đầu
+                        </button>
+                      )}
+                    </div>
+
+                    <div
+                      className={cn(
+                        "min-h-[72px] rounded-2xl border-2 p-3.5 flex flex-wrap items-center gap-2 transition-all",
+                        syntaxChecked
+                          ? syntaxIsCorrect
+                            ? "border-emerald-500 bg-emerald-50/50"
+                            : "border-rose-500 bg-rose-50/50"
+                          : assembledWords.length > 0
+                          ? "border-brand bg-slate-50/50"
+                          : "border-dashed border-slate-200 bg-slate-50/30"
+                      )}
+                    >
+                      {assembledWords.length === 0 ? (
+                        <span className="text-xs font-medium text-slate-400 italic">
+                          Bấm vào các thẻ từ ở bên dưới để ghép thành câu hoàn chỉnh...
+                        </span>
+                      ) : (
+                        assembledWords.map((word, wIdx) => (
+                          <motion.button
+                            key={wIdx}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            type="button"
+                            disabled={syntaxChecked}
+                            onClick={() => handleRemoveWordFromSentence(word, wIdx)}
+                            className={cn(
+                              "rounded-xl px-3.5 py-2 text-sm font-bold shadow-sm transition-all",
+                              syntaxChecked && syntaxIsCorrect
+                                ? "bg-emerald-600 text-white"
+                                : syntaxChecked && !syntaxIsCorrect
+                                ? "bg-rose-600 text-white"
+                                : "bg-white text-slate-800 border border-slate-200 hover:border-red-300 hover:bg-red-50 hover:text-red-700"
+                            )}
+                          >
+                            {word}
+                          </motion.button>
+                        ))
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Ngân hàng thẻ từ (Word Bank) */}
+                  <div>
+                    <span className="text-xs font-bold text-slate-500 mb-2 block">
+                      Ngân hàng thẻ từ ({availableWords.length} từ còn lại):
+                    </span>
+                    <div className="flex flex-wrap gap-2 min-h-[50px] items-center p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                      {availableWords.map((item) => (
+                        <motion.button
+                          key={item.id}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          type="button"
+                          disabled={syntaxChecked}
+                          onClick={() => handleAddWordToSentence(item)}
+                          className="rounded-xl border border-teal-200 bg-white px-3.5 py-2 text-sm font-bold text-teal-900 shadow-sm hover:border-teal-400 hover:bg-teal-50 transition-all"
+                        >
+                          {item.word}
+                        </motion.button>
+                      ))}
+                      {availableWords.length === 0 && assembledWords.length > 0 && !syntaxChecked && (
+                        <span className="text-xs text-slate-400 italic">Đã chọn hết tất cả các từ trong ngân hàng!</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action buttons */}
+                  {!syntaxChecked ? (
+                    <div className="flex justify-end">
+                      <Button
+                        disabled={assembledWords.length === 0}
+                        onClick={handleCheckSyntax}
+                        className="bg-teal-600 hover:bg-teal-700 text-white font-bold"
+                      >
+                        Kiểm tra câu
+                      </Button>
+                    </div>
+                  ) : (
+                    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl bg-slate-50 p-4 text-xs text-slate-700 border border-slate-200">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-bold text-sm">
+                          {syntaxIsCorrect ? "🎉 Xuất sắc! Câu ghép chuẩn xác." : "❌ Chưa đúng trật tự từ."}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => speakWord(curS.correctSentence)}
+                          className="inline-flex items-center gap-1 font-bold text-brand hover:underline"
+                        >
+                          <Volume2 className="h-4 w-4" /> Phát âm
+                        </button>
+                      </div>
+
+                      {!syntaxIsCorrect && (
+                        <p className="mb-2 font-bold text-slate-800">
+                          Đáp án đúng: <span className="text-emerald-700">{curS.correctSentence}</span>
+                        </p>
+                      )}
+
+                      {curS.explanation && <p className="text-slate-500">{curS.explanation}</p>}
+
+                      <div className="mt-4 flex justify-end">
+                        <Button
+                          onClick={() => {
+                            if (syntaxIdx < syntaxList.length - 1) {
+                              setSyntaxIdx((i) => i + 1);
+                            } else {
+                              goToNextStage();
+                            }
+                          }}
+                          className="bg-brand text-white font-bold"
+                        >
+                          {syntaxIdx < syntaxList.length - 1 ? "Câu ghép tiếp theo →" : "Chuyển sang phần tiếp →"}
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              );
+            })()}
           </motion.div>
         )}
 
@@ -765,19 +1144,39 @@ export default function UnifiedExercisePage() {
               <Trophy className="h-10 w-10" />
             </div>
 
-            <h1 className="text-2xl font-extrabold text-slate-900">Chúc mừng bạn đã hoàn thành bài tập!</h1>
+            <div className="mb-2 inline-flex items-center gap-2">
+              <span
+                className={cn(
+                  "rounded-full px-3 py-1 text-xs font-bold border",
+                  difficultyLevel.includes("C1") || difficultyLevel.includes("THPT")
+                    ? "bg-purple-50 text-purple-700 border-purple-200"
+                    : difficultyLevel.includes("B")
+                    ? "bg-blue-50 text-blue-700 border-blue-200"
+                    : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                )}
+              >
+                Cấp độ {difficultyLevel}
+              </span>
+            </div>
+
+            <h1 className="text-2xl font-extrabold text-slate-900">Chúc mừng bạn đã chinh phục bài tập!</h1>
             <p className="mt-2 text-sm text-slate-500 max-w-md mx-auto">
-              Bạn đã hoàn thành trọn vẹn các bước học tập của bài học: xem video, thuộc {knownCount} từ vựng, làm đúng {quizScore} câu trắc nghiệm, {fillScore} câu điền từ, và nộp bài luận thành công.
+              Bạn đã hoàn thành trọn vẹn toàn bộ các chặng học tập: video bài giảng, thuộc {knownCount} từ vựng
+              {readingQuestions.length > 0 ? `, làm đúng ${readingScore}/${readingQuestions.length} câu đọc hiểu` : ""}
+              {syntaxList.length > 0 ? `, ghép đúng ${syntaxScore}/${syntaxList.length} câu cấu trúc` : ""}
+              {quizList.length > 0 ? `, ${quizScore}/${quizList.length} câu trắc nghiệm` : ""}
+              {fillList.length > 0 ? `, ${fillScore}/${fillList.length} câu điền từ` : ""}
+              {writingSubmitted ? " và nộp bài luận thành công." : "."}
             </p>
 
-            <div className="my-6 inline-flex items-center gap-3 rounded-2xl bg-amber-50 px-6 py-3 border border-amber-200 text-amber-900 font-extrabold text-lg">
+            <div className="my-6 inline-flex items-center gap-3 rounded-2xl bg-amber-50 px-6 py-3 border border-amber-200 text-amber-900 font-extrabold text-lg shadow-sm">
               <span>⚡ +{totalXpEarned} XP</span>
-              <span className="text-slate-300">·</span>
+              <span className="text-amber-300">·</span>
               <span>🔥 Chuỗi ngày tiếp tục</span>
             </div>
 
             <div className="flex justify-center gap-3">
-              <Button asChild className="bg-brand text-white font-bold">
+              <Button asChild className="bg-brand hover:bg-brand-600 text-white font-bold">
                 <Link href="/dashboard">Về Trang chủ Dashboard</Link>
               </Button>
             </div>

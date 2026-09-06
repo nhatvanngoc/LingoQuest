@@ -44,6 +44,9 @@ export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number
   const lessonTitle = a.lessonTitle || (a as any).description || "Bài tập rèn luyện";
   const dueLabel = a.dueLabel || ((a as any).dueAt ? `Hạn: ${new Date((a as any).dueAt).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit" })}` : "Còn hạn");
 
+  const difficultyLevel = (a as any).difficultyLevel;
+  const targetXp = (a as any).targetXp;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -68,9 +71,28 @@ export function AssignmentCard({ a, index = 0 }: { a: Assignment; index?: number
         </motion.span>
 
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
             <h4 className="truncate font-bold text-slate-900 group-hover:text-brand transition-colors">{a.title || "Bài tập"}</h4>
+            {difficultyLevel && (
+              <span
+                className={cn(
+                  "rounded-full px-2 py-0.5 text-[10px] font-extrabold border",
+                  difficultyLevel.includes("C1") || difficultyLevel.includes("THPT")
+                    ? "bg-purple-50 text-purple-700 border-purple-200"
+                    : difficultyLevel.includes("B")
+                    ? "bg-blue-50 text-blue-700 border-blue-200"
+                    : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                )}
+              >
+                {difficultyLevel}
+              </span>
+            )}
             <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
+            {targetXp && !done && (
+              <span className="rounded-full bg-amber-50 px-1.5 py-0.5 text-[10px] font-extrabold text-amber-700 border border-amber-200">
+                +{targetXp} XP
+              </span>
+            )}
           </div>
           <p className="truncate text-xs text-slate-400 mt-0.5">{lessonTitle}</p>
 

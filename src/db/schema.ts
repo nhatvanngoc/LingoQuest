@@ -124,6 +124,8 @@ export const cards = pgTable("cards", {
 export interface UnifiedAssignmentContent {
   videoUrl?: string;
   youtubeId?: string;
+  difficultyLevel?: "A1" | "A2" | "B1" | "B2" | "C1" | "THPTQG" | "IELTS" | string;
+  targetXp?: number;
   vocabulary: {
     id: string;
     word: string;
@@ -145,6 +147,25 @@ export interface UnifiedAssignmentContent {
     sentence: string; // Câu có chứa vị trí trống [___]
     answer: string;   // Từ cần điền
     hint?: string;    // Gợi ý
+    explanation?: string;
+  }[];
+  readingPassage?: {
+    title: string;
+    passage: string; // Đoạn văn đọc hiểu
+    levelTag?: string; // vd: "Academic B2" | "THPTQG 2026"
+    questions: {
+      id: string;
+      question: string;
+      options: string[];
+      answer: string;
+      explanation?: string;
+    }[];
+  };
+  syntaxRearrange?: {
+    id: string;
+    promptVi: string; // Nghĩa tiếng Việt gợi ý
+    words: string[]; // Danh sách các từ xáo trộn để người học click ghép
+    correctSentence: string; // Câu chuẩn xác
     explanation?: string;
   }[];
   writingPrompt?: {
