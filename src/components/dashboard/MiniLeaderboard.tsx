@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Trophy, ArrowRight } from "lucide-react";
 import { useApp } from "@/lib/state/app-context";
+import { useRole } from "@/lib/auth/role-context";
 import { cn } from "@/lib/utils";
 
 const MEDALS = ["🥇", "🥈", "🥉"];
@@ -18,6 +19,7 @@ interface LeaderboardItem {
 
 export function MiniLeaderboard() {
   const { xp } = useApp();
+  const { user } = useRole();
   const [board, setBoard] = useState<LeaderboardItem[]>([]);
 
   useEffect(() => {
@@ -31,6 +33,7 @@ export function MiniLeaderboard() {
             id: r.id,
             name: r.name,
             xp: r.xp || 0,
+            me: r.id === user.id,
           }));
           mapped.sort((a, b) => b.xp - a.xp);
           setBoard(mapped);
@@ -41,7 +44,7 @@ export function MiniLeaderboard() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [user.id]);
 
 
 

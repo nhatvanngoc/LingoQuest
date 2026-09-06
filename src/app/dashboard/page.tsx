@@ -55,6 +55,7 @@ function SectionTitle({
 
 export default function DashboardPage() {
   const { xp, streak, wordsLearned, level } = useApp();
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<{
     recentLesson: any;
     assignments: any[];
@@ -77,7 +78,8 @@ export default function DashboardPage() {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => { if (active) setLoading(false); });
 
     return () => {
       active = false;
@@ -89,6 +91,33 @@ export default function DashboardPage() {
   const assignments = data?.assignments ?? [];
   const decks = data?.decks ?? [];
   const activeDeckSlug = decks[0]?.slug || decks[0]?.id || "deck-1";
+
+  if (loading) {
+    return (
+      <AppShell>
+        <div className="grid lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_350px] gap-8 items-start">
+          <div className="flex flex-col gap-6 min-w-0">
+            {/* Hero skeleton */}
+            <div className="h-48 rounded-3xl bg-slate-200/60 animate-pulse" />
+            {/* Lesson card skeleton */}
+            <div className="h-64 rounded-3xl bg-white border border-slate-200/80 animate-pulse" />
+            {/* Assignments skeleton */}
+            <div className="space-y-3">
+              <div className="h-5 w-40 rounded bg-slate-200/60 animate-pulse" />
+              <div className="h-20 rounded-2xl bg-white border border-slate-200/80 animate-pulse" />
+              <div className="h-20 rounded-2xl bg-white border border-slate-200/80 animate-pulse" />
+            </div>
+          </div>
+          {/* Right rail skeleton */}
+          <div className="sticky top-[88px] hidden lg:flex flex-col gap-6">
+            <div className="h-44 rounded-2xl bg-white border border-slate-200/80 animate-pulse" />
+            <div className="h-52 rounded-2xl bg-white border border-slate-200/80 animate-pulse" />
+            <div className="h-40 rounded-2xl bg-white border border-slate-200/80 animate-pulse" />
+          </div>
+        </div>
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell>

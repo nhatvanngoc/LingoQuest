@@ -38,7 +38,13 @@ export function ProgressBar({
 
   return (
     <div className={cn("w-full", className)}>
-      <div className={cn("group relative w-full overflow-hidden rounded-full bg-gray-100", height)}>
+      <div
+        role="progressbar"
+        aria-valuenow={Math.round(pct)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        className={cn("group relative w-full overflow-hidden rounded-full bg-gray-100", height)}
+      >
         <motion.div
           className={cn(
             "relative h-full rounded-full",
@@ -116,7 +122,14 @@ export function CircularProgress({
   const dash = (pct / 100) * circumference;
 
   return (
-    <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+    <div
+      role="progressbar"
+      aria-valuenow={Math.round(pct)}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      className="relative inline-flex items-center justify-center"
+      style={{ width: size, height: size }}
+    >
       <svg width={size} height={size} className="-rotate-90">
         <circle
           cx={size / 2}

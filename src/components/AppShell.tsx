@@ -323,8 +323,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative flex flex-1 flex-col items-center gap-1 rounded-lg py-2.5 text-[10px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-1 visited:text-violet-700 active:scale-95",
-                    active ? "text-brand" : "text-slate-400 hover:text-slate-600 visited:text-slate-500"
+                    "relative flex flex-1 flex-col items-center gap-1 rounded-lg py-2.5 text-[10px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-1 active:scale-95",
+                    active ? "text-brand" : "text-slate-400 hover:text-slate-600"
                   )}
                 >
                   {active && (

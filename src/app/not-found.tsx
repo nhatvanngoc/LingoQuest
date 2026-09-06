@@ -8,38 +8,38 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-cream">
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-canvas">
       {/* Background — mesh + grid + beams */}
-      <div className="pointer-events-none absolute inset-0 bg-mesh-brand opacity-60" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(13,148,136,0.12),rgba(255,255,255,0))] opacity-60" />
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-30" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-cream via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-canvas via-transparent to-transparent" />
       {/* Decorative blobs */}
-      <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-gradient-to-br from-brand-200 to-violet-200 opacity-40 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-gradient-to-br from-accent-100 to-orange-100 opacity-40 blur-3xl" />
+      <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-gradient-to-br from-teal-200 to-violet-200 opacity-40 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 opacity-40 blur-3xl" />
 
       {/* Top brand */}
       <header className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow-brand">
+          <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow">
             <Sparkles className="h-5 w-5" />
           </span>
           <span className="text-lg font-extrabold tracking-tight text-slate-900">
             Lingo<span className="bg-gradient-to-r from-brand to-violet-600 bg-clip-text text-transparent">Quest</span>
           </span>
         </Link>
-        <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-black text-slate-500 shadow-soft">404</span>
+        <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-black text-slate-500 shadow-sm">404</span>
       </header>
 
       {/* Center card */}
       <main className="relative z-10 flex flex-1 items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
         <div className="w-full max-w-xl">
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-white bg-white p-8 shadow-lift sm:p-10">
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-white bg-white p-8 shadow-lg sm:p-10">
             {/* subtle top border gradient */}
-            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand via-violet-500 to-accent" />
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand via-violet-500 to-amber-500" />
             <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br from-brand-50 to-violet-50 opacity-60 blur-2xl" />
 
             <div className="relative">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow-brand">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-brand to-violet-600 text-white shadow-glow">
                 <Search className="h-8 w-8" />
               </div>
 
@@ -90,9 +90,7 @@ export default function NotFound() {
             </div>
           </div>
 
-          <p className="mt-6 text-center text-xs font-semibold text-slate-400">
-            Ảnh minh họa: gradient mesh + Sparkles · Đồng bộ với landing hero · LingoQuest v2
-          </p>
+
         </div>
       </main>
 

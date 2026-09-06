@@ -326,7 +326,7 @@ export default function LandingPage() {
             <p className="mx-auto mt-4 max-w-lg text-lg text-brand-100 leading-relaxed">Tham gia 5000+ học sinh đang học mỗi ngày. Miễn phí cho học sinh, mạnh mẽ cho giáo viên.</p>
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <ShimmerButton asChild size="xl" className="bg-white text-brand hover:bg-white border-0 shadow-lg min-w-[220px]">
-                <Link href="/dashboard" className="flex items-center gap-2">Bắt đầu với Google</Link>
+                <Link href="/dashboard" className="flex items-center gap-2">Bắt đầu miễn phí</Link>
               </ShimmerButton>
               <Button asChild size="xl" variant="ghost" className="text-white hover:bg-white/10 border border-white/20">
                 <Link href="/learn">Xem demo <PlayCircle className="h-5 w-5" /></Link>

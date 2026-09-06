@@ -36,7 +36,7 @@ export function WeeklyStreakCard() {
           </div>
         </div>
         <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-600 border border-amber-200/60">
-          🔥 {streak} ngày
+          <span aria-hidden="true">🔥</span> {streak} ngày
         </span>
       </div>
 
@@ -45,13 +45,16 @@ export function WeeklyStreakCard() {
         {DAYS.map((d, i) => {
           const isPast = i < todayIdx;
           const isToday = i === todayIdx;
-          const isActive = (isPast && streak > 0) || (isToday && streak > 0);
+          // Only light up the most recent `streak` days (today included)
+          const daysSinceToday = todayIdx - i;
+          const isActive = streak > 0 && daysSinceToday >= 0 && daysSinceToday < streak;
 
           return (
             <div key={d.key} className="flex flex-col items-center gap-1">
               <span className="text-[10px] font-bold text-slate-400">{d.label}</span>
               <motion.div
                 whileHover={{ scale: 1.15 }}
+                aria-label={`${d.label}: ${isActive ? "Đã học" : isToday ? "Hôm nay" : "Chưa học"}`}
                 className={cn(
                   "relative flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all",
                   isActive

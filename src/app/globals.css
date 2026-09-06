@@ -306,7 +306,7 @@ body {
   --sidebar-ring: oklch(0.55 0.12 165);
 }
 
-/* ===== Dark theme ===== */
+/* ===== Dark theme (Reserved design tokens for future theme-switching support) ===== */
 .dark {
   --background: oklch(0.14 0 0);
   --foreground: oklch(0.98 0 0);
