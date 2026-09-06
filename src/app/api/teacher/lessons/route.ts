@@ -60,3 +60,60 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });
   }
 }
+
+/* Lấy danh sách bài học video (giáo viên) */
+export async function GET() {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return NextResponse.json({ error: "Chưa đăng nhập" }, { status: 401 });
+    if (user.role !== "teacher") return NextResponse.json({ error: "Chỉ giáo viên mới có quyền xem" }, { status: 403 });
+
+    const { getTeacherLessons } = await import("@/db/queries");
+    const list = await getTeacherLessons();
+    return NextResponse.json({ ok: true, lessons: list });
+  } catch (e) {
+    console.error("Get teacher lessons error:", e);
+    return NextResponse.json({ error: "Lỗi máy chủ" }, { status: 500 });
+  }
+}
+
+/* Xóa video bài học trực tiếp trên web (không cần vào SQL) */
+export async function DELETE(req: Request) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return NextResponse.json({ error: "Chưa đăng nhập" }, { status: 401 });
+    if (user.role !== "teacher") return NextResponse.json({ error: "Chỉ giáo viên mới có quyền xóa" }, { status: 403 });
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    if (!id) return NextResponse.json({ error: "Thiếu ID bài học cần xóa" }, { status: 400 });
+
+    const { deleteLesson } = await import("@/db/queries");
+    const deleted = await deleteLesson(id);
+    return NextResponse.json({ ok: true, deleted });
+  } catch (e) {
+    console.error("Delete lesson error:", e);
+    return NextResponse.json({ error: "Lỗi máy chủ khi xóa bài học" }, { status: 500 });
+  }
+}
+
+/* Bật / tắt ẩn hiện bài học video (published <-> hidden) */
+export async function PATCH(req: Request) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return NextResponse.json({ error: "Chưa đăng nhập" }, { status: 401 });
+    if (user.role !== "teacher") return NextResponse.json({ error: "Chỉ giáo viên mới có quyền thay đổi trạng thái" }, { status: 403 });
+
+    const body = await req.json().catch(() => ({}));
+    const { id, status } = body;
+    if (!id) return NextResponse.json({ error: "Thiếu ID bài học" }, { status: 400 });
+
+    const { toggleLessonStatus } = await import("@/db/queries");
+    const updated = await toggleLessonStatus(id, status);
+    return NextResponse.json({ ok: true, lesson: updated });
+  } catch (e) {
+    console.error("Toggle lesson status error:", e);
+    return NextResponse.json({ error: "Lỗi máy chủ khi cập nhật trạng thái bài học" }, { status: 500 });
+  }
+}
+

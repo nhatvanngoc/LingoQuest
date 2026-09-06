@@ -752,3 +752,128 @@ export async function getTeacherStudentsWithStats() {
   }));
 }
 
+/** Danh sách bài tập đầy đủ kèm số liệu nộp bài (cho màn hình Giáo viên quản lý) */
+export async function getTeacherAssignments() {
+  const rows = await db
+    .select({
+      id: assignments.id,
+      title: assignments.title,
+      type: assignments.type,
+      description: assignments.description,
+      videoUrl: assignments.videoUrl,
+      status: assignments.status,
+      dueAt: assignments.dueAt,
+      createdAt: assignments.createdAt,
+      content: assignments.content,
+      lessonTitle: lessons.title,
+    })
+    .from(assignments)
+    .leftJoin(lessons, eq(lessons.id, assignments.lessonId))
+    .orderBy(desc(assignments.createdAt));
+
+  const subCounts = await db
+    .select({
+      assignmentId: submissions.assignmentId,
+      count: sql<number>`count(*)::int`,
+    })
+    .from(submissions)
+    .groupBy(submissions.assignmentId);
+
+  const subMap = new Map<string, number>();
+  for (const s of subCounts) {
+    if (s.assignmentId) subMap.set(s.assignmentId, s.count);
+  }
+
+  return rows.map((r) => {
+    const c = r.content as UnifiedAssignmentContent | null;
+    const vocabCount = c?.vocabulary?.length ?? 0;
+    const quizCount = c?.quizQuestions?.length ?? 0;
+    const fillCount = c?.fillQuestions?.length ?? 0;
+    const hasWriting = Boolean(c?.writingPrompt?.prompt);
+    return {
+      ...r,
+      status: (r.status as string) || "published",
+      vocabCount,
+      quizCount,
+      fillCount,
+      hasWriting,
+      submissionCount: subMap.get(r.id) ?? 0,
+    };
+  });
+}
+
+/** Xóa bài tập trên web (không cần vào SQL) */
+export async function deleteAssignment(id: string) {
+  // 1. Xóa attempts của học sinh gắn với bài tập này
+  await db.delete(attempts).where(eq(attempts.assignmentId, id));
+  // 2. Cập nhật submissions liên quan gỡ khóa ngoại
+  await db.update(submissions).set({ assignmentId: null }).where(eq(submissions.assignmentId, id));
+  // 3. Xóa bài tập khỏi database
+  const [deleted] = await db.delete(assignments).where(eq(assignments.id, id)).returning();
+  return deleted;
+}
+
+/** Bật/Tắt trạng thái ẩn/hiện của bài tập */
+export async function toggleAssignmentStatus(id: string, newStatus?: "published" | "hidden") {
+  const [curr] = await db.select({ status: assignments.status }).from(assignments).where(eq(assignments.id, id)).limit(1);
+  if (!curr) return null;
+  const target = newStatus ?? (curr.status === "hidden" ? "published" : "hidden");
+  const [updated] = await db.update(assignments).set({ status: target }).where(eq(assignments.id, id)).returning();
+  return updated;
+}
+
+/** Danh sách video bài học kèm số từ vựng (cho màn hình Giáo viên quản lý) */
+export async function getTeacherLessons() {
+  const rows = await db
+    .select({
+      id: lessons.id,
+      slug: lessons.slug,
+      title: lessons.title,
+      titleVi: lessons.titleVi,
+      description: lessons.description,
+      youtubeId: lessons.youtubeId,
+      status: lessons.status,
+      createdAt: lessons.createdAt,
+    })
+    .from(lessons)
+    .orderBy(desc(lessons.createdAt));
+
+  const vocabCounts = await db
+    .select({
+      lessonId: vocab.lessonId,
+      count: sql<number>`count(*)::int`,
+    })
+    .from(vocab)
+    .groupBy(vocab.lessonId);
+
+  const vocabMap = new Map<string, number>();
+  for (const v of vocabCounts) {
+    if (v.lessonId) vocabMap.set(v.lessonId, v.count);
+  }
+
+  return rows.map((l) => ({
+    ...l,
+    status: (l.status as string) || "published",
+    vocabCount: vocabMap.get(l.id) ?? 0,
+  }));
+}
+
+/** Xóa video bài học trên web (không cần vào SQL) */
+export async function deleteLesson(id: string) {
+  await db.delete(vocab).where(eq(vocab.lessonId, id));
+  await db.delete(lessonProgress).where(eq(lessonProgress.lessonId, id));
+  await db.update(assignments).set({ lessonId: null }).where(eq(assignments.lessonId, id));
+  const [deleted] = await db.delete(lessons).where(eq(lessons.id, id)).returning();
+  return deleted;
+}
+
+/** Bật/Tắt trạng thái ẩn/hiện của video bài học */
+export async function toggleLessonStatus(id: string, newStatus?: "published" | "hidden") {
+  const [curr] = await db.select({ status: lessons.status }).from(lessons).where(eq(lessons.id, id)).limit(1);
+  if (!curr) return null;
+  const target = newStatus ?? (curr.status === "hidden" ? "published" : "hidden");
+  const [updated] = await db.update(lessons).set({ status: target }).where(eq(lessons.id, id)).returning();
+  return updated;
+}
+
+

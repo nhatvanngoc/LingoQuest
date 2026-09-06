@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/session";
 import { db } from "@/db";
 import { lessons, assignments, decks, userStats, vocab, attempts } from "@/db/schema";
-import { eq, sql, desc } from "drizzle-orm";
+import { eq, sql, desc, or } from "drizzle-orm";
 
 export const dynamic = "force-dynamic";
 
@@ -27,10 +27,11 @@ export async function GET() {
       level: 1,
     };
 
-    // Lấy bài học mới nhất
+    // Lấy bài học mới nhất (chỉ bài đang published)
     const lessonRows = await db
       .select()
       .from(lessons)
+      .where(or(eq(lessons.status, "published"), sql`${lessons.status} IS NULL`))
       .orderBy(desc(lessons.createdAt))
       .limit(1);
 
@@ -55,7 +56,7 @@ export async function GET() {
       };
     }
 
-    // Lấy bài tập được giao
+    // Lấy bài tập được giao (chỉ bài đang published)
     const assignmentRows = await db
       .select({
         id: assignments.id,
@@ -71,6 +72,7 @@ export async function GET() {
       })
       .from(assignments)
       .leftJoin(lessons, eq(lessons.id, assignments.lessonId))
+      .where(or(eq(assignments.status, "published"), sql`${assignments.status} IS NULL`))
       .orderBy(desc(assignments.createdAt))
       .limit(5);
 

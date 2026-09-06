@@ -80,6 +80,7 @@ export const lessons = pgTable("lessons", {
   youtubeId: varchar("youtube_id", { length: 20 }).notNull(),
   thumbnail: text("thumbnail").default(""),
   durationLabel: varchar("duration_label", { length: 30 }).default(""),
+  status: varchar("status", { length: 20 }).notNull().default("published"), // published | hidden
   createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
@@ -165,6 +166,7 @@ export const assignments = pgTable("assignments", {
   description: text("description").default(""),
   prompt: text("prompt").default(""),
   content: jsonb("content").$type<UnifiedAssignmentContent>(),
+  status: varchar("status", { length: 20 }).notNull().default("published"), // published | hidden
   dueAt: timestamp("due_at", { withTimezone: true }),
   createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
