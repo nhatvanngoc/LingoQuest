@@ -205,29 +205,6 @@ export default function UnifiedExercisePage() {
     setSyntaxIsCorrect(false);
   }, [assignment, syntaxIdx]);
 
-  if (loading) {
-    return (
-      <AppShell>
-        <div className="flex h-96 items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-brand" />
-        </div>
-      </AppShell>
-    );
-  }
-
-  if (!assignment) {
-    return (
-      <AppShell>
-        <div className="mx-auto max-w-md py-12 text-center">
-          <p className="font-bold text-slate-700">Không tìm thấy bài tập hoặc bài tập đã bị xóa.</p>
-          <Button asChild className="mt-4" variant="outline">
-            <Link href="/dashboard">Về Dashboard</Link>
-          </Button>
-        </div>
-      </AppShell>
-    );
-  }
-
   // Available stages list
   const availableStages: { key: Stage; label: string; icon: any }[] = [];
   if (videoUrl) availableStages.push({ key: "video", label: "Video bài giảng", icon: Video });
@@ -240,14 +217,6 @@ export default function UnifiedExercisePage() {
 
   // Navigation helpers
   const currentStageIndex = availableStages.findIndex((s) => s.key === stage);
-
-  const goToNextStage = () => {
-    if (currentStageIndex < availableStages.length - 1) {
-      setStage(availableStages[currentStageIndex + 1].key);
-    } else {
-      finishAll();
-    }
-  };
 
   const finishAll = () => {
     const baseReward = content.targetXp || (difficultyLevel.includes("C1") || difficultyLevel.includes("THPT") ? 150 : difficultyLevel.includes("B") ? 80 : 50);
@@ -264,8 +233,19 @@ export default function UnifiedExercisePage() {
     sound.playLevelUp();
   };
 
+  const goToNextStage = () => {
+    if (currentStageIndex < availableStages.length - 1) {
+      setStage(availableStages[currentStageIndex + 1].key);
+    } else {
+      finishAll();
+    }
+  };
+
   // Keyboard Shortcuts for Flashcards, Quiz & Reading (Tier-1 Interactive UX)
+  // MUST be called before any early returns to satisfy React Rules of Hooks
   useEffect(() => {
+    if (loading || !assignment) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger shortcuts when user is typing in inputs or textareas
       if (
@@ -385,6 +365,30 @@ export default function UnifiedExercisePage() {
     currentStageIndex,
     availableStages.length,
   ]);
+
+  if (loading) {
+    return (
+      <AppShell>
+        <div className="flex h-96 items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-brand" />
+        </div>
+      </AppShell>
+    );
+  }
+
+  if (!assignment) {
+    return (
+      <AppShell>
+        <div className="mx-auto max-w-md py-12 text-center">
+          <p className="font-bold text-slate-700">Không tìm thấy bài tập hoặc bài tập đã bị xóa.</p>
+          <Button asChild className="mt-4" variant="outline">
+            <Link href="/dashboard">Về Dashboard</Link>
+          </Button>
+        </div>
+      </AppShell>
+    );
+  }
+
   const handleSubmitWriting = async () => {
     const words = writingText.trim().split(/\s+/).filter(Boolean).length;
     if (words < 5) return;
