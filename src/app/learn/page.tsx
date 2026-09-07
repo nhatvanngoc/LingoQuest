@@ -1,8 +1,8 @@
 import { AppShell } from "@/components/AppShell";
 import { LessonLibrary } from "@/components/LessonLibrary";
-import { getLessonsWithVocab, getOverview } from "@/db/queries";
+import { getLessonsWithVocab, getOverview, getPublishedAssignments } from "@/db/queries";
 
-/* Trang Thư viện bài học — SERVER COMPONENT đọc từ PostgreSQL thật (Production-Ready).
+/* Trang Thư viện bài học & Bài tập — SERVER COMPONENT đọc từ PostgreSQL thật (Production-Ready).
    Không mock dữ liệu. */
 
 export const dynamic = "force-dynamic";
@@ -36,6 +36,14 @@ export default async function LearnLibraryPage() {
     lessons = [];
   }
 
+  let assignments: any[] = [];
+  try {
+    assignments = await getPublishedAssignments();
+  } catch (e) {
+    console.error("Failed to load assignments from DB:", e);
+    assignments = [];
+  }
+
   let overview = { lessons: 0, vocab: 0, decks: 0, users: 0, assignments: 0 };
   try {
     overview = await getOverview();
@@ -45,7 +53,7 @@ export default async function LearnLibraryPage() {
 
   return (
     <AppShell>
-      <LessonLibrary lessons={lessons} overview={overview} />
+      <LessonLibrary lessons={lessons} assignments={assignments} overview={overview} />
     </AppShell>
   );
 }

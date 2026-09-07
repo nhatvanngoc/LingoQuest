@@ -808,6 +808,59 @@ export async function getTeacherAssignments() {
   });
 }
 
+/** Danh sách bài tập đã phát hành (cho học sinh xem trong Thư viện bài học & làm bài) */
+export async function getPublishedAssignments() {
+  const rows = await db
+    .select({
+      id: assignments.id,
+      title: assignments.title,
+      type: assignments.type,
+      description: assignments.description,
+      videoUrl: assignments.videoUrl,
+      status: assignments.status,
+      dueAt: assignments.dueAt,
+      createdAt: assignments.createdAt,
+      content: assignments.content,
+      lessonTitle: lessons.title,
+    })
+    .from(assignments)
+    .leftJoin(lessons, eq(lessons.id, assignments.lessonId))
+    .where(or(eq(assignments.status, "published"), sql`${assignments.status} IS NULL`))
+    .orderBy(desc(assignments.createdAt));
+
+  return rows.map((r) => {
+    const c = r.content as UnifiedAssignmentContent | null;
+    const vocabCount = c?.vocabulary?.length ?? 0;
+    const quizCount = c?.quizQuestions?.length ?? 0;
+    const fillCount = c?.fillQuestions?.length ?? 0;
+    const readingCount = c?.readingPassage?.questions?.length ?? (c?.readingPassage ? 1 : 0);
+    const syntaxCount = c?.syntaxRearrange?.length ?? 0;
+    const hasWriting = Boolean(c?.writingPrompt?.prompt);
+    const difficultyLevel = c?.difficultyLevel ?? "A2-B1";
+    const targetXp = c?.targetXp ?? 50;
+    const hasVideo = Boolean(r.videoUrl || c?.videoUrl);
+
+    return {
+      id: r.id,
+      title: r.title,
+      type: r.type,
+      description: r.description,
+      lessonTitle: r.lessonTitle,
+      dueAt: r.dueAt,
+      createdAt: r.createdAt,
+      difficultyLevel,
+      targetXp,
+      vocabCount,
+      quizCount,
+      fillCount,
+      readingCount,
+      syntaxCount,
+      hasVideo,
+      hasWriting,
+    };
+  });
+}
+
 /** Xóa bài tập trên web (không cần vào SQL) */
 export async function deleteAssignment(id: string) {
   // 1. Xóa attempts của học sinh gắn với bài tập này

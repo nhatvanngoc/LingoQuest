@@ -281,6 +281,53 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
+            ) : assignments[0] ? (
+              <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm hover:shadow-lg hover:border-teal-500/30 transition-all">
+                <div className="grid md:grid-cols-[1.1fr_0.9fr]">
+                  <div className="relative h-56 md:h-auto min-h-[240px] overflow-hidden bg-gradient-to-br from-teal-900 via-slate-900 to-emerald-950 flex flex-col justify-between p-6 text-white">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-3 py-1 text-xs font-bold text-white">
+                        <Target className="h-3.5 w-3.5 text-teal-300" />
+                        Bài tập mới nhất được giao
+                      </span>
+                      <span className="rounded-full bg-emerald-500/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white">
+                        {assignments[0].difficultyLevel || "B1"}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="text-xs font-bold text-teal-300 uppercase tracking-wider">Hạn nộp</span>
+                      <p className="text-sm font-semibold text-white mt-0.5">{assignments[0].dueLabel || "Không có hạn"}</p>
+                    </div>
+                  </div>
+
+                  <div className="relative flex flex-col justify-center gap-4 p-6 bg-white">
+                    <div>
+                      <span className="text-[11px] font-bold text-teal-700 uppercase tracking-wider">Nhiệm vụ cần hoàn thành</span>
+                      <h3 className="font-heading text-xl font-bold leading-snug tracking-tight text-slate-900 mt-1">
+                        {assignments[0].title}
+                      </h3>
+                      <p className="mt-1 text-xs font-medium text-slate-500 line-clamp-2">
+                        {assignments[0].description || "Hoàn thành bài tập 5-trong-1 để tích luỹ XP và rèn luyện kỹ năng toàn diện."}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between rounded-xl bg-slate-50 p-3 text-xs font-semibold text-slate-600">
+                      <span>Phần thưởng tích luỹ:</span>
+                      <span className="font-bold text-amber-600">+{assignments[0].targetXp || 50} XP</span>
+                    </div>
+
+                    <div className="pt-1">
+                      <Link
+                        href={`/exercise/${assignments[0].id}`}
+                        className="w-full flex items-center justify-center gap-2 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 text-sm shadow-sm transition-all"
+                      >
+                        Bắt đầu làm bài ngay <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ) : (
               <div className="overflow-hidden rounded-xl border border-dashed border-gray-300 bg-white p-8 text-center shadow-sm">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-brand-50 text-brand mb-3 shadow-soft">
