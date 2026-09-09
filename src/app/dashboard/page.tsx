@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   PlayCircle,
@@ -60,9 +61,11 @@ function SectionTitle({
 }
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { xp, streak, wordsLearned, level } = useApp();
   const { user: authUser } = useRole();
   const [loading, setLoading] = useState(true);
+  const [examPinInput, setExamPinInput] = useState("");
   const [data, setData] = useState<{
     recentLesson: any;
     assignments: any[];
@@ -318,6 +321,71 @@ export default function DashboardPage() {
                     </div>
                   </div>
                 )}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ===== Đấu trường Thi đấu & Kiểm tra (Azota & Quizizz) ===== */}
+          <motion.div variants={fadeUpReal}>
+            <div className="overflow-hidden rounded-3xl border border-indigo-200/80 bg-white p-6 shadow-sm hover:shadow-md transition-all">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div>
+                  <div className="inline-flex items-center gap-2 text-xs font-bold text-indigo-700 uppercase tracking-wider mb-1.5">
+                    <Zap className="h-4 w-4 text-amber-500" />
+                    Đấu trường Thi đấu &amp; Kiểm tra Trực tuyến
+                  </div>
+                  <h3 className="font-heading text-lg font-extrabold text-slate-900">
+                    Phòng thi Azota &amp; Đấu trường Quizizz
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-500 leading-relaxed max-w-lg">
+                    Nhập mã PIN do giáo viên cung cấp để bắt đầu làm bài kiểm tra hoặc thử sức với các bài thi trắc nghiệm Lớp 11!
+                  </p>
+                </div>
+
+                {/* PIN Code Entry Form */}
+                <div className="flex flex-col sm:flex-row items-center gap-2.5">
+                  <div className="relative w-full sm:w-48">
+                    <input
+                      type="text"
+                      maxLength={6}
+                      value={examPinInput}
+                      onChange={(e) => setExamPinInput(e.target.value.trim())}
+                      placeholder="Nhập mã PIN..."
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-4 pr-3 text-sm font-mono font-bold tracking-widest text-indigo-900 placeholder:text-slate-400 placeholder:tracking-normal focus:border-indigo-500 focus:outline-none"
+                    />
+                  </div>
+                  <Button
+                    onClick={() => {
+                      if (examPinInput.length >= 4) {
+                        router.push(`/exams/${examPinInput}`);
+                      } else {
+                        alert("Vui lòng nhập mã PIN đề thi!");
+                      }
+                    }}
+                    className="w-full sm:w-auto rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-5 px-6 shadow-xs cursor-pointer"
+                  >
+                    Vào thi ngay 🚀
+                  </Button>
+                </div>
+              </div>
+
+              {/* Quick Sample Exam Pills */}
+              <div className="mt-5 pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs">
+                <span className="font-bold text-slate-400">Đề thi sẵn có:</span>
+                <Link
+                  href="/exams/exam-u1-15m"
+                  className="rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold px-3 py-1.5 border border-indigo-100/70 transition-colors flex items-center gap-1.5"
+                >
+                  <span>⚡ 15 Phút Unit 1 (A Long &amp; Healthy Life)</span>
+                  <span className="text-[10px] bg-white px-1.5 py-0.5 rounded-md font-mono text-indigo-600">PIN: 839201</span>
+                </Link>
+                <Link
+                  href="/exams/exam-u2-45m"
+                  className="rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold px-3 py-1.5 border border-purple-100/70 transition-colors flex items-center gap-1.5"
+                >
+                  <span>📝 45 Phút Unit 2 (The Generation Gap)</span>
+                  <span className="text-[10px] bg-white px-1.5 py-0.5 rounded-md font-mono text-purple-600">PIN: 492105</span>
+                </Link>
               </div>
             </div>
           </motion.div>

@@ -27,6 +27,7 @@ import {
   RefreshCw,
   Copy,
   Download,
+  Zap,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -355,6 +356,9 @@ export default function TeacherPage() {
             <p className="text-sm text-slate-500">Quản lý trực tiếp bài giảng, bài tập, chấm điểm và theo dõi tiến độ</p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <Button asChild className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold shadow-xs">
+              <Link href="/teacher/exams/new"><Zap className="h-4 w-4 text-amber-300" /> Tạo đề Azota &amp; Quizizz</Link>
+            </Button>
             <Button asChild variant="outline" className="border-emerald-500 text-emerald-700 bg-emerald-50/50 hover:bg-emerald-100">
               <Link href="/teacher/units/new"><Sparkles className="h-4 w-4 text-emerald-600" /> AI Unit Factory (30s)</Link>
             </Button>
