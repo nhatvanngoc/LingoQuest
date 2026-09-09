@@ -13,6 +13,7 @@ export interface Grade11VocabItem {
   imageUrl?: string;
   exampleEn: string;
   exampleVi: string;
+  collocations?: string[];
 }
 
 export interface Grade11Section {
