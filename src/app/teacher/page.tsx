@@ -354,7 +354,10 @@ export default function TeacherPage() {
             <h1 className="text-2xl font-extrabold text-slate-900">Bảng điều khiển Giáo viên</h1>
             <p className="text-sm text-slate-500">Quản lý trực tiếp bài giảng, bài tập, chấm điểm và theo dõi tiến độ</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <Button asChild variant="outline" className="border-emerald-500 text-emerald-700 bg-emerald-50/50 hover:bg-emerald-100">
+              <Link href="/teacher/units/new"><Sparkles className="h-4 w-4 text-emerald-600" /> AI Unit Factory (30s)</Link>
+            </Button>
             <Button asChild variant="outline">
               <Link href="/teacher/lessons/new"><Video className="h-4 w-4" /> Đăng video bài học</Link>
             </Button>

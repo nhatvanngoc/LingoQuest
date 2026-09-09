@@ -249,3 +249,147 @@ export const dailyActivity = pgTable("daily_activity", {
   minutes: integer("minutes").notNull().default(0),
   xp: integer("xp").notNull().default(0),
 });
+
+/* ============================================================
+   LingoQuest — Curriculum & AI Orchestration Pipeline Schema
+   Bao gồm: Units, GenerationJobs, UnitContents, VocabItems,
+   GrammarTargets, Topics
+   ============================================================ */
+
+export const gradeLevelEnum = pgEnum("grade_level", ["GRADE_10", "GRADE_11", "GRADE_12"]);
+export const textbookSeriesEnum = pgEnum("textbook_series", ["GLOBAL_SUCCESS", "FRIENDS_GLOBAL", "BRIGHT", "OTHER"]);
+export const cefrLevelEnum = pgEnum("cefr_level", ["A1", "A2", "B1", "B2"]);
+export const unitStatusEnum = pgEnum("unit_status", ["DRAFT", "GENERATING", "NEEDS_REVIEW", "READY", "PUBLISHED", "FAILED", "ARCHIVED"]);
+export const generationStatusEnum = pgEnum("generation_status", ["QUEUED", "RUNNING", "VALIDATING", "REPAIRING", "COMPLETED", "FAILED"]);
+export const contentTypeEnum = pgEnum("content_type", ["UNIT_PACKAGE", "READING", "READING_QUESTIONS", "SYNTAX", "CLOZE", "WRITING", "DIAGNOSTIC"]);
+
+/** Chủ đề / Topic Ontology */
+export const topics = pgTable("topics", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  slug: varchar("slug", { length: 160 }).notNull().unique(),
+  nameEn: varchar("name_en", { length: 200 }).notNull(),
+  nameVi: varchar("name_vi", { length: 200 }).notNull(),
+  description: text("description"),
+  parentId: uuid("parent_id"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Đơn vị bài học chuẩn chuyên đề (Unit) */
+export const units = pgTable("units", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  grade: gradeLevelEnum("grade").notNull(),
+  textbookSeries: textbookSeriesEnum("textbook_series").notNull().default("GLOBAL_SUCCESS"),
+  unitNumber: integer("unit_number").notNull(),
+  title: varchar("title", { length: 240 }).notNull(),
+  slug: varchar("slug", { length: 260 }).notNull().unique(),
+  status: unitStatusEnum("status").notNull().default("DRAFT"),
+  rawVocabulary: text("raw_vocabulary").notNull(),
+  rawGrammar: text("raw_grammar").notNull(),
+  teacherNotes: text("teacher_notes"),
+  videoUrls: jsonb("video_urls").default([]),
+  schemaVersion: varchar("schema_version", { length: 20 }).notNull().default("1.0"),
+  publishedVersion: integer("published_version"),
+  publishedAt: timestamp("published_at", { withTimezone: true }),
+  createdById: uuid("created_by_id").references(() => users.id, { onDelete: "set null" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Liên kết Unit - Topic */
+export const unitTopics = pgTable(
+  "unit_topics",
+  {
+    unitId: uuid("unit_id").notNull().references(() => units.id, { onDelete: "cascade" }),
+    topicId: uuid("topic_id").notNull().references(() => topics.id, { onDelete: "cascade" }),
+    relevance: real("relevance").notNull().default(1.0),
+  },
+  (t) => [primaryKey({ columns: [t.unitId, t.topicId] })],
+);
+
+/** Job state machine cho tiến trình AI sinh bài */
+export const generationJobs = pgTable("generation_jobs", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  unitId: uuid("unit_id").notNull().references(() => units.id, { onDelete: "cascade" }),
+  status: generationStatusEnum("status").notNull().default("QUEUED"),
+  currentStage: varchar("current_stage", { length: 60 }).notNull().default("NORMALIZE"),
+  progress: integer("progress").notNull().default(0), // 0 to 100
+  provider: varchar("provider", { length: 60 }),
+  model: varchar("model", { length: 120 }),
+  promptVersion: varchar("prompt_version", { length: 40 }).notNull().default("unit-generator-1.0"),
+  inputHash: varchar("input_hash", { length: 128 }).notNull(),
+  retryCount: integer("retry_count").notNull().default(0),
+  errorCode: varchar("error_code", { length: 80 }),
+  errorMessage: text("error_message"),
+  trace: jsonb("trace").default({}),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  startedAt: timestamp("started_at", { withTimezone: true }),
+  completedAt: timestamp("completed_at", { withTimezone: true }),
+});
+
+/** Gói nội dung Unit bất biến, có versioning */
+export const unitContents = pgTable("unit_contents", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  unitId: uuid("unit_id").notNull().references(() => units.id, { onDelete: "cascade" }),
+  type: contentTypeEnum("type").notNull().default("UNIT_PACKAGE"),
+  version: integer("version").notNull().default(1),
+  status: generationStatusEnum("status").notNull().default("COMPLETED"),
+  payload: jsonb("payload").notNull(), // Chứa toàn bộ LingoQuestUnitPackage
+  generatorModel: varchar("generator_model", { length: 120 }),
+  promptVersion: varchar("prompt_version", { length: 40 }).notNull().default("1.0"),
+  schemaVersion: varchar("schema_version", { length: 20 }).notNull().default("1.0"),
+  inputHash: varchar("input_hash", { length: 128 }).notNull(),
+  actualWordCount: integer("actual_word_count"),
+  vocabularyCoverage: real("vocabulary_coverage"),
+  grammarCoverage: real("grammar_coverage"),
+  naturalnessScore: real("naturalness_score"),
+  examAlignmentScore: real("exam_alignment_score"),
+  qualityReport: jsonb("quality_report").default({}),
+  isPublished: boolean("is_published").notNull().default(false),
+  generatedAt: timestamp("generated_at", { withTimezone: true }).notNull().defaultNow(),
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+  reviewedById: uuid("reviewed_by_id").references(() => users.id, { onDelete: "set null" }),
+});
+
+/** Từ vựng chi tiết được chuẩn hóa (VocabItem) */
+export const vocabItems = pgTable("vocab_items", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  unitId: uuid("unit_id").notNull().references(() => units.id, { onDelete: "cascade" }),
+  sourceIndex: integer("source_index").notNull().default(0),
+  term: varchar("term", { length: 200 }).notNull(),
+  normalizedTerm: varchar("normalized_term", { length: 200 }).notNull(),
+  lemma: varchar("lemma", { length: 160 }).notNull(),
+  partOfSpeech: varchar("part_of_speech", { length: 40 }).notNull(),
+  intendedSenseEn: text("intended_sense_en").notNull(),
+  meaningEn: text("meaning_en").notNull(),
+  meaningVi: text("meaning_vi").notNull(),
+  cefrLevel: cefrLevelEnum("cefr_level").notNull().default("A2"),
+  cefrConfidence: real("cefr_confidence").notNull().default(0.85),
+  cefrReason: text("cefr_reason"),
+  needsReview: boolean("needs_review").notNull().default(false),
+  ipaUS: varchar("ipa_us", { length: 120 }),
+  ipaUK: varchar("ipa_uk", { length: 120 }),
+  audioConfig: jsonb("audio_config"),
+  collocations: jsonb("collocations").default([]),
+  examples: jsonb("examples").default({}),
+  curriculumFit: real("curriculum_fit").notNull().default(1.0),
+  examUtility: real("exam_utility").notNull().default(1.0),
+  active: boolean("active").notNull().default(true),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Mục tiêu ngữ pháp của Unit (GrammarTarget) */
+export const grammarTargets = pgTable("grammar_targets", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  unitId: uuid("unit_id").notNull().references(() => units.id, { onDelete: "cascade" }),
+  label: varchar("label", { length: 200 }).notNull(),
+  canonicalForm: varchar("canonical_form", { length: 240 }).notNull(),
+  cefrLevel: cefrLevelEnum("cefr_level").notNull().default("B1"),
+  prerequisites: jsonb("prerequisites").default([]),
+  learnerErrorsVi: jsonb("learner_errors_vi").default([]),
+  positiveExamples: jsonb("positive_examples").default([]),
+  contrastWith: text("contrast_with"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
