@@ -19,6 +19,8 @@ import {
   PenTool,
   Puzzle,
   Calendar,
+  GraduationCap,
+  ChevronRight,
 } from "lucide-react";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Button } from "@/components/ui/button";
@@ -109,6 +111,39 @@ export function LessonLibrary({
             <Database className="h-3.5 w-3.5" /> CSDL: {overview.assignments ?? assignments.length} bài tập · {overview.lessons} bài giảng · {overview.vocab} từ
           </motion.span>
         )}
+      </motion.div>
+
+      {/* Grade 11 Global Success Feature Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-teal-200/80 bg-gradient-to-r from-teal-50 via-emerald-50 to-white p-4 shadow-xs"
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white shadow-xs">
+            <GraduationCap className="h-5 w-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-heading text-sm font-bold text-slate-900">
+                Chương trình Tiếng Anh 11 — Global Success (SGK 2018)
+              </span>
+              <span className="rounded-full bg-teal-100 px-2 py-0.5 text-[10px] font-extrabold text-teal-800 uppercase">
+                10 Units + 4 Reviews
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 mt-0.5">
+              Từ vựng Audio chuẩn, Deep Imprint Flashcards, lý thuyết ngữ pháp &amp; hướng dẫn 8 phân mục bài học.
+            </p>
+          </div>
+        </div>
+        <Button asChild size="sm" className="rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shrink-0 shadow-xs">
+          <Link href="/curriculum/grade-11" className="flex items-center gap-1">
+            <span>Học Lớp 11</span>
+            <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
+        </Button>
       </motion.div>
 
       {/* Tabs */}

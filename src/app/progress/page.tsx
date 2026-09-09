@@ -22,6 +22,8 @@ import {
   MessageSquareQuote,
   PenTool,
   ArrowRight,
+  Settings,
+  User,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { ProgressBar, CircularProgress } from "@/components/ProgressBar";
@@ -32,6 +34,8 @@ import { useRole } from "@/lib/auth/role-context";
 import { cn } from "@/lib/utils";
 import { fadeUpReal, staggerContainer, viewportOnce } from "@/lib/motion";
 import type { LeaderRow } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { ProfileEditModal } from "@/components/ProfileEditModal";
 
 interface StudentSubmission {
   id: string;
@@ -47,7 +51,8 @@ interface StudentSubmission {
 
 export default function ProgressPage() {
   const router = useRouter();
-  const { role } = useRole();
+  const { role, user } = useRole();
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
   const { xp, level, streak, wordsLearned, xpIntoLevel, xpForNext, levelPct } = useApp();
   const [leaderboard, setLeaderboard] = useState<LeaderRow[]>([]);
   const [submissions, setSubmissions] = useState<StudentSubmission[]>([]);
@@ -123,8 +128,43 @@ export default function ProgressPage() {
           className="text-3xl font-bold tracking-tight text-slate-900 flex items-center gap-3"
         >
           <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-brand-700 text-white shadow-md"><Target className="h-5 w-5" /></span>
-          Tiến độ học tập
+          Tiến độ học tập & Hồ sơ
         </motion.h1>
+
+        {/* Profile Card with Grade Selector */}
+        <div className="mt-4 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div
+              className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-extrabold text-lg shadow-sm"
+              style={{ backgroundColor: user.avatarColor || "#2563EB" }}
+            >
+              {user.name?.slice(0, 1).toUpperCase()}
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-bold text-slate-900">{user.name}</h2>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-50 text-teal-700 border border-teal-200">
+                  Lớp {user.grade || "11"}
+                </span>
+              </div>
+              <p className="text-xs text-slate-500">{user.email}</p>
+            </div>
+          </div>
+
+          <Button
+            onClick={() => setProfileModalOpen(true)}
+            variant="outline"
+            className="flex items-center gap-2 border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold"
+          >
+            <Settings className="w-3.5 h-3.5 text-teal-600" /> Chỉnh sửa thông tin & chọn lớp
+          </Button>
+        </div>
+
+        <ProfileEditModal
+          isOpen={profileModalOpen}
+          onClose={() => setProfileModalOpen(false)}
+          currentUser={user}
+        />
 
         {/* Tổng quan 4 chỉ số */}
         <motion.div variants={staggerContainer} initial="hidden" animate="show" className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">

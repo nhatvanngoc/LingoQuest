@@ -21,6 +21,8 @@ import {
   Volume2,
   VolumeX,
   Users,
+  User,
+  BookOpen,
 } from "lucide-react";
 import { useRole } from "@/lib/auth/role-context";
 import { useApp } from "@/lib/state/app-context";
@@ -30,6 +32,7 @@ import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 import type { Role } from "@/lib/types";
 import { SPRING_SNAPPY } from "@/lib/motion";
+import { ProfileEditModal } from "@/components/ProfileEditModal";
 
 interface NavItem {
   href: string;
@@ -41,6 +44,7 @@ interface NavItem {
 const NAV: Record<Role, NavItem[]> = {
   student: [
     { href: "/dashboard", label: "Trang chủ", icon: Home },
+    { href: "/curriculum/grade-11", label: "Lớp 11", icon: BookOpen, badge: "GS" },
     { href: "/learn", label: "Học", icon: PlayCircle, badge: "NEW" },
     { href: "/flashcards/deck-1", label: "Flashcard", icon: Layers },
     { href: "/game", label: "Game", icon: Gamepad2, badge: "HOT" },
@@ -104,6 +108,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const items = NAV[role];
   const { xp, streak, level } = useApp();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [muted, setMuted] = useState(false);
 
   useEffect(() => {
@@ -214,10 +219,25 @@ export function AppShell({ children }: { children: ReactNode }) {
                       <div className="border-b border-slate-100 px-3 py-2">
                         <p className="truncate text-sm font-bold text-slate-900">{user.name}</p>
                         <p className="truncate text-[11px] text-slate-400">{user.email}</p>
+                        {user.grade && (
+                          <span className="inline-block mt-1 px-2 py-0.5 rounded text-3xs font-bold bg-teal-50 text-teal-700 border border-teal-200">
+                            Học sinh Lớp {user.grade}
+                          </span>
+                        )}
                       </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setUserMenuOpen(false);
+                          setProfileModalOpen(true);
+                        }}
+                        className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100 text-left"
+                      >
+                        <User className="h-4 w-4 text-teal-600" /> Chỉnh sửa hồ sơ & lớp
+                      </button>
                       <a
                         href="/api/auth/logout"
-                        className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-bold text-rose-600 transition-colors hover:bg-rose-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 focus-visible:ring-offset-2 active:bg-rose-100 active:scale-[0.98]"
+                        className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold text-rose-600 transition-colors hover:bg-rose-50"
                       >
                         <LogOut className="h-4 w-4" /> Đăng xuất
                       </a>
@@ -229,6 +249,13 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </div>
       </motion.header>
+
+      {/* Modal Chỉnh Sửa Thông Tin Hồ Sơ & Chọn Lớp */}
+      <ProfileEditModal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+        currentUser={user}
+      />
 
       <div className="mx-auto flex max-w-7xl gap-6 px-4 pb-28 sm:px-6 lg:px-8 lg:pb-10 relative z-10">
         {/* Sidebar desktop */}

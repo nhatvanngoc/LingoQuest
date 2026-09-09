@@ -33,6 +33,8 @@ export const users = pgTable("users", {
   password: varchar("password", { length: 200 }),
   // Identity Google (OAuth). Null = chưa liên kết. Dùng để login bằng Google.
   googleId: varchar("google_id", { length: 200 }),
+  // Khối lớp của học sinh (10, 11, 12). Mặc định là 11.
+  grade: varchar("grade", { length: 20 }).default("11"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

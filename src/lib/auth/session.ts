@@ -24,6 +24,7 @@ export interface SessionUser {
   avatarColor: string;
   role: Role;
   className?: string;
+  grade?: string;
 }
 
 /** Tạo phiên: ghi cookie httpOnly (gọi trong Route Handler / Server Action). */
@@ -72,6 +73,7 @@ export async function getCurrentUser(): Promise<SessionUser | null> {
       email: rest.email,
       avatarColor: rest.avatarColor,
       role: rest.role as Role,
+      grade: rest.grade || "11",
     };
   } catch {
     // Mock mode - không có DB, trả null để dùng GUEST_USER

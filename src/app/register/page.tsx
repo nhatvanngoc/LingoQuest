@@ -8,6 +8,7 @@ import { GraduationCap, Mail, Lock, Loader2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { staggerContainer, fadeUp } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 
 /* ============================================================
    Trang đăng ký — tạo tài khoản mới qua POST /api/auth/register.
@@ -20,6 +21,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [grade, setGrade] = useState<"10" | "11" | "12">("11");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -55,7 +57,7 @@ export default function RegisterPage() {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), password }),
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), password, grade }),
       });
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
@@ -120,6 +122,27 @@ export default function RegisterPage() {
                 aria-invalid={error ? true : undefined}
                 disabled={busy}
               />
+            </div>
+          </div>
+
+          <div>
+            <Label>Khối lớp đang học<span className="text-danger ml-1" aria-hidden="true">*</span></Label>
+            <div className="grid grid-cols-3 gap-2 mt-1.5">
+              {(["10", "11", "12"] as const).map((g) => (
+                <button
+                  key={g}
+                  type="button"
+                  onClick={() => setGrade(g)}
+                  className={cn(
+                    "py-2 text-xs font-bold rounded-xl border transition-all",
+                    grade === g
+                      ? "bg-brand text-white border-brand shadow-sm"
+                      : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                  )}
+                >
+                  Lớp {g}
+                </button>
+              ))}
             </div>
           </div>
 

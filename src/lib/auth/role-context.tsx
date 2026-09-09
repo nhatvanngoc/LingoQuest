@@ -17,6 +17,7 @@ export interface SessionUser {
   role: Role;
   avatarColor: string;
   className?: string;
+  grade?: string;
 }
 
 interface RoleContextValue {

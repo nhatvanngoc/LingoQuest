@@ -29,12 +29,15 @@ const AVATAR_COLORS = [
 export async function POST(req: Request) {
   try {
     const body = (await req.json().catch(() => null)) as
-      | { name?: unknown; email?: unknown; password?: unknown }
+      | { name?: unknown; email?: unknown; password?: unknown; grade?: unknown }
       | null;
 
     const name = typeof body?.name === "string" ? body.name.trim() : "";
     const emailRaw = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
     const password = typeof body?.password === "string" ? body.password : "";
+    const grade = typeof body?.grade === "string" && ["10", "11", "12"].includes(body.grade)
+      ? body.grade
+      : "11";
 
     // 1. Validate Họ tên: từ 2 đến 120 ký tự
     if (!name || name.length < 2) {
@@ -75,6 +78,7 @@ export async function POST(req: Request) {
         role: "student",
         password: hashed,
         avatarColor,
+        grade,
       })
       .returning();
 
