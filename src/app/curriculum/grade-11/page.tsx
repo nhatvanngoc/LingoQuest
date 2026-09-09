@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   BookOpen,
   Sparkles,
@@ -10,21 +10,23 @@ import {
   GraduationCap,
   ChevronRight,
   Search,
-  Filter,
   CheckCircle2,
-  Volume2,
   Bookmark,
-  Calendar,
-  Award,
   Zap,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { GRADE_11_CURRICULUM, type Grade11Unit } from "@/lib/curriculum/grade11-data";
+import { GRADE_11_CURRICULUM } from "@/lib/curriculum/grade11-data";
 import { Button } from "@/components/ui/button";
+import { useRole } from "@/lib/auth/role-context";
+import { getUnitVocabStats, useVocabProgress } from "@/lib/curriculum/vocab-progress";
 
 export default function Grade11CurriculumPage() {
+  const { user } = useRole();
   const [selectedTerm, setSelectedTerm] = useState<"all" | 1 | 2>("all");
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Hook to keep stats reactive
+  const { records } = useVocabProgress([], user?.id);
 
   const filteredUnits = useMemo(() => {
     return GRADE_11_CURRICULUM.filter((u) => {
@@ -69,7 +71,7 @@ export default function Grade11CurriculumPage() {
             </h1>
             <p className="mt-3 text-base text-teal-100/90 leading-relaxed sm:text-lg">
               Đầy đủ 10 Units chuyên sâu và 4 bài Review ôn tập. Tích hợp từ vựng có phiên âm & phát âm audio,
-              phương pháp phản xạ âm thanh Deep Imprint Flashcard, lý thuyết ngữ pháp chuẩn mực và 8 phân mục bài học SGK.
+              phương pháp phản xạ âm thanh Deep Imprint Flashcard, luyện nói AI Speech Checker, lý thuyết ngữ pháp chuẩn mực và 8 phân mục bài học SGK.
             </p>
 
             {/* Quick Metrics */}
@@ -147,6 +149,9 @@ export default function Grade11CurriculumPage() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredUnits.map((unit, index) => {
             const isReview = unit.isReview;
+            const unitWordIds = unit.vocabulary.map((v) => v.id);
+            const stats = getUnitVocabStats(unitWordIds, user?.id);
+
             return (
               <motion.div
                 key={unit.id}
@@ -218,6 +223,24 @@ export default function Grade11CurriculumPage() {
                       <span className="font-bold text-slate-900">{unit.sections.length}</span> bài học
                     </div>
                   </div>
+
+                  {/* Real SRS Vocabulary Progress Bar */}
+                  {unit.vocabulary.length > 0 && (
+                    <div className="mt-4 rounded-xl bg-slate-50/80 p-2.5 border border-slate-100">
+                      <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600 mb-1">
+                        <span>Tiến độ ghi nhớ:</span>
+                        <span className={stats.percent > 0 ? "text-emerald-700 font-bold" : "text-slate-500"}>
+                          {stats.mastered}/{stats.total} từ ({stats.percent}%)
+                        </span>
+                      </div>
+                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+                        <div
+                          className="h-full rounded-full bg-emerald-500 transition-all duration-300"
+                          style={{ width: `${stats.percent}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Bottom Actions */}

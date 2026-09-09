@@ -22,6 +22,7 @@ import {
   FileQuestion,
   Wand2,
   ExternalLink,
+  GraduationCap,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ import { Label, Input } from "@/components/ui/input";
 import { CLASS_OPTIONS } from "@/lib/mock/data";
 import { cn } from "@/lib/utils";
 import { normalizeVideoUrl, resolveVideoEmbed } from "@/lib/video";
+import { GRADE_11_CURRICULUM } from "@/lib/curriculum/grade11-data";
 
 /* ============================================================
    Unified Co-Pilot Studio (5 trong 1)
@@ -330,6 +332,66 @@ export default function UnifiedNewAssignmentPage() {
       }
     }
   }, []);
+
+  // ===== Giao bài nhanh từ SGK Tiếng Anh 11 Global Success =====
+  const [selectedSgkUnit, setSelectedSgkUnit] = useState<string>("");
+  const [sgkSuccessMsg, setSgkSuccessMsg] = useState<string | null>(null);
+
+  const handleApplySgkUnit = (unitSlug: string) => {
+    const unit = GRADE_11_CURRICULUM.find((u) => u.slug === unitSlug);
+    if (!unit) return;
+
+    setSelectedSgkUnit(unitSlug);
+    setTitle(`Bài tập Unit ${unit.unitNumber}: ${unit.titleEn} (${unit.titleVi})`);
+    setDescription(
+      `Bài tập củng cố từ vựng chủ đề "${unit.topic}" và chuyên đề ngữ pháp "${unit.grammarTitle}" (SGK Tiếng Anh 11 Global Success).`
+    );
+    setAiLevel(unit.cefrLevel || "B1");
+    setAiTopic(`${unit.titleEn} - ${unit.topic}`);
+
+    const in7Days = new Date();
+    in7Days.setDate(in7Days.getDate() + 7);
+    setDueAt(in7Days.toISOString().slice(0, 16));
+
+    if (unit.vocabulary && unit.vocabulary.length > 0) {
+      const topWords = unit.vocabulary.slice(0, 8).map((v, idx) => ({
+        id: `v-sgk-${idx + 1}-${Date.now()}`,
+        word: v.word,
+        phonetic: v.ipa || "",
+        meaning: v.meaningVi || "",
+        example: v.exampleEn || "",
+        exampleVi: v.exampleVi || "",
+      }));
+      setVocabList(topWords);
+
+      if (unit.vocabulary.length >= 4) {
+        const sampleVocab = unit.vocabulary.slice(0, 4);
+        const newQuizzes = sampleVocab.map((v, idx) => {
+          const distractors = unit.vocabulary
+            .filter((x) => x.word !== v.word)
+            .slice(0, 3)
+            .map((x) => x.meaningVi);
+
+          const options = [v.meaningVi, ...distractors].sort(() => 0.5 - Math.random());
+          const correctLetter = ["A", "B", "C", "D"][options.indexOf(v.meaningVi)] || "A";
+
+          return {
+            id: `q-sgk-${idx + 1}-${Date.now()}`,
+            question: `Từ "${v.word}" (${v.partOfSpeech}) trong bài "${unit.titleEn}" có nghĩa là gì?`,
+            options: options.map((opt, i) => `${["A", "B", "C", "D"][i]}. ${opt}`),
+            answer: correctLetter,
+            explanation: `"${v.word}" (${v.ipa}) mang nghĩa: ${v.meaningVi}.`,
+          };
+        });
+        setQuizList(newQuizzes);
+      }
+    }
+
+    setSgkSuccessMsg(
+      `Đã nạp toàn bộ dữ liệu Unit ${unit.unitNumber}: ${unit.titleEn} từ SGK Global Success 11!`
+    );
+    setTimeout(() => setSgkSuccessMsg(null), 6000);
+  };
 
   // ===== AI Co-Pilot: Generate ALL 5-in-1 =====
   const handleGenerateAll = async () => {
@@ -877,6 +939,63 @@ export default function UnifiedNewAssignmentPage() {
             <button onClick={() => setError(null)} className="text-red-500 hover:text-red-800">×</button>
           </div>
         )}
+
+        {/* ===== Quick Assign from Grade 11 Global Success ===== */}
+        <div className="mb-6 rounded-2xl border border-teal-200 bg-gradient-to-br from-teal-50/90 via-emerald-50/40 to-white p-5 shadow-xs">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-600 text-white shadow-xs">
+                <GraduationCap className="h-4 w-4" />
+              </span>
+              <div>
+                <h2 className="font-extrabold text-slate-900 text-sm sm:text-base">
+                  Giao bài nhanh từ SGK Tiếng Anh 11 Global Success (1-Click Template)
+                </h2>
+                <span className="text-[11px] text-teal-800 font-medium">
+                  Chuẩn GDPT 2018 • Tự động điền tiêu đề, từ vựng chuẩn, câu hỏi trắc nghiệm & ngữ pháp
+                </span>
+              </div>
+            </div>
+            <span className="rounded-full bg-teal-100 px-3 py-1 text-[11px] font-extrabold text-teal-800">
+              10 Units SGK
+            </span>
+          </div>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            {GRADE_11_CURRICULUM.filter((u) => !u.isReview).map((u) => {
+              const isSelected = selectedSgkUnit === u.slug;
+              return (
+                <button
+                  key={u.id}
+                  type="button"
+                  onClick={() => handleApplySgkUnit(u.slug)}
+                  className={`rounded-xl px-3 py-1.5 text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    isSelected
+                      ? "bg-teal-700 text-white shadow-xs scale-[1.02]"
+                      : "bg-white border border-teal-200 text-slate-700 hover:border-teal-400 hover:bg-teal-50"
+                  }`}
+                  title={`${u.titleVi} • Ngữ pháp: ${u.grammarTitle}`}
+                >
+                  <span className="text-[10px] font-black uppercase tracking-wider text-teal-500">
+                    U{u.unitNumber < 10 ? `0${u.unitNumber}` : u.unitNumber}
+                  </span>
+                  <span>{u.titleEn}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {sgkSuccessMsg && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-3 rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 py-2 text-xs font-bold text-emerald-800 flex items-center gap-2"
+            >
+              <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+              <span>{sgkSuccessMsg}</span>
+            </motion.div>
+          )}
+        </div>
 
         {/* ===== AI Co-Pilot Master Bar ===== */}
         <div className="mb-8 rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50/80 via-white to-teal-50/60 p-5 shadow-soft">

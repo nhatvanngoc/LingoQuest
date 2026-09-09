@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import { useParams, notFound } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { useParams } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
@@ -13,7 +13,6 @@ import {
   Volume2,
   CheckCircle2,
   ExternalLink,
-  GraduationCap,
   Bookmark,
   Zap,
   HelpCircle,
@@ -21,23 +20,29 @@ import {
   Search,
   Check,
   X,
-  VolumeX,
   Flame,
+  Printer,
   Award,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
+import { useRole } from "@/lib/auth/role-context";
 import {
   getGrade11UnitBySlug,
-  GRADE_11_CURRICULUM,
   type Grade11Unit,
   type Grade11VocabItem,
 } from "@/lib/curriculum/grade11-data";
+import { useVocabProgress } from "@/lib/curriculum/vocab-progress";
+import { SpeechPronunciationChecker } from "@/components/SpeechPronunciationChecker";
 
 export default function Grade11UnitDetailPage() {
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
   const unit = useMemo(() => (slug ? getGrade11UnitBySlug(slug) : undefined), [slug]);
+  const { user } = useRole();
+
+  const vocabIds = useMemo(() => unit?.vocabulary.map((v) => v.id) || [], [unit]);
+  const { records, stats, updateWord } = useVocabProgress(vocabIds, user?.id);
 
   const [activeTab, setActiveTab] = useState<"vocab" | "grammar" | "sections" | "quiz">("vocab");
   const [vocabSearch, setVocabSearch] = useState("");
@@ -88,10 +93,13 @@ export default function Grade11UnitDetailPage() {
     setIsPlayingAudio(true);
     setAudioListenCount((prev) => Math.min(prev + 1, 5));
 
+    if (currentFlashcard) {
+      updateWord(currentFlashcard.id, "learning", { incrementListen: true });
+    }
+
     if (audioUrl) {
       const audio = new Audio(audioUrl);
       audio.play().catch(() => {
-        // Fallback to speech synthesis
         fallbackSpeak(word);
       });
       audio.onended = () => setIsPlayingAudio(false);
@@ -153,7 +161,6 @@ export default function Grade11UnitDetailPage() {
 
     const sample = unit.vocabulary.slice(0, 4);
     return sample.map((v) => {
-      // Pick 3 distractors
       const otherMeanings = unit.vocabulary
         .filter((x) => x.word !== v.word)
         .slice(0, 3)
@@ -179,14 +186,21 @@ export default function Grade11UnitDetailPage() {
     }, 0);
   }, [userAnswers, quizQuestions]);
 
+  const handlePrintWorksheet = () => {
+    if (typeof window !== "undefined") {
+      window.print();
+    }
+  };
+
   return (
     <AppShell>
-      <div className="mx-auto max-w-6xl pb-16">
-        {/* Navigation Breadcrumb */}
+      {/* SCREEN VIEW (HIDDEN WHEN PRINTING) */}
+      <div className="mx-auto max-w-6xl pb-16 print:hidden">
+        {/* Navigation Breadcrumb & Quick Actions */}
         <motion.div
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
-          className="mb-4 flex items-center justify-between"
+          className="mb-4 flex flex-wrap items-center justify-between gap-3"
         >
           <Link
             href="/curriculum/grade-11"
@@ -194,7 +208,20 @@ export default function Grade11UnitDetailPage() {
           >
             <ChevronLeft className="h-4 w-4" /> Tất cả bài học Lớp 11
           </Link>
+
           <div className="flex items-center gap-2">
+            {/* Print Worksheet Button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handlePrintWorksheet}
+              className="rounded-xl border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 hover:text-teal-700 shadow-xs"
+              title="Xuất phiếu học tập và bài tập A4 để in ấn"
+            >
+              <Printer className="mr-1.5 h-3.5 w-3.5 text-teal-600" />
+              In phiếu học tập A4
+            </Button>
+
             <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700 border border-teal-100">
               {unit.isReview ? "Review Bài học" : `Unit ${unit.unitNumber}`} • Học kỳ {unit.term}
             </span>
@@ -226,6 +253,24 @@ export default function Grade11UnitDetailPage() {
                 <BookOpen className="h-3.5 w-3.5 text-emerald-300" /> {unit.sections.length} Phân mục SGK
               </span>
             </div>
+
+            {/* SRS Progress Bar */}
+            {unit.vocabulary.length > 0 && (
+              <div className="mt-5 max-w-md rounded-2xl bg-white/10 p-3 backdrop-blur-md border border-white/10">
+                <div className="flex items-center justify-between text-xs font-bold text-teal-100 mb-1.5">
+                  <span>Tiến độ ghi nhớ từ vựng</span>
+                  <span>
+                    {stats.mastered}/{stats.total} từ ({stats.percent}%)
+                  </span>
+                </div>
+                <div className="h-2 w-full overflow-hidden rounded-full bg-white/20">
+                  <div
+                    className="h-full rounded-full bg-emerald-400 transition-all duration-500"
+                    style={{ width: `${stats.percent}%` }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -240,7 +285,7 @@ export default function Grade11UnitDetailPage() {
             }`}
           >
             <Layers className="h-4 w-4" />
-            <span>Từ vựng & Flashcards ({unit.vocabulary.length})</span>
+            <span>Từ vựng &amp; Flashcards ({unit.vocabulary.length})</span>
           </button>
           <button
             onClick={() => setActiveTab("grammar")}
@@ -302,7 +347,7 @@ export default function Grade11UnitDetailPage() {
                   }`}
                 >
                   <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-                  Flashcard Siêu Trí Nhớ
+                  Flashcard Siêu Trí Nhớ (Deep Imprint)
                 </button>
               </div>
 
@@ -327,10 +372,17 @@ export default function Grade11UnitDetailPage() {
                   <span>
                     Thẻ từ {currentCardIndex + 1} / {unit.vocabulary.length}
                   </span>
-                  <span className="flex items-center gap-1 text-teal-700 bg-teal-50 px-2.5 py-1 rounded-full">
-                    <Volume2 className="h-3.5 w-3.5" />
-                    Thấm âm: {audioListenCount}/5 lần
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {records[currentFlashcard.id]?.status === "mastered" && (
+                      <span className="flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full font-bold">
+                        <Check className="h-3 w-3" /> Đã thuộc
+                      </span>
+                    )}
+                    <span className="flex items-center gap-1 text-teal-700 bg-teal-50 px-2.5 py-1 rounded-full">
+                      <Volume2 className="h-3.5 w-3.5" />
+                      Thấm âm: {audioListenCount}/5 lần
+                    </span>
+                  </div>
                 </div>
 
                 <div className="relative rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-md">
@@ -376,7 +428,10 @@ export default function Grade11UnitDetailPage() {
                   <div className="mt-6">
                     {!guessRevealed ? (
                       <Button
-                        onClick={() => setGuessRevealed(true)}
+                        onClick={() => {
+                          setGuessRevealed(true);
+                          updateWord(currentFlashcard.id, "learning");
+                        }}
                         variant="outline"
                         className="w-full rounded-2xl border-dashed border-teal-300 bg-teal-50/50 py-6 text-sm font-bold text-teal-800 hover:bg-teal-50"
                       >
@@ -402,13 +457,35 @@ export default function Grade11UnitDetailPage() {
                     )}
                   </div>
 
-                  {/* Teacher's Methodology Tip */}
-                  <div className="mt-6 flex items-center gap-2 rounded-xl bg-amber-50 p-3 text-xs text-amber-900 border border-amber-200/60">
-                    <Flame className="h-4 w-4 text-amber-600 shrink-0" />
-                    <span>
-                      <strong>Mẹo học thầy cô khuyên dùng:</strong> Bấm loa nghe đi nghe lại 5 lần cho thấm âm
-                      trước khi tự phát âm nhé!
-                    </span>
+                  {/* Speech AI Pronunciation Practice Checker */}
+                  <div className="mt-6">
+                    <SpeechPronunciationChecker
+                      targetWord={currentFlashcard.word}
+                      minListenCountNeeded={3}
+                      currentListenCount={audioListenCount}
+                      onSuccess={(score) => {
+                        updateWord(currentFlashcard.id, "mastered", { speechScore: score });
+                      }}
+                    />
+                  </div>
+
+                  {/* Spaced Repetition Actions */}
+                  <div className="mt-6 flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => updateWord(currentFlashcard.id, "learning")}
+                      className="flex-1 rounded-xl text-xs font-bold border-amber-300 text-amber-800 hover:bg-amber-50"
+                    >
+                      Cần ôn lại thêm
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => updateWord(currentFlashcard.id, "mastered")}
+                      className="flex-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs"
+                    >
+                      <Check className="mr-1 h-3.5 w-3.5" /> Đã thuộc từ này
+                    </Button>
                   </div>
 
                   {/* Flashcard Navigation */}
@@ -451,43 +528,88 @@ export default function Grade11UnitDetailPage() {
             {/* VOCABULARY LIST MODE */}
             {!flashcardMode && (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredVocab.map((v) => (
-                  <div
-                    key={v.id}
-                    className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-xs hover:border-teal-300 transition-all"
-                  >
-                    <div>
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h3 className="font-heading text-base font-bold text-slate-900">{v.word}</h3>
-                            <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-600">
-                              {v.partOfSpeech}
-                            </span>
+                {filteredVocab.map((v) => {
+                  const record = records[v.id];
+                  const isMastered = record?.status === "mastered";
+                  const isLearning = record?.status === "learning";
+
+                  return (
+                    <div
+                      key={v.id}
+                      className={`flex flex-col justify-between rounded-2xl border p-4 shadow-xs transition-all ${
+                        isMastered
+                          ? "border-emerald-200 bg-emerald-50/30"
+                          : "border-slate-200 bg-white hover:border-teal-300"
+                      }`}
+                    >
+                      <div>
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="font-heading text-base font-bold text-slate-900">{v.word}</h3>
+                              <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-600">
+                                {v.partOfSpeech}
+                              </span>
+                            </div>
+                            <span className="text-xs font-mono text-teal-700 font-semibold">{v.ipa}</span>
                           </div>
-                          <span className="text-xs font-mono text-teal-700 font-semibold">{v.ipa}</span>
+
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              onClick={() => playWordAudio(v.word, v.audioUrl)}
+                              className="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors"
+                              title="Phát âm"
+                            >
+                              <Volume2 className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() =>
+                                updateWord(v.id, isMastered ? "learning" : "mastered")
+                              }
+                              className={`flex h-8 w-8 items-center justify-center rounded-xl transition-colors ${
+                                isMastered
+                                  ? "bg-emerald-600 text-white"
+                                  : "bg-slate-100 text-slate-400 hover:text-slate-600"
+                              }`}
+                              title={isMastered ? "Đã thuộc (Bấm để đổi)" : "Đánh dấu đã thuộc"}
+                            >
+                              <Check className="h-4 w-4" />
+                            </button>
+                          </div>
                         </div>
 
-                        <button
-                          onClick={() => playWordAudio(v.word, v.audioUrl)}
-                          className="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors"
-                          title="Phát âm"
-                        >
-                          <Volume2 className="h-4 w-4" />
-                        </button>
+                        <p className="mt-2 text-sm font-semibold text-slate-800">{v.meaningVi}</p>
+
+                        {v.exampleEn && (
+                          <div className="mt-3 rounded-xl bg-slate-50 p-2.5 border border-slate-100 text-xs">
+                            <p className="text-slate-700 italic">&quot;{v.exampleEn}&quot;</p>
+                            {v.exampleVi && <p className="mt-1 text-slate-500">{v.exampleVi}</p>}
+                          </div>
+                        )}
                       </div>
 
-                      <p className="mt-2 text-sm font-semibold text-slate-800">{v.meaningVi}</p>
-
-                      {v.exampleEn && (
-                        <div className="mt-3 rounded-xl bg-slate-50 p-2.5 border border-slate-100 text-xs">
-                          <p className="text-slate-700 italic">&quot;{v.exampleEn}&quot;</p>
-                          {v.exampleVi && <p className="mt-1 text-slate-500">{v.exampleVi}</p>}
-                        </div>
-                      )}
+                      {/* Word Mastery Status */}
+                      <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2 text-[11px]">
+                        <span
+                          className={`font-semibold ${
+                            isMastered
+                              ? "text-emerald-700"
+                              : isLearning
+                              ? "text-amber-600"
+                              : "text-slate-400"
+                          }`}
+                        >
+                          {isMastered ? "✓ Đã thuộc" : isLearning ? "• Đang học" : "○ Chưa học"}
+                        </span>
+                        {record?.speechScore !== undefined && (
+                          <span className="text-teal-700 font-bold">
+                            Phát âm: {record.speechScore}%
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -662,6 +784,104 @@ export default function Grade11UnitDetailPage() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* PRINT-ONLY WORKSHEET TEMPLATE (A4 FORMATTED) */}
+      <div className="hidden print:block p-4 max-w-4xl mx-auto text-black font-sans">
+        <div className="border-b-2 border-black pb-4 mb-6">
+          <div className="flex justify-between items-start text-xs font-bold uppercase tracking-wider">
+            <div>
+              <p>SỞ GIÁO DỤC VÀ ĐÀO TẠO</p>
+              <p>TRƯỜNG THPT: .......................................</p>
+            </div>
+            <div className="text-right">
+              <p>PHIẾU HỌC TẬP TỰ HỌC</p>
+              <p>TIẾNG ANH 11 — GLOBAL SUCCESS</p>
+            </div>
+          </div>
+
+          <div className="mt-4 text-center">
+            <h1 className="text-xl font-bold uppercase">
+              {unit.titleEn} — {unit.titleVi}
+            </h1>
+            <p className="text-xs italic mt-1">Chủ đề: {unit.topic} • Ngữ pháp: {unit.grammarTitle}</p>
+          </div>
+
+          <div className="mt-4 flex justify-between text-xs">
+            <p>Họ và tên học sinh: ................................................................</p>
+            <p>Lớp: ................ Ngày: ....../....../202...</p>
+          </div>
+        </div>
+
+        {/* Part 1: Vocabulary Table */}
+        <div className="mb-6">
+          <h2 className="text-sm font-bold uppercase tracking-wide border-b border-black pb-1 mb-2">
+            I. BẢNG TỪ VỰNG TRỌNG TÂM (VOCABULARY)
+          </h2>
+          <table className="w-full border-collapse border border-black text-xs">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="border border-black p-1 text-center w-8">STT</th>
+                <th className="border border-black p-1 text-left w-36">Từ vựng (Word)</th>
+                <th className="border border-black p-1 text-center w-16">Loại từ</th>
+                <th className="border border-black p-1 text-left w-28">Phiên âm</th>
+                <th className="border border-black p-1 text-left">Nghĩa tiếng Việt</th>
+                <th className="border border-black p-1 text-left">Ví dụ minh họa</th>
+              </tr>
+            </thead>
+            <tbody>
+              {unit.vocabulary.map((v, i) => (
+                <tr key={v.id}>
+                  <td className="border border-black p-1 text-center font-medium">{i + 1}</td>
+                  <td className="border border-black p-1 font-bold">{v.word}</td>
+                  <td className="border border-black p-1 text-center">{v.partOfSpeech}</td>
+                  <td className="border border-black p-1 font-mono">{v.ipa}</td>
+                  <td className="border border-black p-1">{v.meaningVi}</td>
+                  <td className="border border-black p-1 italic">{v.exampleEn}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Part 2: Grammar Summary */}
+        <div className="mb-6">
+          <h2 className="text-sm font-bold uppercase tracking-wide border-b border-black pb-1 mb-2">
+            II. TÓM TẮT NGỮ PHÁP (GRAMMAR FOCUS)
+          </h2>
+          <p className="text-xs font-semibold">{unit.grammarTitle}</p>
+          <p className="text-xs text-gray-800 leading-relaxed mt-1">{unit.grammarSummary}</p>
+        </div>
+
+        {/* Part 3: Practice Questions */}
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wide border-b border-black pb-1 mb-2">
+            III. BÀI TẬP TRẮC NGHIỆM CỦNG CỐ (PRACTICE QUIZ)
+          </h2>
+          <div className="space-y-4 text-xs">
+            {quizQuestions.map((q, idx) => (
+              <div key={idx} className="mb-2">
+                <p className="font-bold">
+                  Câu {idx + 1}: {q.question}
+                </p>
+                {q.sentence && <p className="italic text-gray-700">{q.sentence}</p>}
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-1">
+                  {q.options.map((opt, optIdx) => (
+                    <div key={optIdx} className="flex items-center gap-1.5">
+                      <span>{String.fromCharCode(65 + optIdx)}.</span>
+                      <span>{opt}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-black flex justify-between text-xs italic">
+          <p>LingoQuest EdTech • Cẩm nang tự học Tiếng Anh THPT</p>
+          <p>Chữ ký giáo viên: .......................................</p>
+        </div>
       </div>
     </AppShell>
   );

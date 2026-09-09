@@ -16,14 +16,20 @@ import {
   Target,
   PartyPopper,
   Rocket,
+  GraduationCap,
+  ChevronRight,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { Button } from "@/components/ui/button";
 import { ShimmerButton } from "@/components/magic/ShimmerButton";
 import { ProgressBar } from "@/components/ProgressBar";
 import { AssignmentCard } from "@/components/AssignmentCard";
 import { SmartImage } from "@/components/SmartImage";
 import { NumberTicker } from "@/components/magic/NumberTicker";
 import { useApp } from "@/lib/state/app-context";
+import { useRole } from "@/lib/auth/role-context";
+import { GRADE_11_CURRICULUM } from "@/lib/curriculum/grade11-data";
+import { getUnitVocabStats } from "@/lib/curriculum/vocab-progress";
 import { WeeklyStreakCard } from "@/components/dashboard/WeeklyStreakCard";
 import { DailyQuestsWidget } from "@/components/dashboard/DailyQuestsWidget";
 import { MiniLeaderboard } from "@/components/dashboard/MiniLeaderboard";
@@ -55,6 +61,7 @@ function SectionTitle({
 
 export default function DashboardPage() {
   const { xp, streak, wordsLearned, level } = useApp();
+  const { user: authUser } = useRole();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<{
     recentLesson: any;
@@ -62,6 +69,11 @@ export default function DashboardPage() {
     decks: any[];
     user?: { id: string; name: string; email: string };
   } | null>(null);
+
+  const userGrade = authUser?.grade || "11";
+  const activeGrade11Unit = GRADE_11_CURRICULUM[0];
+  const grade11WordIds = activeGrade11Unit ? activeGrade11Unit.vocabulary.map((v) => v.id) : [];
+  const grade11Stats = getUnitVocabStats(grade11WordIds, authUser?.id);
 
   useEffect(() => {
     let active = true;
@@ -221,6 +233,94 @@ export default function DashboardPage() {
               </div>
             </motion.div>
           )}
+
+          {/* ===== Grade-Adaptive Roadmap Section ===== */}
+          <motion.div variants={fadeUpReal}>
+            <div className="overflow-hidden rounded-3xl border border-teal-200/80 bg-gradient-to-r from-teal-950 via-slate-900 to-emerald-950 p-6 sm:p-7 text-white shadow-md relative">
+              <div className="pointer-events-none absolute -right-16 -top-16 h-60 w-60 rounded-full bg-teal-500/20 blur-3xl" />
+
+              <div className="relative z-10">
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-500/20 text-teal-300 border border-teal-400/30">
+                      <GraduationCap className="h-4 w-4" />
+                    </span>
+                    <div>
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-teal-300">
+                        Chương trình Khối {userGrade} • Global Success (Bộ GD&ĐT)
+                      </span>
+                      <h3 className="font-heading text-lg font-bold text-white">
+                        {userGrade === "11"
+                          ? "Lộ trình Tiếng Anh 11 Toàn diện"
+                          : `Chương trình Tiếng Anh Lớp ${userGrade}`}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/curriculum/grade-11"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-teal-300 hover:text-white transition-colors"
+                  >
+                    <span>Xem toàn bộ 10 Units</span>
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+
+                {/* Active Unit Highlight Card */}
+                {activeGrade11Unit && (
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="rounded-md bg-teal-500/20 text-teal-300 border border-teal-400/30 px-2 py-0.5 text-[10px] font-black uppercase">
+                          Unit 01
+                        </span>
+                        <span className="text-xs font-bold text-slate-300">Học kỳ 1 • {activeGrade11Unit.cefrLevel}</span>
+                      </div>
+                      <h4 className="font-heading text-base font-bold text-white">{activeGrade11Unit.titleEn}</h4>
+                      <p className="text-xs text-slate-300">
+                        {activeGrade11Unit.titleVi} • Ngữ pháp: {activeGrade11Unit.grammarTitle}
+                      </p>
+
+                      {/* Mini SRS Progress */}
+                      <div className="pt-2 flex items-center gap-3 text-xs">
+                        <div className="h-1.5 w-36 rounded-full bg-white/20 overflow-hidden">
+                          <div
+                            className="h-full bg-emerald-400 rounded-full transition-all duration-300"
+                            style={{ width: `${grade11Stats.percent}%` }}
+                          />
+                        </div>
+                        <span className="text-teal-200 text-[11px] font-medium">
+                          Đã thuộc {grade11Stats.mastered}/{grade11Stats.total} từ ({grade11Stats.percent}%)
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                      <Button
+                        asChild
+                        size="sm"
+                        className="rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs shadow-xs w-full sm:w-auto"
+                      >
+                        <Link href={`/curriculum/grade-11/${activeGrade11Unit.slug}`}>
+                          Học tiếp Unit 1
+                        </Link>
+                      </Button>
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="rounded-xl border-white/20 bg-white/10 text-white hover:bg-white/20 text-xs font-bold shadow-xs w-full sm:w-auto"
+                      >
+                        <Link href={`/curriculum/grade-11/${activeGrade11Unit.slug}`}>
+                          <Layers className="mr-1 h-3.5 w-3.5 text-teal-300" /> Flashcard
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
 
           {/* ===== Bài học gần nhất (Cinema Card) ===== */}
           <motion.div variants={fadeUpReal}>
