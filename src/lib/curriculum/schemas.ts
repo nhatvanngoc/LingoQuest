@@ -100,6 +100,19 @@ export const OptionItemSchema = z.object({
 });
 
 /* ---- 4. Flashcard Suite Schema ---- */
+export const AcousticStageSchema = z.object({
+  stage: z.number().int().min(1).max(5),
+  speed: z.number().min(0.5).max(1.2),
+  focus: z.enum(["overview", "stress", "ending_sounds", "linking", "collocation_sentence"]),
+  instructionVi: z.string(),
+});
+
+export const FlashcardContextSentenceSchema = z.object({
+  en: z.string().min(5),
+  clueVi: z.string().min(3),
+  blankSentence: z.string().min(5),
+});
+
 export const FlashcardItemSchema = z.object({
   id: z.string().min(1),
   vocabId: z.string().min(1),
@@ -109,12 +122,16 @@ export const FlashcardItemSchema = z.object({
   cefrLevel: CefrLevelSchema,
   ipaUS: z.string().min(2),
   ipaUK: z.string().min(2),
+  syllables: z.string().optional(),
+  stressPattern: z.string().optional(),
   audioHint: z.object({
     text: z.string(),
     locale: z.enum(["en-US", "en-GB"]).default("en-US"),
     speed: z.number().min(0.7).max(1.1).default(0.9),
     stressHint: z.string(),
   }),
+  acousticStages: z.array(AcousticStageSchema).optional(),
+  contextSentence: FlashcardContextSentenceSchema.optional(),
   meaningEn: z.string().min(3),
   meaningVi: z.string().min(1),
   collocations: z
@@ -138,6 +155,7 @@ export const FlashcardItemSchema = z.object({
       feature: z.string(),
     }),
   }),
+  learnerTipVi: z.string().optional(),
 });
 
 /* ---- 5. Reading & Questions Schemas ---- */

@@ -26,6 +26,7 @@ import type {
   LingoQuestUnitPackage,
   ServerQualityGate,
 } from "@/lib/curriculum/types";
+import { DeepImprintFlashcard } from "@/components/curriculum/DeepImprintFlashcard";
 
 export default function UnitPreviewPage() {
   const params = useParams();
@@ -50,6 +51,9 @@ export default function UnitPreviewPage() {
   const [activeTab, setActiveTab] = useState<
     "overview" | "flashcards" | "reading" | "questions" | "syntax" | "cloze" | "writing"
   >("overview");
+
+  const [selectedCardIdx, setSelectedCardIdx] = useState<number>(0);
+  const [flashcardViewMode, setFlashcardViewMode] = useState<"interactive" | "grid">("interactive");
 
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishSuccess, setPublishSuccess] = useState(false);
@@ -428,71 +432,192 @@ export default function UnitPreviewPage() {
 
             {/* 2. FLASHCARDS TAB */}
             {activeTab === "flashcards" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {unitPackage.flashcards.map((card) => (
-                  <div
-                    key={card.id}
-                    className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h4 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-                            {card.term}
-                          </h4>
-                          <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300">
-                            {card.cefrLevel}
-                          </span>
-                          <span className="text-xs text-slate-600 dark:text-slate-400 italic">
-                            ({card.partOfSpeech})
-                          </span>
-                        </div>
-                        <div className="text-xs text-slate-600 dark:text-slate-400 font-mono mt-0.5 flex gap-3">
-                          <span>US: {card.ipaUS}</span>
-                          <span>UK: {card.ipaUK}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-1">
-                      <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                        {card.meaningVi}
-                      </div>
-                      <div className="text-xs text-slate-600 dark:text-slate-400 italic">
-                        {card.meaningEn}
-                      </div>
-                    </div>
-
-                    {/* Collocations */}
-                    {card.collocations?.length > 0 && (
-                      <div className="space-y-1">
-                        <div className="text-xs font-bold text-slate-700 dark:text-slate-300">Cụm từ liên quan:</div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {card.collocations.map((c, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-0.5 text-xs rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium"
-                            >
-                              {c.phrase}: <span className="text-slate-600 dark:text-slate-400">{c.meaningVi}</span>
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Tiered Examples */}
-                    <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
-                      <div>
-                        <span className="font-bold text-slate-600 dark:text-slate-400">A2: </span>
-                        <span className="text-slate-800 dark:text-slate-200">{card.examples?.a2?.en}</span>
-                      </div>
-                      <div>
-                        <span className="font-bold text-slate-600 dark:text-slate-400">B1/B2: </span>
-                        <span className="text-slate-800 dark:text-slate-200">{card.examples?.b1b2?.en}</span>
-                      </div>
+              <div className="space-y-6">
+                {/* View Mode Switcher & Card Quick Selector */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase text-slate-700 dark:text-slate-300">
+                      Chế độ hiển thị:
+                    </span>
+                    <div className="inline-flex p-1 rounded-xl bg-slate-100 dark:bg-slate-800">
+                      <button
+                        onClick={() => setFlashcardViewMode("interactive")}
+                        className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors ${
+                          flashcardViewMode === "interactive"
+                            ? "bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm"
+                            : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                        }`}
+                      >
+                        ⚡ Thẻ Tương Tác (Deep Imprint)
+                      </button>
+                      <button
+                        onClick={() => setFlashcardViewMode("grid")}
+                        className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors ${
+                          flashcardViewMode === "grid"
+                            ? "bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm"
+                            : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                        }`}
+                      >
+                        📋 Danh Sách Lưới ({unitPackage.flashcards.length})
+                      </button>
                     </div>
                   </div>
-                ))}
+
+                  {flashcardViewMode === "interactive" && (
+                    <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                      {unitPackage.flashcards.map((fc, idx) => (
+                        <button
+                          key={fc.id || idx}
+                          onClick={() => setSelectedCardIdx(idx)}
+                          className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
+                            selectedCardIdx === idx
+                              ? "bg-emerald-600 text-white shadow-sm scale-105"
+                              : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200"
+                          }`}
+                        >
+                          #{idx + 1} {fc.term}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Interactive Mode */}
+                {flashcardViewMode === "interactive" && unitPackage.flashcards[selectedCardIdx] && (
+                  <DeepImprintFlashcard
+                    card={unitPackage.flashcards[selectedCardIdx]}
+                    onNext={() =>
+                      setSelectedCardIdx((prev) =>
+                        Math.min(prev + 1, unitPackage.flashcards.length - 1)
+                      )
+                    }
+                    onPrev={() => setSelectedCardIdx((prev) => Math.max(prev - 1, 0))}
+                    isFirst={selectedCardIdx === 0}
+                    isLast={selectedCardIdx === unitPackage.flashcards.length - 1}
+                  />
+                )}
+
+                {/* Grid Mode */}
+                {flashcardViewMode === "grid" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {unitPackage.flashcards.map((card, idx) => (
+                      <div
+                        key={card.id || idx}
+                        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h4 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+                                {card.term}
+                              </h4>
+                              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300">
+                                {card.cefrLevel}
+                              </span>
+                              <span className="text-xs text-slate-600 dark:text-slate-400 italic">
+                                ({card.partOfSpeech})
+                              </span>
+                            </div>
+                            <div className="text-xs text-slate-600 dark:text-slate-400 font-mono mt-0.5 flex gap-3">
+                              <span>US: {card.ipaUS}</span>
+                              <span>UK: {card.ipaUK}</span>
+                              {card.syllables && <span>• {card.syllables}</span>}
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={() => {
+                              setSelectedCardIdx(idx);
+                              setFlashcardViewMode("interactive");
+                            }}
+                            className="text-xs font-semibold px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 hover:bg-emerald-100"
+                          >
+                            Tập luyện →
+                          </button>
+                        </div>
+
+                        {/* Context Sentence */}
+                        {card.contextSentence?.en && (
+                          <div className="p-3 bg-amber-50/50 dark:bg-amber-950/20 rounded-xl border border-amber-200 dark:border-amber-900/50 text-xs space-y-1">
+                            <div className="font-bold text-amber-800 dark:text-amber-300">
+                              Câu ngữ cảnh đọc đoán nghĩa:
+                            </div>
+                            <div className="font-serif italic text-slate-800 dark:text-slate-200">
+                              "{card.contextSentence.en}"
+                            </div>
+                            {card.contextSentence.clueVi && (
+                              <div className="text-2xs text-slate-600 dark:text-slate-400">
+                                💡 Gợi ý: {card.contextSentence.clueVi}
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-1">
+                          <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                            {card.meaningVi}
+                          </div>
+                          <div className="text-xs text-slate-600 dark:text-slate-400 italic">
+                            {card.meaningEn}
+                          </div>
+                        </div>
+
+                        {/* Collocations */}
+                        {card.collocations?.length > 0 && (
+                          <div className="space-y-1">
+                            <div className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                              Cụm từ liên quan (Collocations):
+                            </div>
+                            <div className="space-y-1">
+                              {card.collocations.map((c, i) => (
+                                <div
+                                  key={i}
+                                  className="p-2 text-xs rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                                >
+                                  <span className="font-bold text-emerald-700 dark:text-emerald-300">
+                                    {c.phrase}:
+                                  </span>{" "}
+                                  <span>{c.meaningVi}</span>
+                                  {c.example && (
+                                    <div className="italic text-slate-600 dark:text-slate-400 text-2xs mt-0.5">
+                                      VD: "{c.example}"
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Tiered Examples */}
+                        <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+                          <div>
+                            <span className="font-bold text-amber-700 dark:text-amber-400">A2 (Đời thường): </span>
+                            <span className="text-slate-800 dark:text-slate-200">"{card.examples?.a2?.en}"</span>
+                            <div className="text-2xs text-slate-500 italic">→ {card.examples?.a2?.vi}</div>
+                          </div>
+                          <div>
+                            <span className="font-bold text-blue-700 dark:text-blue-400">B1/B2 (Thi THPT): </span>
+                            <span className="text-slate-800 dark:text-slate-200">"{card.examples?.b1b2?.en}"</span>
+                            <div className="text-2xs text-slate-500 italic">→ {card.examples?.b1b2?.vi}</div>
+                            {card.examples?.b1b2?.feature && (
+                              <div className="text-3xs text-emerald-600 font-medium mt-0.5">
+                                📌 Điểm ngữ pháp: {card.examples.b1b2.feature}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Learner Tip */}
+                        {card.learnerTipVi && (
+                          <div className="p-2 rounded-lg bg-rose-50 dark:bg-rose-950/20 text-rose-800 dark:text-rose-200 text-2xs">
+                            <strong>Lưu ý:</strong> {card.learnerTipVi}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 

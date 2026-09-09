@@ -163,6 +163,19 @@ export type OptionItem = {
   rationaleVi: string;
 };
 
+export type AcousticStage = {
+  stage: number; // 1 to 5
+  speed: number;
+  focus: "overview" | "stress" | "ending_sounds" | "linking" | "collocation_sentence";
+  instructionVi: string;
+};
+
+export type FlashcardContextSentence = {
+  en: string;
+  clueVi: string;
+  blankSentence: string;
+};
+
 export type FlashcardItem = {
   id: string;
   vocabId: string;
@@ -172,12 +185,17 @@ export type FlashcardItem = {
   cefrLevel: CefrLevel;
   ipaUS: string;
   ipaUK: string;
+  syllables?: string;
+  stressPattern?: string;
   audioHint: {
     text: string;
     locale: "en-US" | "en-GB";
     speed: number;
     stressHint: string;
   };
+  acousticStages?: AcousticStage[];
+  // Deep Semantic Scaffolding Steps:
+  contextSentence?: FlashcardContextSentence;
   meaningEn: string;
   meaningVi: string;
   collocations: Array<{
@@ -189,6 +207,7 @@ export type FlashcardItem = {
     a2: { en: string; vi: string };
     b1b2: { en: string; vi: string; feature: string };
   };
+  learnerTipVi?: string;
 };
 
 export type ReadingQuestionSkill =
