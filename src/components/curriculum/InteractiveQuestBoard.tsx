@@ -95,28 +95,28 @@ export function InteractiveQuestBoard({
       <div className="rounded-3xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/40 p-6 sm:p-8 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-3 py-1 text-xs font-bold border border-emerald-200">
-              <Target className="h-3.5 w-3.5 text-emerald-600" />
+            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-3.5 py-1.5 text-xs sm:text-sm font-bold border border-emerald-200">
+              <Target className="h-4 w-4 text-emerald-600" />
               Bảng Nhiệm Vụ Game &amp; Chuẩn Đầu Ra (Quest Board)
             </div>
-            <h2 className="font-heading text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-2">
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mt-2.5">
               Chinh Phục Unit {unitNumber}: {titleEn}
             </h2>
-            <p className="mt-1 text-xs sm:text-sm text-slate-600">
-              Chuẩn GDPT 2018 &amp; Khung tham chiếu Châu Âu <strong>CEFR {cefrLevel}</strong> • Hoàn thành cả 4 nhiệm vụ để nhận rương thưởng!
+            <p className="mt-1.5 text-sm sm:text-base text-slate-600 font-medium">
+              Chuẩn GDPT 2018 &amp; Khung tham chiếu Châu Âu <strong className="text-slate-800">CEFR {cefrLevel}</strong> • Hoàn thành cả 4 nhiệm vụ để nhận rương thưởng!
             </p>
           </div>
 
           {/* Treasure Box Preview */}
-          <div className="flex items-center gap-3 rounded-2xl bg-white p-3.5 border border-emerald-200 shadow-xs shrink-0">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-600 font-black text-xl shadow-inner">
+          <div className="flex items-center gap-3.5 rounded-2xl bg-white p-4 border border-emerald-200 shadow-xs shrink-0">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 font-black text-2xl shadow-inner">
               🎁
             </div>
             <div>
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
                 Phần Thưởng Tối Thượng
               </span>
-              <span className="font-heading text-base font-black text-indigo-700">
+              <span className="font-heading text-lg sm:text-xl font-black text-indigo-700">
                 +100 XP &amp; Huy Hiệu
               </span>
             </div>
@@ -125,42 +125,42 @@ export function InteractiveQuestBoard({
       </div>
 
       {/* 2. Quest Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {quests.map((q) => (
           <div
             key={q.id}
-            className={`rounded-3xl border p-6 shadow-xs transition-all flex flex-col justify-between bg-white ${
+            className={`rounded-3xl border p-6 sm:p-7 shadow-xs transition-all flex flex-col justify-between bg-white ${
               q.isDone ? "border-emerald-200 bg-emerald-50/20" : "border-slate-200/90 hover:border-indigo-300"
             }`}
           >
             <div>
-              <div className="flex items-start justify-between gap-2 mb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 shadow-2xs">
+              <div className="flex items-start justify-between gap-3 mb-3.5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 shadow-2xs shrink-0">
                     {q.icon}
                   </div>
                   <div>
-                    <h3 className="font-heading text-sm font-bold text-slate-900">{q.title}</h3>
-                    <span className="text-[11px] font-bold text-emerald-600">{q.reward}</span>
+                    <h3 className="font-heading text-base sm:text-lg font-bold text-slate-900">{q.title}</h3>
+                    <span className="text-xs sm:text-sm font-black text-emerald-600">{q.reward}</span>
                   </div>
                 </div>
 
                 {q.isDone && (
-                  <span className="flex items-center gap-1 rounded-full bg-emerald-100 text-emerald-800 px-2.5 py-0.5 text-xs font-bold">
-                    <Check className="h-3 w-3" /> Hoàn thành
+                  <span className="flex items-center gap-1.5 rounded-full bg-emerald-100 text-emerald-800 px-3 py-1 text-xs sm:text-sm font-bold shrink-0">
+                    <Check className="h-3.5 w-3.5" /> Hoàn thành
                   </span>
                 )}
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed">{q.desc}</p>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">{q.desc}</p>
 
               {/* Progress Bar */}
-              <div className="mt-4">
-                <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 mb-1">
+              <div className="mt-5">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-bold text-slate-600 mb-1.5">
                   <span>Tiến độ</span>
-                  <span>{q.progress}</span>
+                  <span className="font-mono">{q.progress}</span>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
                   <div
                     className="h-full rounded-full bg-indigo-600 transition-all duration-500"
                     style={{ width: `${q.percent}%` }}
@@ -169,14 +169,14 @@ export function InteractiveQuestBoard({
               </div>
             </div>
 
-            <div className="mt-5 pt-3 border-t border-slate-100">
+            <div className="mt-6 pt-4 border-t border-slate-100">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => onJumpToTab(q.actionTab)}
-                className="w-full rounded-xl text-xs font-bold border-indigo-200 text-indigo-700 hover:bg-indigo-50 cursor-pointer"
+                className="w-full rounded-xl text-xs sm:text-sm font-bold border-indigo-200 text-indigo-700 hover:bg-indigo-50 cursor-pointer py-2.5"
               >
-                {q.actionText} <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                {q.actionText} <ArrowRight className="ml-1.5 h-4 w-4" />
               </Button>
             </div>
           </div>
