@@ -35,6 +35,9 @@ import {
 import { useVocabProgress } from "@/lib/curriculum/vocab-progress";
 import { SpeechPronunciationChecker } from "@/components/SpeechPronunciationChecker";
 import { getCollocationsForWord } from "@/lib/curriculum/vocab-collocations";
+import { InteractiveGrammarStudio } from "@/components/curriculum/InteractiveGrammarStudio";
+import { InteractiveReadingStudio } from "@/components/curriculum/InteractiveReadingStudio";
+import { InteractiveQuestBoard } from "@/components/curriculum/InteractiveQuestBoard";
 
 export default function Grade11UnitDetailPage() {
   const params = useParams<{ slug: string }>();
@@ -776,247 +779,42 @@ export default function Grade11UnitDetailPage() {
         )}
 
         {/* ========================================================= */}
-        {/* TAB 2: GRAMMAR FOCUS */}
+        {/* TAB 2: GRAMMAR FOCUS (INTERACTIVE TIMELINE & FORMULAS) */}
         {/* ========================================================= */}
         {activeTab === "grammar" && (
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-amber-200 bg-amber-50/50 p-6">
-              <div className="flex items-center gap-2 text-xs font-bold text-amber-800 uppercase tracking-wide">
-                <Zap className="h-4 w-4 text-amber-600" />
-                Chuyên đề ngữ pháp cốt lõi
-              </div>
-              <h2 className="font-heading text-xl font-bold text-slate-900 mt-1">{unit.grammarTitle}</h2>
-              <p className="mt-2 text-sm text-slate-700 leading-relaxed">{unit.grammarSummary}</p>
-            </div>
-
-            {/* Formatted Grammar HTML extracted from Textbook */}
-            {unit.grammarHtml ? (
-              <div
-                className="prose prose-slate max-w-none rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs text-sm"
-                dangerouslySetInnerHTML={{ __html: unit.grammarHtml }}
-              />
-            ) : (
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 text-sm text-slate-700">
-                <p>Nội dung chi tiết phần ngữ pháp đang được đồng bộ theo chương trình chuẩn SGK.</p>
-              </div>
-            )}
-          </div>
+          <InteractiveGrammarStudio
+            unitNumber={unit.unitNumber}
+            grammarTitle={unit.grammarTitle}
+            grammarSummary={unit.grammarSummary}
+            topic={unit.topic}
+          />
         )}
 
         {/* ========================================================= */}
-        {/* TAB 3: READING COMPREHENSION (ĐỌC HIỂU) */}
+        {/* TAB 3: READING COMPREHENSION (SMART READER & AUDIO) */}
         {/* ========================================================= */}
         {activeTab === "reading" && (
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-indigo-200 bg-indigo-50/40 p-6">
-              <div className="flex items-center gap-2 text-xs font-bold text-indigo-800 uppercase tracking-wide">
-                <FileText className="h-4 w-4 text-indigo-600" />
-                Kỹ năng Đọc hiểu (Reading Comprehension)
-              </div>
-              <h2 className="font-heading text-xl font-bold text-slate-900 mt-1">
-                Chủ đề đọc: {unit.topic} — {unit.titleEn}
-              </h2>
-              <p className="mt-2 text-sm text-slate-700 leading-relaxed">
-                Đọc đoạn văn dưới đây trích từ phân mục SGK Reading và hoàn thành các câu hỏi đọc hiểu bên dưới.
-              </p>
-            </div>
-
-            {/* Reading Passage Card */}
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">
-                  Reading Passage (Section III SGK)
-                </span>
-                <span className="text-xs font-semibold text-slate-400">Thời gian đọc gợi ý: 3 phút</span>
-              </div>
-
-              <div className="prose prose-slate max-w-none text-sm leading-relaxed text-slate-800 space-y-3">
-                <p>
-                  Maintaining a long and healthy life requires a combination of good nutrition, regular physical activity, and positive mental habits. In modern society, many families struggle to balance work and daily life. Sharing household chores among family members not only reduces stress but also strengthens family bonds and creates mutual understanding.
-                </p>
-                <p>
-                  Nutritionists emphasize that a balanced diet rich in nutrients and fresh vegetables helps build muscle and protect the immune system. Doctors also warn against the overreliance on antibiotics for common viral infections, as bacteria can develop resistance over time. Regular workouts and sufficient sleep remain the cornerstones of high life expectancy.
-                </p>
-              </div>
-
-              {/* Comprehension Questions */}
-              <div className="mt-8 pt-6 border-t border-slate-100 space-y-4">
-                <h3 className="font-heading text-base font-bold text-slate-900">Câu hỏi kiểm tra đọc hiểu:</h3>
-
-                <div className="space-y-4">
-                  {[
-                    {
-                      q: "1. What is one positive benefit of sharing household chores mentioned in the passage?",
-                      options: [
-                        "A. It reduces stress and strengthens family bonds",
-                        "B. It replaces physical exercise entirely",
-                        "C. It cures viral infections",
-                        "D. It eliminates the need for a balanced diet",
-                      ],
-                      correct: 0,
-                      explanation: "Đoạn văn nêu rõ: 'Sharing household chores among family members not only reduces stress but also strengthens family bonds.'",
-                    },
-                    {
-                      q: "2. Why do doctors warn against the overuse of antibiotics?",
-                      options: [
-                        "A. Because they cause food poisoning",
-                        "B. Because bacteria can develop resistance over time",
-                        "C. Because they weaken muscles permanently",
-                        "D. Because they are difficult to prescribe",
-                      ],
-                      correct: 1,
-                      explanation: "Đoạn văn chỉ ra: 'bacteria can develop resistance over time'.",
-                    },
-                  ].map((item, qIdx) => {
-                    const selected = readingAnswers[qIdx];
-                    return (
-                      <div key={qIdx} className="rounded-2xl border border-slate-200 bg-slate-50/50 p-4">
-                        <p className="font-semibold text-sm text-slate-900 mb-3">{item.q}</p>
-                        <div className="space-y-2">
-                          {item.options.map((opt, optIdx) => {
-                            const isChosen = selected === optIdx;
-                            const isCorrect = item.correct === optIdx;
-                            let style = "border-slate-200 hover:bg-white text-slate-700 bg-white";
-                            if (readingSubmitted) {
-                              if (isCorrect) style = "border-emerald-400 bg-emerald-50 text-emerald-900 font-bold";
-                              else if (isChosen && !isCorrect) style = "border-red-300 bg-red-50 text-red-900";
-                            } else if (isChosen) {
-                              style = "border-indigo-500 bg-indigo-50 text-indigo-900 font-semibold";
-                            }
-
-                            return (
-                              <button
-                                key={optIdx}
-                                disabled={readingSubmitted}
-                                onClick={() => setReadingAnswers((prev) => ({ ...prev, [qIdx]: optIdx }))}
-                                className={`w-full text-left rounded-xl border p-3 text-xs transition-all flex items-center justify-between cursor-pointer ${style}`}
-                              >
-                                <span>{opt}</span>
-                                {readingSubmitted && isCorrect && (
-                                  <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                                )}
-                              </button>
-                            );
-                          })}
-                        </div>
-                        {readingSubmitted && (
-                          <p className="mt-2.5 text-xs text-indigo-800 bg-indigo-50 p-2 rounded-xl border border-indigo-100">
-                            <strong>Giải thích:</strong> {item.explanation}
-                          </p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="pt-2">
-                  {!readingSubmitted ? (
-                    <Button
-                      onClick={() => setReadingSubmitted(true)}
-                      className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs font-bold text-white shadow-xs px-6 py-2.5"
-                    >
-                      Kiểm tra đáp án Đọc hiểu
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setReadingAnswers({});
-                        setReadingSubmitted(false);
-                      }}
-                      className="rounded-xl text-xs font-bold"
-                    >
-                      <RotateCcw className="mr-1.5 h-3.5 w-3.5" /> Làm lại phần đọc hiểu
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
+          <InteractiveReadingStudio
+            unitNumber={unit.unitNumber}
+            titleEn={unit.titleEn}
+            topic={unit.topic}
+          />
         )}
 
         {/* ========================================================= */}
-        {/* TAB 4: LEARNING OBJECTIVES (MỤC TIÊU) */}
+        {/* TAB 4: GAMIFIED QUEST BOARD (BẢNG NHIỆM VỤ KHÁM PHÁ) */}
         {/* ========================================================= */}
         {activeTab === "objectives" && (
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-emerald-200 bg-emerald-50/40 p-6">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 uppercase tracking-wide">
-                <Target className="h-4 w-4 text-emerald-600" />
-                Chuẩn đầu ra &amp; Mục tiêu bài học (Learning Objectives)
-              </div>
-              <h2 className="font-heading text-xl font-bold text-slate-900 mt-1">
-                Khung năng lực Unit {unit.unitNumber}: {unit.titleEn}
-              </h2>
-              <p className="mt-2 text-sm text-slate-700 leading-relaxed">
-                Được thiết kế bám sát chuẩn Chương trình GDPT 2018 và khung tham chiếu CEFR {unit.cefrLevel}.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {/* Objective 1: Vocabulary */}
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div className="flex items-center gap-2 text-xs font-bold text-indigo-700 uppercase tracking-wider mb-2">
-                  <Layers className="h-4 w-4 text-indigo-600" />
-                  1. Năng lực Từ vựng (Lexical Competence)
-                </div>
-                <ul className="space-y-2 text-xs text-slate-700 leading-relaxed list-disc list-inside">
-                  <li>
-                    Ghi nhớ và sử dụng thành thạo <strong>{unit.vocabulary.length} từ vựng</strong> chủ đề {unit.topic}.
-                  </li>
-                  <li>Nhận biết và vận dụng chính xác các cụm từ (collocations) thường gặp.</li>
-                  <li>Phát âm chuẩn IPA, đạt điểm kiểm tra AI ≥ 80%.</li>
-                </ul>
-              </div>
-
-              {/* Objective 2: Grammar */}
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-700 uppercase tracking-wider mb-2">
-                  <Zap className="h-4 w-4 text-amber-600" />
-                  2. Năng lực Ngữ pháp (Grammar Mastery)
-                </div>
-                <ul className="space-y-2 text-xs text-slate-700 leading-relaxed list-disc list-inside">
-                  <li>
-                    Hiểu sâu bản chất cấu trúc: <strong>{unit.grammarTitle}</strong>.
-                  </li>
-                  <li>Phân biệt dấu hiệu nhận biết và ngữ cảnh sử dụng thực tế.</li>
-                  <li>Áp dụng giải đúng 100% câu hỏi trắc nghiệm ngữ pháp tốt nghiệp THPT.</li>
-                </ul>
-              </div>
-
-              {/* Objective 3: Four Skills */}
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs">
-                <div className="flex items-center gap-2 text-xs font-bold text-teal-700 uppercase tracking-wider mb-2">
-                  <BookOpen className="h-4 w-4 text-teal-600" />
-                  3. Bốn Kỹ năng Nghe - Nói - Đọc - Viết
-                </div>
-                <ul className="space-y-2 text-xs text-slate-700 leading-relaxed list-disc list-inside">
-                  <li>Thấm âm tối thiểu 5 lần trước khi nói theo phương pháp Ear-First.</li>
-                  <li>Đọc hiểu văn bản học thuật chủ đề {unit.topic}.</li>
-                  <li>Tự tin trình bày quan điểm cá nhân trong các bài Speaking &amp; Writing.</li>
-                </ul>
-              </div>
-
-              {/* Objective 4: Gamification & Rewards */}
-              <div className="rounded-3xl border border-purple-200 bg-purple-50/50 p-6 shadow-xs">
-                <div className="flex items-center gap-2 text-xs font-bold text-purple-800 uppercase tracking-wider mb-2">
-                  <Award className="h-4 w-4 text-purple-600" />
-                  4. Phần thưởng hoàn thành bài học
-                </div>
-                <p className="text-xs text-slate-700 leading-relaxed">
-                  Khi hoàn thành đủ thẻ Flashcard và đạt ≥ 80% điểm bài Kiểm tra (10 câu), học sinh sẽ nhận ngay:
-                </p>
-                <div className="mt-3 flex items-center gap-2">
-                  <span className="rounded-xl bg-purple-600 text-white font-black text-sm px-3.5 py-1.5 shadow-xs">
-                    +100 XP Thưởng
-                  </span>
-                  <span className="text-xs font-semibold text-purple-700">
-                    Huy hiệu Master Unit {unit.unitNumber}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <InteractiveQuestBoard
+            unitNumber={unit.unitNumber}
+            titleEn={unit.titleEn}
+            topic={unit.topic}
+            cefrLevel={unit.cefrLevel}
+            totalVocab={unit.vocabulary.length}
+            masteredVocab={stats.mastered}
+            percentVocab={stats.percent}
+            onJumpToTab={(tab) => setActiveTab(tab)}
+          />
         )}
 
         {/* ========================================================= */}
