@@ -1,5 +1,6 @@
 # Project Constitution: LingoQuest Monolithic EdTech Platform
-**Stitch Project ID:** `projects/lingoquest-unified-edtech-v2`
+**Stitch Project ID:** `projects/14571698683300161512`
+**Live Stitch Screen:** `projects/14571698683300161512/screens/5055879593cc4af9b046a66376e4244b` (Dashboard)
 **Version:** 2.5.0 (Monolithic Architecture)
 **Last Updated:** 2026-09-06
 

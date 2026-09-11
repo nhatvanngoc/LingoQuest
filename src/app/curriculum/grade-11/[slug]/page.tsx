@@ -28,6 +28,7 @@ import {
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { useRole } from "@/lib/auth/role-context";
+import { useApp } from "@/lib/state/app-context";
 import {
   getGrade11UnitBySlug,
   type Grade11VocabItem,
@@ -44,6 +45,7 @@ export default function Grade11UnitDetailPage() {
   const slug = params?.slug;
   const unit = useMemo(() => (slug ? getGrade11UnitBySlug(slug) : undefined), [slug]);
   const { user } = useRole();
+  const { addXp, syncStats } = useApp();
 
   const vocabIds = useMemo(() => unit?.vocabulary.map((v) => v.id) || [], [unit]);
   const { records, stats, updateWord } = useVocabProgress(vocabIds, user?.id);
@@ -175,6 +177,35 @@ export default function Grade11UnitDetailPage() {
       updateWord(currentFlashcard.id, "learning", { incrementListen: true });
     }
     setIsLoopPlaying(false);
+  };
+
+  // Handler khi nhấn "Đã thuộc từ này (+10 XP)":
+  // Đánh dấu đã thuộc, thưởng +10 XP, và tự động chuyển sang thẻ tiếp theo
+  const handleMasterCurrentWord = () => {
+    if (!currentFlashcard) return;
+
+    // 1. Cập nhật trạng thái từ thành đã thuộc (mastered)
+    updateWord(currentFlashcard.id, "mastered");
+
+    // 2. Thưởng +10 XP kèm âm thanh chime & toast thông báo
+    addXp(10, `Thuộc từ: ${currentFlashcard.word}`);
+    syncStats({ xp: 10, wordsLearned: 1 });
+
+    // Hủy audio nếu đang phát dở
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsPlayingAudio(false);
+
+    // 3. Tự động chuyển tiếp từ tiếp theo
+    if (unit && currentCardIndex < unit.vocabulary.length - 1) {
+      setCurrentCardIndex((i) => i + 1);
+      setAudioListenCount(0);
+      setHideMeaningForRecall(false);
+    } else {
+      // Nếu đã hoàn thành thẻ cuối cùng -> chuyển sang tab kiểm tra
+      setActiveTab("quiz");
+    }
   };
 
   // 10 Targeted Quiz Questions (Vocab, Collocations, IPA, Grammar, Topic)
@@ -651,7 +682,7 @@ export default function Grade11UnitDetailPage() {
                       </Button>
                       <Button
                         size="sm"
-                        onClick={() => updateWord(currentFlashcard.id, "mastered")}
+                        onClick={handleMasterCurrentWord}
                         className="flex-1 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs py-5 sm:py-5.5 cursor-pointer"
                       >
                         <Check className="mr-2 h-4 w-4" />

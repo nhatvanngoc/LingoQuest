@@ -1,5 +1,6 @@
 # Design System: LingoQuest Monolithic EdTech Platform
-**Project ID:** `projects/lingoquest-unified-edtech-v2`
+**Project ID:** `projects/14571698683300161512`
+**Design System Asset:** `assets/60ed0c23dce74dc18c295c85d16a06ff`
 **Specification Standard:** Google Stitch Semantic Design System (`taste-design` & `design-md`)
 
 ---

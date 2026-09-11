@@ -506,6 +506,9 @@ import { MapHarness95Light, TOTAL_FRAMES as MAP_LIGHT_TOTAL } from './MapHarness
 /* ─── ENGLISH WORD FORMATION (Grade 11 educational, 24 scenes, 10min) ── */
 import { EnglishWordInfo } from './EnglishWordInfo';
 
+/* ─── ENGLISH GRAMMAR MASTERCLASS (Past Simple vs Present Perfect, 72s) ── */
+import { EnglishGrammarMotion } from './EnglishGrammarMotion';
+
 /* ─── ROOT ───────────────────────────────────────────────── */
 export const RemotionRoot: React.FC = () => (
   <>
@@ -658,6 +661,15 @@ export const RemotionRoot: React.FC = () => (
       id="EnglishWordInfo"
       component={EnglishWordInfo}
       durationInFrames={18300}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
+    {/* ENGLISH GRAMMAR MOTION — 7 SCENES · 2160F =72s @30fps · 1920×1080 · Past Simple vs Present Perfect · Timeline + Matrix + Interactive Quiz */}
+    <Composition
+      id="EnglishGrammarMotion"
+      component={EnglishGrammarMotion}
+      durationInFrames={2160}
       fps={30}
       width={1920}
       height={1080}
