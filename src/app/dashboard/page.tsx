@@ -298,7 +298,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                       <Button
                         asChild
                         size="sm"
@@ -312,10 +312,20 @@ export default function DashboardPage() {
                         asChild
                         size="sm"
                         variant="outline"
-                        className="rounded-xl border-white/20 bg-white/10 text-white hover:bg-white/20 text-xs font-bold shadow-xs w-full sm:w-auto"
+                        className="rounded-xl border-white/20 bg-white/10 text-white hover:bg-white/20 text-xs font-bold shadow-xs"
                       >
-                        <Link href={`/curriculum/grade-11/${activeGrade11Unit.slug}`}>
+                        <Link href={`/curriculum/grade-11/${activeGrade11Unit.slug}?tab=vocab`}>
                           <Layers className="mr-1 h-3.5 w-3.5 text-teal-300" /> Flashcard
+                        </Link>
+                      </Button>
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="rounded-xl border-white/20 bg-white/10 text-white hover:bg-white/20 text-xs font-bold shadow-xs hidden md:inline-flex"
+                      >
+                        <Link href={`/curriculum/grade-11/${activeGrade11Unit.slug}?tab=grammar`}>
+                          <BookOpen className="mr-1 h-3.5 w-3.5 text-emerald-300" /> Ngữ pháp
                         </Link>
                       </Button>
                     </div>
@@ -370,21 +380,30 @@ export default function DashboardPage() {
               </div>
 
               {/* Quick Sample Exam Pills */}
-              <div className="mt-5 pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs">
-                <span className="font-bold text-slate-400">Đề thi sẵn có:</span>
+              <div className="mt-5 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-bold text-slate-400">Đề thi sẵn có:</span>
+                  <Link
+                    href="/exams/exam-u1-15m"
+                    className="rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold px-3 py-1.5 border border-indigo-100/70 transition-colors flex items-center gap-1.5"
+                  >
+                    <span>⚡ 15 Phút Unit 1 (A Long &amp; Healthy Life)</span>
+                    <span className="text-[10px] bg-white px-1.5 py-0.5 rounded-md font-mono text-indigo-600">PIN: 839201</span>
+                  </Link>
+                  <Link
+                    href="/exams/exam-u2-45m"
+                    className="rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold px-3 py-1.5 border border-purple-100/70 transition-colors flex items-center gap-1.5"
+                  >
+                    <span>📝 45 Phút Unit 2 (The Generation Gap)</span>
+                    <span className="text-[10px] bg-white px-1.5 py-0.5 rounded-md font-mono text-purple-600">PIN: 492105</span>
+                  </Link>
+                </div>
+
                 <Link
-                  href="/exams/exam-u1-15m"
-                  className="rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold px-3 py-1.5 border border-indigo-100/70 transition-colors flex items-center gap-1.5"
+                  href="/exams"
+                  className="font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 hover:underline"
                 >
-                  <span>⚡ 15 Phút Unit 1 (A Long &amp; Healthy Life)</span>
-                  <span className="text-[10px] bg-white px-1.5 py-0.5 rounded-md font-mono text-indigo-600">PIN: 839201</span>
-                </Link>
-                <Link
-                  href="/exams/exam-u2-45m"
-                  className="rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold px-3 py-1.5 border border-purple-100/70 transition-colors flex items-center gap-1.5"
-                >
-                  <span>📝 45 Phút Unit 2 (The Generation Gap)</span>
-                  <span className="text-[10px] bg-white px-1.5 py-0.5 rounded-md font-mono text-purple-600">PIN: 492105</span>
+                  Xem tất cả đề thi <ChevronRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             </div>

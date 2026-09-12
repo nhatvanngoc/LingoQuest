@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { type ReactNode, useState, useEffect } from "react";
+import { type ReactNode, useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
@@ -23,6 +23,9 @@ import {
   Users,
   User,
   BookOpen,
+  Trophy,
+  Plus,
+  Compass,
 } from "lucide-react";
 import { useRole } from "@/lib/auth/role-context";
 import { useApp } from "@/lib/state/app-context";
@@ -103,9 +106,33 @@ function Avatar({ name, color, size = "h-9 w-9" }: { name: string; color: string
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { user, role } = useRole();
   const pathname = usePathname();
-  const items = NAV[role];
+  const { user, role } = useRole();
+  const items = useMemo(() => {
+    if (role === "student") {
+      const gradeLabel = user.grade ? `Lớp ${user.grade}` : "Lớp 11";
+      return [
+        { href: "/dashboard", label: "Trang chủ", icon: Home },
+        { href: "/curriculum/grade-11", label: gradeLabel, icon: BookOpen, badge: "GS" },
+        { href: "/exams", label: "Phòng thi", icon: Trophy, badge: "PIN" },
+        { href: "/learn", label: "Bài giảng", icon: PlayCircle, badge: "NEW" },
+        { href: "/flashcards/deck-1", label: "Flashcard", icon: Layers },
+        { href: "/game", label: "Game", icon: Gamepad2, badge: "HOT" },
+        { href: "/progress", label: "Hồ sơ", icon: BarChart3 },
+      ];
+    }
+    if (role === "teacher") {
+      return [
+        { href: "/teacher", label: "Bảng điều khiển", icon: LayoutDashboard },
+        { href: "/teacher/exams", label: "Phòng thi & Đề", icon: ClipboardCheck, badge: "Azota" },
+        { href: "/teacher/students", label: "Học sinh", icon: Users },
+        { href: "/teacher/grading", label: "Chấm bài", icon: ClipboardList },
+        { href: "/teacher/assignments/new", label: "Giao bài", icon: Plus },
+        { href: "/teacher/lessons/new", label: "Đăng video", icon: Video },
+      ];
+    }
+    return [];
+  }, [role, user.grade]);
   const { xp, streak, level } = useApp();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);

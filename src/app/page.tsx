@@ -37,6 +37,7 @@ const FEATURES = [
     title: "Học qua Video",
     desc: "Video tương tác, bấm từ vựng để tua đúng đoạn, học tức thì với phụ đề thông minh.",
     color: "from-brand-500 to-violet-500",
+    href: "/learn",
   },
   {
     icon: Layers,
@@ -44,6 +45,7 @@ const FEATURES = [
     title: "Flashcard 3D",
     desc: "Thẻ lật 3D với hiệu ứng tilt, lặp ngắt quãng SRS, ưu tiên từ bạn hay quên.",
     color: "from-emerald-400 to-teal-500",
+    href: "/curriculum/grade-11",
   },
   {
     icon: Gamepad2,
@@ -51,6 +53,7 @@ const FEATURES = [
     title: "Game 2D Pro",
     desc: "Word Defender & Sentence Builder với combo, laser, bảng xếp hạng sống động.",
     color: "from-amber-400 to-orange-500",
+    href: "/game",
   },
 ];
 
@@ -236,32 +239,34 @@ export default function LandingPage() {
             const Icon = f.icon;
             return (
               <motion.div key={f.title} variants={fadeUpReal} transition={{ delay: i * 0.1 } as any}>
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-2xs hover:shadow-lg hover:border-teal-500/30 transition-all duration-300"
-                >
-                  <div className="relative aspect-[3/2] overflow-hidden">
-                    <SmartImage src={f.img} alt={f.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" gradient="from-teal-100 to-emerald-100" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/15 to-transparent" />
-                    <div className={`absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${f.color} text-white shadow-md`}>
-                      <Icon className="h-5 w-5" />
+                <Link href={f.href} className="block group">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-2xs hover:shadow-lg hover:border-teal-500/30 transition-all duration-300"
+                  >
+                    <div className="relative aspect-[3/2] overflow-hidden">
+                      <SmartImage src={f.img} alt={f.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" gradient="from-teal-100 to-emerald-100" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/15 to-transparent" />
+                      <div className={`absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${f.color} text-white shadow-md`}>
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+                        <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} viewport={viewportOnce} transition={{ duration: 1, delay: 0.5 + i * 0.1 }} className={`h-full bg-gradient-to-r ${f.color}`} />
+                      </div>
                     </div>
-                    
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
-                      <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} viewport={viewportOnce} transition={{ duration: 1, delay: 0.5 + i * 0.1 }} className={`h-full bg-gradient-to-r ${f.color}`} />
+                    <div className="p-5">
+                      <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
+                        {f.title}
+                        <Sparkles className="h-4 w-4 text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </h3>
+                      <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{f.desc}</p>
+                      <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-teal-700">
+                        <span>Khám phá ngay</span><ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 group-hover:text-teal-700 transition-colors">
-                      {f.title}
-                      <Sparkles className="h-4 w-4 text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </h3>
-                    <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{f.desc}</p>
-                    <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-teal-700">
-                      <span>Khám phá ngay</span><ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                    </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </Link>
               </motion.div>
             );
           })}
@@ -329,7 +334,7 @@ export default function LandingPage() {
                 <Link href="/dashboard" className="flex items-center gap-2">Bắt đầu miễn phí</Link>
               </ShimmerButton>
               <Button asChild size="xl" variant="ghost" className="text-white hover:bg-white/10 border border-white/20">
-                <Link href="/learn">Xem demo <PlayCircle className="h-5 w-5" /></Link>
+                <Link href="/curriculum/grade-11/unit-1-a-long-and-healthy-life">Xem demo Unit 1 <PlayCircle className="h-5 w-5" /></Link>
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm font-bold text-white/70">

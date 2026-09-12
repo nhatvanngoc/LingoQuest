@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -24,12 +24,14 @@ import {
   Award,
   Eye,
   EyeOff,
+  Compass,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { useRole } from "@/lib/auth/role-context";
 import { useApp } from "@/lib/state/app-context";
 import {
+  GRADE_11_CURRICULUM,
   getGrade11UnitBySlug,
   type Grade11VocabItem,
 } from "@/lib/curriculum/grade11-data";
@@ -50,11 +52,52 @@ export default function Grade11UnitDetailPage() {
   const vocabIds = useMemo(() => unit?.vocabulary.map((v) => v.id) || [], [unit]);
   const { records, stats, updateWord } = useVocabProgress(vocabIds, user?.id);
 
+  // Unit navigation calculations (Previous / Next Unit)
+  const unitIndex = useMemo(() => {
+    if (!slug) return -1;
+    return GRADE_11_CURRICULUM.findIndex((u) => u.slug === slug);
+  }, [slug]);
+  const prevUnit = unitIndex > 0 ? GRADE_11_CURRICULUM[unitIndex - 1] : null;
+  const nextUnit = unitIndex >= 0 && unitIndex < GRADE_11_CURRICULUM.length - 1 ? GRADE_11_CURRICULUM[unitIndex + 1] : null;
+
   // 5 Main Tabs matching the clean design in the screenshot
   const [activeTab, setActiveTab] = useState<"vocab" | "grammar" | "reading" | "objectives" | "quiz">("vocab");
   const [vocabSearch, setVocabSearch] = useState("");
   const [flashcardMode, setFlashcardMode] = useState(true);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+
+  // Sync tab with URL query parameter on mount & browser back/forward
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const searchParams = new URLSearchParams(window.location.search);
+    const tabParam = searchParams.get("tab");
+    if (tabParam && ["vocab", "grammar", "reading", "objectives", "quiz"].includes(tabParam)) {
+      setActiveTab(tabParam as any);
+    }
+    const savedCard = localStorage.getItem(`lingoquest_last_card_${slug}`);
+    if (savedCard) {
+      const idx = parseInt(savedCard, 10);
+      if (!isNaN(idx) && unit && idx >= 0 && idx < unit.vocabulary.length) {
+        setCurrentCardIndex(idx);
+      }
+    }
+  }, [slug, unit]);
+
+  const handleTabChange = (tab: "vocab" | "grammar" | "reading" | "objectives" | "quiz") => {
+    setActiveTab(tab);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("tab", tab);
+      window.history.replaceState(null, "", url.toString());
+    }
+  };
+
+  // Persist flashcard index to localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined" && slug && currentCardIndex >= 0) {
+      localStorage.setItem(`lingoquest_last_card_${slug}`, currentCardIndex.toString());
+    }
+  }, [slug, currentCardIndex]);
 
   // Flashcard Custom States
   const [hideMeaningForRecall, setHideMeaningForRecall] = useState(false);
@@ -204,9 +247,52 @@ export default function Grade11UnitDetailPage() {
       setHideMeaningForRecall(false);
     } else {
       // Nếu đã hoàn thành thẻ cuối cùng -> chuyển sang tab kiểm tra
-      setActiveTab("quiz");
+      handleTabChange("quiz");
     }
   };
+
+  // Keyboard Shortcuts: ArrowLeft/Right for cards, Space for audio, 1 for review, 2 for master
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeEl = document.activeElement;
+      if (
+        activeEl &&
+        (activeEl.tagName === "INPUT" ||
+          activeEl.tagName === "TEXTAREA" ||
+          (activeEl as HTMLElement).isContentEditable)
+      ) {
+        return;
+      }
+
+      if (activeTab === "vocab" && flashcardMode && currentFlashcard) {
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          setCurrentCardIndex((i) => Math.max(i - 1, 0));
+          setAudioListenCount(0);
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          if (unit && currentCardIndex < unit.vocabulary.length - 1) {
+            setCurrentCardIndex((i) => i + 1);
+            setAudioListenCount(0);
+          } else {
+            handleTabChange("quiz");
+          }
+        } else if (e.key === " " || e.code === "Space") {
+          e.preventDefault();
+          playWordAudio(currentFlashcard.word, currentFlashcard.audioUrl);
+        } else if (e.key === "1") {
+          e.preventDefault();
+          updateWord(currentFlashcard.id, "learning");
+        } else if (e.key === "2") {
+          e.preventDefault();
+          handleMasterCurrentWord();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeTab, flashcardMode, currentFlashcard, currentCardIndex, unit]);
 
   // 10 Targeted Quiz Questions (Vocab, Collocations, IPA, Grammar, Topic)
   interface QuizItem {
@@ -355,6 +441,64 @@ export default function Grade11UnitDetailPage() {
     <AppShell>
       {/* SCREEN VIEW (HIDDEN WHEN PRINTING) */}
       <div className="mx-auto max-w-6xl pb-16 print:hidden">
+        {/* BREADCRUMB & QUICK UNIT NAV */}
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm mb-4">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-slate-500 font-medium">
+            <Link href="/" className="hover:text-indigo-600 transition-colors">Trang chủ</Link>
+            <span className="text-slate-300">/</span>
+            <Link href="/curriculum" className="hover:text-indigo-600 transition-colors">Chương trình THPT</Link>
+            <span className="text-slate-300">/</span>
+            <Link href="/curriculum/grade-11" className="hover:text-indigo-600 transition-colors">Lớp 11</Link>
+            <span className="text-slate-300">/</span>
+            <span className="font-bold text-slate-900 truncate max-w-[180px] sm:max-w-none">
+              {unit.isReview ? unit.titleEn : `Unit ${unit.unitNumber}`}
+            </span>
+          </nav>
+
+          {/* Quick Next/Prev Unit Jump */}
+          <div className="flex items-center gap-2">
+            {prevUnit ? (
+              <Link
+                href={`/curriculum/grade-11/${prevUnit.slug}`}
+                className="inline-flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-indigo-600 bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 hover:bg-slate-50 shadow-2xs transition-colors"
+                title={`Bài trước: ${prevUnit.titleEn}`}
+              >
+                <ChevronLeft className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Bài trước</span>
+              </Link>
+            ) : null}
+
+            {/* Unit Dropdown Switcher */}
+            <select
+              aria-label="Chọn bài học Unit"
+              value={unit.slug}
+              onChange={(e) => {
+                if (typeof window !== "undefined") {
+                  window.location.href = `/curriculum/grade-11/${e.target.value}`;
+                }
+              }}
+              className="text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 shadow-2xs hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
+            >
+              {GRADE_11_CURRICULUM.map((u) => (
+                <option key={u.slug} value={u.slug}>
+                  {u.isReview ? u.titleEn : `Unit ${u.unitNumber}: ${u.titleEn}`}
+                </option>
+              ))}
+            </select>
+
+            {nextUnit ? (
+              <Link
+                href={`/curriculum/grade-11/${nextUnit.slug}`}
+                className="inline-flex items-center gap-1 text-xs font-bold text-indigo-700 hover:text-indigo-900 bg-indigo-50 border border-indigo-200 rounded-xl px-2.5 py-1.5 hover:bg-indigo-100 shadow-2xs transition-colors"
+                title={`Bài kế: ${nextUnit.titleEn}`}
+              >
+                <span className="hidden sm:inline">Bài tiếp</span>
+                <ChevronRight className="h-3.5 w-3.5" />
+              </Link>
+            ) : null}
+          </div>
+        </div>
+
         {/* TOP HEADER & SEGMENTED TABS BAR (MATCHING USER SCREENSHOT IMAGE 1) */}
         <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs mb-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
@@ -377,7 +521,7 @@ export default function Grade11UnitDetailPage() {
             {/* Right Column: Segmented Control Tabs */}
             <div className="flex items-center rounded-2xl bg-slate-100/80 p-1.5 overflow-x-auto shrink-0 border border-slate-200/60">
               <button
-                onClick={() => setActiveTab("vocab")}
+                onClick={() => handleTabChange("vocab")}
                 className={`rounded-xl px-4 sm:px-5 py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === "vocab"
                     ? "border border-slate-900 bg-white text-indigo-700 shadow-xs"
@@ -388,7 +532,7 @@ export default function Grade11UnitDetailPage() {
               </button>
 
               <button
-                onClick={() => setActiveTab("grammar")}
+                onClick={() => handleTabChange("grammar")}
                 className={`rounded-xl px-4 sm:px-5 py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === "grammar"
                     ? "border border-slate-900 bg-white text-indigo-700 shadow-xs"
@@ -399,7 +543,7 @@ export default function Grade11UnitDetailPage() {
               </button>
 
               <button
-                onClick={() => setActiveTab("reading")}
+                onClick={() => handleTabChange("reading")}
                 className={`rounded-xl px-4 sm:px-5 py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === "reading"
                     ? "border border-slate-900 bg-white text-indigo-700 shadow-xs"
@@ -410,7 +554,7 @@ export default function Grade11UnitDetailPage() {
               </button>
 
               <button
-                onClick={() => setActiveTab("objectives")}
+                onClick={() => handleTabChange("objectives")}
                 className={`rounded-xl px-4 sm:px-5 py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === "objectives"
                     ? "border border-slate-900 bg-white text-indigo-700 shadow-xs"
@@ -421,7 +565,7 @@ export default function Grade11UnitDetailPage() {
               </button>
 
               <button
-                onClick={() => setActiveTab("quiz")}
+                onClick={() => handleTabChange("quiz")}
                 className={`rounded-xl px-4 sm:px-5 py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === "quiz"
                     ? "border border-slate-900 bg-white text-indigo-700 shadow-xs"
@@ -715,7 +859,7 @@ export default function Grade11UnitDetailPage() {
                           setCurrentCardIndex((i) => i + 1);
                           setAudioListenCount(0);
                         } else {
-                          setActiveTab("quiz");
+                          handleTabChange("quiz");
                         }
                       }}
                       className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white shadow-xs py-2.5 px-4 cursor-pointer"
@@ -728,6 +872,23 @@ export default function Grade11UnitDetailPage() {
                         "Làm bài kiểm tra (10 câu)"
                       )}
                     </Button>
+                  </div>
+
+                  {/* Keyboard shortcuts helper pills */}
+                  <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-center gap-2 text-[11px] text-slate-500">
+                    <span className="font-semibold text-slate-400">Phím tắt nhanh:</span>
+                    <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 font-mono font-medium text-slate-700 border border-slate-200">
+                      <kbd>←</kbd> / <kbd>→</kbd> Đổi thẻ
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 font-mono font-medium text-slate-700 border border-slate-200">
+                      <kbd>Space</kbd> Phát âm
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-md bg-amber-50 px-2 py-0.5 font-mono font-semibold text-amber-800 border border-amber-200">
+                      <kbd>1</kbd> Ôn lại
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 font-mono font-semibold text-emerald-800 border border-emerald-200">
+                      <kbd>2</kbd> Thuộc từ (+10XP)
+                    </span>
                   </div>
                 </div>
               </div>
