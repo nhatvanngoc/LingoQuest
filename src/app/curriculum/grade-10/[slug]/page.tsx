@@ -562,6 +562,25 @@ export default function Grade10UnitDetailPage() {
 
                         {/* Word & IPA Center */}
                         <div className="text-center py-4">
+                          {currentFlashcard.imageUrl && (
+                            <div className="relative w-full max-w-md mx-auto h-40 sm:h-48 mb-4 overflow-hidden rounded-2xl border border-slate-200 shadow-inner bg-slate-100">
+                              <img
+                                src={currentFlashcard.imageUrl}
+                                alt={currentFlashcard.word}
+                                className="h-full w-full object-cover"
+                                loading="lazy"
+                                onError={(e) => {
+                                  (e.currentTarget as HTMLElement).style.display = "none";
+                                }}
+                              />
+                              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-3 py-1.5 text-center pointer-events-none">
+                                <span className="text-[11px] font-medium text-white/95">
+                                  💡 Nhìn ảnh thực tế đoán nghĩa
+                                </span>
+                              </div>
+                            </div>
+                          )}
+
                           <h2
                             className={`font-heading font-black text-slate-900 tracking-tight transition-all ${
                               isLargeText ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl"

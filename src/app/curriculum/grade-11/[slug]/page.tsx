@@ -695,6 +695,26 @@ export default function Grade11UnitDetailPage() {
 
                 {/* THE CUSTOM FLASHCARD CARD (MATCHING USER SCREENSHOT IMAGE 2) */}
                 <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 lg:p-9 shadow-sm transition-all">
+                  {/* Real-world Illustrative Photo */}
+                  {currentFlashcard.imageUrl && (
+                    <div className="relative w-full h-44 sm:h-52 mb-6 overflow-hidden rounded-2xl border border-slate-200 shadow-inner bg-slate-100">
+                      <img
+                        src={currentFlashcard.imageUrl}
+                        alt={currentFlashcard.word}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLElement).style.display = "none";
+                        }}
+                      />
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-3 py-1.5 text-center pointer-events-none">
+                        <span className="text-[11px] font-medium text-white/95">
+                          💡 Nhìn ảnh thực tế đoán nghĩa
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Row 1: Word + Part of Speech Badge + Speaker Button */}
                   <div className="flex items-start justify-between gap-4">
                     <div>

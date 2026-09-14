@@ -191,7 +191,15 @@ function StepVideo({ lesson, onNext }: { lesson: any; onNext: () => void }) {
 
 function StepFlashcard({ lessonId, vocab, onNext, onBack }: { lessonId: string; vocab: VocabItem[]; onNext: () => void; onBack: () => void }) {
   const { recordCard } = useApp();
-  const cards: FlashCardData[] = vocab.map((v) => ({ id: v.id, front: v.word, phonetic: v.phonetic, back: v.meaning, example: v.example, exampleVi: v.exampleVi }));
+  const cards: FlashCardData[] = vocab.map((v) => ({
+    id: v.id,
+    front: v.word,
+    phonetic: v.phonetic,
+    back: v.meaning,
+    example: v.example,
+    exampleVi: v.exampleVi,
+    image: v.image,
+  }));
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
 

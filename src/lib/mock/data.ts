@@ -74,6 +74,7 @@ export const LESSONS: Lesson[] = [
         example: "I had a relaxing weekend at home.",
         exampleVi: "Tôi đã có một cuối tuần thư giãn ở nhà.",
         start: 18,
+        image: "https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "v2",
@@ -83,6 +84,7 @@ export const LESSONS: Lesson[] = [
         example: "We hung out at the mall all afternoon.",
         exampleVi: "Chúng tôi đi chơi ở trung tâm thương mại cả buổi chiều.",
         start: 52,
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "v3",
@@ -92,6 +94,7 @@ export const LESSONS: Lesson[] = [
         example: "After the hike I was completely exhausted.",
         exampleVi: "Sau chuyến đi bộ đường dài tôi hoàn toàn kiệt sức.",
         start: 96,
+        image: "https://images.unsplash.com/photo-1541199249251-f713e6145474?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "v4",
@@ -101,6 +104,7 @@ export const LESSONS: Lesson[] = [
         example: "The pizza was absolutely delicious.",
         exampleVi: "Bánh pizza đó thực sự rất ngon.",
         start: 138,
+        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
       },
     ],
   },
@@ -123,6 +127,7 @@ export const LESSONS: Lesson[] = [
         example: "Can I see the menu, please?",
         exampleVi: "Làm ơn cho tôi xem thực đơn.",
         start: 25,
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "food2",
@@ -132,6 +137,7 @@ export const LESSONS: Lesson[] = [
         example: "I'd like to order the steak.",
         exampleVi: "Tôi muốn gọi món bít tết.",
         start: 84,
+        image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "food3",
@@ -141,6 +147,7 @@ export const LESSONS: Lesson[] = [
         example: "We reserved a table for two.",
         exampleVi: "Chúng tôi đã đặt trước một bàn cho hai người.",
         start: 143,
+        image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "food4",
@@ -150,6 +157,7 @@ export const LESSONS: Lesson[] = [
         example: "The soup is a good appetizer.",
         exampleVi: "Món súp là một món khai vị ngon.",
         start: 202,
+        image: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "food5",
@@ -159,6 +167,7 @@ export const LESSONS: Lesson[] = [
         example: "I'll have the chicken as my main course.",
         exampleVi: "Tôi sẽ gọi món gà làm món chính.",
         start: 261,
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "food6",
@@ -168,6 +177,7 @@ export const LESSONS: Lesson[] = [
         example: "What do you recommend for dessert?",
         exampleVi: "Bạn gợi ý món tráng miệng nào?",
         start: 320,
+        image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "food7",
@@ -538,6 +548,7 @@ export const DECKS: Deck[] = [
         back: "thư giãn",
         example: "a relaxing weekend",
         exampleVi: "một cuối tuần thư giãn",
+        image: "https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c2",
@@ -546,6 +557,7 @@ export const DECKS: Deck[] = [
         back: "đi chơi với bạn bè",
         example: "We hung out at the park.",
         exampleVi: "Chúng tôi đã đi chơi ở công viên.",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c3",
@@ -554,6 +566,7 @@ export const DECKS: Deck[] = [
         back: "kiệt sức",
         example: "I'm exhausted from work.",
         exampleVi: "Tôi kiệt sức vì công việc.",
+        image: "https://images.unsplash.com/photo-1541199249251-f713e6145474?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c4",
@@ -562,6 +575,7 @@ export const DECKS: Deck[] = [
         back: "ngon miệng",
         example: "a delicious meal",
         exampleVi: "một bữa ăn ngon",
+        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c5",
@@ -570,6 +584,7 @@ export const DECKS: Deck[] = [
         back: "cuộc phiêu lưu",
         example: "a great adventure",
         exampleVi: "một cuộc phiêu lưu tuyệt vời",
+        image: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c6",
@@ -578,6 +593,7 @@ export const DECKS: Deck[] = [
         back: "đồ tạp hóa",
         example: "buy weekly groceries",
         exampleVi: "mua đồ tạp hóa hàng tuần",
+        image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c7",
@@ -586,6 +602,7 @@ export const DECKS: Deck[] = [
         back: "ngủ nướng",
         example: "I love to sleep in on Sundays.",
         exampleVi: "Tôi thích ngủ nướng vào chủ nhật.",
+        image: "https://images.unsplash.com/photo-1520206183501-b80df61043c2?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c8",
@@ -594,6 +611,7 @@ export const DECKS: Deck[] = [
         back: "buổi dã ngoại / ăn trưa ngoài trời",
         example: "We had a picnic by the lake.",
         exampleVi: "Chúng tôi đã có buổi dã ngoại bên hồ.",
+        image: "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c9",
@@ -602,6 +620,7 @@ export const DECKS: Deck[] = [
         back: "lười biếng",
         example: "a lazy Sunday afternoon",
         exampleVi: "một chiều chủ nhật lười biếng",
+        image: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c10",
@@ -610,6 +629,7 @@ export const DECKS: Deck[] = [
         back: "tiệc nướng BBQ",
         example: "We had a barbecue in the garden.",
         exampleVi: "Chúng tôi đã tổ chức tiệc nướng trong vườn.",
+        image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c11",
@@ -618,6 +638,7 @@ export const DECKS: Deck[] = [
         back: "đi dạo thong thả",
         example: "a leisurely stroll in the park",
         exampleVi: "một cuộc dạo chơi thong thả trong công viên",
+        image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=800&q=80",
       },
       {
         id: "c12",
@@ -626,15 +647,89 @@ export const DECKS: Deck[] = [
         back: "nạp lại năng lượng",
         example: "Weekends help me recharge.",
         exampleVi: "Cuối tuần giúp tôi nạp lại năng lượng",
+        image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
       },
     ],
   },
   {
     id: "deck-2",
     title: "Giao tiếp nhà hàng",
-    total: 20,
-    learned: 12,
-    cards: [],
+    total: 8,
+    learned: 4,
+    cards: [
+      {
+        id: "r1",
+        front: "menu",
+        phonetic: "/ˈmenjuː/",
+        back: "thực đơn",
+        example: "Could we see the menu, please?",
+        exampleVi: "Cho chúng tôi xem thực đơn được không?",
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "r2",
+        front: "order",
+        phonetic: "/ˈɔːrdər/",
+        back: "gọi món / đặt món",
+        example: "Are you ready to order?",
+        exampleVi: "Quý khách đã sẵn sàng gọi món chưa?",
+        image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "r3",
+        front: "appetizer",
+        phonetic: "/ˈæpɪtaɪzər/",
+        back: "món khai vị",
+        example: "We'd like soup as an appetizer.",
+        exampleVi: "Chúng tôi muốn dùng món súp làm khai vị.",
+        image: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "r4",
+        front: "main course",
+        phonetic: "/meɪn kɔːrs/",
+        back: "món chính",
+        example: "For the main course, I'll have steak.",
+        exampleVi: "Món chính, tôi chọn món bít tết.",
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "r5",
+        front: "dessert",
+        phonetic: "/dɪˈzɜːrt/",
+        back: "món tráng miệng",
+        example: "Chocolate cake for dessert, please.",
+        exampleVi: "Làm ơn cho bánh sô cô la làm món tráng miệng.",
+        image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "r6",
+        front: "bill / check",
+        phonetic: "/bɪl/",
+        back: "hóa đơn thanh toán",
+        example: "Could we have the bill, please?",
+        exampleVi: "Làm ơn cho chúng tôi xin hóa đơn.",
+        image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "r7",
+        front: "reservation",
+        phonetic: "/ˌrezərˈveɪʃn/",
+        back: "sự đặt bàn trước",
+        example: "I have a reservation for two.",
+        exampleVi: "Tôi có đặt trước một bàn cho hai người.",
+        image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "r8",
+        front: "waiter",
+        phonetic: "/ˈweɪtər/",
+        back: "người bồi bàn",
+        example: "The waiter was polite and helpful.",
+        exampleVi: "Người bồi bàn rất lịch sự và nhiệt tình.",
+        image: "https://images.unsplash.com/photo-1581349485608-9469926a8e5e?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
   },
 ];
 

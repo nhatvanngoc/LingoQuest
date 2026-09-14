@@ -35,6 +35,7 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith("/api/classroom") ||
     pathname.startsWith("/api/lessons") ||
     pathname.startsWith("/api/assignments") ||
+    pathname.startsWith("/api/flashcards") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     pathname === "/favicon.ico";

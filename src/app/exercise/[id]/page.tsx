@@ -590,37 +590,86 @@ export default function UnifiedExercisePage() {
                   >
                     {!isFlipped ? (
                       /* Mặt trước: Tiếng Anh */
-                      <div className="flex flex-col items-center justify-center flex-1 text-center">
-                        <span className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Mặt trước • Từ vựng mục tiêu</span>
+                      <div className="flex flex-col items-center justify-center flex-1 text-center w-full">
+                        <div className="flex items-center justify-between w-full mb-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-teal-600">Mặt trước • Từ vựng mục tiêu</span>
+                          {currentCard.image && (
+                            <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[10px] font-extrabold text-teal-700 border border-teal-200">
+                              📷 Ảnh thực tế
+                            </span>
+                          )}
+                        </div>
+
+                        {currentCard.image && (
+                          <div className="relative w-full h-36 sm:h-40 mb-3 overflow-hidden rounded-2xl border border-teal-200/60 shadow-inner bg-slate-100">
+                            <img
+                              src={currentCard.image}
+                              alt={currentCard.word}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLElement).style.display = "none";
+                              }}
+                            />
+                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-3 py-1 text-center pointer-events-none">
+                              <span className="text-[11px] font-medium text-white/95">
+                                💡 Nhìn ảnh thực tế đoán nghĩa
+                              </span>
+                            </div>
+                          </div>
+                        )}
+
                         <div className="flex items-center justify-center gap-2.5">
-                          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">{currentCard.word}</h2>
+                          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{currentCard.word}</h2>
                           <button
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               speakWord(currentCard.word);
                             }}
-                            className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors shadow-xs"
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors shadow-xs"
                             title="Nghe phát âm (Phím P)"
                           >
-                            <Volume2 className="h-5 w-5" />
+                            <Volume2 className="h-4 w-4" />
                           </button>
                         </div>
                         {currentCard.phonetic && (
                           <p className="mt-1 text-sm font-mono text-slate-500 font-semibold">{currentCard.phonetic}</p>
                         )}
-                        <div className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-4 py-1.5 text-xs font-bold text-teal-700 border border-teal-200/80 shadow-2xs">
+                        <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-3.5 py-1 text-xs font-bold text-teal-700 border border-teal-200/80 shadow-2xs">
                           <span>Nhấn thẻ hoặc phím [Space] để xem nghĩa</span>
                           <span className="text-teal-500 font-black">➔</span>
                         </div>
                       </div>
                     ) : (
                       /* Mặt sau: Nghĩa & Ví dụ */
-                      <div className="flex flex-col justify-center flex-1 text-center">
-                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Mặt sau • Nghĩa tiếng Việt</span>
+                      <div className="flex flex-col justify-center flex-1 text-center w-full">
+                        <div className="flex items-center justify-between w-full mb-1">
+                          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">Mặt sau • Nghĩa tiếng Việt</span>
+                          {currentCard.image && (
+                            <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-extrabold text-emerald-700 border border-emerald-200">
+                              ✓ Minh họa chuẩn
+                            </span>
+                          )}
+                        </div>
+
+                        {currentCard.image && (
+                          <div className="relative w-full h-24 sm:h-28 mb-2.5 overflow-hidden rounded-xl border border-emerald-200/60 shadow-xs bg-slate-100">
+                            <img
+                              src={currentCard.image}
+                              alt={currentCard.word}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                            />
+                            <div className="absolute bottom-1 right-2 rounded-md bg-black/60 backdrop-blur-xs px-2 py-0.5 text-[10px] font-bold text-white">
+                              {currentCard.word}
+                            </div>
+                          </div>
+                        )}
+
                         <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">{currentCard.meaning}</h3>
                         {currentCard.example && (
-                          <div className="mt-4 rounded-xl bg-slate-50/90 border border-slate-100 p-3.5 text-left">
+                          <div className="mt-3 rounded-xl bg-slate-50/90 border border-slate-100 p-3 text-left">
                             <div className="flex items-start justify-between gap-2">
                               <p className="text-xs sm:text-sm font-semibold text-slate-800 italic flex-1">"{currentCard.example}"</p>
                               <button
@@ -640,7 +689,7 @@ export default function UnifiedExercisePage() {
                             )}
                           </div>
                         )}
-                        <div className="mt-4 inline-flex items-center justify-center gap-1.5 text-xs font-bold text-slate-400">
+                        <div className="mt-3 inline-flex items-center justify-center gap-1.5 text-xs font-bold text-slate-400">
                           <span>Nhấn thẻ để quay lại mặt trước</span> ↺
                         </div>
                       </div>

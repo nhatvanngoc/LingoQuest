@@ -73,6 +73,7 @@ export const GRADE_10_CURRICULUM: Grade10Unit[] = [
         meaningVi: "người trụ cột đi làm nuôi gia đình",
         ipa: "/ˈbredwɪnə(r)/",
         audioUrl: "https://img.loigiaihay.com/picture/2021/1103/breadwinner.mp3",
+        imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
         exampleEn: "In modern society, both husband and wife often act as breadwinners.",
         exampleVi: "Trong xã hội hiện đại, cả vợ và chồng thường cùng là trụ cột kinh tế.",
         collocations: ["family breadwinner", "sole breadwinner", "primary breadwinner"]
@@ -84,6 +85,7 @@ export const GRADE_10_CURRICULUM: Grade10Unit[] = [
         meaningVi: "người nội trợ, người chăm lo tổ ấm",
         ipa: "/ˈhəʊmmeɪkə(r)/",
         audioUrl: "https://img.loigiaihay.com/picture/2021/1103/homemaker.mp3",
+        imageUrl: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80",
         exampleEn: "Being a homemaker is hard work that requires great organizational skills.",
         exampleVi: "Làm người nội trợ là công việc vất vả đòi hỏi kỹ năng sắp xếp tuyệt vời.",
         collocations: ["dedicated homemaker", "full-time homemaker"]
@@ -95,6 +97,7 @@ export const GRADE_10_CURRICULUM: Grade10Unit[] = [
         meaningVi: "việc vặt trong nhà, công việc thường nhật",
         ipa: "/tʃɔːr/",
         audioUrl: "https://img.loigiaihay.com/picture/2021/1103/chore.mp3",
+        imageUrl: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
         exampleEn: "Doing household chores helps teenagers develop essential life skills.",
         exampleVi: "Làm việc vặt trong nhà giúp thanh thiếu niên phát triển các kỹ năng sống thiết yếu.",
         collocations: ["do household chores", "share chores equally", "daily chores"]
@@ -106,6 +109,7 @@ export const GRADE_10_CURRICULUM: Grade10Unit[] = [
         meaningVi: "công việc mang vác nặng nhọc",
         ipa: "/ˌhevi ˈlɪftɪŋ/",
         audioUrl: "https://img.loigiaihay.com/picture/2021/1103/heavy_lifting.mp3",
+        imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
         exampleEn: "My brother usually does the heavy lifting in our house.",
         exampleVi: "Anh trai tôi thường làm các công việc mang vác nặng trong nhà.",
         collocations: ["do the heavy lifting", "heavy lifting work"]
@@ -117,6 +121,7 @@ export const GRADE_10_CURRICULUM: Grade10Unit[] = [
         meaningVi: "thực phẩm và tạp hóa gia đình",
         ipa: "/ˈɡrəʊsəriz/",
         audioUrl: "https://img.loigiaihay.com/picture/2021/1103/groceries.mp3",
+        imageUrl: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
         exampleEn: "My mother usually shops for groceries at the local supermarket on weekends.",
         exampleVi: "Mẹ tôi thường mua đồ tạp hóa ở siêu thị địa phương vào dịp cuối tuần.",
         collocations: ["shop for groceries", "buy groceries", "carry groceries"]
@@ -128,6 +133,7 @@ export const GRADE_10_CURRICULUM: Grade10Unit[] = [
         meaningVi: "trách nhiệm, bổn phận",
         ipa: "/rɪˌspɒnsəˈbɪləti/",
         audioUrl: "https://img.loigiaihay.com/picture/2021/1103/responsibility.mp3",
+        imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
         exampleEn: "Children should take responsibility for keeping their study area tidy.",
         exampleVi: "Con cái nên nhận trách nhiệm giữ cho góc học tập của mình ngăn nắp.",
         collocations: ["take responsibility", "household responsibility", "sense of responsibility"]
@@ -139,6 +145,7 @@ export const GRADE_10_CURRICULUM: Grade10Unit[] = [
         meaningVi: "lòng biết ơn, sự cảm kích",
         ipa: "/ˈɡrætɪtjuːd/",
         audioUrl: "https://img.loigiaihay.com/picture/2021/1103/gratitude.mp3",
+        imageUrl: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=800&q=80",
         exampleEn: "We should express our gratitude to parents for their unconditional love.",
         exampleVi: "Chúng ta nên bày tỏ lòng biết ơn đối với cha mẹ vì tình yêu thương vô điều kiện.",
         collocations: ["express gratitude", "feel deep gratitude", "show gratitude"]

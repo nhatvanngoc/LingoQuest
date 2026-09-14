@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Volume2, Check, X, RotateCw, Sparkles } from "lucide-react";
+import { Volume2, Check, X, RotateCw, Sparkles, Camera } from "lucide-react";
 import type { FlashCardData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { sound } from "@/lib/sound";
@@ -42,6 +42,8 @@ export function FlashCard({
   const rotateY = useSpring(useTransform(x, [-100, 100], [-8, 8]), { stiffness: 300, damping: 20 });
   const glareX = useTransform(x, [-100, 100], [0, 100]);
   const glareY = useTransform(y, [-100, 100], [0, 100]);
+  const glareLeft = useTransform(glareX, [0, 100], ["10%", "40%"]);
+  const glareTop = useTransform(glareY, [0, 100], ["10%", "40%"]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current || flipped) return;
@@ -82,7 +84,7 @@ export function FlashCard({
           style={{
             rotateX: flipped ? 0 : rotateX,
             rotateY: flipped ? 0 : rotateY,
-            height: compact ? 380 : 460,
+            height: compact ? (card.image ? 420 : 380) : (card.image ? 520 : 460),
           }}
           className="relative block w-full cursor-pointer text-left select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-[2rem]"
           aria-label={flipped ? "Mặt sau thẻ, nhấn để lật lại" : "Mặt trước thẻ, nhấn để xem nghĩa"}
@@ -96,38 +98,67 @@ export function FlashCard({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
-                className="group absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-slate-200/60 bg-gradient-to-br from-white via-white to-brand-50/50 p-8 shadow-card hover:shadow-lift transition-shadow"
+                className={cn(
+                  "group absolute inset-0 flex flex-col items-center overflow-hidden rounded-[2rem] border border-slate-200/60 bg-gradient-to-br from-white via-white to-brand-50/50 shadow-card hover:shadow-lift transition-shadow",
+                  card.image ? "p-5 sm:p-6 justify-between" : "p-8 justify-center"
+                )}
               >
                 {/* mesh & spotlight */}
-                <div className="absolute inset-0 bg-mesh-brand opacity-40" />
+                <div className="absolute inset-0 bg-mesh-brand opacity-40 pointer-events-none" />
                 <motion.div
                   className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-brand-100/60 to-violet-100/40 blur-2xl pointer-events-none"
                   style={{
-                    left: useTransform(glareX, [0, 100], ["10%", "40%"]),
-                    top: useTransform(glareY, [0, 100], ["10%", "40%"]),
+                    left: glareLeft,
+                    top: glareTop,
                   } as any}
                 />
                 
-                <div className="relative z-10 flex flex-col items-center">
-                  <motion.span
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.05 }}
-                    className="relative overflow-hidden rounded-full border border-brand-200 bg-gradient-to-r from-brand-50 to-violet-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand shadow-soft"
-                  >
-                    <span className="relative flex items-center gap-1">
-                      <Sparkles className="h-3 w-3" /> Mặt trước • Từ vựng
-                    </span>
-                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-[shimmer_2s_linear_infinite]" />
-                  </motion.span>
+                <div className="relative z-10 flex flex-col items-center w-full">
+                  <div className="flex items-center justify-between w-full mb-3">
+                    <motion.span
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.05 }}
+                      className="relative overflow-hidden rounded-full border border-brand-200 bg-gradient-to-r from-brand-50 to-violet-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand shadow-soft"
+                    >
+                      <span className="relative flex items-center gap-1">
+                        <Sparkles className="h-3 w-3" /> Mặt trước • Từ vựng
+                      </span>
+                    </motion.span>
+                    {card.image && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-100/90 border border-slate-200/80 px-2.5 py-0.5 text-[11px] font-semibold text-slate-600 shadow-2xs">
+                        <Camera className="h-3 w-3 text-brand" /> Ảnh thực tế
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Real-world Illustrative Photo */}
+                  {card.image && (
+                    <div className="relative w-full h-40 sm:h-44 mb-3 overflow-hidden rounded-2xl border border-slate-200/80 shadow-inner bg-slate-100 group-hover:scale-[1.01] transition-transform">
+                      <img
+                        src={card.image}
+                        alt={card.front}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLElement).style.display = "none";
+                        }}
+                      />
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-3 py-1.5 text-center pointer-events-none">
+                        <span className="text-[11px] font-medium text-white/95 drop-shadow-sm">
+                          💡 Nhìn ảnh thực tế đoán nghĩa
+                        </span>
+                      </div>
+                    </div>
+                  )}
                   
-                  <h2 className="mt-5 text-center text-4xl font-extrabold tracking-tight text-slate-900">
+                  <h2 className={cn("text-center font-extrabold tracking-tight text-slate-900", card.image ? "text-3xl" : "text-4xl mt-3")}>
                     <span className="bg-gradient-to-br from-slate-900 to-slate-700 bg-clip-text text-transparent">
                       {card.front}
                     </span>
                   </h2>
                   {card.phonetic && (
-                    <p className="mt-2 text-lg font-semibold text-slate-400 font-mono">
+                    <p className="mt-1 text-base sm:text-lg font-semibold text-slate-400 font-mono">
                       {card.phonetic}
                     </p>
                   )}
@@ -139,10 +170,13 @@ export function FlashCard({
                       e.stopPropagation();
                       speak(card.front);
                     }}
-                    className="group/btn relative mt-6 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-brand to-brand-700 text-white shadow-glow-brand transition-all hover:shadow-glow-brand"
+                    className={cn(
+                      "group/btn relative flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-brand to-brand-700 text-white shadow-glow-brand transition-all hover:shadow-glow-brand",
+                      card.image ? "mt-2.5 h-11 w-11" : "mt-6 h-14 w-14"
+                    )}
                     aria-label="Phát âm"
                   >
-                    <Volume2 className="h-6 w-6 relative z-10" />
+                    <Volume2 className={card.image ? "h-5 w-5 relative z-10" : "h-6 w-6 relative z-10"} />
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                     <motion.div
                       animate={isHover ? { scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] } : {}}
@@ -150,7 +184,8 @@ export function FlashCard({
                       className="absolute inset-0 rounded-full bg-brand-400 blur-md"
                     />
                   </motion.button>
-                  <div className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-4 py-1.5 text-xs font-bold text-brand border border-brand-200/80 shadow-2xs">
+
+                  <div className={cn("inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3.5 py-1 text-xs font-bold text-brand border border-brand-200/80 shadow-2xs", card.image ? "mt-3" : "mt-6")}>
                     <span>Nhấn thẻ hoặc phím [Space] để xem nghĩa</span>
                     <span className="font-black">➔</span>
                   </div>
@@ -174,25 +209,54 @@ export function FlashCard({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.15, ease: "easeOut" }}
-                className="absolute inset-0 flex flex-col justify-center gap-3 overflow-hidden rounded-[2rem] border border-success-200/50 bg-gradient-to-br from-success-50 via-white to-emerald-50/60 p-8 shadow-card hover:shadow-lift transition-shadow"
+                className={cn(
+                  "absolute inset-0 flex flex-col overflow-hidden rounded-[2rem] border border-success-200/50 bg-gradient-to-br from-success-50 via-white to-emerald-50/60 shadow-card hover:shadow-lift transition-shadow",
+                  card.image ? "p-5 sm:p-6 justify-between" : "p-8 justify-center gap-3"
+                )}
               >
-                <div className="absolute inset-0 bg-mesh-vibrant opacity-30" />
-                <div className="relative z-10 flex flex-col gap-3">
-                  <span className="inline-flex w-fit items-center gap-1 rounded-full bg-gradient-to-r from-success to-emerald-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-glow-success">
-                    <Check className="h-3 w-3" /> Mặt sau • Nghĩa tiếng Việt
-                  </span>
-                  <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
-                    {card.back}
-                  </h2>
-                  {card.example && (
-                    <div className="mt-2 rounded-2xl border border-success-100 bg-white/80 backdrop-blur p-4 shadow-soft">
-                      <p className="text-base font-semibold text-slate-700">“{card.example}”</p>
-                      {card.exampleVi && (
-                        <p className="mt-1 text-sm text-slate-500">{card.exampleVi}</p>
+                <div className="absolute inset-0 bg-mesh-vibrant opacity-30 pointer-events-none" />
+                <div className="relative z-10 flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="inline-flex w-fit items-center gap-1 rounded-full bg-gradient-to-r from-success to-emerald-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-glow-success">
+                        <Check className="h-3 w-3" /> Mặt sau • Nghĩa tiếng Việt
+                      </span>
+                      {card.image && (
+                        <span className="text-[11px] font-bold text-emerald-700 bg-emerald-100/70 border border-emerald-200/60 rounded-full px-2 py-0.5">
+                          ✓ Minh họa chuẩn
+                        </span>
                       )}
                     </div>
-                  )}
-                  <div className="mt-1 flex items-center justify-between">
+
+                    {/* Context image in Back Face */}
+                    {card.image && (
+                      <div className="relative w-full h-24 sm:h-28 mb-3 overflow-hidden rounded-xl border border-emerald-200/60 shadow-xs bg-slate-100">
+                        <img
+                          src={card.image}
+                          alt={card.front}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute bottom-1 right-2 rounded-md bg-black/60 backdrop-blur-xs px-2 py-0.5 text-[10px] font-bold text-white">
+                          {card.front}
+                        </div>
+                      </div>
+                    )}
+
+                    <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+                      {card.back}
+                    </h2>
+                    {card.example && (
+                      <div className="mt-2 rounded-2xl border border-success-100 bg-white/80 backdrop-blur p-3.5 shadow-soft">
+                        <p className="text-sm sm:text-base font-semibold text-slate-700">“{card.example}”</p>
+                        {card.exampleVi && (
+                          <p className="mt-1 text-xs sm:text-sm text-slate-500">{card.exampleVi}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between pt-2 border-t border-emerald-100/60">
                     {card.example && (
                       <motion.button
                         whileHover={{ scale: 1.02, x: 2 }}
@@ -201,7 +265,7 @@ export function FlashCard({
                           e.stopPropagation();
                           speak(card.example);
                         }}
-                        className="inline-flex w-fit items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm font-bold text-slate-600 shadow-soft hover:text-brand hover:border-brand-200 hover:shadow-glow-brand transition-all"
+                        className="inline-flex w-fit items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs sm:text-sm font-bold text-slate-600 shadow-soft hover:text-brand hover:border-brand-200 hover:shadow-glow-brand transition-all"
                       >
                         <Volume2 className="h-4 w-4" /> Nghe ví dụ
                       </motion.button>
