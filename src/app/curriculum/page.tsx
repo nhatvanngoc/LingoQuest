@@ -10,18 +10,27 @@ import {
   Layers,
   FileCheck,
   CheckCircle2,
-  Lock,
   Compass,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { useRole } from "@/lib/auth/role-context";
+import { GRADE_10_CURRICULUM } from "@/lib/curriculum/grade10-data";
 import { GRADE_11_CURRICULUM } from "@/lib/curriculum/grade11-data";
+import { GRADE_12_CURRICULUM } from "@/lib/curriculum/grade12-data";
 
 export default function CurriculumHubPage() {
   const { user } = useRole();
 
+  const totalVocabGrade10 = GRADE_10_CURRICULUM.reduce(
+    (acc, u) => acc + (u.vocabulary?.length || 0),
+    0
+  );
   const totalVocabGrade11 = GRADE_11_CURRICULUM.reduce(
+    (acc, u) => acc + (u.vocabulary?.length || 0),
+    0
+  );
+  const totalVocabGrade12 = GRADE_12_CURRICULUM.reduce(
     (acc, u) => acc + (u.vocabulary?.length || 0),
     0
   );
@@ -32,19 +41,24 @@ export default function CurriculumHubPage() {
       title: "Tiếng Anh Lớp 10 — Global Success",
       subtitle: "Khởi đầu cấp THPT & Nền tảng CEFR A2 → B1",
       unitsCount: 10,
-      grammarCount: 12,
-      status: "coming_soon",
-      statusLabel: "Lộ trình 2026-2027",
-      href: "/curriculum/grade-11", // Friendly redirect or explore
-      color: "from-blue-600 to-indigo-700",
-      bgLight: "bg-blue-50/50 border-blue-200",
+      reviewsCount: 4,
+      grammarCount: 14,
+      vocabCount: totalVocabGrade10,
+      status: "active",
+      statusLabel: "Đầy đủ 10 Units + 4 Reviews",
+      href: "/curriculum/grade-10",
+      themeColor: "blue",
+      btnClass: "bg-blue-600 hover:bg-blue-700 text-white",
+      borderClass: "border-blue-300 ring-2 ring-blue-500/20",
+      badge: "SẴN SÀNG HỌC",
+      badgeClass: "from-blue-600 to-indigo-600",
       description:
-        "Tập trung xây dựng nền tảng từ vựng học thuật, phát âm chuẩn IPA và phản xạ giao tiếp đời sống THPT.",
+        "Tập trung xây dựng nền tảng từ vựng học thuật, phát âm chuẩn IPA và phản xạ giao tiếp đời sống THPT: Gia đình, Môi trường, Âm nhạc, Đổi mới học tập và Sinh thái.",
     },
     {
       grade: 11,
       title: "Tiếng Anh Lớp 11 — Global Success",
-      subtitle: "Chương trình Trọng tâm & Toàn diện (Đang hoạt động)",
+      subtitle: "Chương trình Trọng tâm & Toàn diện",
       unitsCount: 10,
       reviewsCount: 4,
       grammarCount: 14,
@@ -52,25 +66,32 @@ export default function CurriculumHubPage() {
       status: "active",
       statusLabel: "Đầy đủ 10 Units + 4 Reviews",
       href: "/curriculum/grade-11",
-      color: "from-teal-600 via-emerald-600 to-teal-800",
-      bgLight: "bg-teal-50/60 border-teal-300",
-      badge: "SẴN SÀNG HỌC",
+      themeColor: "teal",
+      btnClass: "bg-teal-600 hover:bg-teal-700 text-white",
+      borderClass: "border-teal-300 ring-2 ring-teal-500/20",
+      badge: "PHỔ BIẾN NHẤT",
+      badgeClass: "from-teal-600 to-emerald-600",
       description:
-        "Tích hợp Studio Ngữ pháp trực quan Manim/Remotion, phòng Đọc hiểu tương tác, thẻ Flashcard 3D phản xạ tai và đấu trường thi Azota/Quizizz.",
+        "Tích hợp Studio Ngữ pháp trực quan, phòng Đọc hiểu tương tác, thẻ Flashcard phản xạ âm thanh Deep Imprint và kiểm tra phát âm giọng nói AI.",
     },
     {
       grade: 12,
-      title: "Tiếng Anh Lớp 12 — Ôn thi Tốt nghiệp THPT",
-      subtitle: "Bứt phá Đích đến & Chinh phục Điểm 9+ Đại học",
+      title: "Tiếng Anh Lớp 12 — Global Success",
+      subtitle: "Bứt phá Đích đến & Ôn thi Tốt nghiệp THPT",
       unitsCount: 10,
-      grammarCount: 15,
-      status: "coming_soon",
-      statusLabel: "Chuyên đề Luyện đề 2026",
-      href: "/curriculum/grade-11",
-      color: "from-purple-600 to-pink-700",
-      bgLight: "bg-purple-50/50 border-purple-200",
+      reviewsCount: 4,
+      grammarCount: 14,
+      vocabCount: totalVocabGrade12,
+      status: "active",
+      statusLabel: "Đầy đủ 10 Units + 4 Reviews",
+      href: "/curriculum/grade-12",
+      themeColor: "purple",
+      btnClass: "bg-purple-600 hover:bg-purple-700 text-white",
+      borderClass: "border-purple-300 ring-2 ring-purple-500/20",
+      badge: "CHUẨN TỐT NGHIỆP",
+      badgeClass: "from-purple-600 to-pink-600",
       description:
-        "Tổng ôn toàn diện ngữ pháp THPT, phương pháp giải nhanh bài đọc hiểu dài và kho đề thi thử chuẩn cấu trúc Bộ GD&ĐT.",
+        "Tổng ôn toàn diện ngữ pháp THPT phân hóa cao (Đảo ngữ, Thể truyền khiến, Cụm động từ), vốn từ vựng học thuật B2+ và chuyên đề luyện đề chuẩn Bộ GD&ĐT.",
     },
   ];
 
@@ -90,15 +111,15 @@ export default function CurriculumHubPage() {
               Khung Chương Trình Chuẩn Bộ GD&ĐT 2018 (Global Success)
             </div>
             <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
-              Trung Tâm Giáo Trình Tiếng Anh THPT
+              Hệ Sinh Thái Giáo Trình Tiếng Anh THPT
             </h1>
             <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-medium">
-              Lựa chọn khối lớp để bắt đầu lộ trình học thông minh: Flashcard phản xạ âm thanh, video bài giảng hoạt họa, phòng đọc hiểu thông minh và làm đề trắc nghiệm chuẩn kỳ thi.
+              Hoàn chỉnh trọn bộ 3 khối lớp 10, 11 và 12. Mỗi khối lớp tích hợp đầy đủ 10 Units + 4 bài Review, Flashcard phản xạ âm thanh Deep Imprint, kiểm tra phát âm AI Speech Checker và phòng luyện đề chuẩn cấu trúc khảo thí.
             </p>
 
             {user?.grade && (
               <div className="mt-5 inline-flex items-center gap-2 rounded-xl bg-white/10 px-3.5 py-1.5 text-xs font-bold text-amber-300 border border-white/10 backdrop-blur-md">
-                <span>⭐ Khối lớp của bạn:</span>
+                <span>⭐ Khối lớp hiện tại của bạn:</span>
                 <span className="text-white">Lớp {user.grade}</span>
               </div>
             )}
@@ -108,37 +129,28 @@ export default function CurriculumHubPage() {
         {/* Grade Selection Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {GRADES.map((g, idx) => {
-            const isActive = g.status === "active";
+            const isUserGrade = user?.grade ? Number(user.grade) === g.grade : false;
+
             return (
               <motion.div
                 key={g.grade}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className={`rounded-3xl border p-6 sm:p-7 shadow-xs flex flex-col justify-between transition-all bg-white relative ${
-                  isActive
-                    ? "border-teal-300 shadow-md ring-2 ring-teal-500/20"
-                    : "border-slate-200/90 opacity-90"
+                className={`rounded-3xl border p-6 sm:p-7 shadow-xs flex flex-col justify-between transition-all bg-white relative hover:shadow-lg ${
+                  isUserGrade ? `${g.borderClass} ring-4` : "border-slate-200/90"
                 }`}
               >
-                {isActive && (
-                  <span className="absolute -top-3 right-6 rounded-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white text-[10px] font-black px-3.5 py-1 uppercase tracking-wider shadow-sm">
-                    {g.badge}
-                  </span>
-                )}
+                <span className={`absolute -top-3 right-6 rounded-full bg-gradient-to-r ${g.badgeClass} text-white text-[10px] font-black px-3.5 py-1 uppercase tracking-wider shadow-sm`}>
+                  {g.badge}
+                </span>
 
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white font-heading font-black text-xl shadow-xs">
                       {g.grade}
                     </span>
-                    <span
-                      className={`text-xs font-bold px-3 py-1 rounded-full border ${
-                        isActive
-                          ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                          : "bg-slate-100 text-slate-500 border-slate-200"
-                      }`}
-                    >
+                    <span className="text-xs font-bold px-3 py-1 rounded-full border bg-emerald-50 text-emerald-800 border-emerald-200">
                       {g.statusLabel}
                     </span>
                   </div>
@@ -160,36 +172,21 @@ export default function CurriculumHubPage() {
                     <span className="rounded-xl bg-slate-50 px-2.5 py-1 font-semibold text-slate-700 border border-slate-100">
                       ⚡ {g.grammarCount} Ngữ pháp
                     </span>
-                    {g.vocabCount && (
-                      <span className="rounded-xl bg-teal-50 px-2.5 py-1 font-bold text-teal-800 border border-teal-100">
-                        🎯 {g.vocabCount}+ Từ vựng
-                      </span>
-                    )}
+                    <span className="rounded-xl bg-teal-50 px-2.5 py-1 font-bold text-teal-800 border border-teal-100">
+                      🎯 {g.vocabCount}+ Từ vựng
+                    </span>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-slate-100">
-                  {isActive ? (
-                    <Button
-                      asChild
-                      className="w-full rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm py-5 shadow-xs cursor-pointer"
-                    >
-                      <Link href={g.href} className="flex items-center justify-center gap-2">
-                        Vào học ngay Lớp 11 <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  ) : (
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full rounded-2xl text-slate-600 border-slate-200 hover:bg-slate-50 font-bold text-xs py-5"
-                    >
-                      <Link href="/curriculum/grade-11" className="flex items-center justify-center gap-1.5">
-                        <span>Học thử nghiệm với Lớp 11</span>
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                    </Button>
-                  )}
+                  <Button
+                    asChild
+                    className={`w-full rounded-2xl ${g.btnClass} font-bold text-sm py-5 shadow-xs cursor-pointer`}
+                  >
+                    <Link href={g.href} className="flex items-center justify-center gap-2">
+                      Vào học Lớp {g.grade} <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
                 </div>
               </motion.div>
             );

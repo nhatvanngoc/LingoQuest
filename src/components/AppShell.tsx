@@ -110,10 +110,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { user, role } = useRole();
   const items = useMemo(() => {
     if (role === "student") {
-      const gradeLabel = user.grade ? `Lớp ${user.grade}` : "Lớp 11";
+      const grade = user.grade || "11";
+      const gradeLabel = `Lớp ${grade}`;
+      const gradeHref = `/curriculum/grade-${grade}`;
       return [
         { href: "/dashboard", label: "Trang chủ", icon: Home },
-        { href: "/curriculum/grade-11", label: gradeLabel, icon: BookOpen, badge: "GS" },
+        { href: gradeHref, label: gradeLabel, icon: BookOpen, badge: "GS" },
+        { href: "/curriculum", label: "Giáo trình", icon: Compass },
         { href: "/exams", label: "Phòng thi", icon: Trophy, badge: "PIN" },
         { href: "/learn", label: "Bài giảng", icon: PlayCircle, badge: "NEW" },
         { href: "/flashcards/deck-1", label: "Flashcard", icon: Layers },

@@ -29,7 +29,9 @@ import { SmartImage } from "@/components/SmartImage";
 import { NumberTicker } from "@/components/magic/NumberTicker";
 import { useApp } from "@/lib/state/app-context";
 import { useRole } from "@/lib/auth/role-context";
+import { GRADE_10_CURRICULUM } from "@/lib/curriculum/grade10-data";
 import { GRADE_11_CURRICULUM } from "@/lib/curriculum/grade11-data";
+import { GRADE_12_CURRICULUM } from "@/lib/curriculum/grade12-data";
 import { getUnitVocabStats } from "@/lib/curriculum/vocab-progress";
 import { WeeklyStreakCard } from "@/components/dashboard/WeeklyStreakCard";
 import { DailyQuestsWidget } from "@/components/dashboard/DailyQuestsWidget";
@@ -74,9 +76,16 @@ export default function DashboardPage() {
   } | null>(null);
 
   const userGrade = authUser?.grade || "11";
-  const activeGrade11Unit = GRADE_11_CURRICULUM[0];
-  const grade11WordIds = activeGrade11Unit ? activeGrade11Unit.vocabulary.map((v) => v.id) : [];
-  const grade11Stats = getUnitVocabStats(grade11WordIds, authUser?.id);
+  const gradeCurriculum =
+    userGrade === "10"
+      ? GRADE_10_CURRICULUM
+      : userGrade === "12"
+      ? GRADE_12_CURRICULUM
+      : GRADE_11_CURRICULUM;
+  const activeUnit = gradeCurriculum[0];
+  const unitWordIds = activeUnit ? activeUnit.vocabulary.map((v) => v.id) : [];
+  const unitStats = getUnitVocabStats(unitWordIds, authUser?.id);
+  const curriculumBaseHref = `/curriculum/grade-${userGrade}`;
 
   useEffect(() => {
     let active = true;
@@ -261,7 +270,7 @@ export default function DashboardPage() {
                   </div>
 
                   <Link
-                    href="/curriculum/grade-11"
+                    href={curriculumBaseHref}
                     className="inline-flex items-center gap-1 text-xs font-bold text-teal-300 hover:text-white transition-colors"
                   >
                     <span>Xem toàn bộ 10 Units</span>
@@ -270,18 +279,18 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Active Unit Highlight Card */}
-                {activeGrade11Unit && (
+                {activeUnit && (
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <span className="rounded-md bg-teal-500/20 text-teal-300 border border-teal-400/30 px-2 py-0.5 text-[10px] font-black uppercase">
                           Unit 01
                         </span>
-                        <span className="text-xs font-bold text-slate-300">Học kỳ 1 • {activeGrade11Unit.cefrLevel}</span>
+                        <span className="text-xs font-bold text-slate-300">Học kỳ 1 • {activeUnit.cefrLevel}</span>
                       </div>
-                      <h4 className="font-heading text-base font-bold text-white">{activeGrade11Unit.titleEn}</h4>
+                      <h4 className="font-heading text-base font-bold text-white">{activeUnit.titleEn}</h4>
                       <p className="text-xs text-slate-300">
-                        {activeGrade11Unit.titleVi} • Ngữ pháp: {activeGrade11Unit.grammarTitle}
+                        {activeUnit.titleVi} • Ngữ pháp: {activeUnit.grammarTitle}
                       </p>
 
                       {/* Mini SRS Progress */}
@@ -289,11 +298,11 @@ export default function DashboardPage() {
                         <div className="h-1.5 w-36 rounded-full bg-white/20 overflow-hidden">
                           <div
                             className="h-full bg-emerald-400 rounded-full transition-all duration-300"
-                            style={{ width: `${grade11Stats.percent}%` }}
+                            style={{ width: `${unitStats.percent}%` }}
                           />
                         </div>
                         <span className="text-teal-200 text-[11px] font-medium">
-                          Đã thuộc {grade11Stats.mastered}/{grade11Stats.total} từ ({grade11Stats.percent}%)
+                          Đã thuộc {unitStats.mastered}/{unitStats.total} từ ({unitStats.percent}%)
                         </span>
                       </div>
                     </div>
@@ -304,7 +313,7 @@ export default function DashboardPage() {
                         size="sm"
                         className="rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs shadow-xs w-full sm:w-auto"
                       >
-                        <Link href={`/curriculum/grade-11/${activeGrade11Unit.slug}`}>
+                        <Link href={`${curriculumBaseHref}/${activeUnit.slug}`}>
                           Học tiếp Unit 1
                         </Link>
                       </Button>
@@ -314,7 +323,7 @@ export default function DashboardPage() {
                         variant="outline"
                         className="rounded-xl border-white/20 bg-white/10 text-white hover:bg-white/20 text-xs font-bold shadow-xs"
                       >
-                        <Link href={`/curriculum/grade-11/${activeGrade11Unit.slug}?tab=vocab`}>
+                        <Link href={`${curriculumBaseHref}/${activeUnit.slug}?tab=vocab`}>
                           <Layers className="mr-1 h-3.5 w-3.5 text-teal-300" /> Flashcard
                         </Link>
                       </Button>
@@ -324,7 +333,7 @@ export default function DashboardPage() {
                         variant="outline"
                         className="rounded-xl border-white/20 bg-white/10 text-white hover:bg-white/20 text-xs font-bold shadow-xs hidden md:inline-flex"
                       >
-                        <Link href={`/curriculum/grade-11/${activeGrade11Unit.slug}?tab=grammar`}>
+                        <Link href={`${curriculumBaseHref}/${activeUnit.slug}?tab=grammar`}>
                           <BookOpen className="mr-1 h-3.5 w-3.5 text-emerald-300" /> Ngữ pháp
                         </Link>
                       </Button>

@@ -1,0 +1,708 @@
+/* Grade 10 Global Success Curriculum Data
+   Syllabus: Bộ Giáo dục và Đào tạo • Global Success (Kết nối tri thức)
+   Extracted & Curated via Playwright MCP from Loigiaihay & Vietjack
+   10 Units + 4 Reviews with full vocabulary, IPA, audio, examples & grammar.
+*/
+
+export interface Grade10VocabItem {
+  id: string;
+  word: string;
+  partOfSpeech: string;
+  meaningVi: string;
+  ipa: string;
+  audioUrl: string;
+  imageUrl?: string;
+  exampleEn: string;
+  exampleVi: string;
+  collocations?: string[];
+}
+
+export interface Grade10Section {
+  id: string;
+  title: string;
+  description: string;
+  url?: string;
+}
+
+export interface Grade10Unit {
+  id: string;
+  slug: string;
+  unitNumber: number;
+  isReview?: boolean;
+  titleEn: string;
+  titleVi: string;
+  topic: string;
+  cefrLevel: string;
+  term: 1 | 2;
+  vocabUrl?: string;
+  grammarUrl?: string;
+  grammarTitle: string;
+  grammarSummary: string;
+  grammarHtml?: string;
+  sections: Grade10Section[];
+  vocabulary: Grade10VocabItem[];
+}
+
+export const GRADE_10_CURRICULUM: Grade10Unit[] = [
+  {
+    id: "g10-u1",
+    slug: "unit-1-family-life",
+    unitNumber: 1,
+    titleEn: "Family Life",
+    titleVi: "Đời sống gia đình",
+    topic: "Family & Household Responsibilities",
+    cefrLevel: "A2+",
+    term: 1,
+    grammarTitle: "Present Simple vs. Present Continuous",
+    grammarSummary: "Thì Hiện tại đơn diễn tả thói quen, chân lý, lịch trình cố định. Thì Hiện tại tiếp diễn diễn tả hành động đang diễn ra tại thời điểm nói hoặc xu hướng thay đổi tạm thời.",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "Household chores - Cuộc trò chuyện về phân chia việc nhà" },
+      { id: "sec-2", title: "II. Language", description: "Phát âm /br/, /kr/, /tr/; ngữ pháp Hiện tại đơn và Hiện tại tiếp diễn" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Lợi ích của việc cùng nhau chia sẻ công việc nhà" },
+      { id: "sec-4", title: "IV. Speaking", description: "Thảo luận về các công việc nhà phù hợp với lứa tuổi học sinh" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe chia sẻ về vai trò của các thành viên trong gia đình" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết đoạn văn về thói quen sinh hoạt gia đình" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Văn hóa gia đình truyền thống và hiện đại ở các quốc gia" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Tổng kết từ vựng và dự án Gia đình hạnh phúc" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-breadwinner",
+        word: "breadwinner",
+        partOfSpeech: "noun",
+        meaningVi: "người trụ cột đi làm nuôi gia đình",
+        ipa: "/ˈbredwɪnə(r)/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/breadwinner.mp3",
+        exampleEn: "In modern society, both husband and wife often act as breadwinners.",
+        exampleVi: "Trong xã hội hiện đại, cả vợ và chồng thường cùng là trụ cột kinh tế.",
+        collocations: ["family breadwinner", "sole breadwinner", "primary breadwinner"]
+      },
+      {
+        id: "v10-homemaker",
+        word: "homemaker",
+        partOfSpeech: "noun",
+        meaningVi: "người nội trợ, người chăm lo tổ ấm",
+        ipa: "/ˈhəʊmmeɪkə(r)/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/homemaker.mp3",
+        exampleEn: "Being a homemaker is hard work that requires great organizational skills.",
+        exampleVi: "Làm người nội trợ là công việc vất vả đòi hỏi kỹ năng sắp xếp tuyệt vời.",
+        collocations: ["dedicated homemaker", "full-time homemaker"]
+      },
+      {
+        id: "v10-chore",
+        word: "chore",
+        partOfSpeech: "noun",
+        meaningVi: "việc vặt trong nhà, công việc thường nhật",
+        ipa: "/tʃɔːr/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/chore.mp3",
+        exampleEn: "Doing household chores helps teenagers develop essential life skills.",
+        exampleVi: "Làm việc vặt trong nhà giúp thanh thiếu niên phát triển các kỹ năng sống thiết yếu.",
+        collocations: ["do household chores", "share chores equally", "daily chores"]
+      },
+      {
+        id: "v10-heavy-lifting",
+        word: "heavy lifting",
+        partOfSpeech: "noun",
+        meaningVi: "công việc mang vác nặng nhọc",
+        ipa: "/ˌhevi ˈlɪftɪŋ/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/heavy_lifting.mp3",
+        exampleEn: "My brother usually does the heavy lifting in our house.",
+        exampleVi: "Anh trai tôi thường làm các công việc mang vác nặng trong nhà.",
+        collocations: ["do the heavy lifting", "heavy lifting work"]
+      },
+      {
+        id: "v10-groceries",
+        word: "groceries",
+        partOfSpeech: "noun",
+        meaningVi: "thực phẩm và tạp hóa gia đình",
+        ipa: "/ˈɡrəʊsəriz/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/groceries.mp3",
+        exampleEn: "My mother usually shops for groceries at the local supermarket on weekends.",
+        exampleVi: "Mẹ tôi thường mua đồ tạp hóa ở siêu thị địa phương vào dịp cuối tuần.",
+        collocations: ["shop for groceries", "buy groceries", "carry groceries"]
+      },
+      {
+        id: "v10-responsibility",
+        word: "responsibility",
+        partOfSpeech: "noun",
+        meaningVi: "trách nhiệm, bổn phận",
+        ipa: "/rɪˌspɒnsəˈbɪləti/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/responsibility.mp3",
+        exampleEn: "Children should take responsibility for keeping their study area tidy.",
+        exampleVi: "Con cái nên nhận trách nhiệm giữ cho góc học tập của mình ngăn nắp.",
+        collocations: ["take responsibility", "household responsibility", "sense of responsibility"]
+      },
+      {
+        id: "v10-gratitude",
+        word: "gratitude",
+        partOfSpeech: "noun",
+        meaningVi: "lòng biết ơn, sự cảm kích",
+        ipa: "/ˈɡrætɪtjuːd/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/gratitude.mp3",
+        exampleEn: "We should express our gratitude to parents for their unconditional love.",
+        exampleVi: "Chúng ta nên bày tỏ lòng biết ơn đối với cha mẹ vì tình yêu thương vô điều kiện.",
+        collocations: ["express gratitude", "feel deep gratitude", "show gratitude"]
+      },
+      {
+        id: "v10-strengthen",
+        word: "strengthen",
+        partOfSpeech: "verb",
+        meaningVi: "củng cố, thắt chặt mối quan hệ",
+        ipa: "/ˈstreŋkθn/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/strengthen.mp3",
+        exampleEn: "Eating dinner together helps strengthen family bonds.",
+        exampleVi: "Cùng nhau ăn bữa tối giúp thắt chặt tình cảm gia đình.",
+        collocations: ["strengthen family bonds", "strengthen relationships"]
+      }
+    ]
+  },
+  {
+    id: "g10-u2",
+    slug: "unit-2-humans-and-the-environment",
+    unitNumber: 2,
+    titleEn: "Humans and the Environment",
+    titleVi: "Con người và môi trường",
+    topic: "Eco-friendly Living & Sustainable Habits",
+    cefrLevel: "A2+",
+    term: 1,
+    grammarTitle: "Future with Will & Be going to, Passive Voice",
+    grammarSummary: "Will diễn tả quyết định tức thời hoặc dự đoán không có căn cứ hiện tại. Be going to diễn tả kế hoạch định sẵn hoặc dự đoán có dấu hiệu ở hiện tại. Câu bị động (Passive voice) nhấn mạnh hành động bảo vệ môi trường.",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "Go Green Club - Giới thiệu Câu lạc bộ Sống Xanh" },
+      { id: "sec-2", title: "II. Language", description: "Phát âm /kl/, /pl/, /gr/, /pr/; ngữ pháp Tương lai với Will/Be going to và Bị động" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Cách giảm thiểu lượng khí thải carbon cá nhân (Carbon footprint)" },
+      { id: "sec-4", title: "IV. Speaking", description: "Thảo luận về các thói quen thân thiện với môi trường tại trường học" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe chia sẻ về lối sống không rác thải (Zero-waste)" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết bài chia sẻ mẹo tiết kiệm điện nước tại gia đình" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Các chiến dịch giờ Trái Đất trên thế giới" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Góc học tập xanh của em" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-carbon-footprint",
+        word: "carbon footprint",
+        partOfSpeech: "noun",
+        meaningVi: "vết carbon, lượng khí thải carbon tạo ra",
+        ipa: "/ˌkɑːbən ˈfʊtprɪnt/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/carbon_footprint.mp3",
+        exampleEn: "Cycling to school reduces your carbon footprint significantly.",
+        exampleVi: "Đạp xe đi học giúp giảm đáng kể lượng phát thải carbon của bạn.",
+        collocations: ["reduce carbon footprint", "calculate carbon footprint", "minimize carbon footprint"]
+      },
+      {
+        id: "v10-eco-friendly",
+        word: "eco-friendly",
+        partOfSpeech: "adj",
+        meaningVi: "thân thiện với môi trường",
+        ipa: "/ˌiːkəʊ ˈfrendli/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/eco_friendly.mp3",
+        exampleEn: "We should switch to eco-friendly products made from bamboo.",
+        exampleVi: "Chúng ta nên chuyển sang các sản phẩm thân thiện với môi trường làm từ tre.",
+        collocations: ["eco-friendly products", "eco-friendly lifestyle", "eco-friendly packaging"]
+      },
+      {
+        id: "v10-emission",
+        word: "emission",
+        partOfSpeech: "noun",
+        meaningVi: "sự phát thải, khí thải",
+        ipa: "/iˈmɪʃn/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/emission.mp3",
+        exampleEn: "Electric vehicles produce zero direct exhaust emissions.",
+        exampleVi: "Các phương tiện giao thông chạy điện không tạo ra khí thải trực tiếp.",
+        collocations: ["cut down emissions", "greenhouse gas emissions", "zero emissions"]
+      },
+      {
+        id: "v10-appliances",
+        word: "appliances",
+        partOfSpeech: "noun",
+        meaningVi: "thiết bị đồ gia dụng điện",
+        ipa: "/əˈplaɪənsɪz/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/appliances.mp3",
+        exampleEn: "Remember to unplug household appliances when not in use.",
+        exampleVi: "Hãy nhớ rút phích cắm các thiết bị điện trong nhà khi không sử dụng.",
+        collocations: ["household appliances", "energy-efficient appliances"]
+      }
+    ]
+  },
+  {
+    id: "g10-u3",
+    slug: "unit-3-music",
+    unitNumber: 3,
+    titleEn: "Music",
+    titleVi: "Âm nhạc",
+    topic: "Music, Talents & Cultural Entertainment",
+    cefrLevel: "A2+",
+    term: 1,
+    grammarTitle: "Compound Sentences, To-infinitives & Bare Infinitives",
+    grammarSummary: "Câu ghép với liên từ FANBOYS (for, and, nor, but, or, yet, so). Động từ nguyên mẫu có to (to-infinitive) và nguyên mẫu không to (bare infinitive) sau các động từ tri giác, make/let.",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "A talented artist - Giới thiệu về cuộc thi âm nhạc" },
+      { id: "sec-2", title: "II. Language", description: "Phát âm /eɪ/ & /aɪ/; ngữ pháp Câu ghép và To/Bare-infinitive" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Các chương trình tìm kiếm tài năng âm nhạc thực tế" },
+      { id: "sec-4", title: "IV. Speaking", description: "Chia sẻ về thể loại âm nhạc và nghệ sĩ yêu thích" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe cuộc phỏng vấn một nhạc sĩ trẻ nổi tiếng" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết bài đánh giá ngắn (review) về một buổi biểu diễn nghệ thuật" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Âm nhạc dân gian Quan họ và nhạc đồng quê quốc tế" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Ban nhạc học đường của chúng em" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-audience",
+        word: "audience",
+        partOfSpeech: "noun",
+        meaningVi: "khán giả, thính giả",
+        ipa: "/ˈɔːdiəns/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/audience.mp3",
+        exampleEn: "The singer waved warmly to the cheerful audience.",
+        exampleVi: "Ca sĩ vẫy tay nồng nhiệt với đông đảo khán giả đang reo hò.",
+        collocations: ["enthusiastic audience", "live audience", "attract an audience"]
+      },
+      {
+        id: "v10-talented",
+        word: "talented",
+        partOfSpeech: "adj",
+        meaningVi: "tài năng, có năng khiếu xuất sắc",
+        ipa: "/ˈtæləntɪd/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/talented.mp3",
+        exampleEn: "She is a talented musician who plays both piano and violin gracefully.",
+        exampleVi: "Cô ấy là một nhạc sĩ tài năng chơi cả piano và violin một cách duyên dáng.",
+        collocations: ["talented musician", "exceptionally talented", "talented artist"]
+      },
+      {
+        id: "v10-perform",
+        word: "perform",
+        partOfSpeech: "verb",
+        meaningVi: "biểu diễn, trình diễn nghệ thuật",
+        ipa: "/pəˈfɔːm/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/perform.mp3",
+        exampleEn: "The band will perform live at the charity concert tomorrow.",
+        exampleVi: "Ban nhạc sẽ biểu diễn trực tiếp tại buổi hòa nhạc từ thiện ngày mai.",
+        collocations: ["perform live", "perform on stage", "perform a song"]
+      }
+    ]
+  },
+  {
+    id: "g10-r1",
+    slug: "review-1-units-1-2-3",
+    unitNumber: 3.5,
+    isReview: true,
+    titleEn: "Review 1 (Units 1 - 3)",
+    titleVi: "Ôn tập 1 (Bài 1 - 3)",
+    topic: "Mid-Term 1 Review",
+    cefrLevel: "A2+",
+    term: 1,
+    grammarTitle: "Consolidation: Tenses & Sentence Structures",
+    grammarSummary: "Củng cố thì Hiện tại đơn, Hiện tại tiếp diễn, Tương lai với Will/Be going to, Câu bị động và To/Bare-infinitive.",
+    sections: [
+      { id: "sec-1", title: "I. Language Review", description: "Củng cố ngữ âm, từ vựng và bài tập ngữ pháp tổng hợp" },
+      { id: "sec-2", title: "II. Skills Review", description: "Luyện tập 4 kỹ năng chuẩn bị bài kiểm tra giữa kỳ 1" }
+    ],
+    vocabulary: []
+  },
+  {
+    id: "g10-u4",
+    slug: "unit-4-for-a-better-community",
+    unitNumber: 4,
+    titleEn: "For a Better Community",
+    titleVi: "Vì một cộng đồng tốt đẹp hơn",
+    topic: "Volunteer Work & Community Service",
+    cefrLevel: "B1",
+    term: 1,
+    grammarTitle: "Past Simple vs. Past Continuous with When/While",
+    grammarSummary: "Thì Quá khứ tiếp diễn diễn tả hành động đang xảy ra tại một thời điểm trong quá khứ hoặc một hành động đang tiếp diễn thì một hành động khác xen vào (dùng Past Simple với When/While).",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "Community services - Các hoạt động thiện nguyện vì cộng đồng" },
+      { id: "sec-2", title: "II. Language", description: "Hậu tố -ed, -ing; ngữ pháp Quá khứ đơn vs. Quá khứ tiếp diễn" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Ý nghĩa nhân văn của các hoạt động tình nguyện viên" },
+      { id: "sec-4", title: "IV. Speaking", description: "Lên kế hoạch một dự án giúp đỡ trẻ em có hoàn cảnh khó khăn" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe chia sẻ về trải nghiệm tình nguyện mùa hè xanh" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết thư bày tỏ nguyện vọng tham gia tổ chức tình nguyện" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Các phong trào tình nguyện của giới trẻ quốc tế" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Vì nụ cười trẻ thơ" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-volunteer",
+        word: "volunteer",
+        partOfSpeech: "noun",
+        meaningVi: "tình nguyện viên, người làm việc công ích",
+        ipa: "/ˌvɒlənˈtɪə(r)/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/volunteer.mp3",
+        exampleEn: "Many student volunteers took part in cleaning up the local beach.",
+        exampleVi: "Nhiều tình nguyện viên học sinh đã tham gia dọn dẹp bãi biển địa phương.",
+        collocations: ["community volunteer", "volunteer work", "volunteer organization"]
+      },
+      {
+        id: "v10-donate",
+        word: "donate",
+        partOfSpeech: "verb",
+        meaningVi: "quyên góp, ủng hộ từ thiện",
+        ipa: "/dəʊˈneɪt/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/donate.mp3",
+        exampleEn: "Our school donated hundreds of warm jackets to flood victims.",
+        exampleVi: "Trường chúng tôi đã quyên góp hàng trăm chiếc áo ấm cho nạn nhân lũ lụt.",
+        collocations: ["donate money", "donate to charity", "donate blood"]
+      },
+      {
+        id: "v10-disadvantaged",
+        word: "disadvantaged",
+        partOfSpeech: "adj",
+        meaningVi: "thiệt thòi, có hoàn cảnh khó khăn",
+        ipa: "/ˌdɪsədˈvɑːntɪdʒd/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/disadvantaged.mp3",
+        exampleEn: "The program provides free meals for disadvantaged children.",
+        exampleVi: "Chương trình cung cấp bữa ăn miễn phí cho trẻ em có hoàn cảnh khó khăn.",
+        collocations: ["disadvantaged children", "disadvantaged background"]
+      }
+    ]
+  },
+  {
+    id: "g10-u5",
+    slug: "unit-5-inventions",
+    unitNumber: 5,
+    titleEn: "Inventions",
+    titleVi: "Các phát minh",
+    topic: "Technological Inventions & Digital Innovation",
+    cefrLevel: "B1",
+    term: 1,
+    grammarTitle: "Present Perfect, Gerunds and To-infinitives",
+    grammarSummary: "Thì Hiện tại hoàn thành diễn tả kinh nghiệm hoặc hành động kéo dài từ quá khứ đến hiện tại. Danh động từ và động từ nguyên mẫu có to dùng diễn tả công dụng của đồ vật (used for V-ing / used to V).",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "Useful inventions - Những phát minh hữu ích trong đời sống" },
+      { id: "sec-2", title: "II. Language", description: "Ngữ pháp Hiện tại hoàn thành và danh động từ diễn tả công dụng" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Trí tuệ nhân tạo và các phát minh thay đổi thế giới" },
+      { id: "sec-4", title: "IV. Speaking", description: "Trình bày về một phát minh mà em thấy hữu ích nhất" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe về lịch sử ra đời của điện thoại thông minh" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết đoạn văn miêu tả lợi ích của máy tính cá nhân" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Công nghệ sinh học và giao thông không người lái" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Nhà phát minh tương lai" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-invention",
+        word: "invention",
+        partOfSpeech: "noun",
+        meaningVi: "phát minh, sáng chế kỹ thuật mới",
+        ipa: "/ɪnˈvenʃn/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/invention.mp3",
+        exampleEn: "The invention of smartphones has revolutionized global communication.",
+        exampleVi: "Phát minh ra điện thoại thông minh đã cách mạng hóa giao tiếp toàn cầu.",
+        collocations: ["scientific invention", "revolutionary invention", "patent an invention"]
+      },
+      {
+        id: "v10-portable",
+        word: "portable",
+        partOfSpeech: "adj",
+        meaningVi: "nhỏ gọn, có thể mang theo dễ dàng",
+        ipa: "/ˈpɔːtəbl/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/portable.mp3",
+        exampleEn: "Portable chargers are essential when travelling long distances.",
+        exampleVi: "Sạc dự phòng nhỏ gọn là vật dụng thiết yếu khi đi du lịch đường dài.",
+        collocations: ["portable device", "portable computer", "portable charger"]
+      },
+      {
+        id: "v10-artificial-intelligence",
+        word: "artificial intelligence",
+        partOfSpeech: "noun",
+        meaningVi: "trí tuệ nhân tạo (AI)",
+        ipa: "/ˌɑːtɪfɪʃl ɪnˈtelɪdʒəns/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/artificial_intelligence.mp3",
+        exampleEn: "Artificial intelligence helps doctors diagnose diseases more accurately.",
+        exampleVi: "Trí tuệ nhân tạo giúp các bác sĩ chẩn đoán bệnh chính xác hơn.",
+        collocations: ["apply artificial intelligence", "generative AI", "AI technology"]
+      }
+    ]
+  },
+  {
+    id: "g10-r2",
+    slug: "review-2-units-4-5",
+    unitNumber: 5.5,
+    isReview: true,
+    titleEn: "Review 2 (Units 4 - 5)",
+    titleVi: "Ôn tập 2 (Bài 4 - 5)",
+    topic: "End of Term 1 Review",
+    cefrLevel: "B1",
+    term: 1,
+    grammarTitle: "Consolidation: Term 1 Comprehensive Grammar",
+    grammarSummary: "Tổng kết toàn bộ ngữ pháp học kỳ 1: Hiện tại hoàn thành, Quá khứ tiếp diễn với When/While, Câu bị động và Danh động từ.",
+    sections: [
+      { id: "sec-1", title: "I. Language Review", description: "Hệ thống hóa toàn bộ từ vựng và chuyên đề ngữ pháp học kỳ 1" },
+      { id: "sec-2", title: "II. Skills Review", description: "Đề thi tổng hợp 4 kỹ năng chuẩn bị cho kỳ thi Cuối học kỳ 1" }
+    ],
+    vocabulary: []
+  },
+  {
+    id: "g10-u6",
+    slug: "unit-6-gender-equality",
+    unitNumber: 6,
+    titleEn: "Gender Equality",
+    titleVi: "Bình đẳng giới",
+    topic: "Equal Rights, Opportunities & Career Choices",
+    cefrLevel: "B1",
+    term: 2,
+    grammarTitle: "Passive Voice with Modal Verbs",
+    grammarSummary: "Câu bị động với động từ khuyết thiếu: S + modal verb (can, should, must, may, might) + be + V3/ed. Nhấn mạnh việc bình đẳng giới cần được tôn trọng và thúc đẩy.",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "Equal job opportunities - Cơ hội nghề nghiệp công bằng cho nam và nữ" },
+      { id: "sec-2", title: "II. Language", description: "Trọng âm từ 3 âm tiết; ngữ pháp Bị động với động từ khuyết thiếu" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Phụ nữ trong các lĩnh vực khoa học công nghệ (STEM)" },
+      { id: "sec-4", title: "IV. Speaking", description: "Thảo luận về việc xóa bỏ định kiến giới trong nghề nghiệp" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe bài nói chuyện về các nữ phi công tiên phong" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết đoạn văn về một phụ nữ truyền cảm hứng" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Bình đẳng giới trong chính sách giáo dục ở các nước Bắc Âu" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Nữ quyền và sự phát triển bền vững" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-equality",
+        word: "equality",
+        partOfSpeech: "noun",
+        meaningVi: "sự bình đẳng, quyền ngang nhau",
+        ipa: "/iˈkwɒləti/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/equality.mp3",
+        exampleEn: "Gender equality is fundamental to building a fair and prosperous society.",
+        exampleVi: "Bình đẳng giới là nền tảng cốt lõi để xây dựng một xã hội công bằng và thịnh vượng.",
+        collocations: ["gender equality", "promote equality", "achieve equality"]
+      },
+      {
+        id: "v10-discrimination",
+        word: "discrimination",
+        partOfSpeech: "noun",
+        meaningVi: "sự phân biệt đối xử",
+        ipa: "/dɪˌskrɪmɪˈneɪʃn/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/discrimination.mp3",
+        exampleEn: "Everyone deserves equal pay without discrimination based on gender.",
+        exampleVi: "Mọi người đều xứng đáng được hưởng mức lương bình đẳng mà không bị phân biệt đối xử vì giới tính.",
+        collocations: ["gender discrimination", "eliminate discrimination", "racial discrimination"]
+      }
+    ]
+  },
+  {
+    id: "g10-u7",
+    slug: "unit-7-viet-nam-and-international-organisations",
+    unitNumber: 7,
+    titleEn: "Viet Nam and International Organisations",
+    titleVi: "Việt Nam và các tổ chức quốc tế",
+    topic: "Global Integration, UN, UNICEF & WTO",
+    cefrLevel: "B1",
+    term: 2,
+    grammarTitle: "Comparative and Superlative Adjectives",
+    grammarSummary: "So sánh hơn và so sánh nhất của tính từ ngắn, tính từ dài và các trường hợp bất quy tắc (good/better/best, bad/worse/worst, far/further/furthest).",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "Viet Nam joining international groups - Việt Nam gia nhập các tổ chức quốc tế" },
+      { id: "sec-2", title: "II. Language", description: "So sánh hơn và so sánh nhất; phát âm trọng âm từ có đuôi -ic, -tion" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Vai trò của Việt Nam trong Liên Hợp Quốc (UN) và UNESCO" },
+      { id: "sec-4", title: "IV. Speaking", description: "Thuyết trình về các dự án UNICEF hỗ trợ trẻ em Việt Nam" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe về hoạt động thương mại trong khuôn khổ WTO" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết đoạn văn ngắn giới thiệu về một tổ chức quốc tế" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Đóng góp của thanh niên Việt Nam trong các diễn đàn toàn cầu" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Đại sứ ngoại giao trẻ" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-organisation",
+        word: "organisation",
+        partOfSpeech: "noun",
+        meaningVi: "tổ chức quốc tế hoặc cơ quan đoàn thể",
+        ipa: "/ˌɔːɡənaɪˈzeɪʃn/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/organisation.mp3",
+        exampleEn: "Viet Nam is an active member of the United Nations organisation.",
+        exampleVi: "Việt Nam là thành viên tích cực của tổ chức Liên Hợp Quốc.",
+        collocations: ["international organisation", "join an organisation", "non-governmental organisation"]
+      },
+      {
+        id: "v10-cooperation",
+        word: "cooperation",
+        partOfSpeech: "noun",
+        meaningVi: "sự hợp tác, cùng phối hợp hành động",
+        ipa: "/kəʊˌɒpəˈreɪʃn/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/cooperation.mp3",
+        exampleEn: "International cooperation is vital in tackling global pandemics.",
+        exampleVi: "Sự hợp tác quốc tế là điều thiết yếu trong việc ứng phó với các đại dịch toàn cầu.",
+        collocations: ["international cooperation", "in close cooperation with", "strengthen cooperation"]
+      }
+    ]
+  },
+  {
+    id: "g10-u8",
+    slug: "unit-8-new-ways-to-learn",
+    unitNumber: 8,
+    titleEn: "New Ways to Learn",
+    titleVi: "Những cách học mới",
+    topic: "Blended Learning, Digital Tools & Self-Study",
+    cefrLevel: "B1",
+    term: 2,
+    grammarTitle: "Relative Clauses (Defining Relative Clauses)",
+    grammarSummary: "Mệnh đề quan hệ xác định dùng các đại từ quan hệ Who, Whom, Which, That, Whose để bổ nghĩa cho danh từ đứng trước, cung cấp thông tin thiết yếu không thể lược bỏ.",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "Learning with electronic devices - Học tập cùng thiết bị điện tử" },
+      { id: "sec-2", title: "II. Language", description: "Ngữ pháp Mệnh đề quan hệ xác định (who, which, that, whose)" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Phương pháp học tập kết hợp (Blended Learning) và ứng dụng EdTech" },
+      { id: "sec-4", title: "IV. Speaking", description: "Tranh biện về việc sử dụng điện thoại thông minh phục vụ học tập" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe chuyên gia chia sẻ mẹo quản lý thời gian khi tự học trực tuyến" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết đoạn văn phân tích ưu điểm và nhược điểm của học trực tuyến" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Lớp học số thông minh tại các nước phát triển" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Không gian học tập thời đại số" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-blended-learning",
+        word: "blended learning",
+        partOfSpeech: "noun",
+        meaningVi: "phương pháp học kết hợp trực tiếp và online",
+        ipa: "/ˌblendɪd ˈlɜːnɪŋ/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/blended_learning.mp3",
+        exampleEn: "Blended learning allows students to learn at their own pace outside the classroom.",
+        exampleVi: "Học kết hợp cho phép học sinh học theo tốc độ riêng ngoài giờ lên lớp.",
+        collocations: ["adopt blended learning", "blended learning model", "benefits of blended learning"]
+      },
+      {
+        id: "v10-device",
+        word: "device",
+        partOfSpeech: "noun",
+        meaningVi: "thiết bị công nghệ, dụng cụ điện tử",
+        ipa: "/dɪˈvaɪs/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/device.mp3",
+        exampleEn: "Students can use mobile devices to practice pronunciation with AI tutors.",
+        exampleVi: "Học sinh có thể dùng thiết bị di động để luyện phát âm cùng gia sư AI.",
+        collocations: ["electronic device", "smart device", "digital device"]
+      }
+    ]
+  },
+  {
+    id: "g10-r3",
+    slug: "review-3-units-6-7-8",
+    unitNumber: 8.5,
+    isReview: true,
+    titleEn: "Review 3 (Units 6 - 8)",
+    titleVi: "Ôn tập 3 (Bài 6 - 8)",
+    topic: "Mid-Term 2 Review",
+    cefrLevel: "B1",
+    term: 2,
+    grammarTitle: "Consolidation: Modals, Comparatives & Relative Clauses",
+    grammarSummary: "Củng cố câu bị động với modal verbs, tính từ so sánh hơn/nhất và mệnh đề quan hệ xác định.",
+    sections: [
+      { id: "sec-1", title: "I. Language Review", description: "Ôn tập kiến thức ngôn ngữ chuẩn bị cho kỳ thi giữa học kỳ 2" },
+      { id: "sec-2", title: "II. Skills Review", description: "Luyện đề kỹ năng tổng hợp" }
+    ],
+    vocabulary: []
+  },
+  {
+    id: "g10-u9",
+    slug: "unit-9-protecting-the-environment",
+    unitNumber: 9,
+    titleEn: "Protecting the Environment",
+    titleVi: "Bảo vệ môi trường",
+    topic: "Wildlife Conservation & Anti-Pollution",
+    cefrLevel: "B1",
+    term: 2,
+    grammarTitle: "Reported Speech (Statements & Questions)",
+    grammarSummary: "Câu gián tiếp (tường thuật câu trần thuật và câu hỏi). Quy tắc lùi thì, đổi đại từ nhân xưng, tính từ sở hữu và trạng từ chỉ nơi chốn, thời gian.",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "Environmental protection campaign - Chiến dịch bảo vệ môi trường" },
+      { id: "sec-2", title: "II. Language", description: "Quy tắc chuyển đổi câu trực tiếp sang gián tiếp (Reported speech)" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Các loài động vật nguy cấp và mối đe dọa từ nạn phá rừng" },
+      { id: "sec-4", title: "IV. Speaking", description: "Đề xuất giải pháp bảo tồn đa dạng sinh học tại địa phương" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe về nỗ lực giải cứu động vật hoang dã" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết thông báo kêu gọi tham gia bảo vệ môi trường" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Phong trào trường học không rác thải nhựa trên thế giới" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Tái chế rác thải sáng tạo" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-endangered",
+        word: "endangered",
+        partOfSpeech: "adj",
+        meaningVi: "có nguy cơ tuyệt chủng, bị đe dọa",
+        ipa: "/ɪnˈdeɪndʒəd/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/endangered.mp3",
+        exampleEn: "Rhinos and sea turtles are critically endangered animals that need protection.",
+        exampleVi: "Tê giác và rùa biển là những loài động vật có nguy cơ tuyệt chủng nghiêm trọng cần được bảo vệ.",
+        collocations: ["endangered species", "critically endangered", "endangered animals"]
+      },
+      {
+        id: "v10-habitat",
+        word: "habitat",
+        partOfSpeech: "noun",
+        meaningVi: "môi trường sống tự nhiên của sinh vật",
+        ipa: "/ˈhæbɪtæt/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/habitat.mp3",
+        exampleEn: "Deforestation destroys the natural habitats of thousands of forest animals.",
+        exampleVi: "Nạn phá rừng hủy hoại môi trường sống tự nhiên của hàng ngàn loài động vật rừng.",
+        collocations: ["natural habitat", "habitat loss", "preserve wildlife habitat"]
+      }
+    ]
+  },
+  {
+    id: "g10-u10",
+    slug: "unit-10-ecotourism",
+    unitNumber: 10,
+    titleEn: "Ecotourism",
+    titleVi: "Du lịch sinh thái",
+    topic: "Responsible Travel & Nature Preservation",
+    cefrLevel: "B1",
+    term: 2,
+    grammarTitle: "Conditional Sentences Type 1 and Type 2",
+    grammarSummary: "Câu điều kiện loại 1 (điều kiện có thật ở hiện tại/tương lai: If + V(s/es), will + V). Câu điều kiện loại 2 (điều kiện không có thật ở hiện tại: If + V2/ed / were, would + V).",
+    sections: [
+      { id: "sec-1", title: "I. Getting Started", description: "A tour of Phong Nha - Ke Bang - Khám phá tour du lịch sinh thái" },
+      { id: "sec-2", title: "II. Language", description: "Ngữ pháp Câu điều kiện loại 1 & 2; phát âm ngữ điệu câu hỏi điều kiện" },
+      { id: "sec-3", title: "III. Reading", description: "Bài đọc: Nguyên tắc du lịch có trách nhiệm và bảo tồn danh thắng" },
+      { id: "sec-4", title: "IV. Speaking", description: "Lên kế hoạch một chuyến du lịch sinh thái vì cộng đồng" },
+      { id: "sec-5", title: "V. Listening", description: "Nghe hướng dẫn viên chia sẻ quy tắc ứng xử khi tham quan vườn quốc gia" },
+      { id: "sec-6", title: "VI. Writing", description: "Viết cẩm nang hướng dẫn du khách bảo vệ cảnh quan" },
+      { id: "sec-7", title: "VII. Communication & Culture", description: "Mô hình du lịch sinh thái bền vững trên thế giới" },
+      { id: "sec-8", title: "VIII. Looking Back & Project", description: "Dự án Quảng bá du lịch xanh tại quê hương" }
+    ],
+    vocabulary: [
+      {
+        id: "v10-ecotourism",
+        word: "ecotourism",
+        partOfSpeech: "noun",
+        meaningVi: "du lịch sinh thái, du lịch gắn với thiên nhiên",
+        ipa: "/ˈiːkəʊtʊərɪzəm/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/ecotourism.mp3",
+        exampleEn: "Ecotourism helps preserve natural beauty while supporting local communities.",
+        exampleVi: "Du lịch sinh thái giúp bảo tồn vẻ đẹp tự nhiên đồng thời hỗ trợ các cộng đồng địa phương.",
+        collocations: ["develop ecotourism", "ecotourism destination", "sustainable ecotourism"]
+      },
+      {
+        id: "v10-sustainable",
+        word: "sustainable",
+        partOfSpeech: "adj",
+        meaningVi: "bền vững, thân thiện với môi trường lâu dài",
+        ipa: "/səˈsteɪnəbl/",
+        audioUrl: "https://img.loigiaihay.com/picture/2021/1103/sustainable.mp3",
+        exampleEn: "Sustainable tourism practices protect biodiversity for future generations.",
+        exampleVi: "Các hoạt động du lịch bền vững bảo vệ đa dạng sinh học cho các thế hệ tương lai.",
+        collocations: ["sustainable tourism", "sustainable development", "sustainable future"]
+      }
+    ]
+  },
+  {
+    id: "g10-r4",
+    slug: "review-4-units-9-10",
+    unitNumber: 10.5,
+    isReview: true,
+    titleEn: "Review 4 (Units 9 - 10)",
+    titleVi: "Ôn tập 4 (Bài 9 - 10)",
+    topic: "End of Year Review",
+    cefrLevel: "B1",
+    term: 2,
+    grammarTitle: "Consolidation: Reported Speech & Conditionals",
+    grammarSummary: "Tổng kết toàn diện chương trình Tiếng Anh 10 Global Success: Câu gián tiếp, Câu điều kiện loại 1 & 2 và toàn bộ vốn từ vựng cấp THPT.",
+    sections: [
+      { id: "sec-1", title: "I. Language Review", description: "Tổng kết toàn diện ngữ âm, từ vựng và ngữ pháp học kỳ 2" },
+      { id: "sec-2", title: "II. Skills Review", description: "Bộ đề ôn tập 4 kỹ năng chuẩn bị cho kỳ thi kết thúc năm học lớp 10" }
+    ],
+    vocabulary: []
+  }
+];
+
+export function getGrade10UnitBySlug(slug: string): Grade10Unit | undefined {
+  return GRADE_10_CURRICULUM.find((u) => u.slug === slug);
+}
+
+export function getGrade10UnitsByTerm(term: 1 | 2): Grade10Unit[] {
+  return GRADE_10_CURRICULUM.filter((u) => u.term === term);
+}

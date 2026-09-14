@@ -20,8 +20,10 @@
    - 2.6. Khung Đo lường & Đánh giá Năng lực (Assessment Framework: Formative vs. Summative)
 3. [CƠ SỞ KHOA HỌC DỮ LIỆU & NỘI DUNG CHƯƠNG TRÌNH](#3-cơ-sở-khoa-học-dữ-liệu--nội-dung-chương-trình)
    - 3.1. Chuẩn đầu ra CEFR & Khung chương trình THPT Quốc gia
-   - 3.2. Cấu trúc học liệu Sách giáo khoa Global Success Lớp 11
-   - 3.3. Chuẩn hóa Ngân hàng Đề thi & Cơ chế Truy cập qua Mã PIN (PIN-based Resolution)
+   - 3.2. Cấu trúc học liệu Sách giáo khoa Global Success Lớp 10
+   - 3.3. Cấu trúc học liệu Sách giáo khoa Global Success Lớp 11
+   - 3.4. Cấu trúc học liệu Sách giáo khoa Global Success Lớp 12
+   - 3.5. Chuẩn hóa Ngân hàng Đề thi & Cơ chế Truy cập qua Mã PIN (PIN-based Resolution)
 4. [KIẾN TRÚC HỆ THỐNG & CƠ SỞ KỸ THUẬT CÔNG NGHỆ](#4-kiến-trúc-hệ-thống--cơ-sở-kỹ-thuật-công-nghệ)
    - 4.1. Mô hình Kiến trúc Phần mềm 3 Tầng (3-Tier Modern Architecture)
    - 4.2. Công nghệ Giao diện & Kỹ thuật Tối ưu Trải nghiệm (Frontend & UX Engineering)
@@ -156,7 +158,27 @@ Nội dung học liệu trong LingoQuest được ánh xạ trực tiếp theo K
 - **Khối 11 (Lớp 11):** Cấp độ CEFR B1 đến B1+. Trọng tâm: Mở rộng từ vựng học thuật, các hiện tượng ngữ pháp phức hợp (Past Simple vs. Present Perfect, Stative Verbs in Continuous, Modal Verbs of Obligation & Advice, Linking Words, Cleft Sentences...).
 - **Khối 12 (Lớp 12):** Cấp độ CEFR B1+ đến B2. Trọng tâm: Chuẩn bị thi Tốt nghiệp THPT và Đánh giá năng lực, đọc hiểu văn bản chuyên sâu, mệnh đề quan hệ rút gọn, câu bị động nâng cao.
 
-### 3.2. Cấu Trúc Học Liệu Sách Giáo Khoa Global Success Lớp 11
+### 3.2. Cấu Trúc Học Liệu Sách Giáo Khoa Global Success Lớp 10
+Chương trình Tiếng Anh 10 Global Success đóng vai trò nền tảng cho cấp THPT, gồm 10 Units trọng tâm và 4 bài Review củng cố:
+
+| Unit | Tên Tiếng Anh | Tên Tiếng Việt | Chủ đề (Topic) | Ngữ pháp cốt lõi | Cấp độ |
+| :---: | :--- | :--- | :--- | :--- | :---: |
+| **01** | Family Life | Đời sống gia đình | Gia đình & Việc nhà | Hiện tại đơn vs. Hiện tại tiếp diễn | A2+ |
+| **02** | Humans and the Environment | Con người và Môi trường | Môi trường & Lối sống xanh | Tương lai với Will & Be going to, Bị động | A2+ |
+| **03** | Music | Âm nhạc | Nghệ thuật & Biểu diễn | Câu ghép, Động từ nguyên mẫu có To & không To | A2+ |
+| **R1** | Review 1 (Units 1 - 3) | Ôn tập 1 | Tổng kết Giữa Kỳ 1 | Ôn tập Hiện tại, Tương lai & Cấu trúc câu | A2+ |
+| **04** | For a Better Community | Vì một cộng đồng tốt đẹp hơn | Hoạt động tình nguyện | Quá khứ đơn vs. Quá khứ tiếp diễn với When/While | B1 |
+| **05** | Inventions | Những phát minh | Khoa học & Công nghệ | Hiện tại hoàn thành, Danh động từ & To-V | B1 |
+| **R2** | Review 2 (Units 4 - 5) | Ôn tập 2 | Tổng kết Học Kỳ 1 | Tổng hợp ngữ pháp và từ vựng Học kỳ 1 | B1 |
+| **06** | Gender Equality | Bình đẳng giới | Bình đẳng xã hội & Việc làm | Thể bị động với Động từ khuyết thiếu (Modals) | B1 |
+| **07** | Viet Nam and International Organisations | Việt Nam và các Tổ chức Quốc tế | Ngoại giao & Hợp tác quốc tế | So sánh hơn & So sánh nhất của tính từ | B1 |
+| **08** | New Ways to Learn | Những cách học mới | Công nghệ giáo dục & E-learning | Mệnh đề quan hệ xác định (Defining Relative clauses) | B1 |
+| **R3** | Review 3 (Units 6 - 8) | Ôn tập 3 | Tổng kết Giữa Kỳ 2 | Củng cố Bị động, So sánh & Mệnh đề quan hệ | B1 |
+| **09** | Protecting the Environment | Bảo vệ môi trường | Sinh thái & Động vật hoang dã | Câu gián tiếp (Reported Speech) | B1 |
+| **10** | Ecotourism | Du lịch sinh thái | Du lịch bền vững | Câu điều kiện loại 1 & loại 2 | B1 |
+| **R4** | Review 4 (Units 9 - 10) | Ôn tập 4 | Tổng kết Cuối Năm | Tổng kết toàn diện Tiếng Anh 10 Global Success | B1 |
+
+### 3.3. Cấu Trúc Học Liệu Sách Giáo Khoa Global Success Lớp 11
 Cơ sở dữ liệu của Lớp 11 được thiết kế với độ chi tiết cao, gồm 10 Units bám sát SGK Giáo dục Việt Nam:
 
 | Unit | Tên Tiếng Anh | Tên Tiếng Việt | Chủ đề (Topic) | Ngữ pháp cốt lõi | Cấp độ |
@@ -164,13 +186,37 @@ Cơ sở dữ liệu của Lớp 11 được thiết kế với độ chi tiết
 | **01** | A Long and Healthy Life | Một cuộc sống dài và khỏe mạnh | Sức khỏe & Lối sống | Quá khứ đơn vs. Hiện tại hoàn thành | B1 |
 | **02** | The Generation Gap | Khoảng cách thế hệ | Gia đình & Xã hội | Động từ khuyết thiếu (Must, Have to, Should) | B1 |
 | **03** | Cities of the Future | Các thành phố tương lai | Đô thị hóa & Công nghệ | Động từ chỉ trạng thái trong thì tiếp diễn | B1 |
+| **R1** | Review 1 (Units 1 - 3) | Ôn tập 1 | Tổng kết Giữa Kỳ 1 | Ôn tập Thời thì, Động từ khuyết thiếu & Trạng thái | B1 |
 | **04** | ASEAN and Viet Nam | ASEAN và Việt Nam | Quan hệ quốc tế | Danh động từ (Gerunds as subjects & objects) | B1+ |
 | **05** | Global Warming | Sự nóng lên toàn cầu | Môi trường & Khí hậu | Phân từ hiện tại và hoàn thành (Participle clauses) | B1+ |
+| **R2** | Review 2 (Units 4 - 5) | Ôn tập 2 | Tổng kết Học Kỳ 1 | Tổng hợp ngữ pháp Học kỳ 1 | B1+ |
 | **06** | Preserving Our Heritage | Bảo tồn di sản của chúng ta | Văn hóa & Lịch sử | Mệnh đề quan hệ với To-infinitive | B1+ |
 | **07** | Education Options | Các lựa chọn giáo dục | Định hướng nghề nghiệp | Câu chẻ nhấn mạnh (Cleft sentences: It is/was...) | B1+ |
 | **08** | Becoming Independent | Trở nên độc lập | Kỹ năng sống & Tự chủ | Danh từ ghép & Mệnh đề trạng ngữ chỉ thể cách | B2 |
+| **R3** | Review 3 (Units 6 - 8) | Ôn tập 3 | Tổng kết Giữa Kỳ 2 | Củng cố Câu chẻ, Mệnh đề quan hệ & Danh từ ghép | B2 |
 | **09** | Social Issues | Các vấn đề xã hội | Trách nhiệm cộng đồng | Mệnh đề trạng ngữ chỉ điều kiện & Nhượng bộ | B2 |
 | **10** | The Ecosystem | Hệ sinh thái | Đa dạng sinh học | Từ nối liên kết luận điểm & Danh từ ghép | B2 |
+| **R4** | Review 4 (Units 9 - 10) | Ôn tập 4 | Tổng kết Cuối Năm | Tổng kết toàn diện Tiếng Anh 11 Global Success | B2 |
+
+### 3.4. Cấu Trúc Học Liệu Sách Giáo Khoa Global Success Lớp 12
+Chương trình Tiếng Anh 12 hướng tới chuẩn đầu ra tốt nghiệp THPT và các kỳ thi đánh giá năng lực, đại học:
+
+| Unit | Tên Tiếng Anh | Tên Tiếng Việt | Chủ đề (Topic) | Ngữ pháp cốt lõi | Cấp độ |
+| :---: | :--- | :--- | :--- | :--- | :---: |
+| **01** | Life Stories We Admire | Những câu chuyện cuộc đời đáng khâm phục | Tiểu sử & Nhân vật truyền cảm hứng | Quá khứ đơn vs. Quá khứ tiếp diễn nâng cao | B2 |
+| **02** | A Multicultural World | Thế giới đa văn hóa | Đa dạng văn hóa & Tập quán quốc tế | Hệ thống Mạo từ (A, An, The & Zero article) | B2 |
+| **03** | Green Living | Lối sống xanh | Lối sống sinh thái & Net-Zero | Rút gọn mệnh đề bằng Phân từ & Danh động từ | B2 |
+| **R1** | Review 1 (Units 1 - 3) | Ôn tập 1 | Tổng kết Giữa Kỳ 1 | Củng cố Quá khứ, Mạo từ & Rút gọn phân từ | B2 |
+| **04** | Urbanisation | Đô thị hóa | Siêu đô thị & Di cư nông thôn - thành thị | Tính từ ghép (Compound Adjectives) & Nguyên âm đôi | B2 |
+| **05** | The World of Work | Thế giới việc làm | Kỹ năng thế kỷ 21 & Tuyển dụng | Mệnh đề quan hệ: Xác định & Không xác định | B2 |
+| **R2** | Review 2 (Units 4 - 5) | Ôn tập 2 | Tổng kết Học Kỳ 1 | Luyện đề tổng hợp thi Học kỳ 1 | B2 |
+| **06** | Artificial Intelligence | Trí tuệ nhân tạo | AI, Tự động hóa & Đạo đức công nghệ | Thể truyền khiến Chủ động & Bị động (Causatives) | B2+ |
+| **07** | The World of Mass Media | Thế giới truyền thông đại chúng | Báo chí số & Năng lực số | Giới từ đi sau Động từ và Tính từ | B2 |
+| **08** | Wildlife Conservation | Bảo tồn động vật hoang dã | Động vật nguy cấp & Phục hồi sinh thái | Câu phức với Mệnh đề trạng ngữ chỉ điều kiện, nhượng bộ | B2+ |
+| **R3** | Review 3 (Units 6 - 8) | Ôn tập 3 | Tổng kết Giữa Kỳ 2 | Tổng ôn Causatives, Giới từ & Câu phức | B2+ |
+| **09** | Career Paths | Các con đường sự nghiệp | Hướng nghiệp & Đào tạo nghề | Cụm động từ nâng cao (Advanced Phrasal Verbs) | B2+ |
+| **10** | Lifelong Learning | Học tập suốt đời | Tư duy phát triển & Nâng cao kỹ năng | Hiện tượng Đảo ngữ với Trạng từ phủ định (Inversion) | B2+ |
+| **R4** | Review 4 (Units 9 - 10) | Ôn tập 4 | Ôn thi Tốt nghiệp THPT | Tổng ôn toàn bộ kiến thức 3 năm THPT chuẩn Bộ GD&ĐT | B2+ |
 
 Mỗi từ vựng trong hệ thống lưu trữ đầy đủ 8 trường thông tin chuẩn hóa:
 1. `id`: Khóa định danh duy nhất.
@@ -180,9 +226,9 @@ Mỗi từ vựng trong hệ thống lưu trữ đầy đủ 8 trường thông 
 5. `meaningVi`: Nghĩa tiếng Việt chính xác, cô đọng theo ngữ cảnh SGK.
 6. `exampleEn` & `exampleVi`: Câu ví dụ ngữ cảnh Anh - Việt thực tế.
 7. `audioUrl`: Đường dẫn âm thanh chất lượng cao.
-8. `collocations`: Danh sách cụm từ hay đi kèm (ví dụ: *immune system, healthy lifestyle, dietary habits*).
+8. `collocations`: Danh sách cụm từ hay đi kèm (ví dụ: *immune system, healthy lifestyle, sustainable development*).
 
-### 3.3. Chuẩn Hóa Ngân Hàng Đề Thi & Cơ Chế Truy Cập Qua Mã PIN
+### 3.5. Chuẩn Hóa Ngân Hàng Đề Thi & Cơ Chế Truy Cập Qua Mã PIN
 - **Mã PIN Khảo thí (Exam PIN Code):** Mỗi bài kiểm tra được gán một mã định danh 6 số duy nhất (ví dụ: `839201`, `492105`).
 - **Cơ chế phân giải mã PIN (Direct PIN Resolution):** Module `exam-store.ts` tích hợp thuật toán tìm kiếm kép:
   $$\text{TargetExam} = \operatorname{Find}(e \mid e.\text{id} == \text{input} \lor e.\text{pinCode} == \text{input})$$
