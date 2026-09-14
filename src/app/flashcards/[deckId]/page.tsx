@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChevronLeft, Keyboard, RotateCcw, CheckCircle2 } from "lucide-react";
+import { ChevronLeft, Keyboard, RotateCcw, CheckCircle2, Gamepad2, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ProgressBar";
 import { FlashCard } from "@/components/FlashCard";
@@ -16,10 +16,19 @@ import { useApp, cardKey } from "@/lib/state/app-context";
    Sử dụng lặp ngắt quãng (SRS): thẻ chưa thuộc (box<3) được ưu tiên ôn trước. */
 
 export default function FlashcardsPage() {
+  const router = useRouter();
   const { deckId } = useParams<{ deckId: string }>();
   const [deck, setDeck] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const { srs, recordCard, deckLearnedCount, addXp, wordsLearned, streak, syncStats } = useApp();
+
+  const handleBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/dashboard");
+    }
+  };
 
   useEffect(() => {
     let active = true;
@@ -128,12 +137,12 @@ export default function FlashcardsPage() {
     return (
       <AppShell>
         <div className="mx-auto max-w-2xl">
-          <Link
-            href="/dashboard"
-            className="mb-4 inline-flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-brand"
+          <button
+            onClick={handleBack}
+            className="mb-4 inline-flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-brand transition-colors cursor-pointer"
           >
             <ChevronLeft className="h-4 w-4" /> Quay lại
-          </Link>
+          </button>
           <div className="rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-card">
             <div className="text-5xl">🃏</div>
             <h2 className="mt-3 text-2xl font-extrabold text-slate-900">
@@ -149,12 +158,12 @@ export default function FlashcardsPage() {
   return (
     <AppShell>
       <div className="mx-auto max-w-2xl">
-        <Link
-          href="/dashboard"
-          className="mb-4 inline-flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-brand"
+        <button
+          onClick={handleBack}
+          className="mb-4 inline-flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-brand transition-colors cursor-pointer"
         >
           <ChevronLeft className="h-4 w-4" /> Quay lại
-        </Link>
+        </button>
 
         <div className="mb-6">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
@@ -191,11 +200,23 @@ export default function FlashcardsPage() {
               Bạn nhớ {sessionKnown}/{orderedCards.length} từ trong phiên này ·
               <span className="font-extrabold text-brand"> +{orderedCards.length * 5} XP</span>
             </p>
-            <div className="mt-6 flex justify-center gap-3">
-              <Button variant="outline" onClick={restart}>
-                <RotateCcw className="h-4 w-4" /> Học lại
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Button variant="outline" onClick={restart} className="rounded-xl font-bold">
+                <RotateCcw className="h-4 w-4 mr-1.5" /> Học lại
               </Button>
-              <Button asChild>
+              <Button asChild variant="outline" className="rounded-xl font-bold bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 shadow-2xs">
+                <Link href="/game">
+                  <Gamepad2 className="h-4 w-4 mr-1.5 text-amber-600" />
+                  Chơi Mini Game phản xạ
+                </Link>
+              </Button>
+              <Button asChild className="rounded-xl font-bold bg-brand hover:bg-brand-700 text-white shadow-2xs">
+                <Link href="/curriculum">
+                  <BookOpen className="h-4 w-4 mr-1.5" />
+                  Khám phá SGK
+                </Link>
+              </Button>
+              <Button asChild variant="ghost" className="rounded-xl font-bold text-slate-600">
                 <Link href="/dashboard">Về trang chủ</Link>
               </Button>
             </div>

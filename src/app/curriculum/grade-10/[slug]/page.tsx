@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { GradeSwitcher } from "@/components/curriculum/GradeSwitcher";
 import { motion } from "framer-motion";
 import {
   ChevronLeft,
@@ -43,6 +44,7 @@ import { InteractiveReadingStudio } from "@/components/curriculum/InteractiveRea
 import { InteractiveQuestBoard } from "@/components/curriculum/InteractiveQuestBoard";
 
 export default function Grade10UnitDetailPage() {
+  const router = useRouter();
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
   const unit = useMemo(() => (slug ? getGrade10UnitBySlug(slug) : undefined), [slug]);
@@ -52,11 +54,11 @@ export default function Grade10UnitDetailPage() {
   const vocabIds = useMemo(() => unit?.vocabulary.map((v) => v.id) || [], [unit]);
   const { records, stats, updateWord } = useVocabProgress(vocabIds, user?.id);
 
-  // Unit navigation calculations (Previous / Next Unit)
+  // Unit navigation calculations (Previous / Next Unit) based on resolved unit
   const unitIndex = useMemo(() => {
-    if (!slug) return -1;
-    return GRADE_10_CURRICULUM.findIndex((u) => u.slug === slug);
-  }, [slug]);
+    if (!unit) return -1;
+    return GRADE_10_CURRICULUM.findIndex((u) => u.id === unit.id);
+  }, [unit]);
   const prevUnit = unitIndex > 0 ? GRADE_10_CURRICULUM[unitIndex - 1] : null;
   const nextUnit = unitIndex >= 0 && unitIndex < GRADE_10_CURRICULUM.length - 1 ? GRADE_10_CURRICULUM[unitIndex + 1] : null;
 
@@ -303,6 +305,11 @@ export default function Grade10UnitDetailPage() {
   return (
     <AppShell>
       <div className="mx-auto max-w-7xl pb-16">
+        {/* Top Grade Quick Switcher */}
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <GradeSwitcher currentGrade={10} compact />
+        </div>
+
         {/* Navigation Breadcrumb & Unit Switcher */}
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
@@ -319,19 +326,36 @@ export default function Grade10UnitDetailPage() {
             </span>
           </div>
 
+          {/* Quick Unit Jump with Dropdown */}
           <div className="flex items-center gap-2">
             {prevUnit && (
-              <Button asChild variant="outline" size="sm" className="rounded-xl border-slate-200 text-xs font-bold">
+              <Button asChild variant="outline" size="sm" className="rounded-xl border-slate-200 text-xs font-bold shadow-2xs">
                 <Link href={`/curriculum/grade-10/${prevUnit.slug}`}>
                   <ChevronLeft className="h-3.5 w-3.5 mr-1" />
-                  Bài trước
+                  <span className="hidden sm:inline">Bài trước</span>
                 </Link>
               </Button>
             )}
+
+            <select
+              aria-label="Chọn bài học Unit"
+              value={unit.slug}
+              onChange={(e) => {
+                router.push(`/curriculum/grade-10/${e.target.value}`);
+              }}
+              className="text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 shadow-2xs hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+            >
+              {GRADE_10_CURRICULUM.map((u) => (
+                <option key={u.slug} value={u.slug}>
+                  {u.isReview ? u.titleEn : `Unit ${u.unitNumber}: ${u.titleEn}`}
+                </option>
+              ))}
+            </select>
+
             {nextUnit && (
-              <Button asChild variant="outline" size="sm" className="rounded-xl border-slate-200 text-xs font-bold">
+              <Button asChild size="sm" className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-2xs">
                 <Link href={`/curriculum/grade-10/${nextUnit.slug}`}>
-                  Bài tiếp
+                  <span className="hidden sm:inline">Bài tiếp</span>
                   <ChevronRight className="h-3.5 w-3.5 ml-1" />
                 </Link>
               </Button>

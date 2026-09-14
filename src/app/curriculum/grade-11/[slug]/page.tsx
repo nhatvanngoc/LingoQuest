@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { GradeSwitcher } from "@/components/curriculum/GradeSwitcher";
 import { motion } from "framer-motion";
 import {
   ChevronLeft,
@@ -43,6 +44,7 @@ import { InteractiveReadingStudio } from "@/components/curriculum/InteractiveRea
 import { InteractiveQuestBoard } from "@/components/curriculum/InteractiveQuestBoard";
 
 export default function Grade11UnitDetailPage() {
+  const router = useRouter();
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
   const unit = useMemo(() => (slug ? getGrade11UnitBySlug(slug) : undefined), [slug]);
@@ -52,11 +54,11 @@ export default function Grade11UnitDetailPage() {
   const vocabIds = useMemo(() => unit?.vocabulary.map((v) => v.id) || [], [unit]);
   const { records, stats, updateWord } = useVocabProgress(vocabIds, user?.id);
 
-  // Unit navigation calculations (Previous / Next Unit)
+  // Unit navigation calculations (Previous / Next Unit) based on resolved unit
   const unitIndex = useMemo(() => {
-    if (!slug) return -1;
-    return GRADE_11_CURRICULUM.findIndex((u) => u.slug === slug);
-  }, [slug]);
+    if (!unit) return -1;
+    return GRADE_11_CURRICULUM.findIndex((u) => u.id === unit.id);
+  }, [unit]);
   const prevUnit = unitIndex > 0 ? GRADE_11_CURRICULUM[unitIndex - 1] : null;
   const nextUnit = unitIndex >= 0 && unitIndex < GRADE_11_CURRICULUM.length - 1 ? GRADE_11_CURRICULUM[unitIndex + 1] : null;
 
@@ -441,6 +443,11 @@ export default function Grade11UnitDetailPage() {
     <AppShell>
       {/* SCREEN VIEW (HIDDEN WHEN PRINTING) */}
       <div className="mx-auto max-w-6xl pb-16 print:hidden">
+        {/* Top Grade Quick Switcher */}
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <GradeSwitcher currentGrade={11} compact />
+        </div>
+
         {/* BREADCRUMB & QUICK UNIT NAV */}
         <div className="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm mb-4">
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-slate-500 font-medium">
@@ -473,9 +480,7 @@ export default function Grade11UnitDetailPage() {
               aria-label="Chọn bài học Unit"
               value={unit.slug}
               onChange={(e) => {
-                if (typeof window !== "undefined") {
-                  window.location.href = `/curriculum/grade-11/${e.target.value}`;
-                }
+                router.push(`/curriculum/grade-11/${e.target.value}`);
               }}
               className="text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 shadow-2xs hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
             >

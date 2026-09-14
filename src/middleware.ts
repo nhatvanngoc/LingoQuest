@@ -28,6 +28,11 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith("/learn/") ||
     pathname.startsWith("/exercise/") ||
     pathname.startsWith("/flashcards/") ||
+    pathname === "/curriculum" ||
+    pathname.startsWith("/curriculum/") ||
+    pathname === "/exams" ||
+    pathname.startsWith("/exams/") ||
+    pathname === "/styleguide" ||
     pathname.startsWith("/game") ||
     pathname.startsWith("/api/health") ||
     pathname.startsWith("/api/auth") ||

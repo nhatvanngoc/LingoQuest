@@ -109,21 +109,6 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { user, role } = useRole();
   const items = useMemo(() => {
-    if (role === "student") {
-      const grade = user.grade || "11";
-      const gradeLabel = `Lớp ${grade}`;
-      const gradeHref = `/curriculum/grade-${grade}`;
-      return [
-        { href: "/dashboard", label: "Trang chủ", icon: Home },
-        { href: gradeHref, label: gradeLabel, icon: BookOpen, badge: "GS" },
-        { href: "/curriculum", label: "Giáo trình", icon: Compass },
-        { href: "/exams", label: "Phòng thi", icon: Trophy, badge: "PIN" },
-        { href: "/learn", label: "Bài giảng", icon: PlayCircle, badge: "NEW" },
-        { href: "/flashcards/deck-1", label: "Flashcard", icon: Layers },
-        { href: "/game", label: "Game", icon: Gamepad2, badge: "HOT" },
-        { href: "/progress", label: "Hồ sơ", icon: BarChart3 },
-      ];
-    }
     if (role === "teacher") {
       return [
         { href: "/teacher", label: "Bảng điều khiển", icon: LayoutDashboard },
@@ -134,7 +119,20 @@ export function AppShell({ children }: { children: ReactNode }) {
         { href: "/teacher/lessons/new", label: "Đăng video", icon: Video },
       ];
     }
-    return [];
+    // Student & Guest navigation
+    const grade = user.grade || "11";
+    const gradeLabel = `Lớp ${grade}`;
+    const gradeHref = `/curriculum/grade-${grade}`;
+    return [
+      { href: "/dashboard", label: "Trang chủ", icon: Home },
+      { href: gradeHref, label: gradeLabel, icon: BookOpen, badge: "GS" },
+      { href: "/curriculum", label: "Giáo trình", icon: Compass },
+      { href: "/exams", label: "Phòng thi", icon: Trophy, badge: "PIN" },
+      { href: "/learn", label: "Bài giảng", icon: PlayCircle, badge: "NEW" },
+      { href: "/flashcards/deck-1", label: "Flashcard", icon: Layers },
+      { href: "/game", label: "Game", icon: Gamepad2, badge: "HOT" },
+      { href: "/progress", label: "Hồ sơ", icon: BarChart3 },
+    ];
   }, [role, user.grade]);
   const { xp, streak, level } = useApp();
   const [userMenuOpen, setUserMenuOpen] = useState(false);

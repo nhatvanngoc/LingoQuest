@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { PlayCircle, Layers, ClipboardCheck, ChevronLeft, Check, X, Sparkles, Zap, Trophy } from "lucide-react";
+import { PlayCircle, Layers, ClipboardCheck, ChevronLeft, Check, X, Sparkles, Zap, Trophy, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ShimmerButton } from "@/components/magic/ShimmerButton";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -87,10 +87,16 @@ export default function LearnPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} className="mb-6 flex items-center justify-between">
-        <Link href="/dashboard" className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-brand transition-colors group">
-          <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Quay lại Dashboard
-        </Link>
+      <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <Link href="/learn" className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-brand transition-colors group">
+            <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Thư viện bài giảng
+          </Link>
+          <span className="text-slate-300">•</span>
+          <Link href="/dashboard" className="text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors">
+            Trang chủ
+          </Link>
+        </div>
         <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-black text-violet-600 border border-violet-100">Học tập • {lesson.titleVi}</span>
       </motion.div>
 
@@ -323,9 +329,21 @@ function StepQuiz({
               <Trophy className="h-4 w-4" /> Hoàn hảo! Perfect score ✨
             </motion.div>
           )}
-          <div className="mt-8 flex justify-center gap-3">
-            <Button variant="outline" onClick={onBack}>Xem lại</Button>
-            <ShimmerButton asChild size="lg"><Link href="/dashboard" className="flex items-center gap-2">Về trang chủ <Trophy className="h-4 w-4" /></Link></ShimmerButton>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button variant="outline" onClick={onBack} className="rounded-xl font-bold">Xem lại</Button>
+            <Button asChild variant="outline" className="rounded-xl font-bold bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 shadow-2xs">
+              <Link href="/game" className="flex items-center gap-1.5">
+                <Gamepad2 className="h-4 w-4 text-amber-600" /> Chơi Mini Game
+              </Link>
+            </Button>
+            <Button asChild className="rounded-xl font-bold bg-brand hover:bg-brand-700 text-white shadow-2xs">
+              <Link href="/learn" className="flex items-center gap-1.5">
+                <PlayCircle className="h-4 w-4" /> Bài học tiếp theo
+              </Link>
+            </Button>
+            <Button asChild variant="ghost" className="rounded-xl font-bold text-slate-600">
+              <Link href="/dashboard">Về trang chủ</Link>
+            </Button>
           </div>
         </SpotlightCard>
       </motion.div>

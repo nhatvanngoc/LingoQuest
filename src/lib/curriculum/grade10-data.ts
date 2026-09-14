@@ -707,7 +707,34 @@ export const GRADE_10_CURRICULUM: Grade10Unit[] = [
 ];
 
 export function getGrade10UnitBySlug(slug: string): Grade10Unit | undefined {
-  return GRADE_10_CURRICULUM.find((u) => u.slug === slug);
+  if (!slug) return undefined;
+  const clean = slug.toLowerCase().trim();
+
+  // 1. Exact match by slug or id
+  const exact = GRADE_10_CURRICULUM.find((u) => u.slug.toLowerCase() === clean || u.id.toLowerCase() === clean);
+  if (exact) return exact;
+
+  // 2. Unit number match (e.g. "unit-1", "unit1", "u1", "1")
+  const unitNumMatch = clean.match(/^(?:unit-?|u)?(\d+)$/i);
+  if (unitNumMatch) {
+    const num = parseInt(unitNumMatch[1], 10);
+    const byNum = GRADE_10_CURRICULUM.find((u) => !u.isReview && u.unitNumber === num);
+    if (byNum) return byNum;
+  }
+
+  // 3. Review match (e.g. "review-1", "review1", "r1")
+  const reviewMatch = clean.match(/^(?:review-?|r)(\d+)$/i);
+  if (reviewMatch) {
+    const revNum = parseInt(reviewMatch[1], 10);
+    const byRev = GRADE_10_CURRICULUM.find((u) => u.isReview && (u.id.endsWith(`r${revNum}`) || u.slug.includes(`review-${revNum}`)));
+    if (byRev) return byRev;
+  }
+
+  // 4. Prefix or containment match
+  const byPrefix = GRADE_10_CURRICULUM.find((u) => u.slug.toLowerCase().startsWith(clean + "-") || clean.startsWith(u.slug.toLowerCase() + "-"));
+  if (byPrefix) return byPrefix;
+
+  return undefined;
 }
 
 export function getGrade10UnitsByTerm(term: 1 | 2): Grade10Unit[] {

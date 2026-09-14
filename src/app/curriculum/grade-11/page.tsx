@@ -19,6 +19,7 @@ import { GRADE_11_CURRICULUM } from "@/lib/curriculum/grade11-data";
 import { Button } from "@/components/ui/button";
 import { useRole } from "@/lib/auth/role-context";
 import { getUnitVocabStats, useVocabProgress } from "@/lib/curriculum/vocab-progress";
+import { GradeSwitcher } from "@/components/curriculum/GradeSwitcher";
 
 export default function Grade11CurriculumPage() {
   const { user } = useRole();
@@ -95,6 +96,15 @@ export default function Grade11CurriculumPage() {
             </div>
           </div>
         </motion.div>
+
+        {/* Grade Switcher Tabs */}
+        <div className="mb-6 flex items-center justify-between">
+          <GradeSwitcher currentGrade={11} />
+          <div className="hidden md:flex items-center gap-2 text-xs font-bold text-slate-500">
+            <span className="h-2 w-2 rounded-full bg-teal-500 animate-pulse" />
+            <span>Sách giáo khoa Kết nối tri thức</span>
+          </div>
+        </div>
 
         {/* Filter & Search Bar */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
