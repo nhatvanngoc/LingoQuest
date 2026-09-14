@@ -42,6 +42,11 @@ import { getCollocationsForWord } from "@/lib/curriculum/vocab-collocations";
 import { InteractiveGrammarStudio } from "@/components/curriculum/InteractiveGrammarStudio";
 import { InteractiveReadingStudio } from "@/components/curriculum/InteractiveReadingStudio";
 import { InteractiveQuestBoard } from "@/components/curriculum/InteractiveQuestBoard";
+import {
+  UnitLearningStepper,
+  UnitNextStepCard,
+  QuizCelebrationCard,
+} from "@/components/curriculum/UnitLearningFlow";
 
 export default function Grade11UnitDetailPage() {
   const router = useRouter();
@@ -623,6 +628,14 @@ export default function Grade11UnitDetailPage() {
           </div>
         </div>
 
+        {/* 4-Step Pedagogical Learning Stepper */}
+        <UnitLearningStepper
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          vocabCount={unit.vocabulary.length}
+          quizSubmitted={quizSubmitted}
+        />
+
         {/* ========================================================= */}
         {/* TAB 1: VOCABULARY & FLASHCARDS (MATCHING SCREENSHOT 2) */}
         {/* ========================================================= */}
@@ -884,7 +897,7 @@ export default function Grade11UnitDetailPage() {
                           setCurrentCardIndex((i) => i + 1);
                           setAudioListenCount(0);
                         } else {
-                          handleTabChange("quiz");
+                          handleTabChange("grammar");
                         }
                       }}
                       className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white shadow-xs py-2.5 px-4 cursor-pointer"
@@ -894,7 +907,7 @@ export default function Grade11UnitDetailPage() {
                           Từ tiếp theo <ChevronRight className="ml-1 h-4 w-4" />
                         </>
                       ) : (
-                        "Làm bài kiểm tra (10 câu)"
+                        "Bước tiếp: Học Ngữ pháp"
                       )}
                     </Button>
                   </div>
@@ -1010,6 +1023,9 @@ export default function Grade11UnitDetailPage() {
                 })}
               </div>
             )}
+
+            {/* Bottom Guided Next Step Card */}
+            <UnitNextStepCard currentTab="vocab" onNext={() => handleTabChange("grammar")} />
           </div>
         )}
 
@@ -1017,23 +1033,29 @@ export default function Grade11UnitDetailPage() {
         {/* TAB 2: GRAMMAR FOCUS (INTERACTIVE TIMELINE & FORMULAS) */}
         {/* ========================================================= */}
         {activeTab === "grammar" && (
-          <InteractiveGrammarStudio
-            unitNumber={unit.unitNumber}
-            grammarTitle={unit.grammarTitle}
-            grammarSummary={unit.grammarSummary}
-            topic={unit.topic}
-          />
+          <div>
+            <InteractiveGrammarStudio
+              unitNumber={unit.unitNumber}
+              grammarTitle={unit.grammarTitle}
+              grammarSummary={unit.grammarSummary}
+              topic={unit.topic}
+            />
+            <UnitNextStepCard currentTab="grammar" onNext={() => handleTabChange("reading")} />
+          </div>
         )}
 
         {/* ========================================================= */}
         {/* TAB 3: READING COMPREHENSION (SMART READER & AUDIO) */}
         {/* ========================================================= */}
         {activeTab === "reading" && (
-          <InteractiveReadingStudio
-            unitNumber={unit.unitNumber}
-            titleEn={unit.titleEn}
-            topic={unit.topic}
-          />
+          <div>
+            <InteractiveReadingStudio
+              unitNumber={unit.unitNumber}
+              titleEn={unit.titleEn}
+              topic={unit.topic}
+            />
+            <UnitNextStepCard currentTab="reading" onNext={() => handleTabChange("quiz")} />
+          </div>
         )}
 
         {/* ========================================================= */}
@@ -1173,6 +1195,21 @@ export default function Grade11UnitDetailPage() {
                 </div>
               )}
             </div>
+
+            {/* Post-Quiz Results & Celebration Card */}
+            {quizSubmitted && (
+              <QuizCelebrationCard
+                score={quizScore}
+                total={finalizedQuizQuestions.length}
+                xpEarned={quizScore * 10}
+                nextUnit={nextUnit ? { slug: nextUnit.slug, titleEn: nextUnit.titleEn, unitNumber: nextUnit.unitNumber } : undefined}
+                grade={11}
+                onReset={() => {
+                  setUserAnswers({});
+                  setQuizSubmitted(false);
+                }}
+              />
+            )}
           </div>
         )}
       </div>

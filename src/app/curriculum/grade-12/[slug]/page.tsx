@@ -42,6 +42,11 @@ import { getCollocationsForWord } from "@/lib/curriculum/vocab-collocations";
 import { InteractiveGrammarStudio } from "@/components/curriculum/InteractiveGrammarStudio";
 import { InteractiveReadingStudio } from "@/components/curriculum/InteractiveReadingStudio";
 import { InteractiveQuestBoard } from "@/components/curriculum/InteractiveQuestBoard";
+import {
+  UnitLearningStepper,
+  UnitNextStepCard,
+  QuizCelebrationCard,
+} from "@/components/curriculum/UnitLearningFlow";
 
 export default function Grade12UnitDetailPage() {
   const router = useRouter();
@@ -429,6 +434,14 @@ export default function Grade12UnitDetailPage() {
           </div>
         </motion.div>
 
+        {/* 4-Step Pedagogical Learning Stepper */}
+        <UnitLearningStepper
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          vocabCount={unit.vocabulary.length}
+          quizSubmitted={quizSubmitted}
+        />
+
         {/* Main 5 Navigation Tabs */}
         <div className="mb-8 flex overflow-x-auto border-b border-slate-200 scrollbar-none gap-2">
           <button
@@ -813,6 +826,9 @@ export default function Grade12UnitDetailPage() {
                     ))}
                   </div>
                 )}
+
+                {/* Bottom Guided Next Step Card */}
+                <UnitNextStepCard currentTab="vocab" onNext={() => handleTabChange("grammar")} />
               </div>
             )}
           </div>
@@ -820,21 +836,27 @@ export default function Grade12UnitDetailPage() {
 
         {/* TAB 2: GRAMMAR STUDIO */}
         {activeTab === "grammar" && (
-          <InteractiveGrammarStudio
-            unitNumber={unit.unitNumber}
-            grammarTitle={unit.grammarTitle}
-            grammarSummary={unit.grammarSummary}
-            topic={unit.topic}
-          />
+          <div>
+            <InteractiveGrammarStudio
+              unitNumber={unit.unitNumber}
+              grammarTitle={unit.grammarTitle}
+              grammarSummary={unit.grammarSummary}
+              topic={unit.topic}
+            />
+            <UnitNextStepCard currentTab="grammar" onNext={() => handleTabChange("reading")} />
+          </div>
         )}
 
         {/* TAB 3: READING STUDIO */}
         {activeTab === "reading" && (
-          <InteractiveReadingStudio
-            unitNumber={unit.unitNumber}
-            titleEn={unit.titleEn}
-            topic={unit.topic}
-          />
+          <div>
+            <InteractiveReadingStudio
+              unitNumber={unit.unitNumber}
+              titleEn={unit.titleEn}
+              topic={unit.topic}
+            />
+            <UnitNextStepCard currentTab="reading" onNext={() => handleTabChange("quiz")} />
+          </div>
         )}
 
         {/* TAB 4: OBJECTIVES & SECTIONS */}
@@ -1004,6 +1026,18 @@ export default function Grade12UnitDetailPage() {
                   );
                 })}
               </div>
+            )}
+
+            {/* Post-Quiz Results & Celebration Card */}
+            {quizSubmitted && (
+              <QuizCelebrationCard
+                score={quizScore}
+                total={quizQuestions.length}
+                xpEarned={quizScore * 10}
+                nextUnit={nextUnit ? { slug: nextUnit.slug, titleEn: nextUnit.titleEn, unitNumber: nextUnit.unitNumber } : undefined}
+                grade={12}
+                onReset={handleResetQuiz}
+              />
             )}
           </div>
         )}
