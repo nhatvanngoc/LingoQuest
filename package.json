@@ -22,6 +22,7 @@
     "drizzle-orm": "0.45.2",
     "framer-motion": "^13.2.0",
     "lucide-react": "^1.39.0",
+    "marked": "^18.0.13",
     "next": "16.2.6",
     "pg": "8.20.0",
     "phaser": "^4.2.1",

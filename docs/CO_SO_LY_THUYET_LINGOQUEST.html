@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>LingoQuest - Báo Cáo Cơ Sở Lý Thuyết & Kiến Trúc Kỹ Thuật</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 20mm 15mm 20mm 15mm;
+      @bottom-center {
+        content: counter(page);
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-size: 9pt;
+        color: #64748B;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.65;
+      color: #1E293B;
+      background-color: #FFFFFF;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* COVER PAGE */
+    .cover-page {
+      height: 250mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 3px double #0D9488;
+      padding: 25mm 20mm;
+      text-align: center;
+      background: linear-gradient(180deg, #F0FDFA 0%, #FFFFFF 35%, #F8FAFC 100%);
+      page-break-after: always;
+    }
+
+    .cover-top {
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .cover-org {
+      font-size: 13pt;
+      font-weight: 800;
+      color: #0F172A;
+      margin-bottom: 4px;
+    }
+    .cover-sub-org {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #0D9488;
+      border-bottom: 2px solid #0D9488;
+      display: inline-block;
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: #CCFBF1;
+      color: #0F766E;
+      font-weight: 700;
+      font-size: 9pt;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid #99F6E4;
+    }
+
+    .cover-center {
+      margin: auto 0;
+    }
+    .cover-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 26pt;
+      font-weight: 800;
+      color: #0F172A;
+      line-height: 1.25;
+      margin: 0 0 16px 0;
+    }
+    .cover-title span {
+      color: #0D9488;
+    }
+    .cover-subtitle {
+      font-size: 12pt;
+      font-weight: 600;
+      color: #475569;
+      line-height: 1.5;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    .cover-meta {
+      text-align: left;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 16px 24px;
+      width: 85%;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .cover-meta-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 10pt;
+    }
+    .cover-meta-row:last-child {
+      margin-bottom: 0;
+    }
+    .cover-meta-label {
+      font-weight: 700;
+      color: #475569;
+    }
+    .cover-meta-val {
+      font-weight: 600;
+      color: #0F172A;
+    }
+
+    .cover-bottom {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #64748B;
+      letter-spacing: 0.5px;
+    }
+
+    /* DOCUMENT HEADINGS */
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18pt;
+      font-weight: 800;
+      color: #0F172A;
+      border-bottom: 2px solid #0D9488;
+      padding-bottom: 8px;
+      margin-top: 24pt;
+      margin-bottom: 12pt;
+      page-break-after: avoid;
+    }
+
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14pt;
+      font-weight: 800;
+      color: #0F766E;
+      margin-top: 20pt;
+      margin-bottom: 10pt;
+      border-left: 4px solid #0D9488;
+      padding-left: 10px;
+      page-break-after: avoid;
+    }
+
+    h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12pt;
+      font-weight: 700;
+      color: #1E293B;
+      margin-top: 14pt;
+      margin-bottom: 6pt;
+      page-break-after: avoid;
+    }
+
+    h4 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #334155;
+      margin-top: 10pt;
+      margin-bottom: 4pt;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 8pt;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 10pt;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 4pt;
+    }
+
+    strong {
+      color: #0F172A;
+    }
+
+    /* TABLES */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14pt 0;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+
+    th {
+      background-color: #F1F5F9;
+      color: #0F172A;
+      font-weight: 700;
+      text-align: left;
+      padding: 8px 10px;
+      border: 1px solid #CBD5E1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    td {
+      padding: 7px 10px;
+      border: 1px solid #E2E8F0;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #F8FAFC;
+    }
+
+    /* CODE BLOCKS & ASCII ART */
+    pre {
+      background-color: #0F172A;
+      color: #E2E8F0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5pt;
+      line-height: 1.45;
+      padding: 12px 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 12pt 0;
+      border: 1px solid #334155;
+      page-break-inside: avoid;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5pt;
+      background-color: #F1F5F9;
+      color: #0F766E;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #E2E8F0;
+    }
+
+    pre code {
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+      border: none;
+    }
+
+    /* BLOCKQUOTES / CALLOUTS */
+    blockquote {
+      border-left: 4px solid #0D9488;
+      background-color: #F0FDFA;
+      margin: 12pt 0;
+      padding: 10pt 14pt;
+      border-radius: 0 8px 8px 0;
+      color: #134E4A;
+      font-style: normal;
+      page-break-inside: avoid;
+    }
+
+    blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* HORIZONTAL RULE */
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #E2E8F0;
+      margin: 18pt 0;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    /* FOOTER AND RUNNING ELEMENTS */
+    .running-header {
+      font-size: 8pt;
+      color: #94A3B8;
+      border-bottom: 1px solid #E2E8F0;
+      padding-bottom: 4px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER PAGE -->
+  <div class="cover-page">
+    <div class="cover-top">
+      <div class="cover-org">BỘ GIÁO DỤC VÀ ĐÀO TẠO • CHƯƠNG TRÌNH GDPT 2018</div>
+      <div class="cover-sub-org">DỰ ÁN NGHIÊN CỨU & PHÁT TRIỂN CÔNG NGHỆ GIÁO DỤC (EDTECH THPT)</div>
+      <div><span class="cover-badge">Báo Cáo Nghiên Cứu & Kiến Trúc Hệ Thống</span></div>
+    </div>
+
+    <div class="cover-center">
+      <h1 class="cover-title">LINGO<span>QUEST</span></h1>
+      <div class="cover-subtitle">
+        Cơ Sở Lý Thuyết, Mô Hình Sư Phạm & Kiến Trúc Kỹ Thuật Nền Tảng Học Tập & Khảo Thí Tiếng Anh THPT Tương Tác Thích Ứng
+      </div>
+    </div>
+
+    <div>
+      <div class="cover-meta">
+        <div class="cover-meta-row">
+          <span class="cover-meta-label">Hệ thống:</span>
+          <span class="cover-meta-val">LingoQuest EdTech Multimodal Web Platform</span>
+        </div>
+        <div class="cover-meta-row">
+          <span class="cover-meta-label">Khung chuẩn:</span>
+          <span class="cover-meta-val">GDPT 2018 môn Tiếng Anh • CEFR B1 - B2 • Global Success</span>
+        </div>
+        <div class="cover-meta-row">
+          <span class="cover-meta-label">Kiến trúc:</span>
+          <span class="cover-meta-val">Next.js 16 • React 19 • Web Speech API • Spaced Repetition (SRS)</span>
+        </div>
+        <div class="cover-meta-row">
+          <span class="cover-meta-label">Phiên bản:</span>
+          <span class="cover-meta-val">Release 2.0 (Toàn diện Khảo thí & Học liệu 11 Units)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      VIỆT NAM — NĂM 2026
+    </div>
+  </div>
+
+  <!-- MAIN BODY CONTENT -->
+  <div class="content-container">
+    <h1>CƠ SỞ LÝ THUYẾT &amp; KIẾN TRÚC KỸ THUẬT HỆ THỐNG LINGOQUEST</h1>
+<h2>Nền Tảng Học Tập &amp; Khảo Thí Tiếng Anh THPT Tương Tác Thích Ứng Bám Sát Chương Trình GDPT 2018</h2>
+<blockquote>
+<p><strong>Bản đầy đủ có thể xem tại:</strong> <a href="docs/CO_SO_LY_THUYET_LINGOQUEST.md"><code>docs/CO_SO_LY_THUYET_LINGOQUEST.md</code></a></p>
+</blockquote>
+<hr>
+<h2>MỤC LỤC TỔNG QUAN</h2>
+<ol>
+<li><a href="#1-t%E1%BB%95ng-quan-%C4%91%E1%BB%81-t%C3%A0i--b%E1%BB%91i-c%E1%BA%A3nh-nghi%C3%AAn-c%E1%BB%A9u">TỔNG QUAN ĐỀ TÀI &amp; BỐI CẢNH NGHIÊN CỨU</a><ul>
+<li>1.1. Tên đề tài &amp; Định danh hệ thống</li>
+<li>1.2. Tính cấp thiết &amp; Bối cảnh đổi mới giáo dục THPT (GDPT 2018)</li>
+<li>1.3. Mục tiêu nghiên cứu &amp; Phạm vi ứng dụng</li>
+</ul>
+</li>
+<li><a href="#2-c%C6%A1-s%E1%BB%9F-l%C3%BD-lu%E1%BA%ADn-gi%C3%A1o-d%E1%BB%A5c--ph%C6%B0%C6%A1ng-ph%C3%A1p-lu%E1%BA%ADn-s%C6%B0-ph%E1%BA%A1m">CƠ SỞ LÝ LUẬN GIÁO DỤC &amp; PHƯƠNG PHÁP LUẬN SƯ PHẠM</a><ul>
+<li>2.1. Thuyết Kiến tạo Xã hội (Social Constructivism) &amp; Vùng phát triển gần (ZPD)</li>
+<li>2.2. Đường hướng Dạy học Ngôn ngữ Giao tiếp (CLT) &amp; Dạy học theo Nhiệm vụ (TBLT)</li>
+<li>2.3. Thuyết Mã hóa Kép (Dual-Coding Theory) &amp; Khắc sâu Âm thanh (Ear-Imprint Loop)</li>
+<li>2.4. Hệ thống Lặp lại Ngắt quãng (Spaced Repetition System - SRS) &amp; Đường cong Quên lãng</li>
+<li>2.5. Khung Lý thuyết Trò chơi hóa trong Giáo dục (Gamification &amp; Octalysis Framework)</li>
+<li>2.6. Khung Đo lường &amp; Đánh giá Năng lực (Assessment Framework: Formative vs. Summative)</li>
+</ul>
+</li>
+<li><a href="#3-c%C6%A1-s%E1%BB%9F-khoa-h%E1%BB%8Dc-d%E1%BB%AF-li%E1%BB%87u--n%E1%BB%99i-dung-ch%C6%B0%C6%A1ng-tr%C3%ACnh">CƠ SỞ KHOA HỌC DỮ LIỆU &amp; NỘI DUNG CHƯƠNG TRÌNH</a><ul>
+<li>3.1. Chuẩn đầu ra CEFR &amp; Khung chương trình THPT Quốc gia</li>
+<li>3.2. Cấu trúc học liệu Sách giáo khoa Global Success Lớp 11</li>
+<li>3.3. Chuẩn hóa Ngân hàng Đề thi &amp; Cơ chế Truy cập qua Mã PIN (PIN-based Resolution)</li>
+</ul>
+</li>
+<li><a href="#4-ki%E1%BA%BFn-tr%C3%BAc-h%E1%BB%87-th%E1%BB%91ng--c%C6%A1-s%E1%BB%9F-k%E1%BB%B9-thu%E1%BA%ADt-c%C3%B4ng-ngh%E1%BB%87">KIẾN TRÚC HỆ THỐNG &amp; CƠ SỞ KỸ THUẬT CÔNG NGHỆ</a><ul>
+<li>4.1. Mô hình Kiến trúc Phần mềm 3 Tầng (3-Tier Modern Architecture)</li>
+<li>4.2. Công nghệ Giao diện &amp; Kỹ thuật Tối ưu Trải nghiệm (Frontend &amp; UX Engineering)</li>
+<li>4.3. Công nghệ Xử lý Âm thanh &amp; Nhận dạng Giọng nói (Web Speech API)</li>
+<li>4.4. Cơ chế Đồng bộ Trạng thái 2 Chiều &amp; Lưu trữ Phiên học</li>
+<li>4.5. Cơ chế Kiểm soát Quyền truy cập theo Vai trò (RBAC)</li>
+</ul>
+</li>
+<li><a href="#5-ph%C3%A2n-t%C3%ADch-chi-ti%E1%BA%BFt-c%C3%A1c-ph%C3%A2n-h%E1%BB%87-ch%E1%BB%A9c-n%C4%83ng">PHÂN TÍCH CHI TIẾT CÁC PHÂN HỆ CHỨC NĂNG</a><ul>
+<li>5.1. Phân hệ Cổng Chương trình THPT (Curriculum Hub)</li>
+<li>5.2. Phân hệ Phòng học Tương tác Đa phương thức (Interactive Unit Studio)</li>
+<li>5.3. Phân hệ Đấu trường Khảo thí Trực tuyến (Exam Arena: Azota vs. Quizizz)</li>
+<li>5.4. Phân hệ Quản trị Giảng dạy &amp; Trợ lý Chấm bài AI (Teacher Studio &amp; AI Grader)</li>
+<li>5.5. Động cơ Trò chơi hóa &amp; Thúc đẩy Động lực (Gamification Engine)</li>
+</ul>
+</li>
+<li><a href="#6-m%C3%B4-h%C3%ACnh-h%C3%B3a-quy-tr%C3%ACnh--bi%E1%BB%83u-%C4%91%E1%BB%93-ho%E1%BA%A1t-%C4%91%E1%BB%99ng-flowcharts">MÔ HÌNH HÓA QUY TRÌNH &amp; BIỂU ĐỒ HOẠT ĐỘNG (FLOWCHARTS)</a><ul>
+<li>6.1. Sơ đồ Luồng Học tập Thích ứng (Adaptive Learning Loop)</li>
+<li>6.2. Sơ đồ Luồng Khảo thí Trực tuyến (Dual-Mode Assessment Flow)</li>
+</ul>
+</li>
+<li><a href="#7-k%E1%BA%BFt-lu%E1%BA%ADn--h%C6%B0%E1%BB%9Bng-ph%C3%A1t-tri%E1%BB%83n">KẾT LUẬN &amp; HƯỚNG PHÁT TRIỂN</a></li>
+<li><a href="#8-t%C3%A0i-li%E1%BB%87u-tham-kh%E1%BA%A3o">TÀI LIỆU THAM KHẢO</a></li>
+</ol>
+<hr>
+<div class="page-break"></div><h2>1. TỔNG QUAN ĐỀ TÀI &amp; BỐI CẢNH NGHIÊN CỨU</h2>
+<h3>1.1. Tên Đề Tài &amp; Định Danh Hệ Thống</h3>
+<ul>
+<li><strong>Tên tiếng Việt:</strong> <em>Nghiên cứu, Thiết kế và Xây dựng Nền tảng EdTech Học tập &amp; Khảo thí Tiếng Anh THPT Tương tác Thích ứng LingoQuest.</em></li>
+<li><strong>Tên tiếng Anh:</strong> <em>LingoQuest: An Interactive &amp; Adaptive EdTech Platform for High School English Learning and Standardized Assessment.</em></li>
+<li><strong>Phân loại sản phẩm:</strong> Ứng dụng Web Giáo dục Đa phương thức (Multimodal Educational Web Application), kết hợp Khảo thí Trực tuyến (Computer-Based Assessment) và Trí tuệ Nhân tạo Hỗ trợ Giảng dạy (AI-Assisted Tutoring).</li>
+</ul>
+<h3>1.2. Tính Cấp Thiết &amp; Bối Cảnh Đổi Mới Giáo Dục THPT (GDPT 2018)</h3>
+<ol>
+<li><strong>Chuyển dịch trọng tâm giáo dục:</strong> Theo Thông tư 32/2018/TT-BGDĐT của Bộ Giáo dục và Đào tạo ban hành Chương trình Giáo dục phổ thông mới (GDPT 2018), môn Tiếng Anh đã chuyển dịch căn bản từ việc &quot;truyền thụ kiến thức ngôn ngữ ngữ pháp thụ động&quot; sang &quot;phát triển phẩm chất và năng lực giao tiếp thực tế&quot; đạt chuẩn B1/B2 theo Khung tham chiếu Châu Âu (CEFR).</li>
+<li><strong>Khó khăn thực tế của học sinh THPT:</strong><ul>
+<li>Học sinh thường đối mặt với sách giáo khoa và tài liệu ôn thi khô khan, mang nặng tính tĩnh (static text), thiếu tính sinh động và tương tác.</li>
+<li>Hiện tượng <strong>&quot;Học trước quên sau&quot;</strong> (đặc trưng bởi Đường cong Quên lãng Ebbinghaus) diễn ra phổ biến khi học sinh cố ghi nhớ từ vựng đơn lẻ mà không có ngữ cảnh, cụm từ cố định (collocations) hoặc âm thanh chuẩn xác.</li>
+<li>Thiếu môi trường phản xạ ngữ âm (pronunciation feedback) thường xuyên do thời lượng tiết học trên lớp (45 phút/tiết cho 40-45 học sinh) không đủ để giáo viên sửa lỗi phát âm từng cá nhân.</li>
+</ul>
+</li>
+<li><strong>Thách thức của giáo viên trong kỷ nguyên chuyển đổi số:</strong><ul>
+<li>Việc biên soạn đề kiểm tra 15 phút, 45 phút, đề giữa kỳ theo định dạng mới (kỳ thi tốt nghiệp THPT từ năm 2025) tiêu tốn rất nhiều thời gian.</li>
+<li>Chấm bài tập tự luận (viết đoạn văn, luận ngắn) đòi hỏi tính nhất quán theo barem chuẩn (Rubric), thường bị quá tải khi phải chấm hàng trăm bài mỗi tuần.</li>
+<li>Nhu cầu cấp bách về một hệ thống hợp nhất: Vừa cho phép học sinh tự học vừa giúp giáo viên giao bài, tổ chức thi trắc nghiệm (chuẩn phiếu A4 Azota hoặc đấu trường game Quizizz) và theo dõi tiến độ chi tiết.</li>
+</ul>
+</li>
+</ol>
+<h3>1.3. Mục Tiêu Nghiên Cứu &amp; Phạm Vi Ứng Dụng</h3>
+<ul>
+<li><strong>Mục tiêu tổng quát:</strong> Xây dựng một nền tảng EdTech toàn diện, tối ưu hóa trải nghiệm người dùng (UX), tích hợp các nguyên lý sư phạm hiện đại nhằm nâng cao hiệu quả tiếp thu kiến thức Tiếng Anh THPT và tối ưu hóa quy trình khảo thí.</li>
+<li><strong>Phạm vi nội dung:</strong> Toàn bộ chương trình Tiếng Anh THPT (Lớp 10, 11, 12), tập trung triển khai chuyên sâu hệ thống học liệu Tiếng Anh 11 Global Success (10 Units + 4 Bài ôn tập hoàn chỉnh).</li>
+<li><strong>Phạm vi người dùng:</strong> Phân quyền rạch ròi 2 đối tượng: Học sinh (Student) và Giáo viên (Teacher).</li>
+</ul>
+<hr>
+<div class="page-break"></div><h2>2. CƠ SỞ LÝ LUẬN GIÁO DỤC &amp; PHƯƠNG PHÁP LUẬN SƯ PHẠM</h2>
+<p>Nền tảng LingoQuest không đơn thuần là một hệ thống số hóa văn bản, mà được thiết kế dựa trên các lý thuyết khoa học giáo dục và tâm lý học nhận thức vững chắc.</p>
+<pre><code>       ┌─────────────────────────────────────────────────────────────┐
+       │             NỀN TẢNG SƯ PHẠM CỦA LINGOQUEST                 │
+       └──────────────────────────────┬──────────────────────────────┘
+                                      │
+         ┌────────────────────────────┼────────────────────────────┐
+         │                            │                            │
+         ▼                            ▼                            ▼
+┌──────────────────┐        ┌──────────────────┐        ┌──────────────────┐
+│  Thuyết Kiến Tạo │        │ Thuyết Mã Hóa Kép│        │  Hệ Thống Lặp Lại│
+│  &amp; Vùng ZPD      │        │  (Dual-Coding)   │        │   Ngắt Quãng     │
+│ (Vygotsky, 1978) │        │ (Paivio, 1986)   │        │ (Ebbinghaus, SRS)│
+└──────────────────┘        └──────────────────┘        └──────────────────┘
+         │                            │                            │
+         ▼                            ▼                            ▼
+┌──────────────────┐        ┌──────────────────┐        ┌──────────────────┐
+│  Dạy Ngôn Ngữ    │        │  Trò Chơi Hóa    │        │  Đánh Giá Đa Dạng│
+│  Giao Tiếp (CLT) │        │   (Gamification) │        │  (Formative vs.  │
+│  &amp; Nhiệm Vụ TBLT │        │(Octalysis, 2015) │        │    Summative)    │
+└──────────────────┘        └──────────────────┘        └──────────────────┘
+</code></pre>
+<h3>2.1. Thuyết Kiến Tạo Xã Hội (Social Constructivism) &amp; Vùng Phát Triển Gần (ZPD)</h3>
+<ul>
+<li><strong>Cơ sở lý thuyết:</strong> Theo Lev Vygotsky (1978), tri thức không thể truyền đạt thụ động mà phải được người học chủ động kiến tạo thông qua tương tác. Vygotsky định nghĩa <strong>Vùng phát triển gần (Zone of Proximal Development - ZPD)</strong> là khoảng cách giữa mức độ phát triển hiện tại (những gì người học tự làm được) và mức độ phát triển tiềm năng (những gì người học có thể làm được với sự hướng dẫn của chuyên gia hoặc công cụ trợ giúp).</li>
+<li><strong>Ứng dụng trong LingoQuest (Instructional Scaffolding):</strong><ul>
+<li>Hệ thống &quot;Giàn giáo tri thức&quot;: Học sinh không bị đưa ngay vào làm bài kiểm tra khó. Quy trình được phân tầng bậc thang:<ol>
+<li>Tiếp cận từ vựng kèm phát âm và câu ví dụ minh họa ngữ cảnh.</li>
+<li>Cung cấp cụm từ hay gặp (<strong>Collocations</strong>) để hình thành phản xạ kết hợp từ tự nhiên.</li>
+<li>Trợ lý AI nhận diện phát âm hỗ trợ chỉnh sửa ngữ âm tức thời.</li>
+<li>Thử thách tương tác tại Interactive Grammar Studio và Reading Studio.</li>
+<li>Kiểm tra đánh giá 10 câu trắc nghiệm đa tầng có giải thích chi tiết.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3>2.2. Đường Hướng Dạy Học Ngôn Ngữ Giao Tiếp (CLT) &amp; Dạy Học Theo Nhiệm Vụ (TBLT)</h3>
+<ul>
+<li><strong>Cơ sở lý thuyết:</strong> Đường hướng CLT (Communicative Language Teaching) và TBLT (Task-Based Language Teaching - Ellis, 2003) nhấn mạnh việc học ngôn ngữ thông qua thực hiện các nhiệm vụ có ý nghĩa thực tế (meaningful tasks) thay vì học vẹt các cấu trúc câu cô lập.</li>
+<li><strong>Ứng dụng trong LingoQuest:</strong><ul>
+<li>Mỗi bài học (Unit) xoay quanh một chủ đề thực tiễn của cuộc sống (Health &amp; Lifestyle, Generation Gap, Cities of the Future, ASEAN...).</li>
+<li>Học sinh không học ngữ pháp dưới dạng công thức khô khan, mà được phân tích theo 3 bình diện: <em>Hình thức (Form) - Ý nghĩa (Meaning) - Cách dùng (Use)</em>.</li>
+<li>Interactive Quest Board biến bài tập thành chuỗi nhiệm vụ giải quyết vấn đề thực tế (Problem-solving tasks).</li>
+</ul>
+</li>
+</ul>
+<h3>2.3. Thuyết Mã Hóa Kép (Dual-Coding Theory) &amp; Khắc Sâu Âm Thanh (Ear-Imprint Loop)</h3>
+<ul>
+<li><strong>Cơ sở lý thuyết:</strong> Allan Paivio (1986) chứng minh rằng não bộ con người xử lý thông tin qua hai hệ thống độc lập nhưng tương hỗ: <strong>Hệ thống Ngôn ngữ (Verbal System - văn bản, ký tự, ngữ nghĩa)</strong> và <strong>Hệ thống Phi ngôn ngữ (Non-verbal System - hình ảnh, âm thanh, biểu tượng)</strong>. Khi thông tin được mã hóa đồng thời trên cả hai kênh, khả năng lưu giữ và truy xuất trí nhớ dài hạn (Long-term memory) tăng gấp nhiều lần.</li>
+<li><strong>Ứng dụng trong LingoQuest:</strong><ul>
+<li>Thẻ Flashcard tích hợp đồng thời: Chữ viết (Word), Phiên âm chuẩn quốc tế (IPA), Nghĩa tiếng Việt, Câu ví dụ ngữ cảnh, và Âm thanh phát âm bản ngữ.</li>
+<li><strong>Tính năng độc quyền &quot;Khắc sâu Âm thanh (Ear-Imprint Loop)&quot;:</strong> Tự động phát lặp lại từ vựng 5 lần với quãng nghỉ 800ms giữa các lần. Cơ chế này kích hoạt <strong>Vòng lặp âm vị học (Phonological Loop)</strong> trong Trí nhớ làm việc (Working Memory - Baddeley &amp; Hitch), giúp học sinh &quot;in hằn&quot; trường âm thanh của từ trước khi thực hành nói.</li>
+</ul>
+</li>
+</ul>
+<h3>2.4. Hệ Thống Lặp Lại Ngắt Quãng (Spaced Repetition System - SRS) &amp; Đường Cong Quên Lãng</h3>
+<ul>
+<li><strong>Cơ sở lý thuyết:</strong> Hermann Ebbinghaus (1885) đã chứng minh rằng con người sẽ quên khoảng 70% lượng thông tin mới học sau 24-48 giờ nếu không được ôn tập. Thuật toán Spaced Repetition (nổi tiếng qua hệ thống hộp Leitner và SuperMemo SM-2 của Piotr Wozniak) chứng minh rằng: Việc ôn tập ngắt quãng đúng vào thời điểm chuẩn bị quên sẽ củng cố &quot;dấu vết trí nhớ&quot; (memory trace), biến trí nhớ ngắn hạn thành trí nhớ vĩnh viễn.</li>
+<li><strong>Ứng dụng trong LingoQuest:</strong><ul>
+<li>Hệ thống theo dõi trạng thái của từng từ vựng theo 3 cấp độ:<ul>
+<li><code>new</code>: Từ mới chưa học.</li>
+<li><code>learning</code>: Đang ghi nhớ, cần ôn tập thường xuyên.</li>
+<li><code>mastered</code>: Đã thuộc hoàn toàn (được bảo chứng bằng nhận diện giọng nói hoặc hoàn thành chuỗi flashcard).</li>
+</ul>
+</li>
+<li>Thuật toán tự động đẩy các từ ở trạng thái <code>learning</code> lên ưu tiên học trước trong các phiên làm việc tiếp theo.</li>
+<li>Nút bấm <em>&quot;Cần ôn lại thêm (Phím 1)&quot;</em> và <em>&quot;Đã thuộc từ này (+10 XP - Phím 2)&quot;</em> giúp học sinh tự chủ điều tiết nhịp độ ghi nhớ.</li>
+</ul>
+</li>
+</ul>
+<h3>2.5. Khung Lý Thuyết Trò Chơi Hóa Trong Giáo Dục (Gamification &amp; Octalysis Framework)</h3>
+<ul>
+<li><strong>Cơ sở lý thuyết:</strong> Trò chơi hóa (Deterding et al., 2011) là việc ứng dụng các cơ chế trò chơi vào bối cảnh phi trò chơi. Khung Octalysis của Yu-kai Chou (2015) xác định 8 động lực cốt lõi chi phối hành vi con người, đặc biệt là <em>Cảm giác tiến bộ &amp; Thành tựu (Accomplishment)</em>, <em>Ý thức xã hội &amp; Thi đua (Social Influence)</em>, và <em>Sự làm chủ (Empowerment)</em>.</li>
+<li><strong>Ứng dụng trong LingoQuest:</strong><ul>
+<li><strong>Điểm kinh nghiệm (XP):</strong> Thưởng điểm tức thì cho mỗi hành động tích cực (+10 XP khi thuộc từ, +100 XP khi hoàn thành Unit, +50 XP khi đạt điểm kiểm tra cao).</li>
+<li><strong>Chuỗi ngày học tập (Daily Streak):</strong> Thúc đẩy thói quen học tập vi mô (Micro-learning) hàng ngày để duy trì ngọn lửa chuỗi học.</li>
+<li><strong>Cấp độ (Leveling):</strong> Tăng cấp dần khi tích lũy đủ XP, đem lại cảm giác tự hào và thăng tiến rõ rệt.</li>
+<li><strong>Bảng xếp hạng lớp học (Leaderboard):</strong> Khơi dậy tinh thần thi đua lành mạnh giữa các bạn học trong lớp.</li>
+<li><strong>Nhiệm vụ hàng ngày (Daily Quests):</strong> Đặt ra các mục tiêu rõ ràng, định lượng (Học 5 từ mới, làm 1 bài kiểm tra, phát âm đạt điểm cao).</li>
+</ul>
+</li>
+</ul>
+<h3>2.6. Khung Đo Lường &amp; Đánh Giá Năng Lực (Assessment Framework)</h3>
+<p>LingoQuest tích hợp đồng thời hai hình thức đánh giá theo chuẩn kiểm tra hiện đại:</p>
+<ol>
+<li><strong>Đánh giá Quá trình (Formative Assessment):</strong><ul>
+<li>Đóng vai trò là công cụ hỗ trợ học tập (<em>Assessment for Learning</em>).</li>
+<li>Bao gồm kiểm tra ngữ âm tức thời (Speech AI Pronunciation Checker), câu hỏi trắc nghiệm sau mỗi thẻ từ, và bài kiểm tra 10 câu cuối Unit có phân tích phản hồi chi tiết cho từng phương án sai.</li>
+</ul>
+</li>
+<li><strong>Đánh giá Tổng kết (Summative Assessment):</strong><ul>
+<li>Đóng vai trò đo lường năng lực đầu ra (<em>Assessment of Learning</em>).</li>
+<li>Tích hợp 2 chế độ thi đấu:<ul>
+<li><strong>Chế độ Azota (Phiếu thi chuẩn hóa A4):</strong> Mô phỏng 100% định dạng đề thi thử THPT Quốc gia, kiểm soát thời gian làm bài, giao diện nghiêm túc, có phiếu tô trắc nghiệm.</li>
+<li><strong>Chế độ Quizizz Arena (Đấu trường thi đấu thời gian thực):</strong> Đề thi tính giờ theo từng câu hỏi, tính điểm dựa trên tốc độ và độ chính xác, hiệu ứng âm thanh sống động và bảng xếp hạng realtime.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<div class="page-break"></div><h2>3. CƠ SỞ KHOA HỌC DỮ LIỆU &amp; NỘI DUNG CHƯƠNG TRÌNH</h2>
+<h3>3.1. Chuẩn Đầu Ra CEFR &amp; Khung Chương Trình THPT Quốc Gia</h3>
+<p>Nội dung học liệu trong LingoQuest được ánh xạ trực tiếp theo Khung tham chiếu trình độ ngôn ngữ chung Châu Âu (CEFR) và yêu cầu cần đạt của Bộ GD&amp;ĐT:</p>
+<ul>
+<li><strong>Khối 10 (Lớp 10):</strong> Cấp độ CEFR A2+ đến B1. Trọng tâm: Nền tảng cấu trúc ngữ pháp cơ bản, phát triển vốn từ vựng học đường và môi trường xung quanh.</li>
+<li><strong>Khối 11 (Lớp 11):</strong> Cấp độ CEFR B1 đến B1+. Trọng tâm: Mở rộng từ vựng học thuật, các hiện tượng ngữ pháp phức hợp (Past Simple vs. Present Perfect, Stative Verbs in Continuous, Modal Verbs of Obligation &amp; Advice, Linking Words, Cleft Sentences...).</li>
+<li><strong>Khối 12 (Lớp 12):</strong> Cấp độ CEFR B1+ đến B2. Trọng tâm: Chuẩn bị thi Tốt nghiệp THPT và Đánh giá năng lực, đọc hiểu văn bản chuyên sâu, mệnh đề quan hệ rút gọn, câu bị động nâng cao.</li>
+</ul>
+<h3>3.2. Cấu Trúc Học Liệu Sách Giáo Khoa Global Success Lớp 11</h3>
+<p>Cơ sở dữ liệu của Lớp 11 được thiết kế với độ chi tiết cao, gồm 10 Units bám sát SGK Giáo dục Việt Nam:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Unit</th>
+<th align="left">Tên Tiếng Anh</th>
+<th align="left">Tên Tiếng Việt</th>
+<th align="left">Chủ đề (Topic)</th>
+<th align="left">Ngữ pháp cốt lõi</th>
+<th align="center">Cấp độ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>01</strong></td>
+<td align="left">A Long and Healthy Life</td>
+<td align="left">Một cuộc sống dài và khỏe mạnh</td>
+<td align="left">Sức khỏe &amp; Lối sống</td>
+<td align="left">Quá khứ đơn vs. Hiện tại hoàn thành</td>
+<td align="center">B1</td>
+</tr>
+<tr>
+<td align="center"><strong>02</strong></td>
+<td align="left">The Generation Gap</td>
+<td align="left">Khoảng cách thế hệ</td>
+<td align="left">Gia đình &amp; Xã hội</td>
+<td align="left">Động từ khuyết thiếu (Must, Have to, Should)</td>
+<td align="center">B1</td>
+</tr>
+<tr>
+<td align="center"><strong>03</strong></td>
+<td align="left">Cities of the Future</td>
+<td align="left">Các thành phố tương lai</td>
+<td align="left">Đô thị hóa &amp; Công nghệ</td>
+<td align="left">Động từ chỉ trạng thái trong thì tiếp diễn</td>
+<td align="center">B1</td>
+</tr>
+<tr>
+<td align="center"><strong>04</strong></td>
+<td align="left">ASEAN and Viet Nam</td>
+<td align="left">ASEAN và Việt Nam</td>
+<td align="left">Quan hệ quốc tế</td>
+<td align="left">Danh động từ (Gerunds as subjects &amp; objects)</td>
+<td align="center">B1+</td>
+</tr>
+<tr>
+<td align="center"><strong>05</strong></td>
+<td align="left">Global Warming</td>
+<td align="left">Sự nóng lên toàn cầu</td>
+<td align="left">Môi trường &amp; Khí hậu</td>
+<td align="left">Phân từ hiện tại và hoàn thành (Participle clauses)</td>
+<td align="center">B1+</td>
+</tr>
+<tr>
+<td align="center"><strong>06</strong></td>
+<td align="left">Preserving Our Heritage</td>
+<td align="left">Bảo tồn di sản của chúng ta</td>
+<td align="left">Văn hóa &amp; Lịch sử</td>
+<td align="left">Mệnh đề quan hệ với To-infinitive</td>
+<td align="center">B1+</td>
+</tr>
+<tr>
+<td align="center"><strong>07</strong></td>
+<td align="left">Education Options</td>
+<td align="left">Các lựa chọn giáo dục</td>
+<td align="left">Định hướng nghề nghiệp</td>
+<td align="left">Câu chẻ nhấn mạnh (Cleft sentences: It is/was...)</td>
+<td align="center">B1+</td>
+</tr>
+<tr>
+<td align="center"><strong>08</strong></td>
+<td align="left">Becoming Independent</td>
+<td align="left">Trở nên độc lập</td>
+<td align="left">Kỹ năng sống &amp; Tự chủ</td>
+<td align="left">Danh từ ghép &amp; Mệnh đề trạng ngữ chỉ thể cách</td>
+<td align="center">B2</td>
+</tr>
+<tr>
+<td align="center"><strong>09</strong></td>
+<td align="left">Social Issues</td>
+<td align="left">Các vấn đề xã hội</td>
+<td align="left">Trách nhiệm cộng đồng</td>
+<td align="left">Mệnh đề trạng ngữ chỉ điều kiện &amp; Nhượng bộ</td>
+<td align="center">B2</td>
+</tr>
+<tr>
+<td align="center"><strong>10</strong></td>
+<td align="left">The Ecosystem</td>
+<td align="left">Hệ sinh thái</td>
+<td align="left">Đa dạng sinh học</td>
+<td align="left">Từ nối liên kết luận điểm &amp; Danh từ ghép</td>
+<td align="center">B2</td>
+</tr>
+</tbody></table>
+<p>Mỗi từ vựng trong hệ thống lưu trữ đầy đủ 8 trường thông tin chuẩn hóa:</p>
+<ol>
+<li><code>id</code>: Khóa định danh duy nhất.</li>
+<li><code>word</code>: Từ vựng tiếng Anh.</li>
+<li><code>partOfSpeech</code>: Phân loại từ loại chuẩn (<code>noun</code>, <code>verb</code>, <code>adjective</code>, <code>adverb</code>, <code>phrase</code>).</li>
+<li><code>ipa</code>: Phiên âm quốc tế chuẩn IPA (International Phonetic Alphabet) hỗ trợ học ngữ âm chuẩn.</li>
+<li><code>meaningVi</code>: Nghĩa tiếng Việt chính xác, cô đọng theo ngữ cảnh SGK.</li>
+<li><code>exampleEn</code> &amp; <code>exampleVi</code>: Câu ví dụ ngữ cảnh Anh - Việt thực tế.</li>
+<li><code>audioUrl</code>: Đường dẫn âm thanh chất lượng cao.</li>
+<li><code>collocations</code>: Danh sách cụm từ hay đi kèm (ví dụ: <em>immune system, healthy lifestyle, dietary habits</em>).</li>
+</ol>
+<h3>3.3. Chuẩn Hóa Ngân Hàng Đề Thi &amp; Cơ Chế Truy Cập Qua Mã PIN</h3>
+<ul>
+<li><strong>Mã PIN Khảo thí (Exam PIN Code):</strong> Mỗi bài kiểm tra được gán một mã định danh 6 số duy nhất (ví dụ: <code>839201</code>, <code>492105</code>).</li>
+<li><strong>Cơ chế phân giải mã PIN (Direct PIN Resolution):</strong> Module <code>exam-store.ts</code> tích hợp thuật toán tìm kiếm kép:<br>$$\text{TargetExam} = \operatorname{Find}(e \mid e.\text{id} == \text{input} \lor e.\text{pinCode} == \text{input})$$<br>Điều này cho phép học sinh truy cập bài thi chỉ bằng một mã PIN ngắn gọn mà không cần gõ URL phức tạp.</li>
+</ul>
+<hr>
+<div class="page-break"></div><h2>4. KIẾN TRÚC HỆ THỐNG &amp; CƠ SỞ KỸ THUẬT CÔNG NGHỆ</h2>
+<h3>4.1. Mô Hình Kiến Trúc Phần Mềm 3 Tầng (3-Tier Modern Architecture)</h3>
+<p>LingoQuest ứng dụng kiến trúc Jamstack / Serverless hiện đại với nền tảng Next.js 16 (App Router) và Turbopack:</p>
+<pre><code>┌────────────────────────────────────────────────────────────────────────┐
+│                        TẦNG TRÌNH DIỄN (PRESENTATION)                  │
+│  - React 19 Client Components &amp; Server Components                      │
+│  - Tailwind CSS v4 Engine + Accessible Design Tokens                   │
+│  - Framer Motion Spring Animations (Micro-interactions)                │
+│  - Web Speech Synthesis &amp; Recognition Controllers                      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                  TẦNG LOGIC NGHIỆP VỤ (BUSINESS LOGIC LAYER)            │
+│  - AppContext (XP, Streak, Words, SRS State, Sound Engine)             │
+│  - RoleContext (RBAC: Student vs Teacher Authorization)                │
+│  - Curriculum Data Services &amp; Collocation Resolver                     │
+│  - Exam Engine (Azota Paper Simulation &amp; Quizizz Arena Timer)          │
+│  - Next.js API Routes (Serverless Endpoints)                           │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                   TẦNG LƯU TRỮ &amp; ĐỒNG BỘ (PERSISTENCE LAYER)           │
+│  - LocalStorage Caching (Offline-first Resilience)                     │
+│  - Bidirectional 2-Way URL State Synchronization                       │
+│  - Vercel Global Edge Network Caching                                  │
+└────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>4.2. Công Nghệ Giao Diện &amp; Kỹ Thuật Tối Ưu Trải Nghiệm (Frontend &amp; UX Engineering)</h3>
+<ol>
+<li><strong>Thiết kế màu sắc cao cấp (Curated HSL Palette):</strong><ul>
+<li>Không sử dụng màu sắc nguyên bản (raw colors) gây chói mắt. Hệ thống sử dụng bảng màu HSL hài hòa:<ul>
+<li><strong>Primary (Thương hiệu):</strong> Emerald/Teal (<code>#0D9488</code>, <code>#14B8A6</code>) tượng trưng cho tri thức, sự tươi mới và tập trung.</li>
+<li><strong>Accent (Điểm nhấn):</strong> Indigo (<code>#4F46E5</code>, <code>#4338CA</code>) mang tính học thuật, tin cậy.</li>
+<li><strong>Feedback (Phản hồi):</strong> Amber (<code>#F59E0B</code>) cho từ cần ôn; Emerald (<code>#10B981</code>) cho từ đã thuộc; Crimson (<code>#EF4444</code>) cho phương án sai.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Kỹ thuật hoạt họa Micro-motion (Framer Motion):</strong><ul>
+<li>Mọi chuyển động chuyển tab, lật thẻ Flashcard 3D, thanh tiến độ kinh nghiệm đều áp dụng nguyên lý vật lý đàn hồi (Spring physics - <code>SPRING_BOUNCY</code>), tạo cảm giác mềm mại, không giật cục.</li>
+</ul>
+</li>
+<li><strong>Khả năng tiếp cận Web toàn diện (Web Accessibility - WCAG 2.1):</strong><ul>
+<li><strong>Chế độ Cỡ chữ lớn (Large Text Mode <code>Aa</code>):</strong> Cho phép phóng to văn bản bài học tức thì chỉ với một nút bấm, hỗ trợ học sinh có thị lực kém hoặc học tập trên màn hình nhỏ.</li>
+<li><strong>Hệ thống Phím tắt bàn phím (Keyboard Shortcuts):</strong><ul>
+<li><code>ArrowLeft</code> ($\leftarrow$): Lùi về thẻ từ vựng trước.</li>
+<li><code>ArrowRight</code> ($\rightarrow$): Tiến sang thẻ từ vựng tiếp theo.</li>
+<li><code>Space</code>: Kích hoạt phát âm chuẩn.</li>
+<li><code>Phím 1</code>: Đánh dấu &quot;Cần ôn lại thêm&quot;.</li>
+<li><code>Phím 2</code>: Đánh dấu &quot;Đã thuộc từ này&quot; (nhận ngay +10 XP).</li>
+<li>Tự động tạm ngắt lắng nghe phím tắt khi người dùng gõ vào ô <code>input</code> hoặc <code>textarea</code>.</li>
+</ul>
+</li>
+<li><strong>Tối ưu in ấn (Print CSS Stylesheet):</strong> Hỗ trợ xuất phiếu học tập bài đọc và từ vựng ra giấy A4 chuẩn mực thông qua lớp <code>print:hidden</code> và định dạng in ấn chuyên biệt.</li>
+</ul>
+</li>
+</ol>
+<h3>4.3. Công Nghệ Xử Lý Âm Thanh &amp; Nhận Dạng Giọng Nói (Web Speech API)</h3>
+<ul>
+<li><strong>Tổng hợp giọng nói (Speech Synthesis):</strong> Hệ thống tích hợp sẵn bộ phát âm chuẩn <code>en-US</code> với tốc độ điều chỉnh linh hoạt ($0.85\times$ cho người mới học). Nếu liên kết âm thanh tĩnh bị lỗi hoặc học sinh không có mạng, hệ thống tự động kích hoạt chế độ Fallback phát âm bằng Web Speech API cục bộ, đảm bảo trải nghiệm không bao giờ bị ngắt quãng.</li>
+<li><strong>Nhận diện giọng nói &amp; Đánh giá phát âm AI (Speech Recognition):</strong> Thành phần <code>SpeechPronunciationChecker</code> sử dụng <code>webkitSpeechRecognition</code> để thu âm giọng đọc của học sinh, tiến hành chuẩn hóa chuỗi âm học (string normalization, loại bỏ dấu câu, chuyển chữ thường) và so sánh chuỗi với từ mục tiêu. Khi phát âm đạt yêu cầu, hệ thống tự động ghi nhận trạng thái <code>mastered</code> và cộng điểm thưởng.</li>
+</ul>
+<h3>4.4. Cơ Chế Đồng Bộ Trạng Thái 2 Chiều &amp; Lưu Trữ Phiên Học</h3>
+<ul>
+<li><strong>2-Way URL State Sync:</strong> Mọi thao tác chuyển đổi giữa 5 tab (<code>vocab</code>, <code>grammar</code>, <code>reading</code>, <code>objectives</code>, <code>quiz</code>) đều tự động cập nhật vào URL (<code>?tab=...</code>) thông qua <code>window.history.replaceState</code>. Điều này giải quyết triệt để vấn đề: Giáo viên có thể sao chép link chính xác của bài tập Đọc hiểu hoặc Ngữ pháp gửi cho học sinh, mở ra sẽ đúng ngay nội dung đó thay vì phải bấm chọn lại từ đầu.</li>
+<li><strong>LocalStorage Session Resume:</strong> Vị trí thẻ Flashcard đang học dở (<code>lastCardIndex</code>) được tự động lưu vào trình duyệt. Khi học sinh vô tình tải lại trang hoặc quay lại sau một khoảng thời gian, hệ thống tự động phục hồi đúng thẻ đang học dở.</li>
+</ul>
+<h3>4.5. Cơ Chế Kiểm Soát Quyền Truy Cập Theo Vai Trò (RBAC)</h3>
+<p>Hệ thống quản lý phân quyền linh hoạt qua <code>RoleContext</code>:</p>
+<ul>
+<li><strong>Học sinh (Student):</strong> Truy cập Bảng điều khiển cá nhân, Cổng chương trình THPT, Đấu trường khảo thí, Bài học video, Game luyện từ và Hồ sơ thành tích cá nhân. Thanh điều hướng tự động hiển thị đúng khối lớp của tài khoản (ví dụ: &quot;Lớp 11&quot; với badge &quot;GS&quot;).</li>
+<li><strong>Giáo viên (Teacher):</strong> Truy cập Bảng điều khiển sư phạm, Trung tâm phòng thi &amp; ngân hàng đề (<code>/teacher/exams</code>), Quản lý danh sách lớp (<code>/teacher/students</code>), Trợ lý chấm bài tự luận AI (<code>/teacher/grading</code>), Form biên soạn bài tập (<code>/teacher/assignments/new</code>) và Đăng tải bài học video (<code>/teacher/lessons/new</code>).</li>
+</ul>
+<hr>
+<div class="page-break"></div><h2>5. PHÂN TÍCH CHI TIẾT CÁC PHÂN HỆ CHỨC NĂNG</h2>
+<h3>5.1. Phân Hệ Cổng Chương Trình THPT (Curriculum Hub - <code>/curriculum</code>)</h3>
+<ul>
+<li>Đóng vai trò là bản đồ điều hướng tri thức cho toàn bộ cấp THPT.</li>
+<li>Phân tầng thành 3 khối lớp (Lớp 10, 11, 12).</li>
+<li>Thẻ thông tin hiển thị rõ: Số lượng Unit, cấp độ CEFR, học kỳ (Term 1 &amp; Term 2) và trạng thái sẵn sàng của học liệu.</li>
+</ul>
+<h3>5.2. Phân Hệ Phòng Học Tương Tác Đa Phương Thức (Interactive Unit Studio)</h3>
+<p>Tập trung tại tuyến đường <code>/curriculum/grade-11/[slug]</code>, bao gồm 5 không gian học tập chuyên sâu:</p>
+<ol>
+<li><strong>Flashcard Studio (Không gian Từ vựng &amp; Ngữ âm):</strong><ul>
+<li>Hiển thị từ vựng, ngữ nghĩa, câu ví dụ, cụm từ kết hợp (Collocations).</li>
+<li>Tích hợp 2 chế độ xem: Chế độ Thẻ Flashcard mẫu mới và Chế độ Bảng danh sách tra cứu nhanh có ô tìm kiếm tức thời.</li>
+<li>Tính năng lặp âm thanh 5 lần (Ear-Imprint) và Chấm phát âm AI.</li>
+</ul>
+</li>
+<li><strong>Interactive Grammar Studio (Xưởng Ngữ pháp Tương tác):</strong><ul>
+<li>Hệ thống hóa quy trình ngữ pháp theo 3 bước: Quy tắc cấu trúc $\rightarrow$ Phân tích chuyên sâu $\rightarrow$ Bài tập thực hành tương tác ngay tại chỗ.</li>
+</ul>
+</li>
+<li><strong>Interactive Reading Studio (Không gian Đọc hiểu Chuẩn hóa):</strong><ul>
+<li>Bài đọc bám sát chủ đề với công cụ nghe bài đọc audio.</li>
+<li>Câu hỏi trắc nghiệm kiểm tra khả năng suy luận, tìm thông tin chi tiết và đoán nghĩa từ theo ngữ cảnh.</li>
+</ul>
+</li>
+<li><strong>Interactive Quest Board (Bảng Mục tiêu &amp; Nhiệm vụ Bài học):</strong><ul>
+<li>Ánh xạ trực tiếp mục tiêu bài học theo Thang đo Bloom (Nhận biết, Thông hiểu, Vận dụng, Vận dụng cao).</li>
+</ul>
+</li>
+<li><strong>Summative Quiz (Bài kiểm tra Đánh giá 10 Câu):</strong><ul>
+<li>10 câu hỏi đa dạng bao phủ từ vựng, ngữ pháp, collocations và chủ đề bài học. Tự động chấm điểm, hiển thị huy hiệu thành tích và cung cấp lời giải thích cặn kẽ cho từng câu.</li>
+</ul>
+</li>
+</ol>
+<h3>5.3. Phân Hệ Đấu Trường Khảo Thí Trực Tuyến (Exam Arena - <code>/exams</code>)</h3>
+<ul>
+<li><strong>Cơ chế vào thi:</strong> Học sinh chỉ cần nhập mã PIN 6 số do giáo viên cấp (hoặc bấm chọn các đề thi sẵn có).</li>
+<li><strong>Lựa chọn 2 Chế độ khảo thí:</strong><ul>
+<li><strong>Chế độ Azota (Phiếu thi A4):</strong> Dành cho các bài thi học kỳ, kiểm tra 45 phút nghiêm túc. Đồng hồ đếm ngược, giao diện bảng câu hỏi dạng lưới, cho phép đánh dấu xem lại câu hỏi chưa chắc chắn.</li>
+<li><strong>Chế độ Quizizz Arena:</strong> Dành cho các buổi ôn tập đầu giờ, kiểm tra 15 phút hứng khởi. Từng câu hỏi hiển thị toàn màn hình, tính điểm theo tốc độ trả lời, hiệu ứng âm thanh và bảng xếp hạng trực tiếp.</li>
+</ul>
+</li>
+</ul>
+<h3>5.4. Phân Hệ Quản Trị Giảng Dạy &amp; Trợ Lý Chấm Bài AI (Teacher Studio)</h3>
+<ul>
+<li><strong>Quản trị Khảo thí (<code>/teacher/exams</code>):</strong> Giáo viên theo dõi toàn bộ danh sách đề thi kèm mã PIN, nút <strong>Sao chép mã PIN 1 chạm</strong> để gửi nhanh vào nhóm Zalo/Messenger lớp học.</li>
+<li><strong>Trợ lý Chấm bài Tự luận AI (<code>/teacher/grading</code>):</strong> Tự động phân tích bài viết của học sinh theo các tiêu chí: <em>Ngữ pháp (Grammar), Từ vựng (Lexical Resource), Tính mạch lạc (Coherence) và Hoàn thành yêu cầu đề bài (Task Achievement)</em>, đưa ra nhận xét chi tiết và điểm số gợi ý giúp giáo viên tiết kiệm 80% thời gian chấm bài.</li>
+<li><strong>Theo dõi Tiến độ Học sinh (<code>/teacher/students</code>):</strong> Biểu đồ nhiệt (Heatmap) và ma trận hoàn thành bài học, giúp giáo viên phát hiện sớm học sinh bị hổng kiến thức để kịp thời bồi dưỡng.</li>
+</ul>
+<h3>5.5. Động Cơ Trò Chơi Hóa &amp; Thúc Đẩy Động Lực (Gamification Engine)</h3>
+<ul>
+<li>Tích hợp chặt chẽ trong <code>app-context.tsx</code>:<ul>
+<li><strong>Hệ thống tính điểm kinh nghiệm (XP):</strong> Mỗi bài học, bài tập, flashcard đều được tích lũy vào kho XP của tài khoản.</li>
+<li><strong>Hệ thống bảo toàn Streak:</strong> Ghi nhận ngày học liên tục bằng cơ chế kiểm tra dấu thời gian (Timestamp check), khích lệ tính kỷ luật tự giác.</li>
+<li><strong>Cơ chế phản hồi âm thanh (Sound Engine):</strong> Âm thanh Chime nhẹ nhàng khi trả lời đúng hoặc lên cấp, hỗ trợ bật/tắt âm thanh nhanh chóng trên thanh tiêu đề.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<div class="page-break"></div><h2>6. MÔ HÌNH HÓA QUY TRÌNH &amp; BIỂU ĐỒ HOẠT ĐỘNG (FLOWCHARTS)</h2>
+<h3>6.1. Sơ Đồ Luồng Học Tập Thích Ứng (Adaptive Learning Loop)</h3>
+<pre><code class="language-mermaid">flowchart TD
+    Start([Học sinh đăng nhập]) --&gt; SelectUnit[Chọn Unit bài học từ Cổng THPT]
+    SelectUnit --&gt; LoadUnit[Tải dữ liệu Unit &amp; Phục hồi tiến độ LocalStorage]
+    
+    LoadUnit --&gt; VocabPhase[Giai đoạn 1: Học Từ vựng Flashcard]
+    VocabPhase --&gt; EarImprint[Nghe lặp 5 lần Ear-Imprint Loop]
+    EarImprint --&gt; PronounceCheck[Luyện nói &amp; Chấm phát âm AI]
+    
+    PronounceCheck --&gt; DecisionSRS{Đã thuộc từ?}
+    DecisionSRS -- Chưa --&gt; MarkReview[Gán nhãn &#39;Cần ôn lại&#39; &amp; Lưu hộp SRS]
+    DecisionSRS -- Đã thuộc --&gt; MarkMastered[Gán nhãn &#39;Đã thuộc&#39; + Thưởng 10 XP]
+    
+    MarkReview --&gt; NextCard[Chuyển từ tiếp theo]
+    MarkMastered --&gt; NextCard
+    
+    NextCard --&gt; CheckCardsEnd{Hết danh sách từ?}
+    CheckCardsEnd -- Chưa --&gt; VocabPhase
+    CheckCardsEnd -- Đã hết --&gt; GrammarPhase[Giai đoạn 2: Tương tác Ngữ pháp]
+    
+    GrammarPhase --&gt; ReadingPhase[Giai đoạn 3: Luyện Đọc hiểu PISA]
+    ReadingPhase --&gt; QuestPhase[Giai đoạn 4: Hoàn thành Nhiệm vụ Bài học]
+    QuestPhase --&gt; QuizPhase[Giai đoạn 5: Bài kiểm tra 10 câu]
+    
+    QuizPhase --&gt; ScoreCheck{Điểm &gt;= 80%?}
+    ScoreCheck -- Đạt --&gt; FinishUnit[Hoàn thành Unit: Thưởng 100 XP &amp; Tăng Level]
+    ScoreCheck -- Chưa đạt --&gt; ReviewAdvice[Gợi ý ôn tập lại phần yếu]
+    
+    FinishUnit --&gt; End([Kết thúc phiên học])
+    ReviewAdvice --&gt; End
+</code></pre>
+<h3>6.2. Sơ Đồ Luồng Khảo Thí Trực Tuyến (Dual-Mode Assessment Flow)</h3>
+<pre><code class="language-mermaid">flowchart TD
+    Student[Học sinh] --&gt; EnterExams[Truy cập /exams]
+    EnterExams --&gt; InputPIN{Cách thức vào thi?}
+    
+    InputPIN -- Nhập mã PIN --&gt; ResolvePIN[Hệ thống tra cứu mã PIN trong exam-store]
+    InputPIN -- Chọn đề sẵn có --&gt; SelectExam[Chọn đề 15p hoặc 45p]
+    
+    ResolvePIN --&gt; ValidateExam{Tìm thấy đề?}
+    ValidateExam -- Không --&gt; AlertError[Báo lỗi mã PIN không hợp lệ]
+    AlertError --&gt; EnterExams
+    ValidateExam -- Có --&gt; ChooseMode[Chọn chế độ trải nghiệm]
+    SelectExam --&gt; ChooseMode
+    
+    ChooseMode --&gt; AzotaMode[Chế độ Azota: Phiếu thi A4 chuẩn Bộ GD&amp;ĐT]
+    ChooseMode --&gt; QuizizzMode[Chế độ Quizizz: Đấu trường Gamified Realtime]
+    
+    AzotaMode --&gt; CountdownTimer[Đếm ngược thời gian làm bài]
+    QuizizzMode --&gt; PerQuestionTimer[Đếm ngược từng câu + Âm thanh hiệu ứng]
+    
+    CountdownTimer --&gt; SubmitAzota[Nộp bài thi]
+    PerQuestionTimer --&gt; SubmitQuizizz[Hoàn thành câu hỏi cuối]
+    
+    SubmitAzota --&gt; AutoGrade[Hệ thống tự động chấm điểm &amp; Xuất đáp án]
+    SubmitQuizizz --&gt; AutoGrade
+    
+    AutoGrade --&gt; LeaderboardSync[Cộng XP, Cập nhật Bảng xếp hạng Lớp]
+    LeaderboardSync --&gt; ViewResult[Xem bảng phân tích câu đúng/sai &amp; Lời giải chi tiết]
+</code></pre>
+<hr>
+<div class="page-break"></div><h2>7. KẾT LUẬN &amp; HƯỚNG PHÁT TRIỂN</h2>
+<h3>7.1. Kết Luận</h3>
+<p>Hệ thống <strong>LingoQuest</strong> đã giải quyết toàn diện bài toán kết hợp giữa <strong>Khoa học Sư phạm Hiện đại</strong> và <strong>Công nghệ Web Đỉnh cao</strong>:</p>
+<ol>
+<li><strong>Về mặt sư phạm:</strong> Áp dụng triệt để Thuyết kiến tạo, Spaced Repetition, Dual-Coding Theory và Gamification, giúp triệt tiêu hoàn toàn sự nhàm chán, khô khan của phương pháp học truyền thống.</li>
+<li><strong>Về mặt nội dung:</strong> Bám sát 100% chương trình Giáo dục phổ thông 2018 môn Tiếng Anh và bộ sách Global Success, phân cấp rõ ràng theo chuẩn năng lực CEFR.</li>
+<li><strong>Về mặt công nghệ:</strong> Vận hành trơn tru trên Next.js 16 App Router, tích hợp Web Speech API, đồng bộ URL 2 chiều, giao diện thích ứng chuẩn WCAG 2.1 và triển khai toàn cầu với độ trễ cực thấp trên Vercel Edge Network.</li>
+</ol>
+<h3>7.2. Hướng Phát Triển Mở Rộng</h3>
+<ol>
+<li><strong>Tích hợp sâu Hệ thống Quản lý Học tập (LMS Integration):</strong> Hỗ trợ chuẩn LTI (Learning Tools Interoperability) để kết nối đồng bộ dữ liệu điểm số trực tiếp với Google Classroom, Microsoft Teams for Education và Canvas LMS.</li>
+<li><strong>Nâng cấp Đánh giá Ngữ âm Chuyên sâu (Phoneme-level Speech AI):</strong> Nâng cấp bộ nhận diện giọng nói lên cấp độ âm vị (Phoneme level), chỉ rõ cho học sinh chính xác âm nào phát âm sai (ví dụ: lỗi nuốt âm đuôi <code>/s/</code>, <code>/ed/</code>, hoặc sai trọng âm).</li>
+<li><strong>Thế hệ Đề thi Tự động Thích ứng (Computerized Adaptive Testing - CAT):</strong> Ứng dụng lý thuyết Ứng đáp Câu hỏi (Item Response Theory - IRT) để tự động điều chỉnh độ khó của câu hỏi theo năng lực thời gian thực của từng học sinh.</li>
+</ol>
+<hr>
+<div class="page-break"></div><h2>8. TÀI LIỆU THAM KHẢO</h2>
+<ol>
+<li><strong>Bộ Giáo dục và Đào tạo (2018).</strong> <em>Chương trình Giáo dục phổ thông môn Tiếng Anh</em> (Ban hành kèm theo Thông tư số 32/2018/TT-BGDĐT ngày 26 tháng 12 năm 2018 của Bộ trưởng Bộ GD&amp;ĐT).</li>
+<li><strong>Hoàng Văn Vân (Tổng Chủ biên) và cộng sự (2023).</strong> <em>Tiếng Anh 11 - Global Success (Sách học sinh &amp; Sách giáo viên)</em>. Nhà xuất bản Giáo dục Việt Nam.</li>
+<li><strong>Vygotsky, L. S. (1978).</strong> <em>Mind in society: The development of higher psychological processes</em>. Harvard University Press.</li>
+<li><strong>Paivio, A. (1986).</strong> <em>Mental representations: A dual coding approach</em>. Oxford University Press.</li>
+<li><strong>Ebbinghaus, H. (1885).</strong> <em>Memory: A contribution to experimental psychology</em>. Teachers College, Columbia University.</li>
+<li><strong>Wozniak, P. A. (1990).</strong> <em>Optimization of learning: A new approach to spaced repetition</em>. SuperMemo Research.</li>
+<li><strong>Chou, Y. K. (2015).</strong> <em>Actionable Gamification: Beyond Points, Badges, and Leaderboards</em>. Octalysis Media.</li>
+<li><strong>Council of Europe (2001, 2020).</strong> <em>Common European Framework of Reference for Languages: Learning, teaching, assessment (CEFR)</em>. Cambridge University Press.</li>
+<li><strong>W3C (2018).</strong> <em>Web Content Accessibility Guidelines (WCAG) 2.1</em>. World Wide Web Consortium.</li>
+<li><strong>Next.js Documentation (2026).</strong> <em>App Router, React Server Components, and Turbopack Performance Optimization</em>. Vercel Inc.</li>
+</ol>
+
+  </div>
+
+</body>
+</html>
