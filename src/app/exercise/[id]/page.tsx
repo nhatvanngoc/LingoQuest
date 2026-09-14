@@ -572,47 +572,57 @@ export default function UnifiedExercisePage() {
             {(() => {
               const currentCard = vocabList[cardIdx];
               return (
-                <div className="perspective-1000 mx-auto max-w-md">
+                <div className="mx-auto max-w-md">
                   <motion.div
-                    animate={{ rotateY: isFlipped ? 180 : 0 }}
-                    transition={{ duration: 0.4 }}
-                    onClick={() => setIsFlipped((v) => !v)}
-                    className="relative min-h-[270px] w-full cursor-pointer rounded-3xl border-2 border-teal-100/80 bg-gradient-to-br from-white via-slate-50/50 to-teal-50/30 p-8 shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:shadow-xl transition-all flex flex-col justify-between [transform-style:preserve-3d]"
+                    key={isFlipped ? "back" : "front"}
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
+                    onClick={() => {
+                      sound.playPop();
+                      setIsFlipped((v) => !v);
+                    }}
+                    className={`relative min-h-[280px] w-full cursor-pointer rounded-3xl border-2 p-8 shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:shadow-xl transition-all flex flex-col justify-between select-none ${
+                      isFlipped
+                        ? "border-emerald-200 bg-gradient-to-br from-emerald-50/50 via-white to-teal-50/30"
+                        : "border-teal-200 bg-gradient-to-br from-white via-slate-50/50 to-teal-50/30"
+                    }`}
                   >
                     {!isFlipped ? (
                       /* Mặt trước: Tiếng Anh */
                       <div className="flex flex-col items-center justify-center flex-1 text-center">
-                        <span className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Từ vựng mục tiêu</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-teal-600 mb-2">Mặt trước • Từ vựng mục tiêu</span>
                         <div className="flex items-center justify-center gap-2.5">
-                          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">{currentCard.word}</h2>
+                          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">{currentCard.word}</h2>
                           <button
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               speakWord(currentCard.word);
                             }}
-                            className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors shadow-xs"
+                            className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors shadow-xs"
                             title="Nghe phát âm (Phím P)"
                           >
-                            <Volume2 className="h-4 w-4" />
+                            <Volume2 className="h-5 w-5" />
                           </button>
                         </div>
                         {currentCard.phonetic && (
-                          <p className="mt-1 text-sm font-mono text-slate-500">{currentCard.phonetic}</p>
+                          <p className="mt-1 text-sm font-mono text-slate-500 font-semibold">{currentCard.phonetic}</p>
                         )}
-                        <p className="mt-6 text-xs font-semibold text-slate-400 flex items-center gap-1.5">
-                          <span>Nhấn thẻ hoặc phím [Space] để xem nghĩa</span> ↺
-                        </p>
+                        <div className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-4 py-1.5 text-xs font-bold text-teal-700 border border-teal-200/80 shadow-2xs">
+                          <span>Nhấn thẻ hoặc phím [Space] để xem nghĩa</span>
+                          <span className="text-teal-500 font-black">➔</span>
+                        </div>
                       </div>
                     ) : (
                       /* Mặt sau: Nghĩa & Ví dụ */
-                      <div className="flex flex-col justify-center flex-1 text-center [transform:rotateY(180deg)]">
-                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Nghĩa tiếng Việt</span>
-                        <h3 className="text-2xl font-bold text-slate-900">{currentCard.meaning}</h3>
+                      <div className="flex flex-col justify-center flex-1 text-center">
+                        <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Mặt sau • Nghĩa tiếng Việt</span>
+                        <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">{currentCard.meaning}</h3>
                         {currentCard.example && (
-                          <div className="mt-4 rounded-xl bg-slate-50/80 border border-slate-100 p-3.5 text-left">
+                          <div className="mt-4 rounded-xl bg-slate-50/90 border border-slate-100 p-3.5 text-left">
                             <div className="flex items-start justify-between gap-2">
-                              <p className="text-xs font-semibold text-slate-800 italic flex-1">"{currentCard.example}"</p>
+                              <p className="text-xs sm:text-sm font-semibold text-slate-800 italic flex-1">"{currentCard.example}"</p>
                               <button
                                 type="button"
                                 onClick={(e) => {
@@ -622,14 +632,17 @@ export default function UnifiedExercisePage() {
                                 className="text-teal-700 hover:text-teal-900 shrink-0 p-1"
                                 title="Nghe câu ví dụ"
                               >
-                                <Volume2 className="h-3.5 w-3.5" />
+                                <Volume2 className="h-4 w-4" />
                               </button>
                             </div>
                             {currentCard.exampleVi && (
-                              <p className="text-[11px] text-slate-500 mt-1">→ {currentCard.exampleVi}</p>
+                              <p className="text-xs text-slate-500 mt-1">→ {currentCard.exampleVi}</p>
                             )}
                           </div>
                         )}
+                        <div className="mt-4 inline-flex items-center justify-center gap-1.5 text-xs font-bold text-slate-400">
+                          <span>Nhấn thẻ để quay lại mặt trước</span> ↺
+                        </div>
                       </div>
                     )}
                   </motion.div>

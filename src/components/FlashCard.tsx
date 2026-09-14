@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Volume2, Check, X, RotateCw, Sparkles } from "lucide-react";
 import type { FlashCardData } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -55,6 +55,7 @@ export function FlashCard({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
+      sound.playWhoosh();
       onFlip();
     }
   };
@@ -64,6 +65,13 @@ export function FlashCard({
       <div className={cn("perspective w-full", compact ? "max-w-sm" : "max-w-md")}>
         <motion.div
           ref={ref}
+          role="button"
+          tabIndex={0}
+          onClick={() => {
+            sound.playWhoosh();
+            onFlip();
+          }}
+          onKeyDown={handleKeyDown}
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => {
@@ -74,153 +82,143 @@ export function FlashCard({
           style={{
             rotateX: flipped ? 0 : rotateX,
             rotateY: flipped ? 0 : rotateY,
-            transformStyle: "preserve-3d",
+            height: compact ? 380 : 460,
           }}
-          className="relative block w-full cursor-pointer text-left"
-          aria-label="Lật thẻ"
+          className="relative block w-full cursor-pointer text-left select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-[2rem]"
+          aria-label={flipped ? "Mặt sau thẻ, nhấn để lật lại" : "Mặt trước thẻ, nhấn để xem nghĩa"}
         >
-          <motion.div
-            className="preserve-3d relative h-full w-full"
-            animate={{ rotateY: flipped ? 180 : 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], type: "spring", stiffness: 300, damping: 26 }}
-            style={{ height: compact ? 380 : 460, transformStyle: "preserve-3d" } as any}
-          >
-            {/* ===== MẶT TRƯỚC ===== */}
-            <div className="backface-hidden group absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-slate-200/60 bg-gradient-to-br from-white via-white to-brand-50/50 p-8 shadow-card">
-              {/* mesh & spotlight */}
-              <div className="absolute inset-0 bg-mesh-brand opacity-40" />
+          <AnimatePresence mode="wait">
+            {!flipped ? (
+              /* ===== MẶT TRƯỚC ===== */
               <motion.div
-                className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-brand-100/60 to-violet-100/40 blur-2xl pointer-events-none"
-                style={{
-                  left: useTransform(glareX, [0, 100], ["10%", "40%"]),
-                  top: useTransform(glareY, [0, 100], ["10%", "40%"]),
-                } as any}
-              />
-              
-              <div className="relative z-10 flex flex-col items-center">
-                <motion.span
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                  className="relative overflow-hidden rounded-full border border-brand-200 bg-gradient-to-r from-brand-50 to-violet-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand shadow-soft"
-                >
-                  <span className="relative flex items-center gap-1">
-                    <Sparkles className="h-3 w-3" /> Từ vựng
-                  </span>
-                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-[shimmer_2s_linear_infinite]" />
-                </motion.span>
-                
-                <motion.h2
-                  initial={{ y: 12, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.15, type: "spring", stiffness: 300 }}
-                  className="mt-5 text-center text-4xl font-extrabold tracking-tight text-slate-900"
-                >
-                  <span className="bg-gradient-to-br from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                    {card.front}
-                  </span>
-                </motion.h2>
-                <motion.p
-                  initial={{ y: 8, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="mt-2 text-lg font-semibold text-slate-400 font-mono"
-                >
-                  {card.phonetic}
-                </motion.p>
-
-                <motion.button
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    speak(card.front);
-                  }}
-                  className="group/btn relative mt-7 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-brand to-brand-700 text-white shadow-glow-brand transition-all hover:shadow-glow-brand"
-                  aria-label="Phát âm"
-                >
-                  <Volume2 className="h-6 w-6 relative z-10" />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                  <motion.div
-                    animate={isHover ? { scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] } : {}}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="absolute inset-0 rounded-full bg-brand-400 blur-md"
-                  />
-                </motion.button>
-                <p className="mt-6 text-xs font-semibold text-slate-400 animate-pulse">Nhấn để xem nghĩa ✨</p>
-              </div>
-
-              {/* shine sweep */}
-              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">
+                key="front"
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="group absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-slate-200/60 bg-gradient-to-br from-white via-white to-brand-50/50 p-8 shadow-card hover:shadow-lift transition-shadow"
+              >
+                {/* mesh & spotlight */}
+                <div className="absolute inset-0 bg-mesh-brand opacity-40" />
                 <motion.div
-                  initial={{ x: "-100%" }}
-                  animate={isHover ? { x: "200%" } : {}}
-                  transition={{ duration: 0.8, ease: "easeInOut" }}
-                  className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                  className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-brand-100/60 to-violet-100/40 blur-2xl pointer-events-none"
+                  style={{
+                    left: useTransform(glareX, [0, 100], ["10%", "40%"]),
+                    top: useTransform(glareY, [0, 100], ["10%", "40%"]),
+                  } as any}
                 />
-              </div>
-            </div>
+                
+                <div className="relative z-10 flex flex-col items-center">
+                  <motion.span
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.05 }}
+                    className="relative overflow-hidden rounded-full border border-brand-200 bg-gradient-to-r from-brand-50 to-violet-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand shadow-soft"
+                  >
+                    <span className="relative flex items-center gap-1">
+                      <Sparkles className="h-3 w-3" /> Mặt trước • Từ vựng
+                    </span>
+                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-[shimmer_2s_linear_infinite]" />
+                  </motion.span>
+                  
+                  <h2 className="mt-5 text-center text-4xl font-extrabold tracking-tight text-slate-900">
+                    <span className="bg-gradient-to-br from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                      {card.front}
+                    </span>
+                  </h2>
+                  {card.phonetic && (
+                    <p className="mt-2 text-lg font-semibold text-slate-400 font-mono">
+                      {card.phonetic}
+                    </p>
+                  )}
 
-            {/* ===== MẶT SAU ===== */}
-            <div className="backface-hidden rotate-y-180 absolute inset-0 flex flex-col justify-center gap-3 overflow-hidden rounded-[2rem] border border-success-200/50 bg-gradient-to-br from-success-50 via-white to-emerald-50/60 p-8 shadow-card">
-              <div className="absolute inset-0 bg-mesh-vibrant opacity-30" />
-              <div className="relative z-10 flex flex-col gap-3">
-                <motion.span
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: 1 }}
-                  className="inline-flex w-fit items-center gap-1 rounded-full bg-gradient-to-r from-success to-emerald-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-glow-success"
-                >
-                  <Check className="h-3 w-3" /> Nghĩa
-                </motion.span>
-                <motion.h2
-                  initial={{ y: 10, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                  className="text-3xl font-extrabold tracking-tight text-slate-900"
-                >
-                  {card.back}
-                </motion.h2>
-                <motion.div
-                  initial={{ y: 10, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.15 }}
-                  className="mt-2 rounded-2xl border border-success-100 bg-white/80 backdrop-blur p-4 shadow-soft"
-                >
-                  <p className="text-base font-semibold text-slate-700">“{card.example}”</p>
-                  <p className="mt-1 text-sm text-slate-500">{card.exampleVi}</p>
-                </motion.div>
-                <motion.button
-                  whileHover={{ scale: 1.02, x: 2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    speak(card.example);
-                  }}
-                  className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm font-bold text-slate-600 shadow-soft hover:text-brand hover:border-brand-200 hover:shadow-glow-brand transition-all"
-                >
-                  <Volume2 className="h-4 w-4" /> Nghe ví dụ
-                </motion.button>
-              </div>
-            </div>
-          </motion.div>
+                  <motion.button
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      speak(card.front);
+                    }}
+                    className="group/btn relative mt-6 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-brand to-brand-700 text-white shadow-glow-brand transition-all hover:shadow-glow-brand"
+                    aria-label="Phát âm"
+                  >
+                    <Volume2 className="h-6 w-6 relative z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                    <motion.div
+                      animate={isHover ? { scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] } : {}}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                      className="absolute inset-0 rounded-full bg-brand-400 blur-md"
+                    />
+                  </motion.button>
+                  <div className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-4 py-1.5 text-xs font-bold text-brand border border-brand-200/80 shadow-2xs">
+                    <span>Nhấn thẻ hoặc phím [Space] để xem nghĩa</span>
+                    <span className="font-black">➔</span>
+                  </div>
+                </div>
+
+                {/* shine sweep */}
+                <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">
+                  <motion.div
+                    initial={{ x: "-100%" }}
+                    animate={isHover ? { x: "200%" } : {}}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                  />
+                </div>
+              </motion.div>
+            ) : (
+              /* ===== MẶT SAU ===== */
+              <motion.div
+                key="back"
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="absolute inset-0 flex flex-col justify-center gap-3 overflow-hidden rounded-[2rem] border border-success-200/50 bg-gradient-to-br from-success-50 via-white to-emerald-50/60 p-8 shadow-card hover:shadow-lift transition-shadow"
+              >
+                <div className="absolute inset-0 bg-mesh-vibrant opacity-30" />
+                <div className="relative z-10 flex flex-col gap-3">
+                  <span className="inline-flex w-fit items-center gap-1 rounded-full bg-gradient-to-r from-success to-emerald-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-glow-success">
+                    <Check className="h-3 w-3" /> Mặt sau • Nghĩa tiếng Việt
+                  </span>
+                  <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
+                    {card.back}
+                  </h2>
+                  {card.example && (
+                    <div className="mt-2 rounded-2xl border border-success-100 bg-white/80 backdrop-blur p-4 shadow-soft">
+                      <p className="text-base font-semibold text-slate-700">“{card.example}”</p>
+                      {card.exampleVi && (
+                        <p className="mt-1 text-sm text-slate-500">{card.exampleVi}</p>
+                      )}
+                    </div>
+                  )}
+                  <div className="mt-1 flex items-center justify-between">
+                    {card.example && (
+                      <motion.button
+                        whileHover={{ scale: 1.02, x: 2 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          speak(card.example);
+                        }}
+                        className="inline-flex w-fit items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm font-bold text-slate-600 shadow-soft hover:text-brand hover:border-brand-200 hover:shadow-glow-brand transition-all"
+                      >
+                        <Volume2 className="h-4 w-4" /> Nghe ví dụ
+                      </motion.button>
+                    )}
+                    <span className="text-xs font-bold text-slate-400">Nhấn thẻ để lật lại ↺</span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* shadow */}
           <motion.div
             animate={{ opacity: isHover && !flipped ? 0.15 : 0, scale: isHover && !flipped ? 0.92 : 0.9, y: isHover && !flipped ? 12 : 8 }}
-            className="absolute -inset-2 -z-10 rounded-[2rem] bg-gradient-to-br from-brand-300 to-violet-300 blur-2xl"
+            className="absolute -inset-2 -z-10 rounded-[2rem] bg-gradient-to-br from-brand-300 to-violet-300 blur-2xl pointer-events-none"
           />
         </motion.div>
-
-        {/* invisible button for a11y click area */}
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={onFlip}
-          onKeyDown={handleKeyDown}
-          className="sr-only"
-        >
-          Lật thẻ
-        </div>
       </div>
 
       {/* Controls */}
