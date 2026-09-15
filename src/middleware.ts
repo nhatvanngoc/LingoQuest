@@ -43,7 +43,10 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith("/api/flashcards") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
-    pathname === "/favicon.ico";
+    pathname === "/favicon.ico" ||
+    pathname === "/manifest.webmanifest" ||
+    pathname === "/robots.txt" ||
+    /\.(png|jpg|jpeg|svg|webp|ico|mp4|webm|json)$/.test(pathname);
 
   // Đã đăng nhập mà vào /login hoặc /register → về trang mặc định.
   if (isAuthed && (pathname === "/login" || pathname === "/register")) {

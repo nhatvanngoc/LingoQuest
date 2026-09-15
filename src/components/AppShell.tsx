@@ -1,27 +1,18 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { type ReactNode, useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
   Gamepad2,
   BarChart3,
   Layers,
-  GraduationCap,
   LayoutDashboard,
   ClipboardList,
   ClipboardCheck,
   Video,
   PlayCircle,
-  Sparkles,
-  LogOut,
-  ChevronDown,
-  Volume2,
-  VolumeX,
   Users,
-  User,
   BookOpen,
   Trophy,
   Plus,
@@ -29,86 +20,18 @@ import {
 } from "lucide-react";
 import { useRole } from "@/lib/auth/role-context";
 import { useApp } from "@/lib/state/app-context";
-import { StreakBadge, XPCounter, LevelBadge } from "@/components/StreakBadge";
-import { Notifications } from "@/components/Notifications";
 import { sound } from "@/lib/sound";
-import { cn } from "@/lib/utils";
-import type { Role } from "@/lib/types";
-import { SPRING_SNAPPY } from "@/lib/motion";
 import { ProfileEditModal } from "@/components/ProfileEditModal";
-
-interface NavItem {
-  href: string;
-  label: string;
-  icon: typeof Home;
-  badge?: string;
-}
-
-const NAV: Record<Role, NavItem[]> = {
-  student: [
-    { href: "/dashboard", label: "Trang chủ", icon: Home },
-    { href: "/curriculum/grade-11", label: "Lớp 11", icon: BookOpen, badge: "GS" },
-    { href: "/learn", label: "Học", icon: PlayCircle, badge: "NEW" },
-    { href: "/flashcards/deck-1", label: "Flashcard", icon: Layers },
-    { href: "/game", label: "Game", icon: Gamepad2, badge: "HOT" },
-    { href: "/progress", label: "Hồ sơ", icon: BarChart3 },
-  ],
-  teacher: [
-    { href: "/teacher", label: "Bảng điều khiển", icon: LayoutDashboard },
-    { href: "/teacher/students", label: "Học sinh", icon: Users },
-    { href: "/teacher/grading", label: "Chấm bài", icon: ClipboardCheck },
-    { href: "/teacher/assignments/new", label: "Giao bài", icon: ClipboardList },
-    { href: "/teacher/lessons/new", label: "Đăng bài", icon: Video },
-  ],
-  pending: [],
-};
-
-function Logo() {
-  return (
-    <Link
-      href="/"
-      className="group flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-2 active:scale-[0.98] transition-all"
-    >
-      <motion.span
-        whileHover={{ rotate: 6, scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-teal-600 via-emerald-600 to-teal-800 text-white shadow-sm ring-1 ring-white/20"
-      >
-        <GraduationCap className="h-5 w-5 relative z-10 drop-shadow-xs" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-      </motion.span>
-      <div className="flex flex-col">
-        <span className="font-heading text-lg font-extrabold tracking-tight text-slate-900 leading-none">
-          Lingo<span className="text-teal-600">Quest</span>
-        </span>
-        <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase mt-0.5">EdTech THPT</span>
-      </div>
-    </Link>
-  );
-}
-
-function Avatar({ name, color, size = "h-9 w-9" }: { name: string; color: string; size?: string }) {
-  const initials = name
-    .split(" ")
-    .slice(-2)
-    .map((w) => w[0])
-    .join("");
-  return (
-    <motion.span
-      whileHover={{ scale: 1.05 }}
-      className={cn("relative flex items-center justify-center rounded-full text-sm font-bold text-white shadow-sm overflow-hidden", size)}
-      style={{ backgroundColor: color }}
-    >
-      <span className="relative z-10">{initials}</span>
-      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent" />
-    </motion.span>
-  );
-}
+import { ShellHeader } from "./shell/ShellHeader";
+import { ShellSidebar, type NavItemConfig } from "./shell/ShellSidebar";
+import { ShellBottomNav } from "./shell/ShellBottomNav";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { user, role } = useRole();
-  const items = useMemo(() => {
+  const { xp, streak, level } = useApp();
+
+  const items: NavItemConfig[] = useMemo(() => {
     if (role === "teacher") {
       return [
         { href: "/teacher", label: "Bảng điều khiển", icon: LayoutDashboard },
@@ -134,7 +57,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       { href: "/progress", label: "Hồ sơ", icon: BarChart3 },
     ];
   }, [role, user.grade]);
-  const { xp, streak, level } = useApp();
+
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -166,117 +89,18 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="pointer-events-none fixed inset-x-0 top-0 h-96 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(13,148,136,0.08),rgba(255,255,255,0))] -z-10" />
 
       {/* ===== Header ===== */}
-      <motion.header
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(15,23,42,0.03)]"
-      >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Logo />
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            {role === "student" && (
-              <>
-                <div className="hidden items-center gap-2 sm:flex">
-                  <StreakBadge count={streak} />
-                  <XPCounter xp={xp} />
-                  <div className="hidden lg:flex">
-                    <LevelBadge level={level} />
-                  </div>
-                </div>
-                <div className="flex sm:hidden">
-                  <XPCounter xp={xp} />
-                </div>
-              </>
-            )}
-
-            {/* Audio haptic toggle */}
-            <motion.button
-              type="button"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.92 }}
-              onClick={handleToggleSound}
-              title={muted ? "Bật âm thanh hiệu ứng" : "Tắt âm thanh hiệu ứng"}
-              aria-label={muted ? "Bật âm thanh" : "Tắt âm thanh"}
-              className={cn(
-                "relative flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/80 bg-white/90 shadow-2xs backdrop-blur transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50",
-                muted ? "text-slate-400" : "text-teal-700"
-              )}
-            >
-              {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-            </motion.button>
-
-            <Notifications />
-
-            {/* User menu */}
-            <motion.div whileHover={{ scale: 1.02 }} className="relative">
-              <button
-                type="button"
-                onClick={() => setUserMenuOpen((v) => !v)}
-                aria-haspopup="menu"
-                aria-expanded={userMenuOpen}
-                className="group flex items-center gap-2 rounded-full border border-slate-200/80 bg-white py-1 pl-1 pr-3 shadow-2xs backdrop-blur transition-all hover:shadow-xs hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 focus-visible:ring-offset-2 active:scale-[0.98]"
-              >
-                <Avatar name={user.name} color={user.avatarColor} />
-                <div className="hidden text-left leading-tight sm:block">
-                  <p className="text-sm font-bold text-slate-900 group-hover:text-teal-700 transition-colors">{user.name}</p>
-                  <p className="text-[11px] font-semibold text-slate-400">
-                    {role === "student" ? user.className : role === "teacher" ? "Giáo viên" : "Chờ duyệt"}
-                  </p>
-                </div>
-                <ChevronDown className={cn("hidden h-3.5 w-3.5 text-slate-400 transition-transform sm:block", userMenuOpen && "rotate-180")} />
-              </button>
-              <AnimatePresence>
-                {userMenuOpen && (
-                  <>
-                    <button
-                      type="button"
-                      aria-label="Đóng menu"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="fixed inset-0 z-40 cursor-default"
-                    />
-                    <motion.div
-                      role="menu"
-                      initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.97 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-1.5 shadow-xl"
-                    >
-                      <div className="border-b border-slate-100 px-3 py-2">
-                        <p className="truncate text-sm font-bold text-slate-900">{user.name}</p>
-                        <p className="truncate text-[11px] text-slate-400">{user.email}</p>
-                        {user.grade && (
-                          <span className="inline-block mt-1 px-2 py-0.5 rounded text-3xs font-bold bg-teal-50 text-teal-700 border border-teal-200">
-                            Học sinh Lớp {user.grade}
-                          </span>
-                        )}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setUserMenuOpen(false);
-                          setProfileModalOpen(true);
-                        }}
-                        className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100 text-left"
-                      >
-                        <User className="h-4 w-4 text-teal-600" /> Chỉnh sửa hồ sơ & lớp
-                      </button>
-                      <a
-                        href="/api/auth/logout"
-                        className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold text-rose-600 transition-colors hover:bg-rose-50"
-                      >
-                        <LogOut className="h-4 w-4" /> Đăng xuất
-                      </a>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          </div>
-        </div>
-      </motion.header>
+      <ShellHeader
+        role={role}
+        user={user}
+        streak={streak}
+        xp={xp}
+        level={level}
+        muted={muted}
+        onToggleSound={handleToggleSound}
+        userMenuOpen={userMenuOpen}
+        onSetUserMenuOpen={setUserMenuOpen}
+        onOpenProfileModal={() => setProfileModalOpen(true)}
+      />
 
       {/* Modal Chỉnh Sửa Thông Tin Hồ Sơ & Chọn Lớp */}
       <ProfileEditModal
@@ -287,117 +111,14 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <div className="mx-auto flex max-w-7xl gap-6 px-4 pb-28 sm:px-6 lg:px-8 lg:pb-10 relative z-10">
         {/* Sidebar desktop */}
-        {items.length > 0 && (
-          <aside className="sticky top-[88px] hidden h-[calc(100vh-112px)] w-60 shrink-0 lg:block">
-            <nav className="relative flex flex-col gap-1 py-4">
-              {items.map((item) => {
-                const active = item.href === activeHref;
-                const Icon = item?.icon;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 focus-visible:ring-offset-2 active:scale-[0.98]",
-                      active
-                        ? "bg-teal-50 text-teal-900 font-bold border border-teal-200/80 shadow-2xs"
-                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
-                    )}
-                  >
-                    {active && (
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-teal-600" />
-                    )}
-                    <span className="relative flex items-center gap-3">
-                      <span
-                        className={cn(
-                          "flex h-8 w-8 items-center justify-center rounded-lg transition-all",
-                          active ? "bg-teal-600 text-white shadow-2xs" : "bg-white text-slate-400 group-hover:text-teal-700 group-hover:bg-teal-50 shadow-2xs border border-slate-100"
-                        )}
-                      >
-                        <Icon className="h-4 w-4" />
-                      </span>
-                      {item.label}
-                      {item.badge && (
-                        <motion.span
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          className={cn(
-                            "rounded-full px-2 py-0.5 text-[10px] font-bold",
-                            item.badge === "NEW" ? "bg-teal-600 text-white" : "bg-amber-100 text-amber-800",
-                            active && "bg-teal-600 text-white"
-                          )}
-                        >
-                          {item.badge}
-                        </motion.span>
-                      )}
-                    </span>
-                  </Link>
-                );
-              })}
+        <ShellSidebar items={items} activeHref={activeHref} role={role} />
 
-              {/* Tip card — chỉ cho học sinh */}
-              {role === "student" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="mt-6 rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/80 to-emerald-50/80 p-4 shadow-2xs"
-                >
-                  <div className="flex gap-2">
-                    <Sparkles className="h-4 w-4 text-brand mt-0.5" />
-                    <div>
-                      <p className="text-sm font-bold text-brand-900">Tip học nhanh</p>
-                      <p className="mt-1 text-xs leading-relaxed text-brand-700/70">Hoàn thành nhiệm vụ hàng ngày để x2 XP!</p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </nav>
-          </aside>
-        )}
-
+        {/* Main Content Area */}
         <main className="min-w-0 flex-1 py-5 sm:py-6">{children}</main>
       </div>
 
       {/* ===== Bottom navigation (mobile) ===== */}
-      {items.length > 0 && (
-        <motion.nav
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 25 }}
-          className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200/80 bg-white/90 backdrop-blur-xl lg:hidden shadow-lg"
-        >
-          <div className="mx-auto flex max-w-md items-stretch justify-around px-2 py-1">
-            {items.slice(0, 5).map((item) => {
-              const active = item.href === activeHref;
-              const Icon = item?.icon;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "relative flex flex-1 flex-col items-center gap-1 rounded-lg py-2.5 text-[10px] font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 focus-visible:ring-offset-1 active:scale-95",
-                    active ? "text-brand" : "text-slate-400 hover:text-slate-600"
-                  )}
-                >
-                  {active && (
-                    <div className="absolute inset-1 rounded-lg bg-brand-50 border border-brand-100" />
-                  )}
-                  <span className="relative">
-                    {Icon ? <Icon className={cn("h-5 w-5", active && "scale-110")} /> : null}
-                    {item.badge && !active && (
-                      <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-brand animate-pulse" />
-                    )}
-                  </span>
-                  <span className="relative text-[11px]">{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </motion.nav>
-      )}
+      <ShellBottomNav items={items} activeHref={activeHref} />
     </div>
   );
 }
