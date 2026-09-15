@@ -1,4 +1,5 @@
 import { ParsedQuestion, parseAzotaExamText, SAMPLE_AZOTA_EXAM } from "./azota-parser";
+import { ADDITIONAL_EXAMS } from "./rich-exams";
 
 export interface ExamData {
   id: string;
@@ -100,18 +101,31 @@ const DEFAULT_EXAMS: ExamData[] = [
   },
 ];
 
+export const ALL_INITIAL_EXAMS: ExamData[] = [...DEFAULT_EXAMS, ...ADDITIONAL_EXAMS];
+
 export function getAllExams(): ExamData[] {
-  if (typeof window === "undefined") return DEFAULT_EXAMS;
+  if (typeof window === "undefined") return ALL_INITIAL_EXAMS;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_EXAMS));
-      return DEFAULT_EXAMS;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ALL_INITIAL_EXAMS));
+      return ALL_INITIAL_EXAMS;
     }
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_EXAMS;
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      // Đảm bảo các đề mới luôn xuất hiện trong danh sách
+      const existingIds = new Set(parsed.map((e: ExamData) => e.id));
+      const missing = ALL_INITIAL_EXAMS.filter((e) => !existingIds.has(e.id));
+      if (missing.length > 0) {
+        const merged = [...parsed, ...missing];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        return merged;
+      }
+      return parsed;
+    }
+    return ALL_INITIAL_EXAMS;
   } catch {
-    return DEFAULT_EXAMS;
+    return ALL_INITIAL_EXAMS;
   }
 }
 
