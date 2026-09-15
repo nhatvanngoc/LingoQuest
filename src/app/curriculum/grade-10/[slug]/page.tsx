@@ -47,6 +47,7 @@ import {
   UnitNextStepCard,
   QuizCelebrationCard,
 } from "@/components/curriculum/UnitLearningFlow";
+import { generate50UnitQuizQuestions } from "@/lib/curriculum/unit-quiz-generator";
 
 export default function Grade10UnitDetailPage() {
   const router = useRouter();
@@ -256,31 +257,21 @@ export default function Grade10UnitDetailPage() {
     }
   };
 
-  // Generate 10 Quiz Questions dynamically
+  // Generate 50 Quiz Questions dynamically
   const quizQuestions = useMemo(() => {
     if (!unit || unit.vocabulary.length === 0) return [];
-    const pool = unit.vocabulary;
-
-    return pool.slice(0, 10).map((item, qIdx) => {
-      const wrongOptions = pool
-        .filter((w) => w.id !== item.id)
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
-        .map((w) => w.meaningVi);
-
-      const allOptions = [item.meaningVi, ...wrongOptions].sort(() => 0.5 - Math.random());
-      const correctIdx = allOptions.indexOf(item.meaningVi);
-
-      return {
-        id: qIdx,
-        word: item.word,
-        ipa: item.ipa,
-        pos: item.partOfSpeech,
-        example: item.exampleEn,
-        correctIdx,
-        options: allOptions,
-      };
-    });
+    const full = generate50UnitQuizQuestions(unit);
+    return full.map((item, qIdx) => ({
+      id: qIdx,
+      word: item.question,
+      question: item.question,
+      ipa: "",
+      pos: item.category,
+      example: item.sentence,
+      correctIdx: item.correct,
+      options: item.options,
+      explanation: item.explanation,
+    }));
   }, [unit]);
 
   const quizScore = useMemo(() => {
@@ -906,14 +897,22 @@ export default function Grade10UnitDetailPage() {
 
         {/* TAB 5: QUIZ */}
         {activeTab === "quiz" && (
-          <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-md">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 pb-6 mb-6">
+          <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-md space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 pb-6">
               <div>
-                <h3 className="font-heading text-lg font-bold text-slate-900">
-                  Kiểm tra phản xạ từ vựng • Unit {unit.unitNumber}
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="rounded-full bg-blue-600 text-white text-[10px] font-black px-2.5 py-0.5 uppercase tracking-wider">
+                    Đề kiểm tra 50 câu
+                  </span>
+                  <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md">
+                    Gộp Từ vựng &amp; Ngữ pháp
+                  </span>
+                </div>
+                <h3 className="font-heading text-lg sm:text-xl font-bold text-slate-900">
+                  Kiểm tra toàn diện kiến thức • Unit {unit.unitNumber}
                 </h3>
                 <p className="text-xs text-slate-500 mt-1">
-                  10 câu hỏi trắc nghiệm chọn nghĩa tiếng Việt chuẩn xác theo ngữ cảnh của bài học.
+                  50 câu hỏi bao quát Từ vựng SGK, Collocations, Chuyên đề Ngữ pháp, IPA &amp; Giao tiếp.
                 </p>
               </div>
 
@@ -933,13 +932,53 @@ export default function Grade10UnitDetailPage() {
               ) : (
                 <Button
                   onClick={handleGradeQuiz}
-                  disabled={Object.keys(userAnswers).length < quizQuestions.length}
-                  className="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs"
+                  disabled={Object.keys(userAnswers).length === 0}
+                  className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs py-2.5 px-4"
                 >
                   <Award className="h-4 w-4 mr-1.5" />
-                  Nộp bài chấm điểm
+                  Nộp bài chấm điểm ({Object.keys(userAnswers).length}/{quizQuestions.length})
                 </Button>
               )}
+            </div>
+
+            {/* Matrix Navigator */}
+            <div className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
+              <div className="flex items-center justify-between mb-2.5">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Bảng điều hướng nhanh 50 câu:
+                </span>
+                <span className="text-2xs text-slate-500 font-semibold">
+                  {Object.keys(userAnswers).length}/{quizQuestions.length} câu đã chọn
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {quizQuestions.map((q, idx) => {
+                  const isAnswered = userAnswers[q.id] !== undefined;
+                  const isCorrect = userAnswers[q.id] === q.correctIdx;
+                  let color = "bg-white text-slate-600 border border-slate-200";
+
+                  if (quizSubmitted) {
+                    color = isCorrect
+                      ? "bg-emerald-500 text-white font-bold"
+                      : "bg-rose-500 text-white font-bold";
+                  } else if (isAnswered) {
+                    color = "bg-blue-600 text-white font-bold";
+                  }
+
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        const el = document.getElementById(`g10-question-${q.id}`);
+                        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+                      }}
+                      className={`h-7 w-7 sm:h-8 sm:w-8 rounded-lg text-xs font-bold transition-all shrink-0 cursor-pointer ${color}`}
+                    >
+                      {idx + 1}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {quizQuestions.length === 0 ? (
@@ -954,7 +993,8 @@ export default function Grade10UnitDetailPage() {
                   return (
                     <div
                       key={q.id}
-                      className={`rounded-2xl border p-5 transition-all ${
+                      id={`g10-question-${q.id}`}
+                      className={`rounded-2xl border p-5 transition-all scroll-mt-24 ${
                         quizSubmitted
                           ? isCorrect
                             ? "border-emerald-200 bg-emerald-50/40"

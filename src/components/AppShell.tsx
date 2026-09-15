@@ -39,7 +39,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         { href: "/teacher/students", label: "Học sinh", icon: Users },
         { href: "/teacher/grading", label: "Chấm bài", icon: ClipboardList },
         { href: "/teacher/assignments/new", label: "Giao bài", icon: Plus },
-        { href: "/teacher/lessons/new", label: "Đăng video", icon: Video },
       ];
     }
     // Student & Guest navigation

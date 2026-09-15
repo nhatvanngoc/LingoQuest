@@ -240,26 +240,86 @@ export function InteractiveGrammarStudio({
                 </li>
               </ul>
 
-              {/* Interactive Examples */}
-              <div className="mt-6 pt-5 border-t border-slate-100 space-y-2.5">
-                <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider block">
-                  Ví dụ thực tế (Bấm loa nghe giọng đọc):
-                </span>
+              {/* Interactive Examples (7 câu bám sát SGK & thực tế) */}
+              <div className="mt-6 pt-5 border-t border-slate-100 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider block">
+                    7 Ví dụ chuẩn mực (Bấm loa nghe giọng đọc):
+                  </span>
+                  <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                    7 câu phân tích
+                  </span>
+                </div>
 
-                <div className="rounded-2xl bg-slate-50 p-4 flex items-start justify-between gap-3 border border-slate-100">
-                  <div>
-                    <p className="text-sm sm:text-base font-bold text-slate-900 italic leading-relaxed">
-                      &quot;We <span className="text-blue-600 underline decoration-2">lived</span> in Ha Noi when I was little.&quot;
-                    </p>
-                    <p className="text-xs sm:text-sm text-slate-500 mt-1">→ Chúng tôi từng sống ở Hà Nội khi tôi còn nhỏ (giờ không sống ở đó nữa).</p>
-                  </div>
-                  <button
-                    onClick={() => playSentenceAudio("We lived in Ha Noi when I was little.")}
-                    className="p-2.5 rounded-xl bg-white text-blue-600 hover:bg-blue-100 transition-colors shadow-2xs shrink-0 cursor-pointer"
-                    title="Nghe câu ví dụ"
-                  >
-                    <Volume2 className="h-5 w-5" />
-                  </button>
+                <div className="space-y-2.5 max-h-[420px] overflow-y-auto pr-1.5 scrollbar-thin">
+                  {[
+                    {
+                      en: "We lived in Ha Noi when I was little.",
+                      renderEn: <>We <span className="text-blue-600 underline decoration-2 font-bold">lived</span> in Ha Noi when I was little.</>,
+                      vi: "Chúng tôi từng sống ở Hà Nội khi tôi còn nhỏ (sự việc đã chấm dứt hoàn toàn trong quá khứ).",
+                      tag: "Dứt điểm trong quá khứ",
+                    },
+                    {
+                      en: "Dr. Alexander Fleming discovered penicillin in 1928.",
+                      renderEn: <>Dr. Alexander Fleming <span className="text-blue-600 underline decoration-2 font-bold">discovered</span> penicillin in 1928.</>,
+                      vi: "Bác sĩ Alexander Fleming đã phát hiện ra penicillin vào năm 1928 (mốc lịch sử xác định).",
+                      tag: "Mốc năm cụ thể (in 1928)",
+                    },
+                    {
+                      en: "She fell off her bicycle yesterday and broke her arm.",
+                      renderEn: <>She <span className="text-blue-600 underline decoration-2 font-bold">fell</span> off her bicycle yesterday and <span className="text-blue-600 underline decoration-2 font-bold">broke</span> her arm.</>,
+                      vi: "Cô ấy bị ngã xe đạp hôm qua và gãy tay (hành động xảy ra tại thời điểm cụ thể).",
+                      tag: "Dấu hiệu 'yesterday'",
+                    },
+                    {
+                      en: "He walked into the clinic, sat down, and waited for the doctor.",
+                      renderEn: <>He <span className="text-blue-600 underline decoration-2 font-bold">walked</span> into the clinic, <span className="text-blue-600 underline decoration-2 font-bold">sat</span> down, and <span className="text-blue-600 underline decoration-2 font-bold">waited</span> for the doctor.</>,
+                      vi: "Anh ấy bước vào phòng khám, ngồi xuống và đợi bác sĩ (chuỗi hành động nối tiếp nhau).",
+                      tag: "Chuỗi hành động liên tiếp",
+                    },
+                    {
+                      en: "My grandfather did regular morning exercise when he was young.",
+                      renderEn: <>My grandfather <span className="text-blue-600 underline decoration-2 font-bold">did</span> regular morning exercise when he was young.</>,
+                      vi: "Ông tôi từng tập thể dục buổi sáng đều đặn khi còn trẻ (thói quen xưa không còn nữa).",
+                      tag: "Thói quen thời trẻ",
+                    },
+                    {
+                      en: "They did not take any antibiotics during their illness last week.",
+                      renderEn: <>They <span className="text-blue-600 underline decoration-2 font-bold">did not take</span> any antibiotics during their illness last week.</>,
+                      vi: "Họ đã không uống viên kháng sinh nào trong đợt ốm tuần trước (câu phủ định với didn't).",
+                      tag: "Thể phủ định (didn't + V)",
+                    },
+                    {
+                      en: "Did you consult a nutritionist before starting this strict diet?",
+                      renderEn: <><span className="text-blue-600 underline decoration-2 font-bold">Did</span> you <span className="text-blue-600 underline decoration-2 font-bold">consult</span> a nutritionist before starting this strict diet?</>,
+                      vi: "Bạn đã tham vấn chuyên gia dinh dưỡng trước khi bắt đầu chế độ ăn này chưa?",
+                      tag: "Thể nghi vấn (Did + S + V?)",
+                    },
+                  ].map((item, idx) => (
+                    <div key={idx} className="rounded-2xl bg-slate-50/90 p-3.5 flex items-start justify-between gap-3 border border-slate-100 hover:bg-blue-50/40 hover:border-blue-200 transition-colors">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="h-5 w-5 rounded-full bg-blue-100 text-blue-800 text-xs font-black flex items-center justify-center shrink-0">
+                            {idx + 1}
+                          </span>
+                          <span className="text-3xs sm:text-2xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100/60 px-2 py-0.5 rounded-md">
+                            {item.tag}
+                          </span>
+                        </div>
+                        <p className="text-sm sm:text-base font-semibold text-slate-900 italic leading-relaxed pt-0.5">
+                          &quot;{item.renderEn}&quot;
+                        </p>
+                        <p className="text-xs sm:text-sm text-slate-600 leading-snug">→ {item.vi}</p>
+                      </div>
+                      <button
+                        onClick={() => playSentenceAudio(item.en)}
+                        className="p-2.5 rounded-xl bg-white text-blue-600 hover:bg-blue-100 transition-colors shadow-2xs shrink-0 cursor-pointer border border-slate-100 mt-1"
+                        title="Nghe câu ví dụ chuẩn bản ngữ"
+                      >
+                        <Volume2 className="h-4 w-4 sm:h-5 sm:w-5" />
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -307,26 +367,86 @@ export function InteractiveGrammarStudio({
                 </li>
               </ul>
 
-              {/* Interactive Examples */}
-              <div className="mt-6 pt-5 border-t border-slate-100 space-y-2.5">
-                <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider block">
-                  Ví dụ thực tế (Bấm loa nghe giọng đọc):
-                </span>
+              {/* Interactive Examples (7 câu bám sát SGK & thực tế) */}
+              <div className="mt-6 pt-5 border-t border-slate-100 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider block">
+                    7 Ví dụ chuẩn mực (Bấm loa nghe giọng đọc):
+                  </span>
+                  <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-100">
+                    7 câu phân tích
+                  </span>
+                </div>
 
-                <div className="rounded-2xl bg-slate-50 p-4 flex items-start justify-between gap-3 border border-slate-100">
-                  <div>
-                    <p className="text-sm sm:text-base font-bold text-slate-900 italic leading-relaxed">
-                      &quot;We <span className="text-purple-600 underline decoration-2">have lived</span> in Ha Noi for ten years.&quot;
-                    </p>
-                    <p className="text-xs sm:text-sm text-slate-500 mt-1">→ Chúng tôi đã sống ở Hà Nội được 10 năm (và hiện tại vẫn đang sống ở đây).</p>
-                  </div>
-                  <button
-                    onClick={() => playSentenceAudio("We have lived in Ha Noi for ten years.")}
-                    className="p-2.5 rounded-xl bg-white text-purple-600 hover:bg-purple-100 transition-colors shadow-2xs shrink-0 cursor-pointer"
-                    title="Nghe câu ví dụ"
-                  >
-                    <Volume2 className="h-5 w-5" />
-                  </button>
+                <div className="space-y-2.5 max-h-[420px] overflow-y-auto pr-1.5 scrollbar-thin">
+                  {[
+                    {
+                      en: "We have lived in Ha Noi for ten years.",
+                      renderEn: <>We <span className="text-purple-600 underline decoration-2 font-bold">have lived</span> in Ha Noi for ten years.</>,
+                      vi: "Chúng tôi đã sống ở Hà Nội được 10 năm (và hiện tại vẫn đang tiếp tục sinh sống ở đây).",
+                      tag: "Kéo dài đến hiện tại (for 10 years)",
+                    },
+                    {
+                      en: "Scientists have developed several effective vaccines recently.",
+                      renderEn: <>Scientists <span className="text-purple-600 underline decoration-2 font-bold">have developed</span> several effective vaccines recently.</>,
+                      vi: "Các nhà khoa học vừa phát triển nhiều loại vắc-xin hiệu quả gần đây (kết quả ở hiện tại).",
+                      tag: "Dấu hiệu 'recently'",
+                    },
+                    {
+                      en: "She has suffered from a severe headache since this morning.",
+                      renderEn: <>She <span className="text-purple-600 underline decoration-2 font-bold">has suffered</span> from a severe headache since this morning.</>,
+                      vi: "Cô ấy bị đau đầu dữ dội kể từ sáng nay (tới giờ vẫn chưa khỏi hẳn).",
+                      tag: "Mốc thời gian (since this morning)",
+                    },
+                    {
+                      en: "Have you ever experienced severe food poisoning in your life?",
+                      renderEn: <><span className="text-purple-600 underline decoration-2 font-bold">Have</span> you ever <span className="text-purple-600 underline decoration-2 font-bold">experienced</span> severe food poisoning in your life?</>,
+                      vi: "Bạn đã từng bị ngộ độc thực phẩm nặng bao giờ trong đời chưa (hỏi trải nghiệm)?",
+                      tag: "Trải nghiệm cuộc sống (ever)",
+                    },
+                    {
+                      en: "The hospital has already adopted advanced robotic diagnosis technology.",
+                      renderEn: <>The hospital <span className="text-purple-600 underline decoration-2 font-bold">has already adopted</span> advanced robotic diagnosis technology.</>,
+                      vi: "Bệnh viện đã áp dụng công nghệ chẩn đoán bằng robot tân tiến (hành động đã hoàn thành).",
+                      tag: "Đã hoàn thành sớm (already)",
+                    },
+                    {
+                      en: "I have not consumed sugary drinks for nearly six months.",
+                      renderEn: <>I <span className="text-purple-600 underline decoration-2 font-bold">have not consumed</span> sugary drinks for nearly six months.</>,
+                      vi: "Tôi đã không dùng đồ uống có đường suốt gần 6 tháng qua (thể phủ định).",
+                      tag: "Thể phủ định (haven't + V3)",
+                    },
+                    {
+                      en: "He has just finished his 30-minute cardio workout.",
+                      renderEn: <>He <span className="text-purple-600 underline decoration-2 font-bold">has just finished</span> his 30-minute cardio workout.</>,
+                      vi: "Anh ấy vừa mới hoàn thành buổi tập cardio 30 phút (hành động vừa dứt).",
+                      tag: "Vừa mới xảy ra (just)",
+                    },
+                  ].map((item, idx) => (
+                    <div key={idx} className="rounded-2xl bg-slate-50/90 p-3.5 flex items-start justify-between gap-3 border border-slate-100 hover:bg-purple-50/40 hover:border-purple-200 transition-colors">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="h-5 w-5 rounded-full bg-purple-100 text-purple-800 text-xs font-black flex items-center justify-center shrink-0">
+                            {idx + 1}
+                          </span>
+                          <span className="text-3xs sm:text-2xs font-bold uppercase tracking-wider text-purple-700 bg-purple-100/60 px-2 py-0.5 rounded-md">
+                            {item.tag}
+                          </span>
+                        </div>
+                        <p className="text-sm sm:text-base font-semibold text-slate-900 italic leading-relaxed pt-0.5">
+                          &quot;{item.renderEn}&quot;
+                        </p>
+                        <p className="text-xs sm:text-sm text-slate-600 leading-snug">→ {item.vi}</p>
+                      </div>
+                      <button
+                        onClick={() => playSentenceAudio(item.en)}
+                        className="p-2.5 rounded-xl bg-white text-purple-600 hover:bg-purple-100 transition-colors shadow-2xs shrink-0 cursor-pointer border border-slate-100 mt-1"
+                        title="Nghe câu ví dụ chuẩn bản ngữ"
+                      >
+                        <Volume2 className="h-4 w-4 sm:h-5 sm:w-5" />
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

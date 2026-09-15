@@ -362,9 +362,6 @@ export default function TeacherPage() {
             <Button asChild variant="outline" className="border-emerald-500 text-emerald-700 bg-emerald-50/50 hover:bg-emerald-100">
               <Link href="/teacher/units/new"><Sparkles className="h-4 w-4 text-emerald-600" /> AI Unit Factory (30s)</Link>
             </Button>
-            <Button asChild variant="outline">
-              <Link href="/teacher/lessons/new"><Video className="h-4 w-4" /> Đăng video bài học</Link>
-            </Button>
             <Button asChild>
               <Link href="/teacher/assignments/new"><Plus className="h-4 w-4" /> Giao bài mới (Co-Pilot)</Link>
             </Button>
@@ -883,10 +880,10 @@ export default function TeacherPage() {
             desc="Soạn bài tập 5-trong-1 (Video + Flashcards + Quiz + Điền từ + Luận)."
           />
           <QuickAction
-            href="/teacher/lessons/new"
-            icon={Video}
-            title="Đăng bài học video YouTube"
-            desc="Dán link YouTube và tạo bộ từ vựng gắn với mốc thời gian bài giảng."
+            href="/teacher/exams"
+            icon={ClipboardCheck}
+            title="Phòng thi & Ngân hàng đề thi"
+            desc="Tạo đề thi trắc nghiệm theo ma trận BGD, cấp mã PIN và chấm điểm tự động."
           />
         </motion.div>
       </motion.div>

@@ -47,6 +47,7 @@ import {
   UnitNextStepCard,
   QuizCelebrationCard,
 } from "@/components/curriculum/UnitLearningFlow";
+import { generate50UnitQuizQuestions, type UnitQuizItem } from "@/lib/curriculum/unit-quiz-generator";
 
 export default function Grade11UnitDetailPage() {
   const router = useRouter();
@@ -301,135 +302,13 @@ export default function Grade11UnitDetailPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeTab, flashcardMode, currentFlashcard, currentCardIndex, unit]);
 
-  // 10 Targeted Quiz Questions (Vocab, Collocations, IPA, Grammar, Topic)
-  interface QuizItem {
-    question: string;
-    sentence?: string;
-    options: string[];
-    correct: number;
-    explanation: string;
-  }
-
-  const quizQuestions: QuizItem[] = useMemo(() => {
-    const list: QuizItem[] = [];
-    const vocabs = unit.vocabulary;
-
-    // 1. First 5 Vocab Meaning Questions
-    for (let i = 0; i < Math.min(5, vocabs.length); i++) {
-      const v = vocabs[i];
-      const otherMeanings = vocabs
-        .filter((x) => x.word !== v.word)
-        .map((x) => x.meaningVi)
-        .slice(0, 3);
-
-      const options = [v.meaningVi, ...otherMeanings].sort(() => 0.5 - Math.random());
-      list.push({
-        question: `Từ "${v.word}" (${v.partOfSpeech}) có nghĩa là gì?`,
-        sentence: v.exampleEn ? `Ngữ cảnh: "${v.exampleEn}"` : undefined,
-        options,
-        correct: options.indexOf(v.meaningVi),
-        explanation: `"${v.word}" mang nghĩa: ${v.meaningVi}.`,
-      });
-    }
-
-    // 2. Collocation Question (Question 6)
-    if (vocabs.length > 0) {
-      const targetWord = vocabs[0];
-      const collocations = getCollocationsForWord(targetWord.word, targetWord.partOfSpeech);
-      if (collocations.length > 0) {
-        const correctColloc = collocations[0];
-        const fakeCollocs = [
-          `make ${targetWord.word} wrongly`,
-          `bring ${targetWord.word} false`,
-          `give ${targetWord.word} away`,
-        ];
-        const options = [correctColloc, ...fakeCollocs].sort(() => 0.5 - Math.random());
-        list.push({
-          question: `Cụm từ (collocation) thường gặp và chính xác với "${targetWord.word}" là gì?`,
-          sentence: undefined,
-          options,
-          correct: options.indexOf(correctColloc),
-          explanation: `Cụm từ chuẩn xác được người bản xứ và SGK sử dụng là: "${correctColloc}".`,
-        });
-      }
-    }
-
-    // 3. Pronunciation & IPA Question (Question 7)
-    if (vocabs.length > 1) {
-      const target = vocabs[1];
-      const wrongIPAs = [
-        target.ipa.replace(/aʊ/g, "oʊ").replace(/ɔː/g, "ɑː"),
-        target.ipa.replace(/ʃ/g, "s").replace(/tʃ/g, "k"),
-        `/${target.word.toLowerCase()}/`,
-      ];
-      const options = [target.ipa, ...wrongIPAs].sort(() => 0.5 - Math.random());
-      list.push({
-        question: `Phiên âm IPA chuẩn quốc tế của từ "${target.word}" là:`,
-        sentence: undefined,
-        options,
-        correct: options.indexOf(target.ipa),
-        explanation: `Phiên âm quốc tế chính xác của "${target.word}" là ${target.ipa}.`,
-      });
-    }
-
-    // 4. Grammar Questions (Questions 8 & 9)
-    list.push({
-      question: `Chuyên đề ngữ pháp cốt lõi của bài học này là gì?`,
-      sentence: undefined,
-      options: [
-        unit.grammarTitle,
-        "Thì tương lai tiếp diễn và tương lai hoàn thành",
-        "Mệnh đề quan hệ không xác định với giới từ",
-        "Câu gián tiếp với động từ tường thuật đặc biệt",
-      ].sort(() => 0.5 - Math.random()),
-      correct: 0,
-      explanation: `Chuyên đề ngữ pháp trọng tâm theo phân phối SGK Tiếng Anh 11 là: ${unit.grammarTitle}.`,
-    });
-
-    list.push({
-      question: `Theo quy tắc ngữ pháp của ${unit.grammarTitle}, câu nào sau đây có cấu trúc chính xác?`,
-      sentence: undefined,
-      options: [
-        "She has lived in this city since 2015 and loves her healthy lifestyle.",
-        "She has lived in this city yesterday.",
-        "She lives in this city since 2015.",
-        "She is living in this city for 10 years ago.",
-      ],
-      correct: 0,
-      explanation: `Dùng thì hiện tại hoàn thành với "since + mốc thời gian" để diễn tả hành động bắt đầu trong quá khứ và vẫn tiếp diễn ở hiện tại.`,
-    });
-
-    // 5. Reading & Real-world Usage (Question 10)
-    list.push({
-      question: `Chủ đề bài học (Topic) và kỹ năng giao tiếp ứng dụng thực tế là gì?`,
-      sentence: undefined,
-      options: [
-        unit.topic,
-        "Art & Ancient Architecture",
-        "Space Travel & Galaxies",
-        "Extreme Weather Sports",
-      ].sort(() => 0.5 - Math.random()),
-      correct: 0,
-      explanation: `Chủ đề chính xuyên suốt toàn bộ các kỹ năng của bài là: ${unit.topic}.`,
-    });
-
-    // Ensure strictly 10 items
-    return list.slice(0, 10);
+  // 50 Comprehensive Quiz Questions (Vocab, Collocations, IPA, Grammar, Communication)
+  const quizQuestions = useMemo(() => {
+    if (!unit) return [];
+    return generate50UnitQuizQuestions(unit);
   }, [unit]);
 
-  // Adjust correct index after shuffle
-  const finalizedQuizQuestions = useMemo(() => {
-    return quizQuestions.map((q) => {
-      // If correct choice needs lookup
-      if (q.question.includes("Chuyên đề ngữ pháp cốt lõi")) {
-        return { ...q, correct: q.options.indexOf(unit.grammarTitle) };
-      }
-      if (q.question.includes("Chủ đề bài học")) {
-        return { ...q, correct: q.options.indexOf(unit.topic) };
-      }
-      return q;
-    });
-  }, [quizQuestions, unit]);
+  const finalizedQuizQuestions = quizQuestions;
 
   const quizScore = useMemo(() => {
     return Object.entries(userAnswers).reduce((score, [qIdx, ansIdx]) => {
@@ -1075,27 +954,87 @@ export default function Grade11UnitDetailPage() {
         )}
 
         {/* ========================================================= */}
-        {/* TAB 5: PRACTICE QUIZ (KIỂM TRA 10 CÂU) */}
+        {/* TAB 5: PRACTICE QUIZ (BỘ ĐỀ KIỂM TRA 50 CÂU TOÀN DIỆN) */}
         {/* ========================================================= */}
         {activeTab === "quiz" && (
-          <div className="mx-auto max-w-2xl py-4 space-y-6">
-            <div className="flex items-center justify-between rounded-3xl bg-indigo-50 p-6 border border-indigo-100">
+          <div className="mx-auto max-w-3xl py-4 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between rounded-3xl bg-indigo-50 p-6 sm:p-7 border border-indigo-100 gap-4">
               <div>
-                <h3 className="font-heading text-lg sm:text-xl font-bold text-indigo-950">Kiểm tra củng cố kiến thức</h3>
-                <p className="text-sm sm:text-base text-indigo-700 font-medium mt-0.5">Luyện tập 10 câu hỏi bao quát Từ vựng, Collocations, IPA &amp; Ngữ pháp</p>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="rounded-full bg-indigo-600 text-white text-xs font-black px-3 py-0.5 uppercase tracking-wider">
+                    Chuẩn format 50 câu
+                  </span>
+                  <span className="text-xs font-bold text-indigo-700 bg-indigo-100/70 px-2.5 py-0.5 rounded-full">
+                    Toàn diện 5 chuyên đề
+                  </span>
+                </div>
+                <h3 className="font-heading text-lg sm:text-2xl font-bold text-indigo-950">
+                  Bài kiểm tra củng cố kiến thức Unit {unit.unitNumber}
+                </h3>
+                <p className="text-xs sm:text-sm text-indigo-700 font-medium mt-1 leading-relaxed">
+                  20 câu Từ vựng • 10 câu Collocations • 12 câu Ngữ pháp • 4 câu Ngữ âm IPA • 4 câu Giao tiếp
+                </p>
               </div>
               {quizSubmitted ? (
-                <div className="text-right">
+                <div className="text-left sm:text-right bg-white sm:bg-transparent p-4 sm:p-0 rounded-2xl border sm:border-0 border-indigo-100">
                   <span className="text-3xl sm:text-4xl font-black text-indigo-700">
-                    {quizScore}/10
+                    {quizScore}/{finalizedQuizQuestions.length}
                   </span>
-                  <span className="block text-xs font-bold uppercase text-indigo-600">Điểm số</span>
+                  <span className="block text-xs font-bold uppercase text-indigo-600">Điểm tổng kết</span>
                 </div>
               ) : (
-                <span className="text-xs sm:text-sm font-bold text-indigo-700 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 shadow-2xs">
-                  Mục tiêu: +100 XP
-                </span>
+                <div className="text-left sm:text-right">
+                  <span className="text-xs sm:text-sm font-bold text-indigo-700 bg-white px-3.5 py-2 rounded-xl border border-indigo-200 shadow-2xs inline-block">
+                    Mục tiêu: +{finalizedQuizQuestions.length * 5} XP
+                  </span>
+                  <p className="text-2xs text-slate-500 mt-1 font-semibold">
+                    Đã làm: {Object.keys(userAnswers).length}/{finalizedQuizQuestions.length} câu
+                  </p>
+                </div>
               )}
+            </div>
+
+            {/* Matrix Navigator: Nhảy nhanh tới câu 1 -> 50 */}
+            <div className="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-2xs">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider">
+                  Bảng câu hỏi nhanh (1 – {finalizedQuizQuestions.length}):
+                </span>
+                <span className="text-xs text-slate-500 font-semibold">
+                  {Object.keys(userAnswers).length}/{finalizedQuizQuestions.length} đã chọn
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                {finalizedQuizQuestions.map((q, idx) => {
+                  const isAnswered = userAnswers[idx] !== undefined;
+                  const isCorrect = userAnswers[idx] === q.correct;
+                  let color = "bg-slate-100 text-slate-600 hover:bg-slate-200";
+
+                  if (quizSubmitted) {
+                    color = isCorrect
+                      ? "bg-emerald-500 text-white font-bold"
+                      : "bg-red-400 text-white font-bold";
+                  } else if (isAnswered) {
+                    color = "bg-indigo-600 text-white font-bold";
+                  }
+
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        const el = document.getElementById(`quiz-question-${idx}`);
+                        if (el) {
+                          el.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                      }}
+                      className={`h-8 w-8 sm:h-9 sm:w-9 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${color}`}
+                      title={`Đến câu ${idx + 1}`}
+                    >
+                      {idx + 1}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Quiz Questions List */}
@@ -1105,12 +1044,27 @@ export default function Grade11UnitDetailPage() {
                 return (
                   <div
                     key={qIdx}
-                    className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs"
+                    id={`quiz-question-${qIdx}`}
+                    className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs scroll-mt-24"
                   >
                     <div className="flex items-center justify-between mb-3.5">
-                      <span className="rounded-full bg-slate-100 px-3 py-1 text-xs sm:text-sm font-bold text-slate-700 border border-slate-200/60">
-                        Câu {qIdx + 1} / 10
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs sm:text-sm font-bold text-slate-700 border border-slate-200/60">
+                          Câu {qIdx + 1} / {finalizedQuizQuestions.length}
+                        </span>
+                        <span className="text-2xs font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-md">
+                          {q.category === "vocab" && "Từ vựng"}
+                          {q.category === "collocation" && "Cụm từ Collocation"}
+                          {q.category === "grammar" && "Ngữ pháp"}
+                          {q.category === "pronunciation" && "Ngữ âm IPA"}
+                          {q.category === "communication" && "Giao tiếp & Đọc hiểu"}
+                        </span>
+                      </div>
+                      {userAnswers[qIdx] !== undefined && !quizSubmitted && (
+                        <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+                          Đã chọn
+                        </span>
+                      )}
                     </div>
 
                     <p className="font-heading text-base sm:text-lg lg:text-xl font-bold text-slate-900 leading-relaxed">{q.question}</p>
@@ -1141,7 +1095,12 @@ export default function Grade11UnitDetailPage() {
                             onClick={() => setUserAnswers((prev) => ({ ...prev, [qIdx]: optIdx }))}
                             className={`w-full text-left rounded-2xl border p-4 text-sm sm:text-base transition-all flex items-center justify-between cursor-pointer ${style}`}
                           >
-                            <span className="leading-relaxed">{opt}</span>
+                            <span className="leading-relaxed">
+                              <span className="font-bold mr-2 text-slate-400">
+                                {String.fromCharCode(65 + optIdx)}.
+                              </span>
+                              {opt}
+                            </span>
                             {quizSubmitted && isCorrect && (
                               <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 ml-2" />
                             )}
@@ -1164,21 +1123,21 @@ export default function Grade11UnitDetailPage() {
             </div>
 
             {/* Quiz Action Buttons */}
-            <div className="pt-2">
+            <div className="pt-2 sticky bottom-4 z-20">
               {!quizSubmitted ? (
                 <Button
                   onClick={() => setQuizSubmitted(true)}
-                  disabled={Object.keys(userAnswers).length < finalizedQuizQuestions.length}
-                  className="rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-sm sm:text-base font-bold text-white shadow-xs w-full py-4 sm:py-5 cursor-pointer"
+                  disabled={Object.keys(userAnswers).length === 0}
+                  className="rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-sm sm:text-base font-bold text-white shadow-lg w-full py-4 sm:py-5 cursor-pointer"
                 >
-                  Nộp bài &amp; Nhận kết quả
+                  Nộp bài &amp; Nhận kết quả ({Object.keys(userAnswers).length}/{finalizedQuizQuestions.length} câu)
                 </Button>
               ) : (
-                <div className="space-y-3">
-                  {quizScore >= 8 && (
+                <div className="space-y-3 bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-slate-200">
+                  {quizScore >= 35 && (
                     <div className="rounded-2xl bg-emerald-50 p-4 sm:p-5 border border-emerald-200 text-center">
                       <p className="text-sm sm:text-base font-bold text-emerald-900">
-                        🎉 Xuất sắc! Bạn đã đạt {quizScore}/10 điểm và nhận thành công +100 XP!
+                        🎉 Xuất sắc! Bạn đã đạt {quizScore}/{finalizedQuizQuestions.length} điểm và nhận thành công +{quizScore * 5} XP!
                       </p>
                     </div>
                   )}
@@ -1190,7 +1149,7 @@ export default function Grade11UnitDetailPage() {
                     }}
                     className="rounded-2xl text-sm sm:text-base font-bold w-full py-4 sm:py-5 cursor-pointer"
                   >
-                    <RotateCcw className="mr-2 h-4 w-4" /> Làm lại bài kiểm tra
+                    <RotateCcw className="mr-2 h-4 w-4" /> Làm lại bài kiểm tra 50 câu
                   </Button>
                 </div>
               )}
@@ -1201,7 +1160,7 @@ export default function Grade11UnitDetailPage() {
               <QuizCelebrationCard
                 score={quizScore}
                 total={finalizedQuizQuestions.length}
-                xpEarned={quizScore * 10}
+                xpEarned={quizScore * 5}
                 nextUnit={nextUnit ? { slug: nextUnit.slug, titleEn: nextUnit.titleEn, unitNumber: nextUnit.unitNumber } : undefined}
                 grade={11}
                 onReset={() => {
