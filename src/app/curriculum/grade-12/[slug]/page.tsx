@@ -1062,6 +1062,12 @@ export default function Grade12UnitDetailPage() {
                           );
                         })}
                       </div>
+
+                      {quizSubmitted && q.explanation && (
+                        <div className="mt-3.5 rounded-xl bg-slate-50 p-3.5 text-xs text-slate-700 border border-slate-200/80 leading-relaxed">
+                          <strong className="text-slate-900 font-bold">Giải thích: </strong> {q.explanation}
+                        </div>
+                      )}
                     </div>
                   );
                 })}

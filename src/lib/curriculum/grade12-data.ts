@@ -4,6 +4,8 @@
    10 Units + 4 Reviews with full vocabulary, IPA, audio, examples & grammar.
 */
 
+import { RICH_VOCAB_GRADE12 } from "./grade12-rich-vocab";
+
 export interface Grade12VocabItem {
   id: string;
   word: string;
@@ -1999,4 +2001,23 @@ export function getGrade12UnitBySlug(slug: string): Grade12Unit | undefined {
 
 export function getGrade12UnitsByTerm(term: 1 | 2): Grade12Unit[] {
   return GRADE_12_CURRICULUM.filter((u) => u.term === term);
+}
+
+// Enrich GRADE_12_CURRICULUM with real photos, collocations, and contextual examples
+for (const unit of GRADE_12_CURRICULUM) {
+  const richList = RICH_VOCAB_GRADE12[unit.slug];
+  if (richList && richList.length > 0) {
+    const existingMap = new Map(unit.vocabulary.map((v) => [v.word.toLowerCase(), v]));
+    for (const r of richList) {
+      const match = existingMap.get(r.word.toLowerCase());
+      if (match) {
+        if (r.imageUrl) match.imageUrl = r.imageUrl;
+        if (r.collocations && r.collocations.length > 0) match.collocations = r.collocations;
+        if (r.meaningVi && match.meaningVi.length < r.meaningVi.length) match.meaningVi = r.meaningVi;
+        if (r.exampleVi && !match.exampleVi) match.exampleVi = r.exampleVi;
+      } else {
+        unit.vocabulary.unshift(r);
+      }
+    }
+  }
 }
