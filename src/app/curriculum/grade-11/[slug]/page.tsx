@@ -26,6 +26,7 @@ import {
   Eye,
   EyeOff,
   Compass,
+  PenTool,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -42,10 +43,12 @@ import { getCollocationsForWord } from "@/lib/curriculum/vocab-collocations";
 import { InteractiveGrammarStudio } from "@/components/curriculum/InteractiveGrammarStudio";
 import { InteractiveReadingStudio } from "@/components/curriculum/InteractiveReadingStudio";
 import { InteractiveQuestBoard } from "@/components/curriculum/InteractiveQuestBoard";
+import { MultiExerciseStudio } from "@/components/curriculum/MultiExerciseStudio";
 import {
   UnitLearningStepper,
   UnitNextStepCard,
   QuizCelebrationCard,
+  type UnitTabType,
 } from "@/components/curriculum/UnitLearningFlow";
 import { generate50UnitQuizQuestions, type UnitQuizItem } from "@/lib/curriculum/unit-quiz-generator";
 
@@ -68,8 +71,8 @@ export default function Grade11UnitDetailPage() {
   const prevUnit = unitIndex > 0 ? GRADE_11_CURRICULUM[unitIndex - 1] : null;
   const nextUnit = unitIndex >= 0 && unitIndex < GRADE_11_CURRICULUM.length - 1 ? GRADE_11_CURRICULUM[unitIndex + 1] : null;
 
-  // 5 Main Tabs matching the clean design in the screenshot
-  const [activeTab, setActiveTab] = useState<"vocab" | "grammar" | "reading" | "objectives" | "quiz">("vocab");
+  // 6 Main Tabs (including MultiExerciseStudio)
+  const [activeTab, setActiveTab] = useState<UnitTabType>("vocab");
   const [vocabSearch, setVocabSearch] = useState("");
   const [flashcardMode, setFlashcardMode] = useState(true);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -79,8 +82,8 @@ export default function Grade11UnitDetailPage() {
     if (typeof window === "undefined") return;
     const searchParams = new URLSearchParams(window.location.search);
     const tabParam = searchParams.get("tab");
-    if (tabParam && ["vocab", "grammar", "reading", "objectives", "quiz"].includes(tabParam)) {
-      setActiveTab(tabParam as any);
+    if (tabParam && ["vocab", "grammar", "reading", "exercises", "objectives", "quiz"].includes(tabParam)) {
+      setActiveTab(tabParam as UnitTabType);
     }
     const savedCard = localStorage.getItem(`lingoquest_last_card_${slug}`);
     if (savedCard) {
@@ -91,7 +94,7 @@ export default function Grade11UnitDetailPage() {
     }
   }, [slug, unit]);
 
-  const handleTabChange = (tab: "vocab" | "grammar" | "reading" | "objectives" | "quiz") => {
+  const handleTabChange = (tab: UnitTabType) => {
     setActiveTab(tab);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
@@ -443,6 +446,18 @@ export default function Grade11UnitDetailPage() {
               </button>
 
               <button
+                onClick={() => handleTabChange("exercises")}
+                className={`rounded-xl px-4 sm:px-5 py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
+                  activeTab === "exercises"
+                    ? "border border-slate-900 bg-white text-indigo-700 shadow-xs"
+                    : "border border-transparent text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                <PenTool className="h-4 w-4 text-indigo-600" />
+                <span>Bài tập đa dạng</span>
+              </button>
+
+              <button
                 onClick={() => handleTabChange("objectives")}
                 className={`rounded-xl px-4 sm:px-5 py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === "objectives"
@@ -461,7 +476,7 @@ export default function Grade11UnitDetailPage() {
                     : "border border-transparent text-slate-600 hover:text-slate-900"
                 }`}
               >
-                Kiểm tra (10 câu)
+                Kiểm tra ({finalizedQuizQuestions.length} câu)
               </button>
             </div>
           </div>
@@ -934,7 +949,25 @@ export default function Grade11UnitDetailPage() {
               titleEn={unit.titleEn}
               topic={unit.topic}
             />
-            <UnitNextStepCard currentTab="reading" onNext={() => handleTabChange("quiz")} />
+            <UnitNextStepCard currentTab="reading" onNext={() => handleTabChange("exercises")} />
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB: MULTI-FORMAT EXERCISE STUDIO (CÁC DẠNG BÀI TẬP TỰ HỌC) */}
+        {/* ========================================================= */}
+        {activeTab === "exercises" && (
+          <div>
+            <MultiExerciseStudio
+              unitSlug={unit.slug}
+              unitTitle={unit.isReview ? unit.titleEn : `Unit ${unit.unitNumber}: ${unit.titleEn}`}
+              grade={11}
+              onComplete={() => {
+                addXp(30, "Hoàn thành Luyện bài tập đa dạng");
+                syncStats({ xp: 30 });
+              }}
+            />
+            <UnitNextStepCard currentTab="exercises" onNext={() => handleTabChange("quiz")} />
           </div>
         )}
 

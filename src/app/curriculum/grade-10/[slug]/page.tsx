@@ -26,6 +26,7 @@ import {
   Eye,
   EyeOff,
   Compass,
+  PenTool,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -42,10 +43,12 @@ import { getCollocationsForWord } from "@/lib/curriculum/vocab-collocations";
 import { InteractiveGrammarStudio } from "@/components/curriculum/InteractiveGrammarStudio";
 import { InteractiveReadingStudio } from "@/components/curriculum/InteractiveReadingStudio";
 import { InteractiveQuestBoard } from "@/components/curriculum/InteractiveQuestBoard";
+import { MultiExerciseStudio } from "@/components/curriculum/MultiExerciseStudio";
 import {
   UnitLearningStepper,
   UnitNextStepCard,
   QuizCelebrationCard,
+  type UnitTabType,
 } from "@/components/curriculum/UnitLearningFlow";
 import { generate50UnitQuizQuestions } from "@/lib/curriculum/unit-quiz-generator";
 
@@ -68,8 +71,8 @@ export default function Grade10UnitDetailPage() {
   const prevUnit = unitIndex > 0 ? GRADE_10_CURRICULUM[unitIndex - 1] : null;
   const nextUnit = unitIndex >= 0 && unitIndex < GRADE_10_CURRICULUM.length - 1 ? GRADE_10_CURRICULUM[unitIndex + 1] : null;
 
-  // 5 Main Tabs
-  const [activeTab, setActiveTab] = useState<"vocab" | "grammar" | "reading" | "objectives" | "quiz">("vocab");
+  // 6 Main Tabs (including MultiExerciseStudio)
+  const [activeTab, setActiveTab] = useState<UnitTabType>("vocab");
   const [vocabSearch, setVocabSearch] = useState("");
   const [flashcardMode, setFlashcardMode] = useState(true);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -79,8 +82,8 @@ export default function Grade10UnitDetailPage() {
     if (typeof window === "undefined") return;
     const searchParams = new URLSearchParams(window.location.search);
     const tabParam = searchParams.get("tab");
-    if (tabParam && ["vocab", "grammar", "reading", "objectives", "quiz"].includes(tabParam)) {
-      setActiveTab(tabParam as any);
+    if (tabParam && ["vocab", "grammar", "reading", "exercises", "objectives", "quiz"].includes(tabParam)) {
+      setActiveTab(tabParam as UnitTabType);
     }
     const savedCard = localStorage.getItem(`lingoquest_last_card_g10_${slug}`);
     if (savedCard) {
@@ -91,7 +94,7 @@ export default function Grade10UnitDetailPage() {
     }
   }, [slug, unit]);
 
-  const handleTabChange = (tab: "vocab" | "grammar" | "reading" | "objectives" | "quiz") => {
+  const handleTabChange = (tab: UnitTabType) => {
     setActiveTab(tab);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
@@ -472,6 +475,18 @@ export default function Grade10UnitDetailPage() {
           </button>
 
           <button
+            onClick={() => handleTabChange("exercises")}
+            className={`flex items-center gap-2 border-b-2 px-5 py-3 text-xs font-bold transition-all whitespace-nowrap ${
+              activeTab === "exercises"
+                ? "border-indigo-600 text-indigo-600"
+                : "border-transparent text-slate-500 hover:text-slate-800"
+            }`}
+          >
+            <PenTool className="h-4 w-4 text-indigo-500" />
+            <span>Bài tập đa dạng</span>
+          </button>
+
+          <button
             onClick={() => handleTabChange("objectives")}
             className={`flex items-center gap-2 border-b-2 px-5 py-3 text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "objectives"
@@ -847,7 +862,23 @@ export default function Grade10UnitDetailPage() {
               titleEn={unit.titleEn}
               topic={unit.topic}
             />
-            <UnitNextStepCard currentTab="reading" onNext={() => handleTabChange("quiz")} />
+            <UnitNextStepCard currentTab="reading" onNext={() => handleTabChange("exercises")} />
+          </div>
+        )}
+
+        {/* TAB: MULTI-FORMAT EXERCISE STUDIO */}
+        {activeTab === "exercises" && (
+          <div>
+            <MultiExerciseStudio
+              unitSlug={unit.slug}
+              unitTitle={unit.isReview ? unit.titleEn : `Unit ${unit.unitNumber}: ${unit.titleEn}`}
+              grade={10}
+              onComplete={() => {
+                addXp(30, "Hoàn thành Luyện bài tập đa dạng");
+                syncStats({ xp: 30 });
+              }}
+            />
+            <UnitNextStepCard currentTab="exercises" onNext={() => handleTabChange("quiz")} />
           </div>
         )}
 

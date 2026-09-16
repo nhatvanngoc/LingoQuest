@@ -618,6 +618,357 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleVi: "Ch\u00fang ta nghi\u00eang m\u00ecnh bi\u1ebft \u01a1n s\u1ef1 hy sinh anh d\u0169ng c\u1ee7a c\u00e1c chi\u1ebfn s\u0129 \u00e1o tr\u1eafng tuy\u1ebfn \u0111\u1ea7u.",
       collocations: ["commemorate heroic sacrifice", "honor heroic sacrifice"]
     }
+    ,
+    {
+      id: "mega-unit-1-perseverance",
+      word: "perseverance",
+      partOfSpeech: "n",
+      meaningVi: "s\u1ef1 ki\u00ean tr\u00ec b\u1ec1n b\u1ec9 v\u01b0\u1ee3t qua ngh\u1ecbch c\u1ea3nh",
+      ipa: "/\u02ccp\u025c\u02d0s\u026a\u02c8v\u026a\u0259r\u0259ns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=perseverance&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1506863530036-1efeddceb993?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Her unwavering perseverance through years of scientific skepticism led to the malaria cure.",
+      exampleVi: "S\u1ef1 ki\u00ean tr\u00ec b\u1ec1n b\u1ec9 kh\u00f4ng nao n\u00fang qua bao n\u0103m th\u00e1ng ho\u00e0i nghi c\u1ee7a gi\u1edbi khoa h\u1ecdc \u0111\u00e3 d\u1eabn b\u00e0 t\u1edbi ph\u01b0\u01a1ng thu\u1ed1c tr\u1ecb s\u1ed1t r\u00e9t.",
+      collocations: ["unwavering perseverance", "rewarded for perseverance"]
+    }
+    ,
+    {
+      id: "mega-unit-1-philanthropist",
+      word: "philanthropist",
+      partOfSpeech: "n",
+      meaningVi: "nh\u00e0 t\u1eeb thi\u1ec7n h\u1ea3o t\u00e2m c\u1ed1ng hi\u1ebfn cho \u0111\u1eddi",
+      ipa: "/f\u026a\u02c8l\u00e6n\u03b8r\u0259p\u026ast/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=philanthropist&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The billionaire turned full-time philanthropist donated ninety percent of his estate to clean water.",
+      exampleVi: "V\u1ecb t\u1ef7 ph\u00fa \u0111\u00e3 tr\u1edf th\u00e0nh nh\u00e0 ho\u1ea1t \u0111\u1ed9ng t\u1eeb thi\u1ec7n to\u00e0n th\u1eddi gian v\u00e0 quy\u00ean t\u1eb7ng 90% gia s\u1ea3n cho c\u00e1c d\u1ef1 \u00e1n n\u01b0\u1edbc s\u1ea1ch.",
+      collocations: ["prominent philanthropist", "generous philanthropist"]
+    }
+    ,
+    {
+      id: "mega-unit-1-enduring-legacy",
+      word: "enduring legacy",
+      partOfSpeech: "n.phr",
+      meaningVi: "di s\u1ea3n tr\u01b0\u1eddng t\u1ed3n c\u00f9ng th\u1eddi gian",
+      ipa: "/\u026an\u02c8dj\u028a\u0259r\u026a\u014b \u02c8le\u0261\u0259si/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=enduring+legacy&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "President Ho Chi Minh left an enduring legacy of national unity and patriotic sacrifice.",
+      exampleVi: "Ch\u1ee7 t\u1ecbch H\u1ed3 Ch\u00ed Minh \u0111\u00e3 \u0111\u1ec3 l\u1ea1i m\u1ed9t di s\u1ea3n tr\u01b0\u1eddng t\u1ed3n v\u1ec1 tinh th\u1ea7n \u0111\u1ea1i \u0111o\u00e0n k\u1ebft d\u00e2n t\u1ed9c v\u00e0 \u0111\u1ee9c hy sinh y\u00eau n\u01b0\u1edbc.",
+      collocations: ["leave an enduring legacy", "cement a legacy"]
+    }
+    ,
+    {
+      id: "mega-unit-1-humble-upbringing",
+      word: "humble upbringing",
+      partOfSpeech: "n.phr",
+      meaningVi: "xu\u1ea5t th\u00e2n th\u1eddi th\u01a1 \u1ea5u gi\u1ea3n d\u1ecb ngh\u00e8o kh\u00f3",
+      ipa: "/\u02c8h\u028cmbl \u02c8\u028cpbr\u026a\u014b\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=humble+upbringing&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Despite his humble upbringing in a remote fishing village, he rose to head the Supreme Court.",
+      exampleVi: "D\u00f9 c\u00f3 xu\u1ea5t th\u00e2n b\u00ecnh d\u1ecb trong m\u1ed9t l\u00e0ng ch\u00e0i h\u1ebbo l\u00e1nh, \u00f4ng \u0111\u00e3 v\u01b0\u01a1n l\u00ean gi\u1eef ch\u1ee9c Ch\u00e1nh \u00e1n T\u00f2a \u00e1n T\u1ed1i cao.",
+      collocations: ["overcome a humble upbringing", "proud of humble upbringing"]
+    }
+    ,
+    {
+      id: "mega-unit-1-pioneering-spirit",
+      word: "pioneering spirit",
+      partOfSpeech: "n.phr",
+      meaningVi: "tinh th\u1ea7n ti\u00ean phong m\u1edf l\u1ed1i \u0111i \u0111\u1ea7u",
+      ipa: "/\u02ccpa\u026a\u0259\u02c8n\u026a\u0259r\u026a\u014b \u02c8sp\u026ar\u026at/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=pioneering+spirit&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Her pioneering spirit propelled early deep-sea submersible exploration beyond previous limits.",
+      exampleVi: "Tinh th\u1ea7n ti\u00ean phong khai ph\u00e1 c\u1ee7a b\u00e0 \u0111\u00e3 th\u00fac \u0111\u1ea9y c\u00e1c chuy\u1ebfn th\u00e1m hi\u1ec3m t\u00e0u ng\u1ea7m bi\u1ec3n s\u00e2u v\u01b0\u1ee3t m\u1ecdi gi\u1edbi h\u1ea1n tr\u01b0\u1edbc \u0111\u00f3.",
+      collocations: ["embody a pioneering spirit", "remarkable pioneering spirit"]
+    }
+    ,
+    {
+      id: "mega-unit-1-inspirational-figure",
+      word: "inspirational figure",
+      partOfSpeech: "n.phr",
+      meaningVi: "nh\u00e2n v\u1eadt truy\u1ec1n c\u1ea3m h\u1ee9ng m\u1ea1nh m\u1ebd",
+      ipa: "/\u02cc\u026ansp\u0259\u02c8re\u026a\u0283\u0259nl \u02c8f\u026a\u0261\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=inspirational+figure&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Helen Keller stands as an eternal inspirational figure demonstrating courage over blindness.",
+      exampleVi: "Helen Keller l\u00e0 m\u1ed9t h\u00ecnh t\u01b0\u1ee3ng truy\u1ec1n c\u1ea3m h\u1ee9ng b\u1ea5t h\u1ee7 ch\u1ee9ng minh l\u00f2ng qu\u1ea3 c\u1ea3m chi\u1ebfn th\u1eafng s\u1ef1 m\u00f9 l\u00f2a.",
+      collocations: ["admire an inspirational figure", "towering figure"]
+    }
+    ,
+    {
+      id: "mega-unit-1-selfless-dedication",
+      word: "selfless dedication",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 c\u1ed1ng hi\u1ebfn qu\u00ean m\u00ecnh v\u00ec \u0111\u1ed3ng b\u00e0o",
+      ipa: "/\u02c8selfl\u0259s \u02ccded\u026a\u02c8ke\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=selfless+dedication&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Frontline nurses worked seventy-hour shifts with selfless dedication during the medical crisis.",
+      exampleVi: "C\u00e1c y t\u00e1 tuy\u1ebfn \u0111\u1ea7u l\u00e0m vi\u1ec7c t\u0103ng ca b\u1ea3y m\u01b0\u01a1i gi\u1edd v\u1edbi s\u1ef1 c\u1ed1ng hi\u1ebfn qu\u00ean m\u00ecnh su\u1ed1t cu\u1ed9c kh\u1ee7ng ho\u1ea3ng y t\u1ebf.",
+      collocations: ["praise for selfless dedication", "act of dedication"]
+    }
+    ,
+    {
+      id: "mega-unit-1-epoch-making-achievement",
+      word: "epoch-making achievement",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u00e0nh t\u1ef1u mang t\u00ednh b\u01b0\u1edbc ngo\u1eb7t th\u1eddi \u0111\u1ea1i",
+      ipa: "/\u02cci\u02d0p\u0252k \u02c8me\u026ak\u026a\u014b \u0259\u02c8t\u0283i\u02d0vm\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=epoch-making+achievement&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Discovering penicillin was an epoch-making achievement that transformed modern medicine.",
+      exampleVi: "Vi\u1ec7c ph\u00e1t hi\u1ec7n ra kh\u00e1ng sinh penicillin l\u00e0 m\u1ed9t th\u00e0nh t\u1ef1u mang t\u00ednh b\u01b0\u1edbc ngo\u1eb7t th\u1eddi \u0111\u1ea1i \u0111\u00e3 thay \u0111\u1ed5i n\u1ec1n y h\u1ecdc.",
+      collocations: ["herald an epoch-making achievement", "monumental achievement"]
+    }
+    ,
+    {
+      id: "mega-unit-1-trailblazer",
+      word: "trailblazer",
+      partOfSpeech: "n",
+      meaningVi: "ng\u01b0\u1eddi khai ph\u00e1 ti\u00ean phong d\u1eabn \u0111\u1ea7u tr\u00e0o l\u01b0u",
+      ipa: "/\u02c8tre\u026alble\u026az\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=trailblazer&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Marie Curie was an undisputed trailblazer as the first woman to claim two distinct Nobel prizes.",
+      exampleVi: "Marie Curie l\u00e0 m\u1ed9t ng\u01b0\u1eddi ti\u00ean phong khai ph\u00e1 v\u0129 \u0111\u1ea1i khi l\u00e0 ng\u01b0\u1eddi ph\u1ee5 n\u1eef \u0111\u1ea7u ti\u00ean gi\u00e0nh hai gi\u1ea3i Nobel kh\u00e1c nhau.",
+      collocations: ["act as a trailblazer", "trailblazer in physics"]
+    }
+    ,
+    {
+      id: "mega-unit-1-moral-fortitude",
+      word: "moral fortitude",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u1ea3n l\u0129nh ki\u00ean c\u01b0\u1eddng v\u00e0 l\u00f2ng d\u0169ng c\u1ea3m \u0111\u1ea1o \u0111\u1ee9c",
+      ipa: "/\u02c8m\u0252r\u0259l \u02c8f\u0254\u02d0t\u026atju\u02d0d/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=moral+fortitude&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Nelson Mandela possessed immense moral fortitude refusing to compromise on human dignity.",
+      exampleVi: "Nelson Mandela s\u1edf h\u1eefu b\u1ea3n l\u0129nh ki\u00ean c\u01b0\u1eddng v\u0129 \u0111\u1ea1i khi ki\u00ean quy\u1ebft kh\u00f4ng bao gi\u1edd nh\u00e2n nh\u01b0\u1ee3ng v\u1ec1 nh\u00e2n ph\u1ea9m con ng\u01b0\u1eddi.",
+      collocations: ["display moral fortitude", "admire someone's fortitude"]
+    }
+    ,
+    {
+      id: "mega-unit-1-visionary-leader",
+      word: "visionary leader",
+      partOfSpeech: "n.phr",
+      meaningVi: "nh\u00e0 l\u00e3nh \u0111\u1ea1o c\u00f3 t\u1ea7m nh\u00ecn xa tr\u00f4ng r\u1ed9ng",
+      ipa: "/\u02c8v\u026a\u0292\u0259nri \u02c8li\u02d0d\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=visionary+leader&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "A visionary leader anticipates geopolitical shifts and prepares institutions decades in advance.",
+      exampleVi: "M\u1ed9t nh\u00e0 l\u00e3nh \u0111\u1ea1o c\u00f3 t\u1ea7m nh\u00ecn xa lu\u00f4n d\u1ef1 \u0111o\u00e1n tr\u01b0\u1edbc bi\u1ebfn \u0111\u1ed9ng \u0111\u1ecba ch\u00ednh tr\u1ecb v\u00e0 chu\u1ea9n b\u1ecb cho t\u1ed5 ch\u1ee9c tr\u01b0\u1edbc h\u00e0ng th\u1eadp k\u1ef7.",
+      collocations: ["acclaim as visionary leader", "visionary leadership"]
+    }
+    ,
+    {
+      id: "mega-unit-1-posthumous-honor",
+      word: "posthumous honor",
+      partOfSpeech: "n.phr",
+      meaningVi: "vinh danh v\u00e0 truy t\u1eb7ng sau khi \u0111\u00e3 qua \u0111\u1eddi",
+      ipa: "/\u02c8p\u0252stj\u028am\u0259s \u02c8\u0252n\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=posthumous+honor&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The brave firefighter was awarded the nation's highest medal as a posthumous honor.",
+      exampleVi: "Ng\u01b0\u1eddi l\u00ednh c\u1ee9u h\u1ecfa d\u0169ng c\u1ea3m \u0111\u00e3 \u0111\u01b0\u1ee3c truy t\u1eb7ng hu\u00e2n ch\u01b0\u01a1ng cao qu\u00fd nh\u1ea5t c\u1ee7a qu\u1ed1c gia sau khi anh hy sinh.",
+      collocations: ["receive a posthumous honor", "confer posthumously"]
+    }
+    ,
+    {
+      id: "mega-unit-1-generous-endowment",
+      word: "generous endowment",
+      partOfSpeech: "n.phr",
+      meaningVi: "kho\u1ea3n ti\u1ec1n quy\u00ean t\u1eb7ng t\u00e0i tr\u1ee3 h\u00e0o ph\u00f3ng",
+      ipa: "/\u02c8d\u0292en\u0259r\u0259s \u026an\u02c8da\u028am\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=generous+endowment&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "An anonymous alumnus made a generous endowment to build modern semiconductor labs.",
+      exampleVi: "M\u1ed9t c\u1ef1u sinh vi\u00ean \u1ea9n danh \u0111\u00e3 t\u00e0i tr\u1ee3 m\u1ed9t kho\u1ea3n ti\u1ec1n kh\u1ed5ng l\u1ed3 \u0111\u1ec3 x\u00e2y d\u1ef1ng ph\u00f2ng th\u00ed nghi\u1ec7m b\u00e1n d\u1eabn hi\u1ec7n \u0111\u1ea1i.",
+      collocations: ["establish an endowment", "endowment fund"]
+    }
+    ,
+    {
+      id: "mega-unit-1-social-reformer",
+      word: "social reformer",
+      partOfSpeech: "n.phr",
+      meaningVi: "nh\u00e0 c\u1ea3i c\u00e1ch x\u00e3 h\u1ed9i th\u00fac \u0111\u1ea9y ti\u1ebfn b\u1ed9",
+      ipa: "/\u02ccs\u0259\u028a\u0283l r\u026a\u02c8f\u0254\u02d0m\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=social+reformer&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The courageous social reformer championed universal literacy laws for industrial child laborers.",
+      exampleVi: "Nh\u00e0 c\u1ea3i c\u00e1ch x\u00e3 h\u1ed9i d\u0169ng c\u1ea3m \u0111\u00e3 \u0111\u1ea5u tranh cho lu\u1eadt ph\u1ed5 c\u1eadp gi\u00e1o d\u1ee5c cho lao \u0111\u1ed9ng tr\u1ebb em trong nh\u00e0 m\u00e1y.",
+      collocations: ["work of social reformers", "influential reformer"]
+    }
+    ,
+    {
+      id: "mega-unit-1-unshakeable-conviction",
+      word: "unshakeable conviction",
+      partOfSpeech: "n.phr",
+      meaningVi: "ni\u1ec1m tin v\u1eefng nh\u01b0 b\u00e0n th\u1ea1ch kh\u00f4ng g\u00ec lay chuy\u1ec3n",
+      ipa: "/\u028cn\u02c8\u0283e\u026ak\u0259bl k\u0259n\u02c8v\u026ak\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=unshakeable+conviction&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1506863530036-1efeddceb993?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Her unshakeable conviction in environmental conservation motivated thousands of young activists.",
+      exampleVi: "Ni\u1ec1m tin s\u1eaft \u0111\u00e1 kh\u00f4ng g\u00ec lay chuy\u1ec3n c\u1ee7a c\u00f4 v\u1ec1 b\u1ea3o t\u1ed3n thi\u00ean nhi\u00ean \u0111\u00e3 th\u00f4i th\u00fac h\u00e0ng ng\u00e0n b\u1ea1n tr\u1ebb c\u00f9ng h\u00e0nh \u0111\u1ed9ng.",
+      collocations: ["hold an unshakeable conviction", "conviction of rightness"]
+    }
+    ,
+    {
+      id: "mega-unit-1-daunting-obstacle",
+      word: "daunting obstacle",
+      partOfSpeech: "n.phr",
+      meaningVi: "tr\u1edf ng\u1ea1i to l\u1edbn \u0111\u1ea7y gian nan th\u1eed th\u00e1ch",
+      ipa: "/\u02ccd\u0254\u02d0nt\u026a\u014b \u02c8\u0252bst\u0259kl/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=daunting+obstacle&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "They overcame daunting obstacles including severe malaria and bitter winter cold to map the cave.",
+      exampleVi: "H\u1ecd \u0111\u00e3 v\u01b0\u1ee3t qua nh\u1eefng tr\u1edf ng\u1ea1i kh\u1ed5ng l\u1ed3 \u0111\u1ea7y th\u1eed th\u00e1ch nh\u01b0 s\u1ed1t r\u00e9t v\u00e0 gi\u00e1 r\u00e9t m\u00f9a \u0111\u00f4ng \u0111\u1ec3 l\u1eadp b\u1ea3n \u0111\u1ed3 hang \u0111\u1ed9ng.",
+      collocations: ["conquer daunting obstacles", "face an obstacle"]
+    }
+    ,
+    {
+      id: "mega-unit-1-monumental-impact",
+      word: "monumental impact",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ee9c \u1ea3nh h\u01b0\u1edfng to l\u1edbn mang t\u1ea7m v\u00f3c l\u1ecbch s\u1eed",
+      ipa: "/\u02ccm\u0252nju\u02c8mentl \u02c8\u026amp\u00e6kt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=monumental+impact&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The invention of the transistor had a monumental impact on everyday civilization.",
+      exampleVi: "Ph\u00e1t minh ra b\u00f3ng b\u00e1n d\u1eabn transistor \u0111\u00e3 t\u1ea1o ra m\u1ed9t s\u1ee9c \u1ea3nh h\u01b0\u1edfng mang t\u1ea7m v\u00f3c kh\u1ed5ng l\u1ed3 \u0111\u1ed1i v\u1edbi n\u1ec1n v\u0103n minh nh\u00e2n lo\u1ea1i.",
+      collocations: ["have a monumental impact", "monumental consequences"]
+    }
+    ,
+    {
+      id: "mega-unit-1-eloquent-orator",
+      word: "eloquent orator",
+      partOfSpeech: "n.phr",
+      meaningVi: "nh\u00e0 h\u00f9ng bi\u1ec7n t\u00e0i ba l\u00f4i cu\u1ed1n ng\u01b0\u1eddi nghe",
+      ipa: "/\u02c8el\u0259kw\u0259nt \u02c8\u0252r\u0259t\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=eloquent+orator&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Dr. Martin Luther King Jr. was an eloquent orator whose words ignited the Civil Rights movement.",
+      exampleVi: "Ti\u1ebfn s\u0129 Martin Luther King Jr. l\u00e0 m\u1ed9t nh\u00e0 h\u00f9ng bi\u1ec7n t\u00e0i ba m\u00e0 l\u1eddi n\u00f3i \u0111\u00e3 th\u1eafp l\u1eeda cho phong tr\u00e0o d\u00e2n quy\u1ec1n.",
+      collocations: ["gifted eloquent orator", "speeches of an orator"]
+    }
+    ,
+    {
+      id: "mega-unit-1-intellectual-rigor",
+      word: "intellectual rigor",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 nghi\u00eam c\u1ea9n v\u00e0 ch\u1eb7t ch\u1ebd trong h\u1ecdc thu\u1eadt",
+      ipa: "/\u02cc\u026ant\u0259\u02c8lekt\u0283u\u0259l \u02c8r\u026a\u0261\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=intellectual+rigor&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Her mathematical treatises are celebrated for their clarity and uncompromising intellectual rigor.",
+      exampleVi: "C\u00e1c lu\u1eadn \u00e1n to\u00e1n h\u1ecdc c\u1ee7a b\u00e0 \u0111\u01b0\u1ee3c ca ng\u1ee3i b\u1edfi s\u1ef1 trong s\u00e1ng v\u00e0 t\u00ednh chu\u1ea9n x\u00e1c nghi\u00eam c\u1ea9n tuy\u1ec7t \u0111\u1ed1i.",
+      collocations: ["demand intellectual rigor", "uncompromising rigor"]
+    }
+    ,
+    {
+      id: "mega-unit-1-noble-cause",
+      word: "noble cause",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ee9 m\u1ec7nh cao \u0111\u1eb9p v\u00ec c\u1ed9ng \u0111\u1ed3ng x\u00e3 h\u1ed9i",
+      ipa: "/\u02c8n\u0259\u028abl k\u0254\u02d0z/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=noble+cause&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Doctors Without Borders volunteers risk their lives everyday in dedication to a noble cause.",
+      exampleVi: "C\u00e1c t\u00ecnh nguy\u1ec7n vi\u00ean c\u1ee7a t\u1ed5 ch\u1ee9c B\u00e1c s\u0129 Kh\u00f4ng Bi\u00ean gi\u1edbi ch\u1ea5p nh\u1eadn hi\u1ec3m nguy m\u1ed7i ng\u00e0y \u0111\u1ec3 c\u1ed1ng hi\u1ebfn cho s\u1ee9 m\u1ec7nh cao c\u1ea3.",
+      collocations: ["champion a noble cause", "sacrifice for a cause"]
+    }
+    ,
+    {
+      id: "mega-unit-1-formative-experience",
+      word: "formative experience",
+      partOfSpeech: "n.phr",
+      meaningVi: "tr\u1ea3i nghi\u1ec7m \u0111\u1ecbnh h\u00ecnh n\u00ean t\u00ednh c\u00e1ch v\u00e0 s\u1ef1 nghi\u1ec7p",
+      ipa: "/\u02c8f\u0254\u02d0m\u0259t\u026av \u026ak\u02c8sp\u026a\u0259ri\u0259ns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=formative+experience&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Volunteering in rural health clinics was the formative experience that inspired her medical vocation.",
+      exampleVi: "\u0110i t\u00ecnh nguy\u1ec7n t\u1ea1i c\u00e1c tr\u1ea1m y t\u1ebf n\u00f4ng th\u00f4n l\u00e0 tr\u1ea3i nghi\u1ec7m mang t\u00ednh \u0111\u1ecbnh h\u00ecnh th\u00f4i th\u00fac c\u00f4 theo \u0111u\u1ed5i nghi\u1ec7p y s\u01b0.",
+      collocations: ["a formative experience", "crucial formative years"]
+    }
+    ,
+    {
+      id: "mega-unit-1-illustrious-career",
+      word: "illustrious career",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 nghi\u1ec7p l\u1eaby l\u1eebng hi\u1ec3n h\u00e1ch",
+      ipa: "/\u026a\u02c8l\u028cstri\u0259s k\u0259\u02c8r\u026a\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=illustrious+career&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Over an illustrious career spanning five decades, the architect designed forty award-winning cathedrals.",
+      exampleVi: "Tr\u1ea3i qua m\u1ed9t s\u1ef1 nghi\u1ec7p l\u1eaby l\u1eebng k\u00e9o d\u00e0i n\u0103m th\u1eadp k\u1ef7, v\u1ecb ki\u1ebfn tr\u00fac s\u01b0 \u0111\u00e3 thi\u1ebft k\u1ebf b\u1ed1n m\u01b0\u01a1i th\u00e1nh \u0111\u01b0\u1eddng \u0111\u1ea1t gi\u1ea3i th\u01b0\u1edfng danh gi\u00e1.",
+      collocations: ["crown an illustrious career", "retire from an illustrious career"]
+    }
+    ,
+    {
+      id: "mega-unit-1-historical-chronicles",
+      word: "historical chronicles",
+      partOfSpeech: "n.pl",
+      meaningVi: "nh\u1eefng trang bi\u00ean ni\u00ean s\u1eed h\u00e0o h\u00f9ng",
+      ipa: "/h\u026a\u02c8st\u0252r\u026akl \u02c8kr\u0252n\u026aklz/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=historical+chronicles&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "General Vo Nguyen Giap's tactical brilliance is inscribed forever in world historical chronicles.",
+      exampleVi: "T\u00e0i thao l\u01b0\u1ee3c qu\u00e2n s\u1ef1 c\u1ee7a \u0110\u1ea1i t\u01b0\u1edbng V\u00f5 Nguy\u00ean Gi\u00e1p \u0111\u01b0\u1ee3c kh\u1eafc ghi m\u00e3i m\u00e3i trong nh\u1eefng trang bi\u00ean ni\u00ean s\u1eed th\u1ebf gi\u1edbi.",
+      collocations: ["recorded in historical chronicles", "read the chronicles"]
+    }
+    ,
+    {
+      id: "mega-unit-1-triumph-over-adversity",
+      word: "triumph over adversity",
+      partOfSpeech: "idiom",
+      meaningVi: "chi\u1ebfn th\u1eafng v\u1ebb vang tr\u01b0\u1edbc ngh\u1ecbch c\u1ea3nh s\u1ed1 ph\u1eadn",
+      ipa: "/\u02c8tra\u026a\u028cmf \u02c8\u0259\u028av\u0259r \u0259d\u02c8v\u025c\u02d0s\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=triumph+over+adversity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Beethoven composing the Ninth Symphony while entirely deaf represents the ultimate triumph over adversity.",
+      exampleVi: "Vi\u1ec7c Beethoven so\u1ea1n B\u1ea3n giao h\u01b0\u1edfng s\u1ed1 9 khi \u0111\u00e3 \u0111i\u1ebfc ho\u00e0n to\u00e0n l\u00e0 bi\u1ec3u t\u01b0\u1ee3ng t\u1ed1i cao c\u1ee7a chi\u1ebfn th\u1eafng tr\u01b0\u1edbc ngh\u1ecbch c\u1ea3nh s\u1ed1 ph\u1eadn.",
+      collocations: ["testament to triumph over adversity", "inspire triumph"]
+    }
+    ,
+    {
+      id: "mega-unit-1-unwavering-commitment",
+      word: "unwavering commitment",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 cam k\u1ebft s\u1eaft son ki\u00ean \u0111\u1ecbnh",
+      ipa: "/\u028cn\u02c8we\u026av\u0259r\u026a\u014b k\u0259\u02c8m\u026atm\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=unwavering+commitment&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "His unwavering commitment to human rights earned him international admiration and the peace medal.",
+      exampleVi: "S\u1ef1 cam k\u1ebft ki\u00ean \u0111\u1ecbnh s\u1eaft son v\u00ec nh\u00e2n quy\u1ec1n \u0111\u00e3 mang l\u1ea1i cho \u00f4ng s\u1ef1 ng\u01b0\u1ee1ng m\u1ed9 c\u1ee7a th\u1ebf gi\u1edbi c\u00f9ng hu\u00e2n ch\u01b0\u01a1ng h\u00f2a b\u00ecnh.",
+      collocations: ["demonstrate unwavering commitment", "praise for commitment"]
+    }
+    ,
+    {
+      id: "mega-unit-1-indelible-impression",
+      word: "indelible impression",
+      partOfSpeech: "n.phr",
+      meaningVi: "d\u1ea5u \u1ea5n s\u00e2u s\u1eafc kh\u00f3 phai m\u1edd trong t\u00e2m kh\u1ea3m",
+      ipa: "/\u026an\u02c8del\u0259bl \u026am\u02c8pre\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=indelible+impression&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The teacher's empathy and kind encouragement left an indelible impression on generations of students.",
+      exampleVi: "S\u1ef1 th\u1ea5u c\u1ea3m v\u00e0 nh\u1eefng l\u1eddi \u0111\u1ed9ng vi\u00ean \u00e2n c\u1ea7n c\u1ee7a ng\u01b0\u1eddi th\u1ea7y \u0111\u00e3 \u0111\u1ec3 l\u1ea1i d\u1ea5u \u1ea5n kh\u00f3 phai trong t\u00e2m tr\u00ed bao th\u1ebf h\u1ec7 h\u1ecdc tr\u00f2.",
+      collocations: ["leave an indelible impression", "make an impression"]
+    }
+    ,
+    {
+      id: "mega-unit-1-self-sacrifice",
+      word: "self-sacrifice",
+      partOfSpeech: "n",
+      meaningVi: "s\u1ef1 hy sinh qu\u00ean m\u00ecnh v\u00ec \u0111\u1ea1i ngh\u0129a",
+      ipa: "/\u02ccself \u02c8s\u00e6kr\u026afa\u026as/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=self-sacrifice&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The soldiers displayed extraordinary self-sacrifice defending the mountain border outpost.",
+      exampleVi: "Nh\u1eefng ng\u01b0\u1eddi l\u00ednh \u0111\u00e3 th\u1ec3 hi\u1ec7n s\u1ef1 hy sinh qu\u00ean m\u00ecnh phi th\u01b0\u1eddng khi b\u1ea3o v\u1ec7 ti\u1ec1n \u0111\u1ed3n bi\u00ean c\u01b0\u01a1ng tr\u00ean n\u00fai.",
+      collocations: ["noble self-sacrifice", "act of self-sacrifice"]
+    }
   ],
   "unit-2-a-multicultural-world": [
     {
@@ -1223,6 +1574,331 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleEn: "Translating medical leaflets helps overcome linguistic barriers for ethnic patients.",
       exampleVi: "D\u1ecbch t\u1edd r\u01a1i y t\u1ebf gi\u00fap v\u01b0\u1ee3t qua r\u00e0o c\u1ea3n ng\u00f4n ng\u1eef cho b\u1ec7nh nh\u00e2n \u0111\u1ed3ng b\u00e0o thi\u1ec3u s\u1ed1.",
       collocations: ["overcome linguistic barriers", "break down linguistic barriers"]
+    }
+    ,
+    {
+      id: "mega-unit-2-cultural-assimilation",
+      word: "cultural assimilation",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 \u0111\u1ed3ng h\u00f3a v\u0103n h\u00f3a v\u00e0o x\u00e3 h\u1ed9i m\u1edbi",
+      ipa: "/\u02c8k\u028clt\u0283\u0259r\u0259l \u0259\u02ccs\u026am\u0259\u02c8le\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cultural+assimilation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Sociologists study how second-generation immigrants balance cultural assimilation with heritage preservation.",
+      exampleVi: "C\u00e1c nh\u00e0 x\u00e3 h\u1ed9i h\u1ecdc nghi\u00ean c\u1ee9u c\u00e1ch th\u1ebf h\u1ec7 nh\u1eadp c\u01b0 th\u1ee9 hai c\u00e2n b\u1eb1ng gi\u1eefa s\u1ef1 \u0111\u1ed3ng h\u00f3a v\u0103n h\u00f3a v\u00e0 vi\u1ec7c g\u00ecn gi\u1eef c\u1ed9i ngu\u1ed3n.",
+      collocations: ["resist cultural assimilation", "rate of assimilation"]
+    }
+    ,
+    {
+      id: "mega-unit-2-melting-pot",
+      word: "melting pot",
+      partOfSpeech: "n.phr",
+      meaningVi: "n\u1ed3i l\u1ea9u v\u0103n h\u00f3a h\u00f2a tr\u1ed9n \u0111a s\u1eafc t\u1ed9c",
+      ipa: "/\u02c8melt\u026a\u014b p\u0252t/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=melting+pot&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "New York City has long been depicted as an energetic melting pot of cuisines and tongues.",
+      exampleVi: "Th\u00e0nh ph\u1ed1 New York t\u1eeb l\u00e2u \u0111\u00e3 \u0111\u01b0\u1ee3c v\u00ed nh\u01b0 m\u1ed9t chi\u1ebfc n\u1ed3i l\u1ea9u v\u0103n h\u00f3a ng\u1eadp tr\u00e0n n\u0103ng l\u01b0\u1ee3ng c\u1ee7a c\u00e1c phong v\u1ecb \u1ea9m th\u1ef1c v\u00e0 ng\u00f4n ng\u1eef.",
+      collocations: ["classic melting pot", "vibrant melting pot"]
+    }
+    ,
+    {
+      id: "mega-unit-2-salad-bowl",
+      word: "salad bowl",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u00f4 h\u00ecnh t\u00f4 salad \u0111a v\u0103n h\u00f3a gi\u1eef nguy\u00ean b\u1ea3n s\u1eafc",
+      ipa: "/\u02c8s\u00e6l\u0259d b\u0259\u028al/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=salad+bowl&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Unlike assimilation, the salad bowl concept celebrates ethnic groups retaining their distinct identities.",
+      exampleVi: "Kh\u00e1c v\u1edbi s\u1ef1 \u0111\u1ed3ng h\u00f3a, kh\u00e1i ni\u1ec7m 't\u00f4 x\u00e0 l\u00e1ch' t\u00f4n vinh vi\u1ec7c m\u1ed7i nh\u00f3m d\u00e2n t\u1ed9c gi\u1eef tr\u1ecdn b\u1ea3n s\u1eafc \u0111\u1ed9c \u0111\u00e1o ri\u00eang c\u1ee7a m\u00ecnh.",
+      collocations: ["salad bowl theory", "multicultural salad bowl"]
+    }
+    ,
+    {
+      id: "mega-unit-2-cross-cultural-competence",
+      word: "cross-cultural competence",
+      partOfSpeech: "n.phr",
+      meaningVi: "n\u0103ng l\u1ef1c giao ti\u1ebfp v\u00e0 l\u00e0m vi\u1ec7c li\u00ean v\u0103n h\u00f3a",
+      ipa: "/\u02cckr\u0252s \u02c8k\u028clt\u0283\u0259r\u0259l \u02c8k\u0252mp\u026at\u0259ns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cross-cultural+competence&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "International business managers cultivate cross-cultural competence to avoid unintentional negotiating insults.",
+      exampleVi: "C\u00e1c nh\u00e0 qu\u1ea3n l\u00fd kinh doanh qu\u1ed1c t\u1ebf trau d\u1ed3i n\u0103ng l\u1ef1c li\u00ean v\u0103n h\u00f3a \u0111\u1ec3 tr\u00e1nh nh\u1eefng hi\u1ec3u l\u1ea7m khi \u0111\u00e0m ph\u00e1n.",
+      collocations: ["master cross-cultural competence", "develop competence"]
+    }
+    ,
+    {
+      id: "mega-unit-2-diaspora",
+      word: "diaspora",
+      partOfSpeech: "n",
+      meaningVi: "c\u1ed9ng \u0111\u1ed3ng ki\u1ec1u b\u00e0o di d\u00e2n s\u1ed1ng xa qu\u00ea h\u01b0\u01a1ng",
+      ipa: "/da\u026a\u02c8\u00e6sp\u0259r\u0259/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=diaspora&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The Vietnamese diaspora across North America and Europe hosts vibrant Lunar New Year festivities.",
+      exampleVi: "C\u1ed9ng \u0111\u1ed3ng ki\u1ec1u b\u00e0o Vi\u1ec7t Nam t\u1ea1i B\u1eafc M\u1ef9 v\u00e0 ch\u00e2u \u00c2u t\u1ed5 ch\u1ee9c nh\u1eefng l\u1ec5 h\u1ed9i T\u1ebft Nguy\u00ean \u0111\u00e1n r\u1ef1c r\u1ee1 v\u00e0 \u0111\u1ea7m \u1ea5m.",
+      collocations: ["overseas diaspora", "members of the diaspora"]
+    }
+    ,
+    {
+      id: "mega-unit-2-ethnocentrism",
+      word: "ethnocentrism",
+      partOfSpeech: "n",
+      meaningVi: "thuy\u1ebft v\u1ecb ch\u1ee7ng coi v\u0103n h\u00f3a m\u00ecnh l\u00e0 \u01b0u vi\u1ec7t nh\u1ea5t",
+      ipa: "/\u02cce\u03b8n\u0259\u028a\u02c8sentr\u026az\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ethnocentrism&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Anthropology classes teach students to unlearn ethnocentrism and evaluate customs objectively.",
+      exampleVi: "C\u00e1c l\u1edbp nh\u00e2n ch\u1ee7ng h\u1ecdc r\u00e8n cho h\u1ecdc sinh c\u00e1ch t\u1eeb b\u1ecf t\u01b0 t\u01b0\u1edfng v\u1ecb ch\u1ee7ng \u0111\u1ec3 nh\u00ecn nh\u1eadn c\u00e1c phong t\u1ee5c m\u1ed9t c\u00e1ch kh\u00e1ch quan.",
+      collocations: ["overcome ethnocentrism", "dangers of ethnocentrism"]
+    }
+    ,
+    {
+      id: "mega-unit-2-cultural-relativism",
+      word: "cultural relativism",
+      partOfSpeech: "n.phr",
+      meaningVi: "thuy\u1ebft t\u01b0\u01a1ng \u0111\u1ed1i v\u0103n h\u00f3a t\u00f4n tr\u1ecdng d\u1ecb bi\u1ec7t",
+      ipa: "/\u02c8k\u028clt\u0283\u0259r\u0259l \u02c8rel\u0259t\u026av\u026az\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cultural+relativism&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Cultural relativism encourages understanding marriage rites within their specific historic context.",
+      exampleVi: "Thuy\u1ebft t\u01b0\u01a1ng \u0111\u1ed1i v\u0103n h\u00f3a khuy\u1ebfn kh\u00edch vi\u1ec7c th\u1ea5u hi\u1ec3u c\u00e1c nghi l\u1ec5 h\u00f4n nh\u00e2n trong b\u1ed1i c\u1ea3nh l\u1ecbch s\u1eed ri\u00eang bi\u1ec7t c\u1ee7a ch\u00fang.",
+      collocations: ["principle of cultural relativism", "apply cultural relativism"]
+    }
+    ,
+    {
+      id: "mega-unit-2-bilingualism",
+      word: "bilingualism",
+      partOfSpeech: "n",
+      meaningVi: "n\u0103ng l\u1ef1c s\u1eed d\u1ee5ng song ng\u1eef l\u01b0u lo\u00e1t",
+      ipa: "/ba\u026a\u02c8l\u026a\u014b\u0261w\u0259l\u026az\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=bilingualism&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Childhood bilingualism enhances neural cognitive flexibility and executive mental control.",
+      exampleVi: "Vi\u1ec7c s\u1eed d\u1ee5ng song ng\u1eef t\u1eeb th\u1eddi th\u01a1 \u1ea5u gi\u00fap t\u0103ng c\u01b0\u1eddng s\u1ef1 linh ho\u1ea1t nh\u1eadn th\u1ee9c c\u1ee7a n\u00e3o b\u1ed9 v\u00e0 kh\u1ea3 n\u0103ng \u0111i\u1ec1u h\u00e0nh tinh th\u1ea7n.",
+      collocations: ["benefits of bilingualism", "foster bilingualism"]
+    }
+    ,
+    {
+      id: "mega-unit-2-ethnic-enclave",
+      word: "ethnic enclave",
+      partOfSpeech: "n.phr",
+      meaningVi: "khu ph\u1ed1 t\u1eadp trung \u0111\u00f4ng \u0111\u1ed3ng h\u01b0\u01a1ng m\u1ed9t s\u1eafc t\u1ed9c",
+      ipa: "/\u02c8e\u03b8n\u026ak \u02c8enkle\u026av/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ethnic+enclave&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Little Saigon in California stands as a vibrant ethnic enclave supporting generations of refugees.",
+      exampleVi: "Khu Little Saigon \u1edf California l\u00e0 m\u1ed9t khu ph\u1ed1 ki\u1ec1u b\u00e0o s\u1ea7m u\u1ea5t nu\u00f4i d\u01b0\u1ee1ng bao th\u1ebf h\u1ec7 ng\u01b0\u1eddi Vi\u1ec7t sinh s\u1ed1ng.",
+      collocations: ["settle in an ethnic enclave", "thriving ethnic enclave"]
+    }
+    ,
+    {
+      id: "mega-unit-2-cultural-pluralism",
+      word: "cultural pluralism",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 \u0111a nguy\u00ean v\u0103n h\u00f3a h\u00f2a h\u1ee3p c\u00f9ng t\u1ed3n t\u1ea1i",
+      ipa: "/\u02c8k\u028clt\u0283\u0259r\u0259l \u02c8pl\u028a\u0259r\u0259l\u026az\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cultural+pluralism&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Democratic societies thrive when cultural pluralism is protected and cherished by institutions.",
+      exampleVi: "C\u00e1c x\u00e3 h\u1ed9i d\u00e2n ch\u1ee7 ph\u00e1t tri\u1ec3n v\u1eefng m\u1ea1nh khi s\u1ef1 \u0111a nguy\u00ean v\u0103n h\u00f3a \u0111\u01b0\u1ee3c ph\u00e1p lu\u1eadt v\u00e0 th\u1ec3 ch\u1ebf tr\u00e2n tr\u1ecdng b\u1ea3o v\u1ec7.",
+      collocations: ["embrace cultural pluralism", "advocate pluralism"]
+    }
+    ,
+    {
+      id: "mega-unit-2-linguistic-diversity",
+      word: "linguistic diversity",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 phong ph\u00fa v\u00e0 \u0111a d\u1ea1ng v\u1ec1 ng\u00f4n ng\u1eef",
+      ipa: "/l\u026a\u014b\u02c8\u0261w\u026ast\u026ak da\u026a\u02c8v\u025c\u02d0s\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=linguistic+diversity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "UNESCO documents endangered dialects to preserve Papua New Guinea's astonishing linguistic diversity.",
+      exampleVi: "UNESCO ghi nh\u1eadn c\u00e1c ph\u01b0\u01a1ng ng\u1eef c\u00f3 nguy c\u01a1 mai m\u1ed9t \u0111\u1ec3 b\u1ea3o t\u1ed3n s\u1ef1 \u0111a d\u1ea1ng ng\u00f4n ng\u1eef kinh ng\u1ea1c c\u1ee7a Papua New Guinea.",
+      collocations: ["celebrate linguistic diversity", "loss of diversity"]
+    }
+    ,
+    {
+      id: "mega-unit-2-acculturation",
+      word: "acculturation",
+      partOfSpeech: "n",
+      meaningVi: "qu\u00e1 tr\u00ecnh ti\u1ebfp bi\u1ebfn v\u0103n h\u00f3a hai chi\u1ec1u",
+      ipa: "/\u0259\u02cck\u028clt\u0283\u0259\u02c8re\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=acculturation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Acculturation allows international students to adapt to university life while sharing native cuisine.",
+      exampleVi: "Ti\u1ebfp bi\u1ebfn v\u0103n h\u00f3a gi\u00fap sinh vi\u00ean qu\u1ed1c t\u1ebf h\u00f2a nh\u1eadp v\u00e0o \u0111\u1eddi s\u1ed1ng \u0111\u1ea1i h\u1ecdc \u0111\u1ed3ng th\u1eddi lan t\u1ecfa n\u00e9t \u0111\u1eb9p \u1ea9m th\u1ef1c qu\u00ea nh\u00e0.",
+      collocations: ["psychological acculturation", "process of acculturation"]
+    }
+    ,
+    {
+      id: "mega-unit-2-global-citizenship",
+      word: "global citizenship",
+      partOfSpeech: "n.phr",
+      meaningVi: "tinh th\u1ea7n c\u00f4ng d\u00e2n to\u00e0n c\u1ea7u c\u1edfi m\u1edf",
+      ipa: "/\u02cc\u0261l\u0259\u028abl \u02c8s\u026at\u026az\u0259n\u0283\u026ap/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=global+citizenship&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Study-abroad programs nurture global citizenship by confronting students with novel perspectives.",
+      exampleVi: "C\u00e1c ch\u01b0\u01a1ng tr\u00ecnh du h\u1ecdc nu\u00f4i d\u01b0\u1ee1ng tinh th\u1ea7n c\u00f4ng d\u00e2n to\u00e0n c\u1ea7u b\u1eb1ng c\u00e1ch \u0111\u01b0a sinh vi\u00ean ti\u1ebfp c\u1eadn c\u00e1c g\u00f3c nh\u00ecn m\u1edbi m\u1ebb.",
+      collocations: ["cultivate global citizenship", "sense of citizenship"]
+    }
+    ,
+    {
+      id: "mega-unit-2-cultural-diplomacy",
+      word: "cultural diplomacy",
+      partOfSpeech: "n.phr",
+      meaningVi: "ngo\u1ea1i giao v\u0103n h\u00f3a k\u1ebft n\u1ed1i c\u00e1c d\u00e2n t\u1ed9c",
+      ipa: "/\u02c8k\u028clt\u0283\u0259r\u0259l d\u026a\u02c8pl\u0259\u028am\u0259si/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cultural+diplomacy&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Culinary expos and traveling folk ensembles form the spearhead of peaceful cultural diplomacy.",
+      exampleVi: "H\u1ed9i ch\u1ee3 \u1ea9m th\u1ef1c v\u00e0 c\u00e1c \u0111o\u00e0n ngh\u1ec7 thu\u1eadt d\u00e2n gian l\u01b0u di\u1ec5n l\u00e0 m\u0169i nh\u1ecdn c\u1ee7a n\u1ec1n ngo\u1ea1i giao v\u0103n h\u00f3a h\u00f2a b\u00ecnh.",
+      collocations: ["practice cultural diplomacy", "soft power diplomacy"]
+    }
+    ,
+    {
+      id: "mega-unit-2-intercultural-exchange",
+      word: "intercultural exchange",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 giao l\u01b0u h\u1ecdc h\u1ecfi li\u00ean v\u0103n h\u00f3a",
+      ipa: "/\u02cc\u026ant\u0259\u02c8k\u028clt\u0283\u0259r\u0259l \u026aks\u02c8t\u0283e\u026and\u0292/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=intercultural+exchange&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Youth leadership camps foster heartfelt intercultural exchange between students from fifty nations.",
+      exampleVi: "Tr\u1ea1i h\u00e8 th\u1ee7 l\u0129nh thanh ni\u00ean t\u1ea1o kh\u00f4ng gian giao l\u01b0u li\u00ean v\u0103n h\u00f3a ch\u00e2n th\u00e0nh gi\u1eefa c\u00e1c b\u1ea1n tr\u1ebb \u0111\u1ebfn t\u1eeb n\u0103m m\u01b0\u01a1i qu\u1ed1c gia.",
+      collocations: ["participate in intercultural exchange", "meaningful exchange"]
+    }
+    ,
+    {
+      id: "mega-unit-2-multicultural-harmony",
+      word: "multicultural harmony",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 h\u00f2a thu\u1eadn h\u00f2a h\u1ee3p trong x\u00e3 h\u1ed9i \u0111a v\u0103n h\u00f3a",
+      ipa: "/\u02ccm\u028clti\u02c8k\u028clt\u0283\u0259r\u0259l \u02c8h\u0251\u02d0m\u0259ni/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=multicultural+harmony&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Festivals celebrating Diwali, Christmas, and Tet side-by-side reflect true multicultural harmony.",
+      exampleVi: "Nh\u1eefng l\u1ec5 h\u1ed9i \u0111\u00f3n ch\u00e0o Diwali, Gi\u00e1ng sinh v\u00e0 T\u1ebft Nguy\u00ean \u0111\u00e1n c\u1ea1nh nhau ph\u1ea3n \u00e1nh s\u1ef1 h\u00f2a h\u1ee3p \u0111a v\u0103n h\u00f3a \u0111\u00edch th\u1ef1c.",
+      collocations: ["maintain multicultural harmony", "live in harmony"]
+    }
+    ,
+    {
+      id: "mega-unit-2-ethnic-minority",
+      word: "ethnic minority",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u1ed9ng \u0111\u1ed3ng \u0111\u1ed3ng b\u00e0o d\u00e2n t\u1ed9c thi\u1ec3u s\u1ed1",
+      ipa: "/\u02cce\u03b8n\u026ak ma\u026a\u02c8n\u0252r\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ethnic+minority&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Preserving the distinct woven brocade costumes of ethnic minorities is an urgent cultural priority.",
+      exampleVi: "G\u00ecn gi\u1eef trang ph\u1ee5c th\u1ed5 c\u1ea9m th\u00eau tay \u0111\u1eb7c s\u1eafc c\u1ee7a c\u00e1c \u0111\u1ed3ng b\u00e0o d\u00e2n t\u1ed9c thi\u1ec3u s\u1ed1 l\u00e0 m\u1ed9t \u01b0u ti\u00ean v\u0103n h\u00f3a c\u1ea5p b\u00e1ch.",
+      collocations: ["rights of ethnic minorities", "support ethnic minorities"]
+    }
+    ,
+    {
+      id: "mega-unit-2-cultural-heritage-preservation",
+      word: "cultural heritage preservation",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng t\u00e1c b\u1ea3o t\u1ed3n g\u00ecn gi\u1eef di s\u1ea3n v\u0103n h\u00f3a",
+      ipa: "/\u02c8k\u028clt\u0283\u0259r\u0259l \u02c8her\u026at\u026ad\u0292 \u02ccprez\u0259\u02c8ve\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cultural+heritage+preservation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Government subsidies support the cultural heritage preservation of wooden communal houses.",
+      exampleVi: "Ng\u00e2n s\u00e1ch nh\u00e0 n\u01b0\u1edbc h\u1ed7 tr\u1ee3 c\u00f4ng t\u00e1c b\u1ea3o t\u1ed3n di s\u1ea3n v\u0103n h\u00f3a c\u1ee7a nh\u1eefng ng\u00f4i \u0111\u00ecnh l\u00e0ng m\u00e1i cong c\u1ed5 k\u00ednh.",
+      collocations: ["fund cultural heritage preservation", "efforts in preservation"]
+    }
+    ,
+    {
+      id: "mega-unit-2-social-integration",
+      word: "social integration",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 h\u00f2a nh\u1eadp x\u00e3 h\u1ed9i c\u1ee7a ng\u01b0\u1eddi m\u1edbi \u0111\u1ebfn",
+      ipa: "/\u02ccs\u0259\u028a\u0283l \u02cc\u026ant\u026a\u02c8\u0261re\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=social+integration&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Language classes and job workshops facilitate smooth social integration for newly arrived refugees.",
+      exampleVi: "C\u00e1c l\u1edbp h\u1ecdc ti\u1ebfng v\u00e0 h\u1ed9i th\u1ea3o vi\u1ec7c l\u00e0m gi\u00fap qu\u00e1 tr\u00ecnh h\u00f2a nh\u1eadp x\u00e3 h\u1ed9i c\u1ee7a ng\u01b0\u1eddi t\u1ecb n\u1ea1n m\u1edbi \u0111\u1ebfn di\u1ec5n ra thu\u1eadn l\u1ee3i.",
+      collocations: ["accelerate social integration", "barriers to integration"]
+    }
+    ,
+    {
+      id: "mega-unit-2-anti-discrimination-law",
+      word: "anti-discrimination law",
+      partOfSpeech: "n.phr",
+      meaningVi: "lu\u1eadt ch\u1ed1ng ph\u00e2n bi\u1ec7t \u0111\u1ed1i x\u1eed",
+      ipa: "/\u02cc\u00e6nti d\u026a\u02ccskr\u026am\u026a\u02c8ne\u026a\u0283n l\u0254\u02d0/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=anti-discrimination+law&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The parliamentary chamber voted to strengthen anti-discrimination laws in rental real estate.",
+      exampleVi: "Ngh\u1ecb vi\u1ec7n \u0111\u00e3 b\u1ecf phi\u1ebfu th\u1eaft ch\u1eb7t lu\u1eadt ch\u1ed1ng ph\u00e2n bi\u1ec7t \u0111\u1ed1i x\u1eed trong giao d\u1ecbch b\u1ea5t \u0111\u1ed9ng s\u1ea3n nh\u00e0 \u1edf.",
+      collocations: ["enforce anti-discrimination laws", "breach the law"]
+    }
+    ,
+    {
+      id: "mega-unit-2-multicultural-curriculum",
+      word: "multicultural curriculum",
+      partOfSpeech: "n.phr",
+      meaningVi: "ch\u01b0\u01a1ng tr\u00ecnh gi\u00e1o d\u1ee5c \u0111a v\u0103n h\u00f3a to\u00e0n di\u1ec7n",
+      ipa: "/\u02ccm\u028clti\u02c8k\u028clt\u0283\u0259r\u0259l k\u0259\u02c8r\u026akj\u0259l\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=multicultural+curriculum&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Schools adopted a multicultural curriculum celebrating history from indigenous and immigrant vantage points.",
+      exampleVi: "C\u00e1c tr\u01b0\u1eddng h\u1ecdc \u0111\u00e3 \u00e1p d\u1ee5ng ch\u01b0\u01a1ng tr\u00ecnh gi\u00e1o d\u1ee5c \u0111a v\u0103n h\u00f3a t\u00f4n vinh l\u1ecbch s\u1eed t\u1eeb g\u00f3c nh\u00ecn c\u1ee7a c\u1ea3 ng\u01b0\u1eddi b\u1ea3n \u0111\u1ecba v\u00e0 ng\u01b0\u1eddi nh\u1eadp c\u01b0.",
+      collocations: ["design a multicultural curriculum", "benefits of curriculum"]
+    }
+    ,
+    {
+      id: "mega-unit-2-cultural-sensibility",
+      word: "cultural sensibility",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 tinh t\u1ebf nh\u1ea1y c\u1ea3m v\u1edbi c\u00e1c s\u1eafc th\u00e1i v\u0103n h\u00f3a",
+      ipa: "/\u02c8k\u028clt\u0283\u0259r\u0259l \u02ccsens\u0259\u02c8b\u026al\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cultural+sensibility&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Diplomats undergo training in cultural sensibility to master appropriate dining and greeting rituals.",
+      exampleVi: "C\u00e1c nh\u00e0 ngo\u1ea1i giao \u0111\u01b0\u1ee3c \u0111\u00e0o t\u1ea1o v\u1ec1 s\u1ef1 nh\u1ea1y c\u1ea3m v\u0103n h\u00f3a \u0111\u1ec3 n\u1eafm v\u1eefng c\u00e1c quy t\u1eafc \u1ee9ng x\u1eed tr\u00ean b\u00e0n ti\u1ec7c v\u00e0 ch\u00e0o h\u1ecfi \u0111\u00fang m\u1ef1c.",
+      collocations: ["exhibit cultural sensibility", "heightened sensibility"]
+    }
+    ,
+    {
+      id: "mega-unit-2-transnational-network",
+      word: "transnational network",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u1ea1ng l\u01b0\u1edbi li\u00ean k\u1ebft xuy\u00ean qu\u1ed1c gia",
+      ipa: "/tr\u00e6nz\u02c8n\u00e6\u0283n\u0259l \u02c8netw\u025c\u02d0k/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=transnational+network&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Scientists leverage transnational networks to share vaccine genomic sequences in real time.",
+      exampleVi: "C\u00e1c nh\u00e0 khoa h\u1ecdc t\u1eadn d\u1ee5ng m\u1ea1ng l\u01b0\u1edbi li\u00ean k\u1ebft xuy\u00ean qu\u1ed1c gia \u0111\u1ec3 chia s\u1ebb gi\u1ea3i tr\u00ecnh t\u1ef1 gen v\u1eafc xin theo th\u1eddi gian th\u1ef1c.",
+      collocations: ["operate a transnational network", "global network"]
+    }
+    ,
+    {
+      id: "mega-unit-2-traditional-folklore",
+      word: "traditional folklore",
+      partOfSpeech: "n.phr",
+      meaningVi: "truy\u1ec1n thuy\u1ebft v\u0103n h\u1ecdc d\u00e2n gian truy\u1ec1n mi\u1ec7ng",
+      ipa: "/tr\u0259\u02c8d\u026a\u0283\u0259nl \u02c8f\u0259\u028akl\u0254\u02d0(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=traditional+folklore&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Granny gathered neighborhood children beneath the banyan tree to tell traditional folklore of fairy spirits.",
+      exampleVi: "B\u00e0 c\u1ee5 t\u1eadp h\u1ee3p l\u0169 tr\u1ebb trong x\u00f3m d\u01b0\u1edbi g\u1ed1c \u0111a l\u00e0ng \u0111\u1ec3 k\u1ec3 nh\u1eefng c\u00e2u chuy\u1ec7n d\u00e2n gian truy\u1ec1n th\u1ed1ng v\u1ec1 n\u00e0ng ti\u00ean v\u00e0 th\u1ea7n c\u00e2y.",
+      collocations: ["retell traditional folklore", "rich folklore"]
+    }
+    ,
+    {
+      id: "mega-unit-2-shared-humanity",
+      word: "shared humanity",
+      partOfSpeech: "n.phr",
+      meaningVi: "nh\u00e2n t\u00ednh v\u00e0 gi\u00e1 tr\u1ecb nh\u00e2n v\u0103n g\u1eafn k\u1ebft mu\u00f4n ng\u01b0\u1eddi",
+      ipa: "/\u0283e\u0259d hju\u02d0\u02c8m\u00e6n\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=shared+humanity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Beyond differences of skin color and creed lies our profound shared humanity.",
+      exampleVi: "V\u01b0\u1ee3t l\u00ean tr\u00ean m\u1ecdi d\u1ecb bi\u1ec7t v\u1ec1 m\u00e0u da v\u00e0 t\u00edn ng\u01b0\u1ee1ng l\u00e0 b\u1ea3n t\u00ednh nh\u00e2n v\u0103n thi\u00eang li\u00eang g\u1eafn k\u1ebft m\u1ecdi con ng\u01b0\u1eddi tr\u00ean th\u1ebf gian.",
+      collocations: ["affirm our shared humanity", "reminder of shared humanity"]
     }
   ],
   "unit-3-green-living": [
@@ -1856,6 +2532,344 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleVi: "Hi\u1ec7p \u01b0\u1edbc quy \u0111\u1ecbnh c\u1eaft gi\u1ea3m 50% l\u01b0\u1ee3ng ph\u00e1t th\u1ea3i kh\u00ed nh\u00e0 k\u00ednh tr\u01b0\u1edbc n\u0103m 2030.",
       collocations: ["slash greenhouse gas emissions", "monitor greenhouse gas emissions"]
     }
+    ,
+    {
+      id: "mega-unit-3-circular-packaging",
+      word: "circular packaging",
+      partOfSpeech: "n.phr",
+      meaningVi: "bao b\u00ec t\u00e1i s\u1eed d\u1ee5ng theo chu tr\u00ecnh kh\u00e9p k\u00edn",
+      ipa: "/\u02ccs\u025c\u02d0kj\u0259l\u0259r \u02c8p\u00e6k\u026ad\u0292\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=circular+packaging&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Cosmetic companies incentivize consumers to return glass jars for sterilizing and circular packaging.",
+      exampleVi: "C\u00e1c h\u00e3ng m\u1ef9 ph\u1ea9m t\u1eb7ng \u0111i\u1ec3m cho kh\u00e1ch h\u00e0ng g\u1eedi l\u1ea1i l\u1ecd th\u1ee7y tinh \u0111\u1ec3 kh\u1eed tr\u00f9ng v\u00e0 t\u00e1i \u0111\u00f3ng g\u00f3i tu\u1ea7n ho\u00e0n.",
+      collocations: ["adopt circular packaging", "zero-waste circular packaging"]
+    }
+    ,
+    {
+      id: "mega-unit-3-upcycling-workshop",
+      word: "upcycling workshop",
+      partOfSpeech: "n.phr",
+      meaningVi: "x\u01b0\u1edfng t\u00e1i ch\u1ebf s\u00e1ng t\u1ea1o bi\u1ebfn \u0111\u1ed3 c\u0169 th\u00e0nh t\u00e1c ph\u1ea9m ngh\u1ec7 thu\u1eadt",
+      ipa: "/\u02c8\u028cpsa\u026akl\u026a\u014b \u02c8w\u025c\u02d0k\u0283\u0252p/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=upcycling+workshop&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Artisans run weekend upcycling workshops turning discarded denim trousers into trendy tote bags.",
+      exampleVi: "C\u00e1c ngh\u1ec7 nh\u00e2n m\u1edf x\u01b0\u1edfng t\u00e1i ch\u1ebf s\u00e1ng t\u1ea1o cu\u1ed1i tu\u1ea7n bi\u1ebfn nh\u1eefng chi\u1ebfc qu\u1ea7n b\u00f2 c\u0169 b\u1ecf \u0111i th\u00e0nh t\u00fai x\u00e1ch th\u1eddi th\u01b0\u1ee3ng.",
+      collocations: ["attend an upcycling workshop", "creative upcycling"]
+    }
+    ,
+    {
+      id: "mega-unit-3-energy-audit",
+      word: "energy audit",
+      partOfSpeech: "n.phr",
+      meaningVi: "ho\u1ea1t \u0111\u1ed9ng ki\u1ec3m to\u00e1n n\u0103ng l\u01b0\u1ee3ng \u0111o l\u01b0\u1eddng r\u00f2 r\u1ec9 \u0111i\u1ec7n",
+      ipa: "/\u02c8en\u0259d\u0292i \u02c8\u0254\u02d0d\u026at/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=energy+audit&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "A professional home energy audit revealed extensive thermal leaks around bedroom window frames.",
+      exampleVi: "Bu\u1ed5i ki\u1ec3m to\u00e1n n\u0103ng l\u01b0\u1ee3ng gia \u0111\u00ecnh chuy\u00ean nghi\u1ec7p \u0111\u00e3 ph\u00e1t hi\u1ec7n c\u00e1c \u0111i\u1ec3m th\u1ea5t tho\u00e1t nhi\u1ec7t l\u1edbn quanh khung c\u1eeda s\u1ed5 ph\u00f2ng ng\u1ee7.",
+      collocations: ["conduct an energy audit", "home energy audit"]
+    }
+    ,
+    {
+      id: "mega-unit-3-greywater-recycling",
+      word: "greywater recycling",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ec7 th\u1ed1ng l\u1ecdc t\u00e1i s\u1eed d\u1ee5ng n\u01b0\u1edbc x\u00e1m sinh ho\u1ea1t",
+      ipa: "/\u02c8\u0261re\u026aw\u0254\u02d0t\u0259 \u02ccri\u02d0\u02c8sa\u026akl\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=greywater+recycling&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The eco-villa routes washing machine rinse runoff to subterranean greywater recycling for garden lawn irrigation.",
+      exampleVi: "Bi\u1ec7t th\u1ef1 sinh th\u00e1i d\u1eabn n\u01b0\u1edbc th\u1ea3i m\u00e1y gi\u1eb7t t\u1edbi h\u1ec7 th\u1ed1ng l\u1ecdc n\u01b0\u1edbc x\u00e1m ng\u1ea7m \u0111\u1ec3 t\u01b0\u1edbi th\u1ea3m c\u1ecf s\u00e2n v\u01b0\u1eddn.",
+      collocations: ["install greywater recycling", "greywater system"]
+    }
+    ,
+    {
+      id: "mega-unit-3-vampire-power",
+      word: "vampire power",
+      partOfSpeech: "n.phr",
+      meaningVi: "l\u01b0\u1ee3ng \u0111i\u1ec7n ti\u00eau hao ng\u1ea7m khi thi\u1ebft b\u1ecb \u1edf ch\u1ebf \u0111\u1ed9 ch\u1edd",
+      ipa: "/\u02c8v\u00e6mpa\u026a\u0259 \u02c8pa\u028a\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=vampire+power&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Smart power strips eliminate vampire power by automatically shutting off idle television peripherals.",
+      exampleVi: "\u1ed4 c\u1eafm \u0111i\u1ec7n th\u00f4ng minh tri\u1ec7t ti\u00eau l\u01b0\u1ee3ng \u0111i\u1ec7n ti\u00eau th\u1ee5 ng\u1ea7m b\u1eb1ng c\u00e1ch t\u1ef1 ng\u1eaft ngu\u1ed3n cho c\u00e1c thi\u1ebft b\u1ecb ph\u1ee5 tr\u1ee3 tivi khi kh\u00f4ng d\u00f9ng.",
+      collocations: ["curb vampire power", "eliminate phantom load"]
+    }
+    ,
+    {
+      id: "mega-unit-3-bulk-grocery-shopping",
+      word: "bulk grocery shopping",
+      partOfSpeech: "n.phr",
+      meaningVi: "mua s\u1eafm th\u1ef1c ph\u1ea9m d\u1ea1ng r\u1eddi kh\u00f4ng bao b\u00ec nilon",
+      ipa: "/b\u028clk \u02c8\u0261r\u0259\u028as\u0259ri \u02c8\u0283\u0252p\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=bulk+grocery+shopping&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Bringing cloth bags and glass jars for bulk grocery shopping cuts plastic container trash entirely.",
+      exampleVi: "Mang theo t\u00fai v\u1ea3i v\u00e0 l\u1ecd th\u1ee7y tinh khi mua th\u1ef1c ph\u1ea9m d\u1ea1ng r\u1eddi gi\u00fap lo\u1ea1i b\u1ecf ho\u00e0n to\u00e0n r\u00e1c th\u1ea3i h\u1ed9p nh\u1ef1a.",
+      collocations: ["practice bulk grocery shopping", "zero-waste grocery store"]
+    }
+    ,
+    {
+      id: "mega-unit-3-carbon-footprint-reduction",
+      word: "carbon footprint reduction",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 c\u1eaft gi\u1ea3m d\u1ea5u ch\u00e2n ph\u00e1t th\u1ea3i carbon",
+      ipa: "/\u02cck\u0251\u02d0b\u0259n \u02c8f\u028atpr\u026ant r\u026a\u02c8d\u028ck\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=carbon+footprint+reduction&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Biking to campus achieved an impressive 40 percent carbon footprint reduction for the student club.",
+      exampleVi: "\u0110\u1ea1p xe \u0111\u1ebfn tr\u01b0\u1eddng gi\u00fap c\u00e2u l\u1ea1c b\u1ed9 h\u1ecdc sinh \u0111\u1ea1t \u0111\u01b0\u1ee3c m\u1ee9c c\u1eaft gi\u1ea3m d\u1ea5u ch\u00e2n carbon \u1ea5n t\u01b0\u1ee3ng l\u00ean \u0111\u1ebfn 40%.",
+      collocations: ["achieve footprint reduction", "commit to reduction"]
+    }
+    ,
+    {
+      id: "mega-unit-3-plant-based-diet",
+      word: "plant-based diet",
+      partOfSpeech: "n.phr",
+      meaningVi: "ch\u1ebf \u0111\u1ed9 dinh d\u01b0\u1ee1ng \u01b0u ti\u00ean ngu\u1ed3n th\u1ef1c v\u1eadt",
+      ipa: "/\u02c8pl\u0251\u02d0nt be\u026ast \u02c8da\u026a\u0259t/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=plant-based+diet&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Adopting a plant-based diet conserves thousands of gallons of freshwater and slashes methane emissions.",
+      exampleVi: "Chuy\u1ec3n sang ch\u1ebf \u0111\u1ed9 \u0103n \u01b0u ti\u00ean th\u1ef1c v\u1eadt gi\u00fap ti\u1ebft ki\u1ec7m h\u00e0ng ng\u00e0n gallon n\u01b0\u1edbc ng\u1ecdt v\u00e0 c\u1eaft gi\u1ea3m l\u01b0\u1ee3ng kh\u00ed methane ph\u00e1t th\u1ea3i.",
+      collocations: ["transition to a plant-based diet", "benefits of plant-based diet"]
+    }
+    ,
+    {
+      id: "mega-unit-3-community-compost-bin",
+      word: "community compost bin",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u00f9ng \u1ee7 ph\u00e2n h\u1eefu c\u01a1 chung c\u1ee7a khu d\u00e2n c\u01b0",
+      ipa: "/k\u0259\u02ccmju\u02d0n\u0259ti \u02c8k\u0252mp\u0252st b\u026an/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=community+compost+bin&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Neighbors drop kitchen peels and coffee grounds into the neighborhood community compost bin daily.",
+      exampleVi: "H\u00e0ng x\u00f3m mang v\u1ecf c\u1ee7 qu\u1ea3 v\u00e0 b\u00e3 c\u00e0 ph\u00ea b\u1ecf v\u00e0o th\u00f9ng \u1ee7 ph\u00e2n h\u1eefu c\u01a1 chung c\u1ee7a khu ph\u1ed1 m\u1ed7i ng\u00e0y.",
+      collocations: ["maintain a community compost bin", "deposit food scraps"]
+    }
+    ,
+    {
+      id: "mega-unit-3-passive-solar-design",
+      word: "passive solar design",
+      partOfSpeech: "n.phr",
+      meaningVi: "thi\u1ebft k\u1ebf nh\u00e0 \u0111\u00f3n \u00e1nh s\u00e1ng t\u1ef1 nhi\u00ean ti\u1ebft ki\u1ec7m \u0111i\u1ec7n",
+      ipa: "/\u02ccp\u00e6s\u026av \u02c8s\u0259\u028al\u0259 d\u026a\u02c8za\u026an/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=passive+solar+design&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "South-facing windows and thermal stone flooring showcase the smart principles of passive solar design.",
+      exampleVi: "C\u1eeda s\u1ed5 h\u01b0\u1edbng nam v\u00e0 s\u00e0n \u0111\u00e1 t\u00edch nhi\u1ec7t th\u1ec3 hi\u1ec7n nguy\u00ean l\u00fd th\u00f4ng minh c\u1ee7a thi\u1ebft k\u1ebf t\u1eadn d\u1ee5ng n\u0103ng l\u01b0\u1ee3ng m\u1eb7t tr\u1eddi th\u1ee5 \u0111\u1ed9ng.",
+      collocations: ["incorporate passive solar design", "passive solar heating"]
+    }
+    ,
+    {
+      id: "mega-unit-3-microgeneration",
+      word: "microgeneration",
+      partOfSpeech: "n",
+      meaningVi: "m\u00f4 h\u00ecnh t\u1ef1 s\u1ea3n xu\u1ea5t \u0111i\u1ec7n quy m\u00f4 h\u1ed9 gia \u0111\u00ecnh",
+      ipa: "/\u02ccma\u026akr\u0259\u028a\u02ccd\u0292en\u0259\u02c8re\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=microgeneration&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Rooftop microgeneration with small wind turbines and panels makes rural homesteads completely self-sufficient.",
+      exampleVi: "M\u00f4 h\u00ecnh t\u1ef1 s\u1ea3n xu\u1ea5t \u0111i\u1ec7n vi m\u00f4 b\u1eb1ng tuabin gi\u00f3 nh\u1ecf v\u00e0 pin m\u1eb7t tr\u1eddi gi\u00fap c\u00e1c trang tr\u1ea1i n\u00f4ng th\u00f4n ho\u00e0n to\u00e0n t\u1ef1 c\u1ea5p n\u0103ng l\u01b0\u1ee3ng.",
+      collocations: ["invest in microgeneration", "residential microgeneration"]
+    }
+    ,
+    {
+      id: "mega-unit-3-rainwater-harvesting",
+      word: "rainwater harvesting",
+      partOfSpeech: "n.phr",
+      meaningVi: "thu gom v\u00e0 t\u00edch tr\u1eef n\u01b0\u1edbc m\u01b0a sinh ho\u1ea1t",
+      ipa: "/\u02c8re\u026anw\u0254\u02d0t\u0259 \u02cch\u0251\u02d0v\u026ast\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=rainwater+harvesting&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Installing underground filtration cisterns enables domestic rainwater harvesting during monsoon months.",
+      exampleVi: "L\u1eafp \u0111\u1eb7t b\u1ec3 l\u1ecdc ng\u1ea7m gi\u00fap thu gom n\u01b0\u1edbc m\u01b0a sinh ho\u1ea1t hi\u1ec7u qu\u1ea3 trong su\u1ed1t nh\u1eefng th\u00e1ng m\u00f9a m\u01b0a b\u00e3o.",
+      collocations: ["practice rainwater harvesting", "rainwater harvesting system"]
+    }
+    ,
+    {
+      id: "mega-unit-3-eco-friendly-detergent",
+      word: "eco-friendly detergent",
+      partOfSpeech: "n.phr",
+      meaningVi: "n\u01b0\u1edbc gi\u1eb7t t\u1ea9y r\u1eeda sinh h\u1ecdc kh\u00f4ng h\u00f3a ch\u1ea5t \u0111\u1ed9c h\u1ea1i",
+      ipa: "/\u02cci\u02d0k\u0259\u028a \u02c8frendli d\u026a\u02c8t\u025c\u02d0d\u0292\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=eco-friendly+detergent&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Biodegradable plant surfactants make eco-friendly detergent completely safe for stream fish.",
+      exampleVi: "C\u00e1c ch\u1ea5t ho\u1ea1t \u0111\u1ed9ng b\u1ec1 m\u1eb7t sinh h\u1ecdc t\u1eeb th\u1ef1c v\u1eadt l\u00e0m cho n\u01b0\u1edbc gi\u1eb7t sinh th\u00e1i ho\u00e0n to\u00e0n v\u00f4 h\u1ea1i \u0111\u1ed1i v\u1edbi c\u00e1 su\u1ed1i.",
+      collocations: ["switch to eco-friendly detergent", "phosphate-free detergent"]
+    }
+    ,
+    {
+      id: "mega-unit-3-sustainable-consumerism",
+      word: "sustainable consumerism",
+      partOfSpeech: "n.phr",
+      meaningVi: "xu h\u01b0\u1edbng ti\u00eau d\u00f9ng b\u1ec1n v\u1eefng c\u00f3 tr\u00e1ch nhi\u1ec7m",
+      ipa: "/s\u0259\u02ccste\u026an\u0259bl k\u0259n\u02c8sju\u02d0m\u0259r\u026az\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=sustainable+consumerism&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Sustainable consumerism motivates buyers to prioritize durable modular gear over fleeting fast-fashion.",
+      exampleVi: "Xu h\u01b0\u1edbng ti\u00eau d\u00f9ng b\u1ec1n v\u1eefng th\u00f4i th\u00fac ng\u01b0\u1eddi mua \u01b0u ti\u00ean c\u00e1c m\u00f3n \u0111\u1ed3 b\u1ec1n \u0111\u1eb9p c\u00f3 th\u1ec3 s\u1eeda ch\u1eefa thay v\u00ec th\u1eddi trang \u0103n li\u1ec1n ch\u00f3ng t\u00e0n.",
+      collocations: ["embrace sustainable consumerism", "principles of consumerism"]
+    }
+    ,
+    {
+      id: "mega-unit-3-energy-vampire",
+      word: "energy vampire",
+      partOfSpeech: "n.phr",
+      meaningVi: "thi\u1ebft b\u1ecb \u0111i\u1ec7n ng\u1ed1n n\u0103ng l\u01b0\u1ee3ng v\u00f4 \u00edch khi c\u1eafm ph\u00edch",
+      ipa: "/\u02c8en\u0259d\u0292i \u02c8v\u00e6mpa\u026a\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=energy+vampire&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Microwaves and gaming consoles are notorious energy vampires if not unplugged before vacations.",
+      exampleVi: "L\u00f2 vi s\u00f3ng v\u00e0 m\u00e1y ch\u01a1i game l\u00e0 nh\u1eefng k\u1ebb h\u00fat \u0111i\u1ec7n ng\u1ea7m tai ti\u1ebfng n\u1ebfu b\u1ea1n kh\u00f4ng r\u00fat ph\u00edch c\u1eafm tr\u01b0\u1edbc k\u1ef3 ngh\u1ec9 d\u00e0i ng\u00e0y.",
+      collocations: ["unplug energy vampires", "standby energy vampire"]
+    }
+    ,
+    {
+      id: "mega-unit-3-low-flow-aerator",
+      word: "low-flow aerator",
+      partOfSpeech: "n.phr",
+      meaningVi: "\u0111\u1ea7u v\u00f2i n\u01b0\u1edbc t\u1ea1o b\u1ecdt ti\u1ebft ki\u1ec7m 50% n\u01b0\u1edbc",
+      ipa: "/\u02ccl\u0259\u028a \u02c8fl\u0259\u028a \u02c8e\u0259re\u026at\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=low-flow+aerator&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Screwing a low-flow aerator onto the bathroom tap cuts water usage in half without losing pressure.",
+      exampleVi: "V\u1eb7n th\u00eam \u0111\u1ea7u l\u1ecdc t\u1ea1o b\u1ecdt v\u00e0o v\u00f2i n\u01b0\u1edbc b\u1ed3n r\u1eeda gi\u00fap gi\u1ea3m m\u1ed9t n\u1eeda l\u01b0\u1ee3ng n\u01b0\u1edbc ti\u00eau th\u1ee5 m\u00e0 \u00e1p l\u1ef1c n\u01b0\u1edbc v\u1eabn m\u1ea1nh.",
+      collocations: ["install a low-flow aerator", "water-saving aerator"]
+    }
+    ,
+    {
+      id: "mega-unit-3-zero-waste-pantry",
+      word: "zero-waste pantry",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u1ee7 b\u1ebfp kh\u00f4ng r\u00e1c th\u1ea3i \u0111\u1ef1ng \u0111\u1ed3 kh\u00f4 trong l\u1ecd th\u1ee7y tinh",
+      ipa: "/\u02ccz\u026a\u0259r\u0259\u028a \u02c8we\u026ast \u02c8p\u00e6ntri/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=zero-waste+pantry&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Glass jars filled with rice, lentils, and spices create an aesthetically organized zero-waste pantry.",
+      exampleVi: "Nh\u1eefng chi\u1ebfc l\u1ecd th\u1ee7y tinh \u0111\u1ef1ng g\u1ea1o, \u0111\u1eadu v\u00e0 gia v\u1ecb t\u1ea1o n\u00ean m\u1ed9t gian t\u1ee7 b\u1ebfp kh\u00f4ng r\u00e1c th\u1ea3i v\u00f4 c\u00f9ng \u0111\u1eb9p m\u1eaft v\u00e0 ng\u0103n n\u1eafp.",
+      collocations: ["build a zero-waste pantry", "pantry organization"]
+    }
+    ,
+    {
+      id: "mega-unit-3-thermal-curtain",
+      word: "thermal curtain",
+      partOfSpeech: "n.phr",
+      meaningVi: "r\u00e8m c\u00e1ch nhi\u1ec7t gi\u1eef \u1ea5m m\u00f9a \u0111\u00f4ng c\u1ea3n nhi\u1ec7t m\u00f9a h\u00e8",
+      ipa: "/\u02c8\u03b8\u025c\u02d0ml \u02c8k\u025c\u02d0tn/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=thermal+curtain&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Hanging thick thermal curtains over patio doors prevents air conditioning cold from escaping.",
+      exampleVi: "Treo r\u00e8m c\u00e1ch nhi\u1ec7t d\u00e0y ph\u1ee7 k\u00edn c\u1eeda ra v\u00e0o hi\u00ean nh\u00e0 gi\u00fap gi\u1eef k\u00edn h\u01a1i m\u00e1t c\u1ee7a m\u00e1y \u0111i\u1ec1u h\u00f2a, ch\u1ed1ng th\u1ea5t tho\u00e1t nhi\u1ec7t.",
+      collocations: ["install thermal curtains", "energy-saving curtains"]
+    }
+    ,
+    {
+      id: "mega-unit-3-reusable-produce-bag",
+      word: "reusable produce bag",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u00fai l\u01b0\u1edbi \u0111\u1ef1ng hoa qu\u1ea3 t\u00e1i s\u1eed d\u1ee5ng nhi\u1ec1u l\u1ea7n",
+      ipa: "/ri\u02d0\u02ccju\u02d0z\u0259bl \u02c8pr\u0252dju\u02d0s b\u00e6\u0261/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=reusable+produce+bag&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Keep washable cotton mesh reusable produce bags in your backpack for spontaneous market stops.",
+      exampleVi: "H\u00e3y lu\u00f4n \u0111\u1ec3 s\u1eb5n v\u00e0i chi\u1ebfc t\u00fai l\u01b0\u1edbi cotton t\u00e1i s\u1eed d\u1ee5ng trong balo \u0111\u1ec3 ti\u1ec7n \u0111\u1ef1ng hoa qu\u1ea3 t\u01b0\u01a1i khi t\u1ea1t qua ch\u1ee3.",
+      collocations: ["pack reusable produce bags", "cotton mesh bags"]
+    }
+    ,
+    {
+      id: "mega-unit-3-green-lifestyle-choice",
+      word: "green lifestyle choice",
+      partOfSpeech: "n.phr",
+      meaningVi: "l\u1ef1a ch\u1ecdn phong c\u00e1ch s\u1ed1ng xanh v\u00ec m\u00f4i tr\u01b0\u1eddng",
+      ipa: "/\u0261ri\u02d0n \u02c8la\u026afsta\u026al t\u0283\u0254\u026as/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=green+lifestyle+choice&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Eating locally grown seasonal produce is a delicious and straightforward green lifestyle choice.",
+      exampleVi: "Th\u01b0\u1edfng th\u1ee9c c\u00e1c lo\u1ea1i n\u00f4ng s\u1ea3n theo m\u00f9a \u0111\u01b0\u1ee3c tr\u1ed3ng t\u1ea1i \u0111\u1ecba ph\u01b0\u01a1ng l\u00e0 m\u1ed9t l\u1ef1a ch\u1ecdn l\u1ed1i s\u1ed1ng xanh th\u01a1m ngon v\u00e0 d\u1ec5 d\u00e0ng.",
+      collocations: ["make a green lifestyle choice", "rewarding choices"]
+    }
+    ,
+    {
+      id: "mega-unit-3-solid-shampoo-bar",
+      word: "solid shampoo bar",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u00e1nh x\u00e0 b\u00f4ng g\u1ed9i \u0111\u1ea7u d\u1ea1ng r\u1eafn kh\u00f4ng d\u00f9ng chai nh\u1ef1a",
+      ipa: "/\u02c8s\u0252l\u026ad \u0283\u00e6m\u02c8pu\u02d0 b\u0251\u02d0(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=solid+shampoo+bar&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "A single concentrated solid shampoo bar replaces three plastic bottles of liquid hair wash.",
+      exampleVi: "M\u1ed9t b\u00e1nh x\u00e0 b\u00f4ng g\u1ed9i \u0111\u1ea7u d\u1ea1ng r\u1eafn c\u00f4 \u0111\u1eb7c thay th\u1ebf \u0111\u01b0\u1ee3c ba chai nh\u1ef1a \u0111\u1ef1ng d\u1ea7u g\u1ed9i \u0111\u1ea7u d\u1ea1ng l\u1ecfng.",
+      collocations: ["lather a solid shampoo bar", "travel with shampoo bars"]
+    }
+    ,
+    {
+      id: "mega-unit-3-thrift-shopping",
+      word: "thrift shopping",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u00f3i quen mua s\u1eafm \u0111\u1ed3 c\u0169 \u0111\u1ed3 vintage ti\u1ebft ki\u1ec7m",
+      ipa: "/\u02c8\u03b8r\u026aft \u02cc\u0283\u0252p\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=thrift+shopping&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Gen Z embraces thrift shopping as an eco-conscious way to discover unique vintage jackets.",
+      exampleVi: "Th\u1ebf h\u1ec7 tr\u1ebb Gen Z y\u00eau th\u00edch mua s\u1eafm \u0111\u1ed3 c\u0169 secondhand nh\u01b0 m\u1ed9t l\u1ed1i s\u1ed1ng xanh \u0111\u1ec3 s\u0103n nh\u1eefng chi\u1ebfc \u00e1o kho\u00e1c vintage \u0111\u1ed9c l\u1ea1.",
+      collocations: ["go thrift shopping", "joy of thrift shopping"]
+    }
+    ,
+    {
+      id: "mega-unit-3-energy-conservation-habit",
+      word: "energy conservation habit",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u00f3i quen ti\u1ebft ki\u1ec7m \u0111i\u1ec7n trong gia \u0111\u00ecnh",
+      ipa: "/\u02c8en\u0259d\u0292i \u02cck\u0252ns\u0259\u02c8ve\u026a\u0283n \u02c8h\u00e6b\u026at/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=energy+conservation+habit&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Flipping off lighting when exiting a study room is a fundamental energy conservation habit.",
+      exampleVi: "T\u1eaft \u0111\u00e8n m\u1ed7i khi b\u01b0\u1edbc ra kh\u1ecfi ph\u00f2ng h\u1ecdc l\u00e0 m\u1ed9t th\u00f3i quen ti\u1ebft ki\u1ec7m \u0111i\u1ec7n n\u0103ng c\u01a1 b\u1ea3n v\u00e0 h\u1eefu \u00edch.",
+      collocations: ["form energy conservation habits", "family habits"]
+    }
+    ,
+    {
+      id: "mega-unit-3-carbon-footprint-audit",
+      word: "carbon footprint audit",
+      partOfSpeech: "n.phr",
+      meaningVi: "ki\u1ec3m tra r\u00e0 so\u00e1t to\u00e0n di\u1ec7n m\u1ee9c ph\u00e1t th\u1ea3i c\u00e1 nh\u00e2n",
+      ipa: "/\u02c8k\u0251\u02d0b\u0259n \u02c8f\u028atpr\u026ant \u02c8\u0254\u02d0d\u026at/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=carbon+footprint+audit&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Completing an annual online carbon footprint audit helps households identify high-emission blindspots.",
+      exampleVi: "Th\u1ef1c hi\u1ec7n b\u00e0i ki\u1ec3m tra ph\u00e1t th\u1ea3i carbon tr\u1ef1c tuy\u1ebfn h\u1eb1ng n\u0103m gi\u00fap c\u00e1c gia \u0111\u00ecnh nh\u1eadn ra nh\u1eefng \u0111i\u1ec3m ti\u00eau hao n\u0103ng l\u01b0\u1ee3ng l\u00e3ng ph\u00ed.",
+      collocations: ["perform a footprint audit", "audit results"]
+    }
+    ,
+    {
+      id: "mega-unit-3-sustainable-meal-planning",
+      word: "sustainable meal planning",
+      partOfSpeech: "n.phr",
+      meaningVi: "l\u00ean k\u1ebf ho\u1ea1ch th\u1ef1c \u0111\u01a1n b\u1ec1n v\u1eefng h\u1ea1n ch\u1ebf b\u1ecf th\u1eeba th\u1ee9c \u0103n",
+      ipa: "/s\u0259\u02ccste\u026an\u0259bl mi\u02d0l \u02c8pl\u00e6n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=sustainable+meal+planning&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Sustainable meal planning cuts household food waste to nearly zero by repurposing vegetable peel stocks.",
+      exampleVi: "L\u00ean th\u1ef1c \u0111\u01a1n \u0103n u\u1ed1ng b\u1ec1n v\u1eefng gi\u00fap gi\u1ea3m l\u01b0\u1ee3ng th\u1ee9c \u0103n th\u1eeba trong nh\u00e0 v\u1ec1 g\u1ea7n b\u1eb1ng kh\u00f4ng nh\u1edd t\u1eadn d\u1ee5ng cu\u1ed1ng rau n\u1ea5u n\u01b0\u1edbc d\u00f9ng.",
+      collocations: ["master sustainable meal planning", "weekly planning"]
+    }
+    ,
+    {
+      id: "mega-unit-3-zero-emission-commute",
+      word: "zero-emission commute",
+      partOfSpeech: "n.phr",
+      meaningVi: "qu\u00e3ng \u0111\u01b0\u1eddng \u0111i l\u00e0m \u0111i h\u1ecdc kh\u00f4ng kh\u00f3i b\u1ee5i b\u1eb1ng xe \u0111\u1ea1p",
+      ipa: "/\u02ccz\u026a\u0259r\u0259\u028a \u026a\u02c8m\u026a\u0283n k\u0259\u02c8mju\u02d0t/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=zero-emission+commute&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Riding an electric bicycle to the studio grants me an invigorating zero-emission commute every morning.",
+      exampleVi: "\u0110\u1ea1p xe \u0111\u1ea1p \u0111i\u1ec7n t\u1edbi ch\u1ed7 l\u00e0m mang l\u1ea1i cho t\u00f4i m\u1ed9t h\u00e0nh tr\u00ecnh \u0111i l\u00e0m khoan kho\u00e1i kh\u00f4ng kh\u00f3i b\u1ee5i v\u00e0o m\u1ed7i s\u00e1ng s\u1edbm.",
+      collocations: ["enjoy a zero-emission commute", "daily bike commute"]
+    }
   ],
   "unit-4-urbanisation": [
     {
@@ -2488,6 +3502,383 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleVi: "N\u01b0\u1edbc m\u00e1y s\u1ea1ch v\u00e0 m\u1ea1ng internet t\u1ed1c \u0111\u1ed9 cao \u0111\u00e3 n\u00e2ng cao m\u1ee9c s\u1ed1ng chung c\u1ee7a ng\u01b0\u1eddi d\u00e2n.",
       collocations: ["elevate living standards", "high living standard"]
     }
+    ,
+    {
+      id: "mega-unit-4-rural-urban-migration",
+      word: "rural-urban migration",
+      partOfSpeech: "n.phr",
+      meaningVi: "l\u00e0n s\u00f3ng di c\u01b0 t\u1eeb n\u00f4ng th\u00f4n ra th\u00e0nh th\u1ecb t\u00ecm vi\u1ec7c",
+      ipa: "/\u02ccr\u028a\u0259r\u0259l \u02c8\u025c\u02d0b\u0259n ma\u026a\u02c8\u0261re\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=rural-urban+migration&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Rapid rural-urban migration places heavy strain on metropolitan water pipes and schools.",
+      exampleVi: "L\u00e0n s\u00f3ng di c\u01b0 \u1ed3 \u1ea1t t\u1eeb n\u00f4ng th\u00f4n ra th\u00e0nh ph\u1ed1 g\u00e2y \u00e1p l\u1ef1c n\u1eb7ng n\u1ec1 l\u00ean h\u1ec7 th\u1ed1ng \u0111\u01b0\u1eddng \u1ed1ng n\u01b0\u1edbc v\u00e0 tr\u01b0\u1eddng h\u1ecdc \u0111\u00f4 th\u1ecb.",
+      collocations: ["accelerate rural-urban migration", "drivers of migration"]
+    }
+    ,
+    {
+      id: "mega-unit-4-slum-redevelopment",
+      word: "slum redevelopment",
+      partOfSpeech: "n.phr",
+      meaningVi: "ch\u01b0\u01a1ng tr\u00ecnh c\u1ea3i t\u1ea1o v\u00e0 ch\u1ec9nh trang khu \u1ed5 chu\u1ed9t",
+      ipa: "/sl\u028cm \u02ccri\u02d0d\u026a\u02c8vel\u0259pm\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=slum+redevelopment&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The city government financed slum redevelopment, replacing squalid shanties with subsidized apartments.",
+      exampleVi: "Ch\u00ednh quy\u1ec1n th\u00e0nh ph\u1ed1 \u0111\u00e3 t\u00e0i tr\u1ee3 cho d\u1ef1 \u00e1n c\u1ea3i t\u1ea1o khu \u1ed5 chu\u1ed9t, thay th\u1ebf nh\u1eefng l\u00e1n nh\u00e0 \u1ed5 chu\u1ed9t d\u1ed9t n\u00e1t b\u1eb1ng c\u00e1c c\u0103n h\u1ed9 gi\u00e1 r\u1ebb.",
+      collocations: ["fund slum redevelopment", "participatory redevelopment"]
+    }
+    ,
+    {
+      id: "mega-unit-4-affordable-housing",
+      word: "affordable housing",
+      partOfSpeech: "n.phr",
+      meaningVi: "nh\u00e0 \u1edf x\u00e3 h\u1ed9i gi\u00e1 r\u1ebb h\u1ee3p t\u00fai ti\u1ec1n ng\u01b0\u1eddi thu nh\u1eadp th\u1ea5p",
+      ipa: "/\u0259\u02ccf\u0254\u02d0d\u0259bl \u02c8ha\u028az\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=affordable+housing&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Subsidized loans empower young blue-collar couples to purchase secure affordable housing.",
+      exampleVi: "C\u00e1c g\u00f3i vay \u01b0u \u0111\u00e3i gi\u00fap c\u00e1c c\u1eb7p v\u1ee3 ch\u1ed3ng c\u00f4ng nh\u00e2n tr\u1ebb mua \u0111\u01b0\u1ee3c nh\u00e0 \u1edf x\u00e3 h\u1ed9i gi\u00e1 c\u1ea3 ph\u1ea3i ch\u0103ng v\u00e0 an c\u01b0 l\u1eadp nghi\u1ec7p.",
+      collocations: ["provide affordable housing", "affordable housing shortage"]
+    }
+    ,
+    {
+      id: "mega-unit-4-urban-sprawl",
+      word: "urban sprawl",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 ph\u00e1t tri\u1ec3n \u0111\u00f4 th\u1ecb loang l\u1ed5 ra v\u00f9ng ven thi\u1ebfu quy ho\u1ea1ch",
+      ipa: "/\u02c8\u025c\u02d0b\u0259n spr\u0254\u02d0l/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=urban+sprawl&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Unregulated urban sprawl consumes prime agricultural paddies and causes grueling multi-hour commutes.",
+      exampleVi: "S\u1ef1 m\u1edf r\u1ed9ng \u0111\u00f4 th\u1ecb loang l\u1ed5 thi\u1ebfu ki\u1ec3m so\u00e1t nu\u1ed1t ch\u1eedng nh\u1eefng \u0111\u1ed3ng l\u00faa ph\u00ec nhi\u00eau v\u00e0 t\u1ea1o ra nh\u1eefng chuy\u1ebfn \u0111i l\u00e0m t\u1eafc ngh\u1ebdn k\u00e9o d\u00e0i.",
+      collocations: ["contain urban sprawl", "consequences of sprawl"]
+    }
+    ,
+    {
+      id: "mega-unit-4-sanitation-infrastructure",
+      word: "sanitation infrastructure",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ea1 t\u1ea7ng tho\u00e1t n\u01b0\u1edbc v\u00e0 x\u1eed l\u00fd v\u1ec7 sinh m\u00f4i tr\u01b0\u1eddng",
+      ipa: "/\u02ccs\u00e6n\u026a\u02c8te\u026a\u0283n \u02c8\u026anfr\u0259str\u028ckt\u0283\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=sanitation+infrastructure&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Upgrading subterranean sewage lines is a prerequisite for hygienic urban sanitation infrastructure.",
+      exampleVi: "N\u00e2ng c\u1ea5p h\u1ec7 th\u1ed1ng c\u1ed1ng ng\u1ea7m tho\u00e1t n\u01b0\u1edbc th\u1ea3i l\u00e0 \u0111i\u1ec1u ki\u1ec7n ti\u00ean quy\u1ebft cho h\u1ea1 t\u1ea7ng v\u1ec7 sinh \u0111\u00f4 th\u1ecb s\u1ea1ch s\u1ebd v\u0103n minh.",
+      collocations: ["upgrade sanitation infrastructure", "modern infrastructure"]
+    }
+    ,
+    {
+      id: "mega-unit-4-megacity",
+      word: "megacity",
+      partOfSpeech: "n",
+      meaningVi: "si\u00eau \u0111\u00f4 th\u1ecb kh\u1ed5ng l\u1ed3 v\u1edbi tr\u00ean 10 tri\u1ec7u d\u00e2n",
+      ipa: "/\u02c8me\u0261\u0259s\u026ati/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=megacity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Tokyo and Jakarta are bustling megacities requiring automated subway networks to move millions daily.",
+      exampleVi: "Tokyo v\u00e0 Jakarta l\u00e0 nh\u1eefng si\u00eau \u0111\u00f4 th\u1ecb s\u1ea7m u\u1ea5t \u0111\u00f2i h\u1ecfi m\u1ea1ng l\u01b0\u1edbi t\u00e0u \u0111i\u1ec7n ng\u1ea7m t\u1ef1 \u0111\u1ed9ng \u0111\u1ec3 v\u1eadn chuy\u1ec3n h\u00e0ng tri\u1ec7u l\u01b0\u1ee3t kh\u00e1ch m\u1ed7i ng\u00e0y.",
+      collocations: ["manage a megacity", "growth of megacities"]
+    }
+    ,
+    {
+      id: "mega-unit-4-gentrification",
+      word: "gentrification",
+      partOfSpeech: "n",
+      meaningVi: "s\u1ef1 ch\u1ec9nh trang \u0111\u00f4 th\u1ecb l\u00e0m t\u0103ng gi\u00e1 nh\u00e0 \u0111\u1ea9y ng\u01b0\u1eddi ngh\u00e8o \u0111i",
+      ipa: "/\u02ccd\u0292entr\u026af\u026a\u02c8ke\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=gentrification&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Rapid gentrification transformed working-class waterfront wharves into luxury boutiques and bistros.",
+      exampleVi: "Qu\u00e1 tr\u00ecnh ch\u1ec9nh trang n\u00e2ng c\u1ea5p \u0111\u00f4 th\u1ecb nhanh ch\u00f3ng \u0111\u00e3 bi\u1ebfn nh\u1eefng b\u1ebfn c\u1ea3ng c\u1ee7a t\u1ea7ng l\u1edbp lao \u0111\u1ed9ng th\u00e0nh chu\u1ed7i c\u1eeda h\u00e0ng xa x\u1ec9 \u0111\u1eaft \u0111\u1ecf.",
+      collocations: ["fuel gentrification", "victims of gentrification"]
+    }
+    ,
+    {
+      id: "mega-unit-4-traffic-gridlock",
+      word: "traffic gridlock",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u00ecnh tr\u1ea1ng t\u00ea li\u1ec7t giao th\u00f4ng \u00f9n t\u1eafc ho\u00e0n to\u00e0n",
+      ipa: "/\u02c8tr\u00e6f\u026ak \u02c8\u0261r\u026adl\u0252k/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=traffic+gridlock&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Heavy monsoon downpours triggered crippling traffic gridlock across all downtown suspension bridges.",
+      exampleVi: "Nh\u1eefng tr\u1eadn m\u01b0a r\u00e0o nh\u01b0 tr\u00fat n\u01b0\u1edbc \u0111\u00e3 g\u00e2y ra t\u00ecnh tr\u1ea1ng t\u00ea li\u1ec7t giao th\u00f4ng ngh\u1ebdn c\u1ee9ng tr\u00ean to\u00e0n b\u1ed9 c\u00e1c c\u00e2y c\u1ea7u d\u00e2y v\u0103ng v\u00e0o trung t\u00e2m.",
+      collocations: ["stuck in traffic gridlock", "resolve gridlock"]
+    }
+    ,
+    {
+      id: "mega-unit-4-population-density",
+      word: "population density",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u1eadt \u0111\u1ed9 d\u00e2n s\u1ed1 tr\u00ean m\u1ed7i km vu\u00f4ng",
+      ipa: "/\u02ccp\u0252pju\u02c8le\u026a\u0283n \u02c8dens\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=population+density&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The historic Old Quarter possesses the highest population density anywhere in the northern provinces.",
+      exampleVi: "Khu Ph\u1ed1 C\u1ed5 l\u1ecbch s\u1eed c\u00f3 m\u1eadt \u0111\u1ed9 d\u00e2n s\u1ed1 cao nh\u1ea5t so v\u1edbi b\u1ea5t k\u1ef3 khu v\u1ef1c n\u00e0o \u1edf c\u00e1c t\u1ec9nh ph\u00eda B\u1eafc.",
+      collocations: ["high population density", "calculate population density"]
+    }
+    ,
+    {
+      id: "mega-unit-4-overcrowded-school",
+      word: "overcrowded school",
+      partOfSpeech: "n.phr",
+      meaningVi: "tr\u01b0\u1eddng h\u1ecdc qu\u00e1 t\u1ea3i s\u0129 s\u1ed1 h\u1ecdc sinh \u0111\u00f4ng \u0111\u00fac",
+      ipa: "/\u02cc\u0259\u028av\u0259\u02c8kra\u028ad\u026ad sku\u02d0l/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=overcrowded+school&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Fast-growing outer suburbs constructed three new campuses to relieve severely overcrowded schools.",
+      exampleVi: "C\u00e1c qu\u1eadn ngo\u1ea1i \u00f4 ph\u00e1t tri\u1ec3n nhanh \u0111\u00e3 x\u00e2y m\u1edbi ba \u0111i\u1ec3m tr\u01b0\u1eddng \u0111\u1ec3 gi\u1ea3m t\u1ea3i cho c\u00e1c l\u1edbp h\u1ecdc \u0111ang qu\u00e1 \u0111\u00f4ng \u0111\u00fac.",
+      collocations: ["attend an overcrowded school", "alleviate overcrowding"]
+    }
+    ,
+    {
+      id: "mega-unit-4-public-transit-network",
+      word: "public transit network",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u1ea1ng l\u01b0\u1edbi ph\u01b0\u01a1ng ti\u1ec7n giao th\u00f4ng c\u00f4ng c\u1ed9ng",
+      ipa: "/\u02ccp\u028cbl\u026ak \u02c8tr\u00e6nz\u026at \u02c8netw\u025c\u02d0k/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=public+transit+network&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "An integrated public transit network links high-speed buses, ferries, and elevated railways seamlessly.",
+      exampleVi: "M\u1ea1ng l\u01b0\u1edbi giao th\u00f4ng c\u00f4ng c\u1ed9ng t\u00edch h\u1ee3p li\u00ean k\u1ebft li\u1ec1n m\u1ea1ch gi\u1eefa xe bu\u00fdt nhanh BRT, ph\u00e0 \u0111\u01b0\u1eddng th\u1ee7y v\u00e0 \u0111\u01b0\u1eddng s\u1eaft tr\u00ean cao.",
+      collocations: ["expand the public transit network", "reliable transit"]
+    }
+    ,
+    {
+      id: "mega-unit-4-urban-zoning-law",
+      word: "urban zoning law",
+      partOfSpeech: "n.phr",
+      meaningVi: "lu\u1eadt quy ho\u1ea1ch ph\u00e2n khu ch\u1ee9c n\u0103ng \u0111\u00f4 th\u1ecb",
+      ipa: "/\u02c8\u025c\u02d0b\u0259n \u02c8z\u0259\u028an\u026a\u014b l\u0254\u02d0/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=urban+zoning+law&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Urban zoning laws separate noisy industrial chemical factories from quiet residential school neighborhoods.",
+      exampleVi: "Lu\u1eadt ph\u00e2n khu quy ho\u1ea1ch \u0111\u00f4 th\u1ecb t\u00e1ch bi\u1ec7t c\u00e1c nh\u00e0 m\u00e1y h\u00f3a ch\u1ea5t \u1ed3n \u00e0o ra kh\u1ecfi c\u00e1c khu d\u00e2n c\u01b0 v\u00e0 tr\u01b0\u1eddng h\u1ecdc y\u00ean t\u0129nh.",
+      collocations: ["enforce urban zoning laws", "comply with zoning laws"]
+    }
+    ,
+    {
+      id: "mega-unit-4-skyline-view",
+      word: "skyline view",
+      partOfSpeech: "n.phr",
+      meaningVi: "g\u00f3c nh\u00ecn to\u00e0n c\u1ea3nh \u0111\u01b0\u1eddng ch\u00e2n tr\u1eddi th\u00e0nh ph\u1ed1 lung linh",
+      ipa: "/\u02c8ska\u026ala\u026an vju\u02d0/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=skyline+view&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The observatory deck on the 81st floor offers a glittering 360-degree metropolitan skyline view.",
+      exampleVi: "\u0110\u00e0i quan s\u00e1t t\u1ea7ng 81 m\u1edf ra t\u1ea7m nh\u00ecn to\u00e0n c\u1ea3nh 360 \u0111\u1ed9 ng\u1eafm tr\u1ecdn \u0111\u01b0\u1eddng ch\u00e2n tr\u1eddi \u0111\u00f4 th\u1ecb r\u1ef1c r\u1ee1 \u00e1nh \u0111\u00e8n v\u1ec1 \u0111\u00eam.",
+      collocations: ["admire the skyline view", "iconic skyline"]
+    }
+    ,
+    {
+      id: "mega-unit-4-municipal-governance",
+      word: "municipal governance",
+      partOfSpeech: "n.phr",
+      meaningVi: "n\u0103ng l\u1ef1c \u0111i\u1ec1u h\u00e0nh v\u00e0 qu\u1ea3n tr\u1ecb c\u1ee7a ch\u00ednh quy\u1ec1n \u0111\u00f4 th\u1ecb",
+      ipa: "/mju\u02d0\u02c8n\u026as\u026apl \u02c8\u0261\u028cv\u0259n\u0259ns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=municipal+governance&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Digital civic dashboards enhance transparency and citizen feedback in modern municipal governance.",
+      exampleVi: "B\u1ea3ng \u0111i\u1ec7n t\u1eed d\u1ecbch v\u1ee5 c\u00f4ng n\u00e2ng cao t\u00ednh minh b\u1ea1ch v\u00e0 s\u1ef1 ti\u1ebfp nh\u1eadn \u00fd ki\u1ebfn c\u1ee7a ng\u01b0\u1eddi d\u00e2n trong qu\u1ea3n tr\u1ecb \u0111\u00f4 th\u1ecb hi\u1ec7n \u0111\u1ea1i.",
+      collocations: ["effective municipal governance", "modern governance"]
+    }
+    ,
+    {
+      id: "mega-unit-4-informal-economy",
+      word: "informal economy",
+      partOfSpeech: "n.phr",
+      meaningVi: "khu v\u1ef1c kinh t\u1ebf phi ch\u00ednh th\u1ee9c v\u1ec9a h\u00e8",
+      ipa: "/\u026an\u02c8f\u0254\u02d0ml \u026a\u02c8k\u0252n\u0259mi/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=informal+economy&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Street vendors and freelance delivery drivers make up a vibrant proportion of the capital's informal economy.",
+      exampleVi: "Nh\u1eefng g\u00e1nh h\u00e0ng rong v\u00e0 t\u00e0i x\u1ebf c\u00f4ng ngh\u1ec7 t\u1ef1 do t\u1ea1o n\u00ean m\u1ed9t ph\u1ea7n n\u0103ng \u0111\u1ed9ng c\u1ee7a n\u1ec1n kinh t\u1ebf phi ch\u00ednh th\u1ee9c \u1edf th\u1ee7 \u0111\u00f4.",
+      collocations: ["work in the informal economy", "size of the informal economy"]
+    }
+    ,
+    {
+      id: "mega-unit-4-noise-abatement",
+      word: "noise abatement",
+      partOfSpeech: "n.phr",
+      meaningVi: "bi\u1ec7n ph\u00e1p gi\u1ea3m thi\u1ec3u v\u00e0 c\u00e1ch \u00e2m ch\u1ed1ng \u00f4 nhi\u1ec5m ti\u1ebfng \u1ed3n",
+      ipa: "/n\u0254\u026az \u0259\u02c8be\u026atm\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=noise+abatement&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Erecting landscaped soundproof glass barriers alongside elevated highways aids urban noise abatement.",
+      exampleVi: "D\u1ef1ng v\u00e1ch k\u00ednh c\u00e1ch \u00e2m ph\u1ee7 c\u00e2y xanh d\u1ecdc \u0111\u01b0\u1eddng cao t\u1ed1c tr\u00ean cao l\u00e0 gi\u1ea3i ph\u00e1p h\u1eefu hi\u1ec7u gi\u00fap gi\u1ea3m \u00f4 nhi\u1ec5m ti\u1ebfng \u1ed3n \u0111\u00f4 th\u1ecb.",
+      collocations: ["measures for noise abatement", "noise abatement policy"]
+    }
+    ,
+    {
+      id: "mega-unit-4-pedestrian-skywalk",
+      word: "pedestrian skywalk",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u1ea7u v\u01b0\u1ee3t \u0111i b\u1ed9 tr\u00ean cao c\u00f3 m\u00e1i che",
+      ipa: "/p\u0259\u02c8destri\u0259n \u02c8ska\u026aw\u0254\u02d0k/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=pedestrian+skywalk&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Air-conditioned pedestrian skywalks allow commuters to cross busy eight-lane ring roads safely.",
+      exampleVi: "C\u1ea7u v\u01b0\u1ee3t b\u1ed9 h\u00e0nh tr\u00ean cao c\u00f3 m\u00e1y l\u1ea1nh gi\u00fap ng\u01b0\u1eddi \u0111i b\u1ed9 b\u0103ng qua \u0111\u01b0\u1eddng v\u00e0nh \u0111ai t\u00e1m l\u00e0n xe \u0111\u00f4ng \u0111\u00fac m\u1ed9t c\u00e1ch an to\u00e0n.",
+      collocations: ["cross via pedestrian skywalk", "connect via skywalk"]
+    }
+    ,
+    {
+      id: "mega-unit-4-urban-decay",
+      word: "urban decay",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 xu\u1ed1ng c\u1ea5p ti\u00eau \u0111i\u1ec1u c\u1ee7a c\u00e1c khu nh\u00e0 c\u0169 trong th\u00e0nh ph\u1ed1",
+      ipa: "/\u02c8\u025c\u02d0b\u0259n d\u026a\u02c8ke\u026a/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=urban+decay&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Graffiti, broken streetlamps, and boarded-up shopfronts signaled the neighborhood's acute urban decay.",
+      exampleVi: "H\u00ecnh v\u1ebd b\u1eady, \u0111\u00e8n \u0111\u01b0\u1eddng h\u1ecfng v\u00e0 c\u00e1c \u00f4 c\u1eeda hi\u1ec7u b\u1ecb \u0111\u00f3ng v\u00e1n l\u00e0 d\u1ea5u hi\u1ec7u cho th\u1ea5y s\u1ef1 xu\u1ed1ng c\u1ea5p ti\u00eau \u0111i\u1ec1u c\u1ee7a khu ph\u1ed1.",
+      collocations: ["reverse urban decay", "suffer from urban decay"]
+    }
+    ,
+    {
+      id: "mega-unit-4-water-treatment-facility",
+      word: "water treatment facility",
+      partOfSpeech: "n.phr",
+      meaningVi: "nh\u00e0 m\u00e1y x\u1eed l\u00fd n\u01b0\u1edbc sinh ho\u1ea1t \u0111\u1ea1t chu\u1ea9n",
+      ipa: "/\u02c8w\u0254\u02d0t\u0259 \u02c8tri\u02d0tm\u0259nt f\u0259\u02c8s\u026al\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=water+treatment+facility&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The municipal water treatment facility purifies millions of cubic meters of river water every single day.",
+      exampleVi: "Nh\u00e0 m\u00e1y x\u1eed l\u00fd n\u01b0\u1edbc sinh ho\u1ea1t c\u1ee7a th\u00e0nh ph\u1ed1 l\u00e0m s\u1ea1ch h\u00e0ng tri\u1ec7u m\u00e9t kh\u1ed1i n\u01b0\u1edbc s\u00f4ng m\u1ed7i ng\u00e0y ph\u1ee5c v\u1ee5 ng\u01b0\u1eddi d\u00e2n.",
+      collocations: ["expand the water treatment facility", "purification facility"]
+    }
+    ,
+    {
+      id: "mega-unit-4-suburban-development",
+      word: "suburban development",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 ph\u00e1t tri\u1ec3n m\u1edf mang c\u00e1c khu \u0111\u00f4 th\u1ecb ngo\u1ea1i \u00f4",
+      ipa: "/s\u0259\u02c8b\u025c\u02d0b\u0259n d\u026a\u02c8vel\u0259pm\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=suburban+development&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Suburban development offers young families larger detached houses surrounded by green parklands.",
+      exampleVi: "S\u1ef1 ph\u00e1t tri\u1ec3n c\u1ee7a v\u00f9ng ngo\u1ea1i \u00f4 mang \u0111\u1ebfn cho c\u00e1c gia \u0111\u00ecnh tr\u1ebb nh\u1eefng c\u0103n nh\u00e0 v\u01b0\u1eddn r\u1ed9ng r\u00e3i \u0111\u01b0\u1ee3c bao quanh b\u1edfi c\u00f4ng vi\u00ean c\u00e2y xanh.",
+      collocations: ["boom in suburban development", "suburban development plan"]
+    }
+    ,
+    {
+      id: "mega-unit-4-city-master-plan",
+      word: "city master plan",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u1ea3n quy ho\u1ea1ch t\u1ed5ng th\u1ec3 th\u00e0nh ph\u1ed1 t\u1ea7m nh\u00ecn d\u00e0i h\u1ea1n",
+      ipa: "/\u02c8s\u026ati \u02c8m\u0251\u02d0st\u0259 pl\u00e6n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=city+master+plan&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The city master plan outlines dedicated ecological preservation zones stretching along the southern coastline.",
+      exampleVi: "Quy ho\u1ea1ch t\u1ed5ng th\u1ec3 th\u00e0nh ph\u1ed1 v\u1ea1ch r\u00f5 c\u00e1c ph\u00e2n khu b\u1ea3o t\u1ed3n sinh th\u00e1i tr\u1ea3i d\u00e0i d\u1ecdc b\u1edd bi\u1ec3n ph\u00eda nam.",
+      collocations: ["unveil the city master plan", "adhere to master plan"]
+    }
+    ,
+    {
+      id: "mega-unit-4-urban-forestry",
+      word: "urban forestry",
+      partOfSpeech: "n.phr",
+      meaningVi: "ch\u01b0\u01a1ng tr\u00ecnh tr\u1ed3ng r\u1eebng c\u00e2y xanh trong l\u00f2ng th\u00e0nh ph\u1ed1",
+      ipa: "/\u02c8\u025c\u02d0b\u0259n \u02c8f\u0252r\u026astri/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=urban+forestry&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Urban forestry teams planted ten thousand shady golden shower trees along wide city boulevards.",
+      exampleVi: "C\u00e1c \u0111\u1ed9i ph\u00e1t tri\u1ec3n c\u00e2y xanh \u0111\u00f4 th\u1ecb \u0111\u00e3 tr\u1ed3ng m\u01b0\u1eddi ng\u00e0n c\u00e2y mu\u1ed3ng ho\u00e0ng y\u1ebfn che b\u00f3ng m\u00e1t d\u1ecdc c\u00e1c \u0111\u1ea1i l\u1ed9 l\u1edbn.",
+      collocations: ["invest in urban forestry", "urban forestry initiative"]
+    }
+    ,
+    {
+      id: "mega-unit-4-stormwater-drainage",
+      word: "stormwater drainage",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ec7 th\u1ed1ng tho\u00e1t n\u01b0\u1edbc m\u01b0a ch\u1ed1ng ng\u1eadp \u00fang",
+      ipa: "/\u02c8st\u0254\u02d0mw\u0254\u02d0t\u0259 \u02c8dre\u026an\u026ad\u0292/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=stormwater+drainage&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Widening stormwater drainage canals prevented flash inundations during the recent category-four typhoon.",
+      exampleVi: "M\u1edf r\u1ed9ng c\u00e1c k\u00eanh m\u01b0\u01a1ng tho\u00e1t n\u01b0\u1edbc m\u01b0a \u0111\u00e3 ng\u0103n ng\u1eeba t\u00ecnh tr\u1ea1ng ng\u1eadp \u00fang c\u1ee5c b\u1ed9 trong c\u01a1n b\u00e3o c\u1ea5p b\u1ed1n v\u1eeba qua.",
+      collocations: ["clear stormwater drainage", "drainage capacity"]
+    }
+    ,
+    {
+      id: "mega-unit-4-livable-community",
+      word: "livable community",
+      partOfSpeech: "n.phr",
+      meaningVi: "khu \u0111\u00f4 th\u1ecb \u0111\u00e1ng s\u1ed1ng v\u0103n minh an to\u00e0n",
+      ipa: "/\u02c8l\u026av\u0259bl k\u0259\u02c8mju\u02d0n\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=livable+community&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Clean air, abundant parks, and low crime rates transform our neighborhood into an internationally recognized livable community.",
+      exampleVi: "Kh\u00f4ng kh\u00ed trong l\u00e0nh, nhi\u1ec1u c\u00f4ng vi\u00ean v\u00e0 t\u1ef7 l\u1ec7 t\u1ed9i ph\u1ea1m th\u1ea5p \u0111\u00e3 bi\u1ebfn khu ph\u1ed1 c\u1ee7a ch\u00fang t\u00f4i th\u00e0nh m\u1ed9t \u0111\u00f4 th\u1ecb \u0111\u00e1ng s\u1ed1ng \u0111\u01b0\u1ee3c qu\u1ed1c t\u1ebf vinh danh.",
+      collocations: ["build a livable community", "award for livable community"]
+    }
+    ,
+    {
+      id: "mega-unit-4-underground-metro-system",
+      word: "underground metro system",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ec7 th\u1ed1ng t\u00e0u \u0111i\u1ec7n ng\u1ea7m d\u01b0\u1edbi l\u00f2ng \u0111\u1ea5t",
+      ipa: "/\u02c8\u028cnd\u0259\u0261ra\u028and \u02c8metr\u0259\u028a \u02c8s\u026ast\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=underground+metro+system&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The newly inaugurated underground metro system carried over half a million passengers on opening weekend.",
+      exampleVi: "H\u1ec7 th\u1ed1ng t\u00e0u \u0111i\u1ec7n ng\u1ea7m m\u1edbi kh\u00e1nh th\u00e0nh \u0111\u00e3 v\u1eadn chuy\u1ec3n h\u01a1n n\u1eeda tri\u1ec7u l\u01b0\u1ee3t h\u00e0nh kh\u00e1ch ch\u1ec9 trong d\u1ecbp cu\u1ed1i tu\u1ea7n \u0111\u1ea7u ti\u00ean.",
+      collocations: ["commute via underground metro system", "expand the metro system"]
+    }
+    ,
+    {
+      id: "mega-unit-4-solid-waste-management",
+      word: "solid waste management",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng t\u00e1c qu\u1ea3n l\u00fd v\u00e0 x\u1eed l\u00fd r\u00e1c th\u1ea3i r\u1eafn \u0111\u00f4 th\u1ecb",
+      ipa: "/\u02c8s\u0252l\u026ad we\u026ast \u02c8m\u00e6n\u026ad\u0292m\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=solid+waste+management&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Modernizing municipal solid waste management eliminated open-air smoking dumps across the riverbank.",
+      exampleVi: "Hi\u1ec7n \u0111\u1ea1i h\u00f3a c\u00f4ng t\u00e1c qu\u1ea3n l\u00fd ch\u1ea5t th\u1ea3i r\u1eafn \u0111\u00f4 th\u1ecb \u0111\u00e3 x\u00f3a s\u1ed5 ho\u00e0n to\u00e0n c\u00e1c b\u00e3i r\u00e1c l\u1ed9 thi\u00ean b\u1ed1c m\u00f9i ven b\u1edd s\u00f4ng.",
+      collocations: ["improve solid waste management", "waste management plan"]
+    }
+    ,
+    {
+      id: "mega-unit-4-sustainable-urbanization",
+      word: "sustainable urbanization",
+      partOfSpeech: "n.phr",
+      meaningVi: "qu\u00e1 tr\u00ecnh \u0111\u00f4 th\u1ecb h\u00f3a b\u1ec1n v\u1eefng h\u00e0i h\u00f2a thi\u00ean nhi\u00ean",
+      ipa: "/s\u0259\u02ccste\u026an\u0259bl \u02cc\u025c\u02d0b\u0259na\u026a\u02c8ze\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=sustainable+urbanization&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Balancing skyscraper economic vitality with green wetlands forms the core mandate of sustainable urbanization.",
+      exampleVi: "C\u00e2n b\u1eb1ng gi\u1eefa s\u1ee9c s\u1ed1ng kinh t\u1ebf t\u1eeb c\u00e1c t\u00f2a th\u00e1p ch\u1ecdc tr\u1eddi v\u1edbi b\u1ea3o t\u1ed3n v\u00f9ng \u0111\u1ea5t ng\u1eadp n\u01b0\u1edbc xanh t\u01b0\u01a1i l\u00e0 s\u1ee9 m\u1ec7nh c\u1ed1t l\u00f5i c\u1ee7a \u0111\u00f4 th\u1ecb h\u00f3a b\u1ec1n v\u1eefng.",
+      collocations: ["pioneer sustainable urbanization", "framework for urbanization"]
+    }
+    ,
+    {
+      id: "mega-unit-4-ring-road",
+      word: "ring road",
+      partOfSpeech: "n.phr",
+      meaningVi: "tuy\u1ebfn \u0111\u01b0\u1eddng v\u00e0nh \u0111ai gi\u1ea3i t\u1ecfa \u00e1ch t\u1eafc \u0111\u00f4 th\u1ecb",
+      ipa: "/\u02c8r\u026a\u014b r\u0259\u028ad/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ring+road&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Constructing the fourth municipal ring road diverted heavy cargo container trucks away from the inner core.",
+      exampleVi: "X\u00e2y d\u1ef1ng tuy\u1ebfn \u0111\u01b0\u1eddng v\u00e0nh \u0111ai th\u1ee9 t\u01b0 \u0111\u00e3 gi\u00fap \u0111i\u1ec1u h\u01b0\u1edbng c\u00e1c \u0111o\u00e0n xe container ch\u1edf h\u00e0ng n\u1eb7ng tr\u00e1nh xa l\u00f5i trung t\u00e2m th\u00e0nh ph\u1ed1.",
+      collocations: ["drive along the ring road", "inner ring road"]
+    }
+    ,
+    {
+      id: "mega-unit-4-commuter-rail-link",
+      word: "commuter rail link",
+      partOfSpeech: "n.phr",
+      meaningVi: "tuy\u1ebfn \u0111\u01b0\u1eddng s\u1eaft k\u1ebft n\u1ed1i khu ngo\u1ea1i \u00f4 v\u00e0o n\u1ed9i \u0111\u00f4",
+      ipa: "/k\u0259\u02c8mju\u02d0t\u0259 re\u026al l\u026a\u014bk/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=commuter+rail+link&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The high-speed commuter rail link cuts rush-hour travel times to twenty minutes.",
+      exampleVi: "Tuy\u1ebfn \u0111\u01b0\u1eddng s\u1eaft \u0111\u00f4 th\u1ecb t\u1ed1c \u0111\u1ed9 cao r\u00fat ng\u1eafn th\u1eddi gian di chuy\u1ec3n gi\u1edd cao \u0111i\u1ec3m xu\u1ed1ng ch\u1ec9 c\u00f2n hai m\u01b0\u01a1i ph\u00fat.",
+      collocations: ["ride the commuter rail link", "modern rail link"]
+    }
   ],
   "unit-5-the-world-of-work": [
     {
@@ -3119,6 +4510,344 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleEn: "Her impeccable work ethic and punctuality earned the admiration of all partners.",
       exampleVi: "\u0110\u1ea1o \u0111\u1ee9c l\u00e0m vi\u1ec7c ch\u1ec9n chu v\u00e0 t\u00ednh \u0111\u00fang gi\u1edd c\u1ee7a c\u00f4 \u0111\u00e3 nh\u1eadn \u0111\u01b0\u1ee3c s\u1ef1 n\u1ec3 ph\u1ee5c c\u1ee7a c\u00e1c \u0111\u1ed1i t\u00e1c.",
       collocations: ["strong work ethic", "admirable work ethic"]
+    }
+    ,
+    {
+      id: "mega-unit-5-telecommuting",
+      word: "telecommuting",
+      partOfSpeech: "n",
+      meaningVi: "l\u00e0m vi\u1ec7c t\u1eeb xa qua m\u1ea1ng internet t\u1ea1i nh\u00e0",
+      ipa: "/\u02c8tel\u026ak\u0259mju\u02d0t\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=telecommuting&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "High-speed fiber connectivity enables seamless telecommuting for graphic designers and accountants.",
+      exampleVi: "K\u1ebft n\u1ed1i c\u00e1p quang t\u1ed1c \u0111\u1ed9 cao cho ph\u00e9p c\u00e1c nh\u00e0 thi\u1ebft k\u1ebf \u0111\u1ed3 h\u1ecda v\u00e0 k\u1ebf to\u00e1n l\u00e0m vi\u1ec7c t\u1eeb xa t\u1ea1i nh\u00e0 v\u00f4 c\u00f9ng m\u01b0\u1ee3t m\u00e0.",
+      collocations: ["opt for telecommuting", "benefits of telecommuting"]
+    }
+    ,
+    {
+      id: "mega-unit-5-gig-economy",
+      word: "gig economy",
+      partOfSpeech: "n.phr",
+      meaningVi: "n\u1ec1n kinh t\u1ebf vi\u1ec7c l\u00e0m t\u1ef1 do theo d\u1ef1 \u00e1n ng\u1eafn h\u1ea1n",
+      ipa: "/\u02c8\u0261\u026a\u0261 \u026a\u02cck\u0252n\u0259mi/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=gig+economy&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Ride-hailing apps and freelance copywriting flourish within the fast-growing flexible gig economy.",
+      exampleVi: "\u1ee8ng d\u1ee5ng g\u1ecdi xe c\u00f4ng ngh\u1ec7 v\u00e0 vi\u1ebft b\u00e0i t\u1ef1 do n\u1edf r\u1ed9 trong n\u1ec1n kinh t\u1ebf vi\u1ec7c l\u00e0m t\u1ef1 do theo d\u1ef1 \u00e1n ng\u00e0y c\u00e0ng ph\u00e1t tri\u1ec3n.",
+      collocations: ["work in the gig economy", "rise of the gig economy"]
+    }
+    ,
+    {
+      id: "mega-unit-5-job-satisfaction",
+      word: "job satisfaction",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 th\u1ecfa m\u00e3n v\u00e0 ni\u1ec1m vui trong c\u00f4ng vi\u1ec7c",
+      ipa: "/\u02c8d\u0292\u0252b \u02ccs\u00e6t\u026asf\u00e6k\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=job+satisfaction&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Autonomous creative control and appreciative managers correlate strongly with high employee job satisfaction.",
+      exampleVi: "S\u1ef1 t\u1ef1 ch\u1ee7 s\u00e1ng t\u1ea1o v\u00e0 ng\u01b0\u1eddi s\u1ebfp bi\u1ebft ghi nh\u1eadn \u0111\u00f3ng g\u00f3p g\u1eafn li\u1ec1n m\u1eadt thi\u1ebft v\u1edbi m\u1ee9c \u0111\u1ed9 h\u00e0i l\u00f2ng c\u00f4ng vi\u1ec7c cao c\u1ee7a nh\u00e2n vi\u00ean.",
+      collocations: ["achieve high job satisfaction", "measure job satisfaction"]
+    }
+    ,
+    {
+      id: "mega-unit-5-performance-review",
+      word: "performance review",
+      partOfSpeech: "n.phr",
+      meaningVi: "\u0111\u00e1nh gi\u00e1 hi\u1ec7u qu\u1ea3 c\u00f4ng vi\u1ec7c \u0111\u1ecbnh k\u1ef3",
+      ipa: "/p\u0259\u02c8f\u0254\u02d0m\u0259ns r\u026a\u02c8vju\u02d0/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=performance+review&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Constructive feedback during the biannual performance review paved the way for her promotion to manager.",
+      exampleVi: "Nh\u1eefng ph\u1ea3n h\u1ed3i mang t\u00ednh x\u00e2y d\u1ef1ng trong bu\u1ed5i \u0111\u00e1nh gi\u00e1 hi\u1ec7u su\u1ea5t \u0111\u1ecbnh k\u1ef3 s\u00e1u th\u00e1ng \u0111\u00e3 m\u1edf \u0111\u01b0\u1eddng cho c\u00f4 th\u0103ng ch\u1ee9c qu\u1ea3n l\u00fd.",
+      collocations: ["conduct a performance review", "annual performance review"]
+    }
+    ,
+    {
+      id: "mega-unit-5-retention-rate",
+      word: "retention rate",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u1ef7 l\u1ec7 gi\u1eef ch\u00e2n nh\u00e2n s\u1ef1 t\u00e0i n\u0103ng c\u1ee7a c\u00f4ng ty",
+      ipa: "/r\u026a\u02c8ten\u0283n re\u026at/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=retention+rate&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Generous wellness benefits and parental leave elevate the tech firm's annual employee retention rate.",
+      exampleVi: "Ch\u00ednh s\u00e1ch ch\u0103m s\u00f3c s\u1ee9c kh\u1ecfe h\u00e0o ph\u00f3ng v\u00e0 ch\u1ebf \u0111\u1ed9 ngh\u1ec9 thai s\u1ea3n \u0111\u00e3 n\u00e2ng cao t\u1ef7 l\u1ec7 gi\u1eef ch\u00e2n nh\u00e2n s\u1ef1 h\u1eb1ng n\u0103m c\u1ee7a c\u00f4ng ty c\u00f4ng ngh\u1ec7.",
+      collocations: ["boost employee retention rate", "high retention rate"]
+    }
+    ,
+    {
+      id: "mega-unit-5-severance-package",
+      word: "severance package",
+      partOfSpeech: "n.phr",
+      meaningVi: "g\u00f3i tr\u1ee3 c\u1ea5p th\u00f4i vi\u1ec7c v\u00e0 \u0111\u1ec1n b\u00f9 h\u1ee3p \u0111\u1ed3ng",
+      ipa: "/\u02c8sev\u0259r\u0259ns \u02c8p\u00e6k\u026ad\u0292/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=severance+package&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Laid-off workers received six months of salary and health coverage as a compassionate severance package.",
+      exampleVi: "Nh\u1eefng c\u00f4ng nh\u00e2n b\u1ecb tinh gi\u1ea3m bi\u00ean ch\u1ebf \u0111\u00e3 nh\u1eadn s\u00e1u th\u00e1ng l\u01b0\u01a1ng v\u00e0 b\u1ea3o hi\u1ec3m y t\u1ebf nh\u01b0 m\u1ed9t g\u00f3i tr\u1ee3 c\u1ea5p th\u00f4i vi\u1ec7c nh\u00e2n \u00e1i.",
+      collocations: ["negotiate a severance package", "generous severance package"]
+    }
+    ,
+    {
+      id: "mega-unit-5-occupational-hazard",
+      word: "occupational hazard",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u1ed1i nguy h\u1ea1i ngh\u1ec1 nghi\u1ec7p \u0111\u1eb7c th\u00f9",
+      ipa: "/\u02cc\u0252kju\u02c8pe\u026a\u0283\u0259nl \u02c8h\u00e6z\u0259d/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=occupational+hazard&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Repetitive strain injury and back pain are common occupational hazards for office software engineers.",
+      exampleVi: "Ch\u1ea5n th\u01b0\u01a1ng do v\u1eadn \u0111\u1ed9ng l\u1eb7p l\u1ea1i v\u00e0 \u0111au l\u01b0ng l\u00e0 nh\u1eefng nguy c\u01a1 b\u1ec7nh ngh\u1ec1 nghi\u1ec7p ph\u1ed5 bi\u1ebfn c\u1ee7a k\u1ef9 s\u01b0 ph\u1ea7n m\u1ec1m v\u0103n ph\u00f2ng.",
+      collocations: ["mitigate occupational hazards", "face an occupational hazard"]
+    }
+    ,
+    {
+      id: "mega-unit-5-corporate-hierarchy",
+      word: "corporate hierarchy",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ec7 th\u1ed1ng t\u00f4n ti c\u1ea5p b\u1eadc trong t\u1eadp \u0111o\u00e0n",
+      ipa: "/\u02c8k\u0254\u02d0p\u0259r\u0259t \u02c8ha\u026a\u0259r\u0251\u02d0ki/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=corporate+hierarchy&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Agile startups flatten the traditional corporate hierarchy to accelerate decision-making speed.",
+      exampleVi: "C\u00e1c c\u00f4ng ty kh\u1edfi nghi\u1ec7p tinh g\u1ecdn tinh gi\u1ea3n h\u1ec7 th\u1ed1ng c\u1ea5p b\u1eadc truy\u1ec1n th\u1ed1ng \u0111\u1ec3 t\u0103ng t\u1ed1c \u0111\u1ed9 ra quy\u1ebft \u0111\u1ecbnh.",
+      collocations: ["navigate the corporate hierarchy", "flat hierarchy"]
+    }
+    ,
+    {
+      id: "mega-unit-5-upskilling",
+      word: "upskilling",
+      partOfSpeech: "n",
+      meaningVi: "ho\u1ea1t \u0111\u1ed9ng h\u1ecdc t\u1eadp n\u00e2ng cao tay ngh\u1ec1 tr\u00ecnh \u0111\u1ed9",
+      ipa: "/\u02c8\u028cpsk\u026al\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=upskilling&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The manufacturing ministry funds weekend robotics upskilling courses for assembly line supervisors.",
+      exampleVi: "B\u1ed9 s\u1ea3n xu\u1ea5t t\u00e0i tr\u1ee3 c\u00e1c kh\u00f3a n\u00e2ng cao tay ngh\u1ec1 v\u1ec1 v\u1eadn h\u00e0nh robot cu\u1ed1i tu\u1ea7n cho c\u00e1c qu\u1ea3n \u0111\u1ed1c d\u00e2y chuy\u1ec1n l\u1eafp r\u00e1p.",
+      collocations: ["invest in upskilling", "continuous upskilling"]
+    }
+    ,
+    {
+      id: "mega-unit-5-reskilling",
+      word: "reskilling",
+      partOfSpeech: "n",
+      meaningVi: "\u0111\u00e0o t\u1ea1o l\u1ea1i k\u1ef9 n\u0103ng m\u1edbi \u0111\u1ec3 chuy\u1ec3n \u0111\u1ed5i ngh\u1ec1",
+      ipa: "/\u02ccri\u02d0\u02c8sk\u026al\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=reskilling&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Government subsidies aid the reskilling of coal plant technicians into certified solar photovoltaic installers.",
+      exampleVi: "Tr\u1ee3 c\u1ea5p ch\u00ednh ph\u1ee7 h\u1ed7 tr\u1ee3 vi\u1ec7c \u0111\u00e0o t\u1ea1o l\u1ea1i ngh\u1ec1 cho k\u1ef9 thu\u1eadt vi\u00ean nh\u00e0 m\u00e1y than th\u00e0nh th\u1ee3 l\u1eafp \u0111\u1eb7t pin m\u1eb7t tr\u1eddi l\u00e0nh ngh\u1ec1.",
+      collocations: ["undergo reskilling", "reskilling workforce"]
+    }
+    ,
+    {
+      id: "mega-unit-5-flexible-working-hours",
+      word: "flexible working hours",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u1eddi gian l\u00e0m vi\u1ec7c linh ho\u1ea1t theo nhu c\u1ea7u",
+      ipa: "/\u02ccfleks\u0259bl \u02c8w\u025c\u02d0k\u026a\u014b \u02c8a\u028a\u0259z/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=flexible+working+hours&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Parents appreciate flexible working hours that let them pick up young children from kindergarten without stress.",
+      exampleVi: "C\u00e1c b\u1eadc cha m\u1eb9 r\u1ea5t th\u00edch ch\u1ebf \u0111\u1ed9 gi\u1edd l\u00e0m vi\u1ec7c linh ho\u1ea1t cho ph\u00e9p h\u1ecd \u0111\u00f3n con nh\u1ecf \u1edf tr\u01b0\u1eddng m\u1eabu gi\u00e1o m\u00e0 kh\u00f4ng ph\u1ea3i v\u1ed9i v\u00e3.",
+      collocations: ["enjoy flexible working hours", "offer flexible hours"]
+    }
+    ,
+    {
+      id: "mega-unit-5-executive-coaching",
+      word: "executive coaching",
+      partOfSpeech: "n.phr",
+      meaningVi: "d\u1ecbch v\u1ee5 khai v\u1ea5n \u0111\u00e0o t\u1ea1o l\u00e3nh \u0111\u1ea1o c\u1ea5p cao",
+      ipa: "/\u026a\u0261\u02c8zekj\u0259t\u026av \u02c8k\u0259\u028at\u0283\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=executive+coaching&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The newly appointed CEO hired an executive coaching specialist to refine her public communication style.",
+      exampleVi: "V\u1ecb n\u1eef t\u1ed5ng gi\u00e1m \u0111\u1ed1c m\u1edbi \u0111\u01b0\u1ee3c b\u1ed5 nhi\u1ec7m \u0111\u00e3 thu\u00ea chuy\u00ean gia khai v\u1ea5n l\u00e3nh \u0111\u1ea1o \u0111\u1ec3 ho\u00e0n thi\u1ec7n k\u1ef9 n\u0103ng thuy\u1ebft tr\u00ecnh tr\u01b0\u1edbc c\u00f4ng ch\u00fang.",
+      collocations: ["benefit from executive coaching", "invest in coaching"]
+    }
+    ,
+    {
+      id: "mega-unit-5-talent-acquisition",
+      word: "talent acquisition",
+      partOfSpeech: "n.phr",
+      meaningVi: "chi\u1ebfn l\u01b0\u1ee3c thu h\u00fat v\u00e0 tuy\u1ec3n d\u1ee5ng nh\u00e2n t\u00e0i",
+      ipa: "/\u02c8t\u00e6l\u0259nt \u02cc\u00e6kw\u026a\u02c8z\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=talent+acquisition&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The human resources director designed a global talent acquisition drive offering stock option bonuses.",
+      exampleVi: "Gi\u00e1m \u0111\u1ed1c nh\u00e2n s\u1ef1 \u0111\u00e3 thi\u1ebft k\u1ebf chi\u1ebfn d\u1ecbch thu h\u00fat nh\u00e2n t\u00e0i to\u00e0n c\u1ea7u v\u1edbi c\u00e1c g\u00f3i c\u1ed5 phi\u1ebfu th\u01b0\u1edfng h\u1ea5p d\u1eabn.",
+      collocations: ["lead talent acquisition", "talent acquisition team"]
+    }
+    ,
+    {
+      id: "mega-unit-5-fringe-benefits",
+      word: "fringe benefits",
+      partOfSpeech: "n.pl",
+      meaningVi: "c\u00e1c ch\u1ebf \u0111\u1ed9 \u0111\u00e3i ng\u1ed9 ph\u1ee5 c\u1ea5p ngo\u00e0i l\u01b0\u01a1ng",
+      ipa: "/\u02ccfr\u026and\u0292 \u02c8ben\u026af\u026ats/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=fringe+benefits&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Fringe benefits such as free gym memberships and catered lunches make the workspace enjoyable.",
+      exampleVi: "Nh\u1eefng ph\u1ee5 c\u1ea5p \u0111\u00e3i ng\u1ed9 ngo\u00e0i l\u01b0\u01a1ng nh\u01b0 th\u1ebb t\u1eadp gym mi\u1ec5n ph\u00ed v\u00e0 b\u1eefa tr\u01b0a n\u00f3ng h\u1ed5i khi\u1ebfn m\u00f4i tr\u01b0\u1eddng l\u00e0m vi\u1ec7c th\u00eam h\u00e0o h\u1ee9ng.",
+      collocations: ["enjoy fringe benefits", "competitive benefits package"]
+    }
+    ,
+    {
+      id: "mega-unit-5-workplace-culture",
+      word: "workplace culture",
+      partOfSpeech: "n.phr",
+      meaningVi: "v\u0103n h\u00f3a m\u00f4i tr\u01b0\u1eddng l\u00e0m vi\u1ec7c c\u00f4ng s\u1edf",
+      ipa: "/\u02c8w\u025c\u02d0kple\u026as \u02c8k\u028clt\u0283\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=workplace+culture&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "A supportive workplace culture fosters innovative experimentation without fear of punitive failure.",
+      exampleVi: "M\u1ed9t v\u0103n h\u00f3a c\u00f4ng s\u1edf lu\u00f4n h\u1ed7 tr\u1ee3 l\u1eabn nhau s\u1ebd \u01b0\u01a1m m\u1ea7m cho nh\u1eefng s\u00e1ng t\u1ea1o \u0111\u1ed5i m\u1edbi m\u00e0 kh\u00f4ng s\u1ee3 h\u00e3i th\u1ea5t b\u1ea1i.",
+      collocations: ["cultivate healthy workplace culture", "toxic culture"]
+    }
+    ,
+    {
+      id: "mega-unit-5-career-trajectory",
+      word: "career trajectory",
+      partOfSpeech: "n.phr",
+      meaningVi: "qu\u1ef9 \u0111\u1ea1o l\u1ed9 tr\u00ecnh ph\u00e1t tri\u1ec3n s\u1ef1 nghi\u1ec7p",
+      ipa: "/k\u0259\u02c8r\u026a\u0259 tr\u0259\u02c8d\u0292ekt\u0259ri/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=career+trajectory&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Earning a project management certification shifted his career trajectory toward international director roles.",
+      exampleVi: "Vi\u1ec7c s\u1edf h\u1eefu ch\u1ee9ng ch\u1ec9 qu\u1ea3n l\u00fd d\u1ef1 \u00e1n \u0111\u00e3 t\u1ea1o b\u01b0\u1edbc ngo\u1eb7t tr\u00ean qu\u1ef9 \u0111\u1ea1o s\u1ef1 nghi\u1ec7p c\u1ee7a anh h\u01b0\u1edbng t\u1edbi v\u1ecb tr\u00ed gi\u00e1m \u0111\u1ed1c qu\u1ed1c t\u1ebf.",
+      collocations: ["accelerate career trajectory", "steep trajectory"]
+    }
+    ,
+    {
+      id: "mega-unit-5-cross-functional-team",
+      word: "cross-functional team",
+      partOfSpeech: "n.phr",
+      meaningVi: "\u0111\u1ed9i ng\u0169 li\u00ean ph\u00f2ng ban k\u1ebft h\u1ee3p nhi\u1ec1u chuy\u00ean m\u00f4n",
+      ipa: "/\u02cckr\u0252s \u02c8f\u028c\u014bk\u0283\u0259nl ti\u02d0m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cross-functional+team&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Software developers, designers, and marketing leads formed an agile cross-functional team to launch the app.",
+      exampleVi: "L\u1eadp tr\u00ecnh vi\u00ean, nh\u00e0 thi\u1ebft k\u1ebf v\u00e0 tr\u01b0\u1edfng nh\u00f3m marketing \u0111\u00e3 th\u00e0nh l\u1eadp \u0111\u1ed9i li\u00ean ph\u00f2ng ban tinh g\u1ecdn \u0111\u1ec3 ra m\u1eaft \u1ee9ng d\u1ee5ng.",
+      collocations: ["lead a cross-functional team", "collaborate in a team"]
+    }
+    ,
+    {
+      id: "mega-unit-5-whistleblower-protection",
+      word: "whistleblower protection",
+      partOfSpeech: "n.phr",
+      meaningVi: "lu\u1eadt b\u1ea3o v\u1ec7 ng\u01b0\u1eddi t\u1ed1 c\u00e1o sai ph\u1ea1m trong doanh nghi\u1ec7p",
+      ipa: "/\u02c8w\u026aslbl\u0259\u028a\u0259 pr\u0259\u02c8tek\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=whistleblower+protection&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Federal whistleblower protection guarantees that employees exposing accounting fraud cannot be retaliated against.",
+      exampleVi: "Lu\u1eadt b\u1ea3o v\u1ec7 ng\u01b0\u1eddi t\u1ed1 gi\u00e1c b\u1ea3o \u0111\u1ea3m r\u1eb1ng nh\u1eefng nh\u00e2n vi\u00ean phanh phui gian l\u1eadn t\u00e0i ch\u00ednh s\u1ebd kh\u00f4ng b\u1ecb tr\u00f9 d\u1eadp tr\u1ea3 th\u00f9.",
+      collocations: ["enact whistleblower protection", "legal protection"]
+    }
+    ,
+    {
+      id: "mega-unit-5-quiet-quitting",
+      word: "quiet quitting",
+      partOfSpeech: "n.phr",
+      meaningVi: "l\u1ed1i s\u1ed1ng l\u00e0m \u0111\u00fang ph\u1eadn s\u1ef1 kh\u00f4ng nh\u1eadn th\u00eam vi\u1ec7c ngo\u00e0i gi\u1edd",
+      ipa: "/\u02cckwa\u026a\u0259t \u02c8kw\u026at\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=quiet+quitting&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Exhausted from perpetual unpaid overtime, some staff resorted to quiet quitting to reclaim evenings.",
+      exampleVi: "Qu\u00e1 m\u1ec7t m\u1ecfi v\u1edbi nh\u1eefng gi\u1edd l\u00e0m th\u00eam kh\u00f4ng l\u01b0\u01a1ng tri\u1ec1n mi\u00ean, m\u1ed9t s\u1ed1 nh\u00e2n vi\u00ean ch\u1ecdn l\u00e0m \u0111\u00fang ph\u1eadn s\u1ef1 \u0111\u1ec3 gi\u1eef l\u1ea5y bu\u1ed5i t\u1ed1i cho gia \u0111\u00ecnh.",
+      collocations: ["trends in quiet quitting", "respond to quiet quitting"]
+    }
+    ,
+    {
+      id: "mega-unit-5-onboarding-process",
+      word: "onboarding process",
+      partOfSpeech: "n.phr",
+      meaningVi: "quy tr\u00ecnh ti\u1ebfp nh\u1eadn v\u00e0 h\u01b0\u1edbng d\u1eabn nh\u00e2n vi\u00ean m\u1edbi",
+      ipa: "/\u02c8\u0252nb\u0254\u02d0d\u026a\u014b \u02c8pr\u0259\u028ases/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=onboarding+process&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "A structured two-week onboarding process introduces recruits to company history, security, and tools.",
+      exampleVi: "Quy tr\u00ecnh \u0111\u00f3n nh\u1eadn nh\u00e2n vi\u00ean m\u1edbi b\u00e0i b\u1ea3n trong hai tu\u1ea7n gi\u00fap ng\u01b0\u1eddi m\u1edbi hi\u1ec3u v\u1ec1 v\u0103n h\u00f3a c\u00f4ng ty, b\u1ea3o m\u1eadt v\u00e0 c\u00f4ng c\u1ee5.",
+      collocations: ["streamline onboarding process", "smooth onboarding"]
+    }
+    ,
+    {
+      id: "mega-unit-5-burnout-prevention",
+      word: "burnout prevention",
+      partOfSpeech: "n.phr",
+      meaningVi: "bi\u1ec7n ph\u00e1p ph\u00f2ng ng\u1eeba ki\u1ec7t s\u1ee9c lao l\u1ef1c",
+      ipa: "/\u02c8b\u025c\u02d0na\u028at pr\u026a\u02c8ven\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=burnout+prevention&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1506863530036-1efeddceb993?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Mandatory four-week annual vacations and mental wellness subsidies aid proactive burnout prevention.",
+      exampleVi: "K\u1ef3 ngh\u1ec9 ph\u00e9p n\u0103m b\u1ed1n tu\u1ea7n b\u1eaft bu\u1ed9c v\u00e0 h\u1ed7 tr\u1ee3 ch\u0103m s\u00f3c s\u1ee9c kh\u1ecfe t\u00e2m th\u1ea7n gi\u00fap ng\u0103n ng\u1eeba t\u00ecnh tr\u1ea1ng ki\u1ec7t s\u1ee9c k\u1ecbp th\u1eddi.",
+      collocations: ["prioritize burnout prevention", "strategies for prevention"]
+    }
+    ,
+    {
+      id: "mega-unit-5-stock-option",
+      word: "stock option",
+      partOfSpeech: "n.phr",
+      meaningVi: "quy\u1ec1n mua c\u1ed5 phi\u1ebfu \u01b0u \u0111\u00e3i c\u1ee7a c\u00f4ng ty",
+      ipa: "/\u02c8st\u0252k \u02c8\u0252p\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=stock+option&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Early tech employees realized life-changing wealth after their company stock options vested post-IPO.",
+      exampleVi: "Nh\u1eefng nh\u00e2n vi\u00ean th\u1eddi k\u1ef3 \u0111\u1ea7u c\u1ee7a h\u00e3ng c\u00f4ng ngh\u1ec7 \u0111\u00e3 c\u00f3 \u0111\u01b0\u1ee3c gia s\u1ea3n thay \u0111\u1ed5i cu\u1ed9c \u0111\u1eddi khi quy\u1ec1n mua c\u1ed5 phi\u1ebfu \u0111\u01b0\u1ee3c gi\u1ea3i ng\u00e2n sau IPO.",
+      collocations: ["exercise a stock option", "grant stock options"]
+    }
+    ,
+    {
+      id: "mega-unit-5-collective-bargaining",
+      word: "collective bargaining",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u01b0\u01a1ng l\u01b0\u1ee3ng t\u1eadp th\u1ec3 gi\u1eefa c\u00f4ng \u0111o\u00e0n v\u00e0 gi\u1edbi ch\u1ee7",
+      ipa: "/k\u0259\u02cclekt\u026av \u02c8b\u0251\u02d0\u0261\u0259n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=collective+bargaining&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The transport labor union engaged in collective bargaining to secure safer bus scheduling rosters.",
+      exampleVi: "C\u00f4ng \u0111o\u00e0n ng\u00e0nh giao th\u00f4ng \u0111\u00e3 ti\u1ebfn h\u00e0nh th\u01b0\u01a1ng l\u01b0\u1ee3ng t\u1eadp th\u1ec3 \u0111\u1ec3 gi\u00e0nh \u0111\u01b0\u1ee3c l\u1ecbch tr\u00ecnh ch\u1ea1y xe bu\u00fdt an to\u00e0n h\u01a1n cho t\u00e0i x\u1ebf.",
+      collocations: ["engage in collective bargaining", "bargaining agreement"]
+    }
+    ,
+    {
+      id: "mega-unit-5-remote-workplace",
+      word: "remote workplace",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u00f4i tr\u01b0\u1eddng l\u00e0m vi\u1ec7c ho\u00e0n to\u00e0n t\u1eeb xa",
+      ipa: "/r\u026a\u02ccm\u0259\u028at \u02c8w\u025c\u02d0kple\u026as/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=remote+workplace&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Operating across ten time zones, the digital publishing firm thrives as a fully remote workplace.",
+      exampleVi: "V\u1eadn h\u00e0nh tr\u00ean m\u01b0\u1eddi m\u00fai gi\u1edd kh\u00e1c nhau, c\u00f4ng ty xu\u1ea5t b\u1ea3n s\u1ed1 ph\u00e1t tri\u1ec3n m\u1ea1nh m\u1ebd nh\u01b0 m\u1ed9t m\u00f4i tr\u01b0\u1eddng l\u00e0m vi\u1ec7c ho\u00e0n to\u00e0n t\u1eeb xa.",
+      collocations: ["manage a remote workplace", "transition to remote workplace"]
+    }
+    ,
+    {
+      id: "mega-unit-5-equal-employment-opportunity",
+      word: "equal employment opportunity",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u01a1 h\u1ed9i vi\u1ec7c l\u00e0m b\u00ecnh \u0111\u1eb3ng kh\u00f4ng ph\u00e2n bi\u1ec7t \u0111\u1ed1i x\u1eed",
+      ipa: "/\u02cci\u02d0kw\u0259l \u026am\u02c8pl\u0254\u026am\u0259nt \u02cc\u0252p\u0259\u02c8tju\u02d0n\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=equal+employment+opportunity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "All job postings prominently display our steadfast commitment to equal employment opportunity.",
+      exampleVi: "M\u1ecdi b\u00e0i \u0111\u0103ng tuy\u1ec3n d\u1ee5ng \u0111\u1ec1u kh\u1eb3ng \u0111\u1ecbnh r\u00f5 r\u00e0ng cam k\u1ebft ki\u00ean \u0111\u1ecbnh c\u1ee7a ch\u00fang t\u00f4i v\u1ec1 c\u01a1 h\u1ed9i vi\u1ec7c l\u00e0m b\u00ecnh \u0111\u1eb3ng cho t\u1ea5t c\u1ea3 m\u1ecdi ng\u01b0\u1eddi.",
+      collocations: ["champion equal employment opportunity", "EEO policy"]
+    }
+    ,
+    {
+      id: "mega-unit-5-professional-integrity",
+      word: "professional integrity",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 li\u00eam ch\u00ednh v\u00e0 chu\u1ea9n m\u1ef1c \u0111\u1ea1o \u0111\u1ee9c ngh\u1ec1 nghi\u1ec7p",
+      ipa: "/pr\u0259\u02c8fe\u0283\u0259nl \u026an\u02c8te\u0261r\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=professional+integrity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Auditors demonstrated uncompromising professional integrity by refusing a lucrative offshore bribe.",
+      exampleVi: "C\u00e1c ki\u1ec3m to\u00e1n vi\u00ean \u0111\u00e3 th\u1ec3 hi\u1ec7n s\u1ef1 li\u00eam ch\u00ednh ngh\u1ec1 nghi\u1ec7p ki\u00ean \u0111\u1ecbnh khi t\u1eeb ch\u1ed1i kho\u1ea3n ti\u1ec1n h\u1ed1i l\u1ed9 b\u00e9o b\u1edf.",
+      collocations: ["uphold professional integrity", "breach of integrity"]
     }
   ],
   "unit-6-artificial-intelligence": [
@@ -3765,6 +5494,331 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleVi: "C\u00e1c tri\u1ebft gia tranh lu\u1eadn li\u1ec7u m\u1ea1ng n\u01a1-ron nh\u00e2n t\u1ea1o c\u00f3 th\u1ec3 \u0111\u1ea1t t\u1edbi kh\u1ea3 n\u0103ng t\u1ef1 tri gi\u00e1c hay kh\u00f4ng.",
       collocations: ["possess sentient capability", "debate sentient capability"]
     }
+    ,
+    {
+      id: "mega-unit-6-deep-learning",
+      word: "deep learning",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ecdc s\u00e2u d\u1ef1a tr\u00ean m\u1ea1ng n\u01a1-ron nhi\u1ec1u t\u1ea7ng",
+      ipa: "/\u02ccdi\u02d0p \u02c8l\u025c\u02d0n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=deep+learning&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Deep learning networks composed of dozens of layers detect microscopic lung tumors from scans.",
+      exampleVi: "C\u00e1c m\u1ea1ng h\u1ecdc s\u00e2u g\u1ed3m h\u00e0ng ch\u1ee5c t\u1ea7ng n\u01a1-ron c\u00f3 th\u1ec3 ph\u00e1t hi\u1ec7n nh\u1eefng kh\u1ed1i u ph\u1ed5i si\u00eau nh\u1ecf tr\u00ean phim ch\u1ee5p X-quang.",
+      collocations: ["advances in deep learning", "deep learning architecture"]
+    }
+    ,
+    {
+      id: "mega-unit-6-neural-network",
+      word: "neural network",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u1ea1ng n\u01a1-ron nh\u00e2n t\u1ea1o m\u00f4 ph\u1ecfng n\u00e3o ng\u01b0\u1eddi",
+      ipa: "/\u02c8nj\u028a\u0259r\u0259l \u02c8netw\u025c\u02d0k/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=neural+network&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Trained on millions of sample brushstrokes, the neural network generated convincing oil paintings.",
+      exampleVi: "\u0110\u01b0\u1ee3c hu\u1ea5n luy\u1ec7n tr\u00ean h\u00e0ng tri\u1ec7u n\u00e9t c\u1ecd m\u1eabu, m\u1ea1ng n\u01a1-ron nh\u00e2n t\u1ea1o \u0111\u00e3 v\u1ebd n\u00ean nh\u1eefng b\u1ee9c tranh s\u01a1n d\u1ea7u \u0111\u1ea7y thuy\u1ebft ph\u1ee5c.",
+      collocations: ["train a neural network", "convolutional neural network"]
+    }
+    ,
+    {
+      id: "mega-unit-6-natural-language-processing",
+      word: "natural language processing",
+      partOfSpeech: "n.phr",
+      meaningVi: "x\u1eed l\u00fd ng\u00f4n ng\u1eef t\u1ef1 nhi\u00ean hi\u1ec3u ti\u1ebfng n\u00f3i ch\u1eef vi\u1ebft",
+      ipa: "/\u02ccn\u00e6t\u0283r\u0259l \u02c8l\u00e6\u014b\u0261w\u026ad\u0292 \u02c8pr\u0259\u028ases\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=natural+language+processing&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Natural language processing allows search engines to decipher the contextual nuances of human queries.",
+      exampleVi: "X\u1eed l\u00fd ng\u00f4n ng\u1eef t\u1ef1 nhi\u00ean cho ph\u00e9p c\u00f4ng c\u1ee5 t\u00ecm ki\u1ebfm gi\u1ea3i m\u00e3 nh\u1eefng s\u1eafc th\u00e1i ng\u1eef c\u1ea3nh trong c\u00e2u h\u1ecfi c\u1ee7a ng\u01b0\u1eddi d\u00f9ng.",
+      collocations: ["specialist in natural language processing", "NLP model"]
+    }
+    ,
+    {
+      id: "mega-unit-6-computer-vision",
+      word: "computer vision",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u1ecb gi\u00e1c m\u00e1y t\u00ednh nh\u1eadn di\u1ec7n v\u1eadt th\u1ec3 h\u00ecnh \u1ea3nh",
+      ipa: "/k\u0259m\u02c8pju\u02d0t\u0259 \u02c8v\u026a\u0292n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=computer+vision&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Equipped with computer vision, self-driving shuttles differentiate pedestrians from light poles in heavy fog.",
+      exampleVi: "\u0110\u01b0\u1ee3c trang b\u1ecb th\u1ecb gi\u00e1c m\u00e1y t\u00ednh, xe t\u1ef1 h\u00e0nh ph\u00e2n bi\u1ec7t \u0111\u01b0\u1ee3c ng\u01b0\u1eddi \u0111i b\u1ed9 v\u00e0 c\u1ed9t \u0111\u00e8n ngay trong m\u00e0n s\u01b0\u01a1ng m\u00f9 d\u00e0y \u0111\u1eb7c.",
+      collocations: ["algorithms in computer vision", "computer vision system"]
+    }
+    ,
+    {
+      id: "mega-unit-6-generative-ai",
+      word: "generative ai",
+      partOfSpeech: "n.phr",
+      meaningVi: "tr\u00ed tu\u1ec7 nh\u00e2n t\u1ea1o t\u1ea1o sinh t\u1ea1o v\u0103n b\u1ea3n h\u00ecnh \u1ea3nh",
+      ipa: "/\u02c8d\u0292en\u0259r\u0259t\u026av e\u026a a\u026a/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=generative+ai&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Generative AI enables creative writers to brainstorm novel dialogue and world-building tropes.",
+      exampleVi: "Tr\u00ed tu\u1ec7 nh\u00e2n t\u1ea1o t\u1ea1o sinh gi\u00fap c\u00e1c nh\u00e0 v\u0103n l\u00ean \u00fd t\u01b0\u1edfng \u0111\u1ed1i tho\u1ea1i m\u1edbi l\u1ea1 v\u00e0 x\u00e2y d\u1ef1ng b\u1ed1i c\u1ea3nh ti\u1ec3u thuy\u1ebft s\u1ed1ng \u0111\u1ed9ng.",
+      collocations: ["breakthrough in generative AI", "harness generative AI"]
+    }
+    ,
+    {
+      id: "mega-unit-6-hallucination",
+      word: "hallucination",
+      partOfSpeech: "n",
+      meaningVi: "hi\u1ec7n t\u01b0\u1ee3ng AI b\u1ecba \u0111\u1eb7t th\u00f4ng tin sai l\u1ec7ch",
+      ipa: "/h\u0259\u02cclu\u02d0s\u026a\u02c8ne\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=hallucination&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Engineers implement retrieval-augmented generation to eliminate factual hallucination in legal bots.",
+      exampleVi: "C\u00e1c k\u1ef9 s\u01b0 \u00e1p d\u1ee5ng c\u00f4ng ngh\u1ec7 t\u1ea1o sinh t\u0103ng c\u01b0\u1eddng truy xu\u1ea5t RAG \u0111\u1ec3 lo\u1ea1i b\u1ecf hi\u1ec7n t\u01b0\u1ee3ng AI b\u1ecba \u0111\u1eb7t th\u00f4ng tin trong bot ph\u00e1p l\u00fd.",
+      collocations: ["prevent AI hallucination", "factual hallucination"]
+    }
+    ,
+    {
+      id: "mega-unit-6-algorithmic-bias",
+      word: "algorithmic bias",
+      partOfSpeech: "n.phr",
+      meaningVi: "thi\u00ean ki\u1ebfn thu\u1eadt to\u00e1n do d\u1eef li\u1ec7u hu\u1ea5n luy\u1ec7n thi\u00ean l\u1ec7ch",
+      ipa: "/\u02cc\u00e6l\u0261\u0259\u02c8r\u026a\u00f0m\u026ak \u02c8ba\u026a\u0259s/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=algorithmic+bias&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Auditors discovered algorithmic bias in mortgage approval software that penalized minority zip codes.",
+      exampleVi: "C\u00e1c ki\u1ec3m to\u00e1n vi\u00ean ph\u00e1t hi\u1ec7n thi\u00ean ki\u1ebfn thu\u1eadt to\u00e1n trong ph\u1ea7n m\u1ec1m duy\u1ec7t th\u1ebf ch\u1ea5p khi h\u1ea1 \u0111i\u1ec3m c\u00e1c khu v\u1ef1c thi\u1ec3u s\u1ed1.",
+      collocations: ["eliminate algorithmic bias", "sources of bias"]
+    }
+    ,
+    {
+      id: "mega-unit-6-reinforcement-learning",
+      word: "reinforcement learning",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ecdc t\u0103ng c\u01b0\u1eddng th\u00f4ng qua th\u01b0\u1edfng ph\u1ea1t th\u1eed sai",
+      ipa: "/\u02ccri\u02d0\u026an\u02c8f\u0254\u02d0sm\u0259nt \u02c8l\u025c\u02d0n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=reinforcement+learning&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Chess engines master grandmaster strategies through millions of self-play reinforcement learning games.",
+      exampleVi: "C\u00e1c ph\u1ea7n m\u1ec1m c\u1edd vua l\u00e0m ch\u1ee7 chi\u1ebfn thu\u1eadt \u0111\u1ea1i ki\u1ec7n t\u01b0\u1edbng th\u00f4ng qua h\u00e0ng tri\u1ec7u v\u00e1n c\u1edd t\u1ef1 \u0111\u1ea5u h\u1ecdc t\u0103ng c\u01b0\u1eddng th\u01b0\u1edfng ph\u1ea1t.",
+      collocations: ["powered by reinforcement learning", "RL agent"]
+    }
+    ,
+    {
+      id: "mega-unit-6-training-dataset",
+      word: "training dataset",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u1ed9 d\u1eef li\u1ec7u d\u00f9ng \u0111\u1ec3 hu\u1ea5n luy\u1ec7n m\u00f4 h\u00ecnh",
+      ipa: "/\u02c8tre\u026an\u026a\u014b \u02c8de\u026at\u0259set/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=training+dataset&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The team curated a diverse training dataset spanning twenty languages to prevent translation skew.",
+      exampleVi: "Nh\u00f3m nghi\u00ean c\u1ee9u \u0111\u00e3 x\u00e2y d\u1ef1ng m\u1ed9t b\u1ed9 d\u1eef li\u1ec7u hu\u1ea5n luy\u1ec7n \u0111a d\u1ea1ng g\u1ed3m hai m\u01b0\u01a1i ng\u00f4n ng\u1eef \u0111\u1ec3 tr\u00e1nh sai l\u1ec7ch b\u1ea3n d\u1ecbch.",
+      collocations: ["curate a training dataset", "massive dataset"]
+    }
+    ,
+    {
+      id: "mega-unit-6-predictive-analytics",
+      word: "predictive analytics",
+      partOfSpeech: "n.phr",
+      meaningVi: "ph\u00e2n t\u00edch d\u1ef1 \u0111o\u00e1n d\u1ef1a tr\u00ean xu h\u01b0\u1edbng qu\u00e1 kh\u1ee9",
+      ipa: "/pr\u026a\u02c8d\u026akt\u026av \u02cc\u00e6n\u0259\u02c8l\u026at\u026aks/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=predictive+analytics&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Hospitals utilize predictive analytics to forecast ICU bed shortages weeks prior to seasonal viral surges.",
+      exampleVi: "C\u00e1c b\u1ec7nh vi\u1ec7n \u1ee9ng d\u1ee5ng ph\u00e2n t\u00edch d\u1ef1 \u0111o\u00e1n \u0111\u1ec3 \u01b0\u1edbc l\u01b0\u1ee3ng t\u00ecnh tr\u1ea1ng thi\u1ebfu gi\u01b0\u1eddng h\u1ed3i s\u1ee9c c\u1ea5p c\u1ee9u tr\u01b0\u1edbc c\u00e1c \u0111\u1ee3t b\u00f9ng ph\u00e1t d\u1ecbch.",
+      collocations: ["employ predictive analytics", "predictive model"]
+    }
+    ,
+    {
+      id: "mega-unit-6-ethical-dilemma",
+      word: "ethical dilemma",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u00ecnh th\u1ebf ti\u1ebfn tho\u00e1i l\u01b0\u1ee1ng nan v\u1ec1 m\u1eb7t \u0111\u1ea1o \u0111\u1ee9c",
+      ipa: "/\u02c8e\u03b8\u026akl da\u026a\u02c8lem\u0259/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ethical+dilemma&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Self-driving crash algorithms face an ethical dilemma when deciding between passenger and pedestrian safety.",
+      exampleVi: "Thu\u1eadt to\u00e1n va ch\u1ea1m c\u1ee7a xe t\u1ef1 h\u00e0nh \u0111\u1ed1i m\u1eb7t v\u1edbi t\u00ecnh th\u1ebf nan gi\u1ea3i v\u1ec1 \u0111\u1ea1o \u0111\u1ee9c khi c\u00e2n nh\u1eafc gi\u1eefa an to\u00e0n c\u1ee7a h\u00e0nh kh\u00e1ch hay ng\u01b0\u1eddi \u0111i b\u1ed9.",
+      collocations: ["confront an ethical dilemma", "resolve a dilemma"]
+    }
+    ,
+    {
+      id: "mega-unit-6-facial-recognition-technology",
+      word: "facial recognition technology",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng ngh\u1ec7 nh\u1eadn d\u1ea1ng khu\u00f4n m\u1eb7t t\u1ef1 \u0111\u1ed9ng",
+      ipa: "/\u02ccfe\u026a\u0283l \u02ccrek\u0259\u0261\u02c8n\u026a\u0283n tek\u02c8n\u0252l\u0259d\u0292i/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=facial+recognition+technology&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Airport border security gates utilize facial recognition technology to expedite passport verification.",
+      exampleVi: "C\u1eeda kh\u1ea9u an ninh s\u00e2n bay \u1ee9ng d\u1ee5ng c\u00f4ng ngh\u1ec7 nh\u1eadn di\u1ec7n khu\u00f4n m\u1eb7t \u0111\u1ec3 \u0111\u1ea9y nhanh qu\u00e1 tr\u00ecnh ki\u1ec3m tra h\u1ed9 chi\u1ebfu h\u00e0nh kh\u00e1ch.",
+      collocations: ["deploy facial recognition technology", "concerns over technology"]
+    }
+    ,
+    {
+      id: "mega-unit-6-unsupervised-learning",
+      word: "unsupervised learning",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ecdc kh\u00f4ng gi\u00e1m s\u00e1t t\u1ef1 gom c\u1ee5m ph\u00e2n lo\u1ea1i m\u1eabu",
+      ipa: "/\u02cc\u028cn\u02c8su\u02d0p\u0259va\u026azd \u02c8l\u025c\u02d0n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=unsupervised+learning&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Clustering algorithms leverage unsupervised learning to discover anomalous fraud patterns without labels.",
+      exampleVi: "C\u00e1c thu\u1eadt to\u00e1n ph\u00e2n c\u1ee5m t\u1eadn d\u1ee5ng h\u1ecdc kh\u00f4ng gi\u00e1m s\u00e1t \u0111\u1ec3 ph\u00e1t hi\u1ec7n c\u00e1c h\u00e0nh vi gian l\u1eadn b\u1ea5t th\u01b0\u1eddng m\u00e0 kh\u00f4ng c\u1ea7n d\u00e1n nh\u00e3n tr\u01b0\u1edbc.",
+      collocations: ["principles of unsupervised learning", "clustering model"]
+    }
+    ,
+    {
+      id: "mega-unit-6-singularity",
+      word: "singularity",
+      partOfSpeech: "n",
+      meaningVi: "\u0111i\u1ec3m k\u1ef3 d\u1ecb khi tr\u00ed tu\u1ec7 m\u00e1y m\u00f3c v\u01b0\u1ee3t qua con ng\u01b0\u1eddi",
+      ipa: "/\u02ccs\u026a\u014b\u0261j\u028a\u02c8l\u00e6r\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=singularity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Futurists debate whether the technological singularity will occur within the next three decades.",
+      exampleVi: "C\u00e1c nh\u00e0 v\u1ecb lai h\u1ecdc tranh lu\u1eadn li\u1ec7u \u0111i\u1ec3m k\u1ef3 d\u1ecb c\u00f4ng ngh\u1ec7 c\u00f3 di\u1ec5n ra trong v\u00f2ng ba th\u1eadp k\u1ef7 t\u1edbi hay kh\u00f4ng.",
+      collocations: ["approaching the singularity", "concept of singularity"]
+    }
+    ,
+    {
+      id: "mega-unit-6-large-language-model",
+      word: "large language model",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u00f4 h\u00ecnh ng\u00f4n ng\u1eef l\u1edbn x\u1eed l\u00fd v\u0103n b\u1ea3n",
+      ipa: "/l\u0251\u02d0d\u0292 \u02c8l\u00e6\u014b\u0261w\u026ad\u0292 \u02c8m\u0252dl/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=large+language+model&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Modern large language models generate articulate scientific summaries and synthesize research papers.",
+      exampleVi: "C\u00e1c m\u00f4 h\u00ecnh ng\u00f4n ng\u1eef l\u1edbn hi\u1ec7n \u0111\u1ea1i c\u00f3 th\u1ec3 t\u1ea1o ra nh\u1eefng b\u1ea3n t\u00f3m t\u1eaft khoa h\u1ecdc m\u1ea1ch l\u1ea1c v\u00e0 t\u1ed5ng h\u1ee3p c\u00e1c b\u00e0i nghi\u00ean c\u1ee9u.",
+      collocations: ["query a large language model", "LLM capabilities"]
+    }
+    ,
+    {
+      id: "mega-unit-6-ai-alignment",
+      word: "ai alignment",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 tinh ch\u1ec9nh AI \u0111\u1ed3ng b\u1ed9 v\u1edbi gi\u00e1 tr\u1ecb \u0111\u1ea1o \u0111\u1ee9c con ng\u01b0\u1eddi",
+      ipa: "/e\u026a a\u026a \u0259\u02c8la\u026anm\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ai+alignment&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "AI alignment researchers ensure autonomous systems remain honest, helpful, and completely harmless.",
+      exampleVi: "C\u00e1c nh\u00e0 nghi\u00ean c\u1ee9u tinh ch\u1ec9nh gi\u00e1 tr\u1ecb AI b\u1ea3o \u0111\u1ea3m r\u1eb1ng h\u1ec7 th\u1ed1ng t\u1ef1 h\u00e0nh lu\u00f4n trung th\u1ef1c, h\u1eefu \u00edch v\u00e0 ho\u00e0n to\u00e0n v\u00f4 h\u1ea1i.",
+      collocations: ["prioritize AI alignment", "safe alignment"]
+    }
+    ,
+    {
+      id: "mega-unit-6-prompt-engineering",
+      word: "prompt engineering",
+      partOfSpeech: "n.phr",
+      meaningVi: "k\u1ef9 thu\u1eadt thi\u1ebft k\u1ebf c\u00e2u l\u1ec7nh t\u1ed1i \u01b0u cho AI",
+      ipa: "/pr\u0252mpt \u02ccend\u0292\u026a\u02c8n\u026a\u0259r\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=prompt+engineering&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Careful prompt engineering yields structured JSON outputs and minimizes hallucinations.",
+      exampleVi: "K\u1ef9 thu\u1eadt t\u1ea1o c\u00e2u l\u1ec7nh k\u1ef9 l\u01b0\u1ee1ng mang l\u1ea1i k\u1ebft qu\u1ea3 \u0111\u1ecbnh d\u1ea1ng JSON chu\u1ea9n m\u1ef1c v\u00e0 gi\u1ea3m thi\u1ec3u hi\u1ec7n t\u01b0\u1ee3ng b\u1ecba \u0111\u1eb7t th\u00f4ng tin.",
+      collocations: ["master prompt engineering", "effective prompt"]
+    }
+    ,
+    {
+      id: "mega-unit-6-recommendation-engine",
+      word: "recommendation engine",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ec7 th\u1ed1ng g\u1ee3i \u00fd n\u1ed9i dung v\u00e0 s\u1ea3n ph\u1ea9m th\u00f4ng minh",
+      ipa: "/\u02ccrek\u0259men\u02c8de\u026a\u0283n \u02c8end\u0292\u026an/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=recommendation+engine&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Streaming platforms rely on an adaptive recommendation engine to keep viewers watching.",
+      exampleVi: "C\u00e1c n\u1ec1n t\u1ea3ng xem phim tr\u1ef1c tuy\u1ebfn d\u1ef1a v\u00e0o h\u1ec7 th\u1ed1ng thu\u1eadt to\u00e1n g\u1ee3i \u00fd th\u00f4ng minh \u0111\u1ec3 gi\u1eef ch\u00e2n kh\u00e1n gi\u1ea3.",
+      collocations: ["build a recommendation engine", "personalized engine"]
+    }
+    ,
+    {
+      id: "mega-unit-6-autonomous-weapon",
+      word: "autonomous weapon",
+      partOfSpeech: "n.phr",
+      meaningVi: "v\u0169 kh\u00ed s\u00e1t th\u01b0\u01a1ng t\u1ef1 \u0111\u1ed9ng h\u00f3a b\u1eb1ng AI",
+      ipa: "/\u0254\u02d0\u02c8t\u0252n\u0259m\u0259s \u02c8wep\u0259n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=autonomous+weapon&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "United Nations delegates voted in favor of treaty bans against lethal autonomous weapons without human oversight.",
+      exampleVi: "C\u00e1c \u0111\u1ea1i bi\u1ec3u Li\u00ean H\u1ee3p Qu\u1ed1c \u0111\u00e3 b\u1ecf phi\u1ebfu \u1ee7ng h\u1ed9 vi\u1ec7c c\u1ea5m c\u00e1c lo\u1ea1i v\u0169 kh\u00ed t\u1ef1 s\u00e1t th\u01b0\u01a1ng t\u1ef1 h\u00e0nh m\u00e0 kh\u00f4ng c\u00f3 s\u1ef1 ki\u1ec3m so\u00e1t c\u1ee7a con ng\u01b0\u1eddi.",
+      collocations: ["ban autonomous weapons", "dangers of autonomous weapons"]
+    }
+    ,
+    {
+      id: "mega-unit-6-turing-test",
+      word: "turing test",
+      partOfSpeech: "n.phr",
+      meaningVi: "ph\u00e9p th\u1eed Turing ki\u1ec3m tra tr\u00ed tu\u1ec7 m\u00e1y m\u00f3c",
+      ipa: "/\u02c8tj\u028a\u0259r\u026a\u014b test/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=turing+test&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Passing the conversational Turing test means human judges cannot tell machine from human responses.",
+      exampleVi: "V\u01b0\u1ee3t qua ph\u00e9p th\u1eed tr\u00f2 chuy\u1ec7n Turing \u0111\u1ed3ng ngh\u0129a v\u1edbi vi\u1ec7c ban gi\u00e1m kh\u1ea3o con ng\u01b0\u1eddi kh\u00f4ng th\u1ec3 ph\u00e2n bi\u1ec7t \u0111\u01b0\u1ee3c c\u00e2u tr\u1ea3 l\u1eddi c\u1ee7a m\u00e1y hay ng\u01b0\u1eddi.",
+      collocations: ["pass the Turing test", "historic Turing test"]
+    }
+    ,
+    {
+      id: "mega-unit-6-superintelligence",
+      word: "superintelligence",
+      partOfSpeech: "n",
+      meaningVi: "si\u00eau tr\u00ed tu\u1ec7 nh\u00e2n t\u1ea1o v\u01b0\u1ee3t xa to\u00e0n th\u1ec3 nh\u00e2n lo\u1ea1i",
+      ipa: "/\u02ccsu\u02d0p\u0259r\u026an\u02c8tel\u026ad\u0292\u0259ns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=superintelligence&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The emergence of benevolent superintelligence could unlock solutions to cancer and fusion energy.",
+      exampleVi: "S\u1ef1 ra \u0111\u1eddi c\u1ee7a si\u00eau tr\u00ed tu\u1ec7 nh\u00e2n t\u1ea1o nh\u00e2n t\u1eeb c\u00f3 th\u1ec3 m\u1edf ra l\u1eddi gi\u1ea3i cho b\u1ec7nh ung th\u01b0 v\u00e0 ngu\u1ed3n n\u0103ng l\u01b0\u1ee3ng nhi\u1ec7t h\u1ea1ch v\u00f4 t\u1eadn.",
+      collocations: ["dangers of superintelligence", "path to superintelligence"]
+    }
+    ,
+    {
+      id: "mega-unit-6-ai-governance",
+      word: "ai governance",
+      partOfSpeech: "n.phr",
+      meaningVi: "khung ph\u00e1p l\u00fd qu\u1ea3n tr\u1ecb v\u00e0 gi\u00e1m s\u00e1t AI qu\u1ed1c t\u1ebf",
+      ipa: "/e\u026a a\u026a \u02c8\u0261\u028cv\u0259n\u0259ns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ai+governance&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "International treaties establish global AI governance bodies to audit frontier foundation models.",
+      exampleVi: "C\u00e1c hi\u1ec7p \u01b0\u1edbc qu\u1ed1c t\u1ebf th\u00e0nh l\u1eadp c\u01a1 quan qu\u1ea3n tr\u1ecb AI to\u00e0n c\u1ea7u \u0111\u1ec3 ki\u1ec3m to\u00e1n c\u00e1c m\u00f4 h\u00ecnh n\u1ec1n t\u1ea3ng ti\u00ean ti\u1ebfn.",
+      collocations: ["framework for AI governance", "responsible governance"]
+    }
+    ,
+    {
+      id: "mega-unit-6-voice-synthesis",
+      word: "voice synthesis",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng ngh\u1ec7 t\u1ed5ng h\u1ee3p v\u00e0 l\u1ed3ng ti\u1ebfng gi\u1ea3 l\u1eadp gi\u1ecdng n\u00f3i",
+      ipa: "/v\u0254\u026as \u02c8s\u026an\u03b8\u0259s\u026as/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=voice+synthesis&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Modern voice synthesis models can mimic tone, breathing, and emotional inflection with pinpoint accuracy.",
+      exampleVi: "C\u00e1c m\u00f4 h\u00ecnh t\u1ed5ng h\u1ee3p gi\u1ecdng n\u00f3i hi\u1ec7n \u0111\u1ea1i c\u00f3 th\u1ec3 b\u1eaft ch\u01b0\u1edbc t\u00f4ng gi\u1ecdng, ti\u1ebfng th\u1edf v\u00e0 s\u1eafc th\u00e1i c\u1ea3m x\u00fac v\u1edbi \u0111\u1ed9 ch\u00ednh x\u00e1c tuy\u1ec7t \u0111\u1ed1i.",
+      collocations: ["state-of-the-art voice synthesis", "natural voice synthesis"]
+    }
+    ,
+    {
+      id: "mega-unit-6-cybernetic-enhancement",
+      word: "cybernetic enhancement",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 n\u00e2ng c\u1ea5p th\u1ec3 ch\u1ea5t tr\u00ed n\u00e3o b\u1eb1ng thi\u1ebft b\u1ecb \u0111i\u1ec7n t\u1eed",
+      ipa: "/\u02ccsa\u026ab\u0259\u02c8net\u026ak \u026an\u02c8h\u0251\u02d0nsm\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cybernetic+enhancement&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Neural implants represent the first generation of cybernetic enhancements for memory restoration.",
+      exampleVi: "Thi\u1ebft b\u1ecb c\u1ea5y gh\u00e9p th\u1ea7n kinh \u0111\u1ea1i di\u1ec7n cho th\u1ebf h\u1ec7 \u0111\u1ea7u ti\u00ean c\u1ee7a s\u1ef1 n\u00e2ng c\u1ea5p sinh h\u1ecdc \u0111i\u1ec7n t\u1eed nh\u1eb1m ph\u1ee5c h\u1ed3i tr\u00ed nh\u1edb.",
+      collocations: ["human cybernetic enhancement", "future of enhancements"]
+    }
+    ,
+    {
+      id: "mega-unit-6-explainable-ai",
+      word: "explainable ai",
+      partOfSpeech: "n.phr",
+      meaningVi: "tr\u00ed tu\u1ec7 nh\u00e2n t\u1ea1o c\u00f3 kh\u1ea3 n\u0103ng gi\u1ea3i tr\u00ecnh minh b\u1ea1ch",
+      ipa: "/\u026ak\u02c8sple\u026an\u0259bl e\u026a a\u026a/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=explainable+ai&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Medical regulators mandate explainable AI so doctors know the exact reasoning behind diagnostic suggestions.",
+      exampleVi: "C\u01a1 quan qu\u1ea3n l\u00fd y t\u1ebf b\u1eaft bu\u1ed9c AI ph\u1ea3i c\u00f3 kh\u1ea3 n\u0103ng gi\u1ea3i tr\u00ecnh \u0111\u1ec3 b\u00e1c s\u0129 hi\u1ec3u r\u00f5 l\u1eadp lu\u1eadn \u0111\u1eb1ng sau m\u1ed7i g\u1ee3i \u00fd ch\u1ea9n \u0111o\u00e1n.",
+      collocations: ["adopt explainable AI", "importance of explainable AI"]
+    }
   ],
   "unit-7-the-world-of-mass-media": [
     {
@@ -4410,6 +6464,357 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleVi: "B\u1ed9 phim truy\u1ec1n h\u00ecnh \u0111ang chi\u1ebfu b\u1ecb gi\u00e1n \u0111o\u1ea1n b\u1edfi b\u1ea3n tin kh\u1ea9n c\u1ea5p v\u1ec1 c\u01a1n b\u00e3o l\u1edbn.",
       collocations: ["flash a breaking news bulletin", "urgent breaking news bulletin"]
     }
+    ,
+    {
+      id: "mega-unit-7-sensationalism",
+      word: "sensationalism",
+      partOfSpeech: "n",
+      meaningVi: "xu h\u01b0\u1edbng gi\u1eadt g\u00e2n gi\u1eadt g\u00f3t c\u00e2u kh\u00e1ch r\u1ebb ti\u1ec1n",
+      ipa: "/sen\u02c8se\u026a\u0283\u0259n\u0259l\u026az\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=sensationalism&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Tabloid headlines exploit sensationalism to boost social clicks at the expense of journalistic truth.",
+      exampleVi: "C\u00e1c d\u00f2ng t\u00edt b\u00e1o l\u00e1 c\u1ea3i khai th\u00e1c xu h\u01b0\u1edbng gi\u1eadt g\u00e2n r\u1ebb ti\u1ec1n \u0111\u1ec3 c\u00e2u l\u01b0\u1ee3t t\u01b0\u01a1ng t\u00e1c m\u1ea1ng v\u00e0 ch\u00e0 \u0111\u1ea1p l\u00ean s\u1ef1 th\u1eadt b\u00e1o ch\u00ed.",
+      collocations: ["criticize sensationalism", "resort to sensationalism"]
+    }
+    ,
+    {
+      id: "mega-unit-7-fact-checking",
+      word: "fact-checking",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng t\u00e1c ki\u1ec3m ch\u1ee9ng x\u00e1c minh t\u00ednh \u0111\u00fang \u0111\u1eafn c\u1ee7a tin t\u1ee9c",
+      ipa: "/\u02c8f\u00e6kt t\u0283ek\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=fact-checking&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Independent fact-checking organizations debunk altered viral videos before national elections.",
+      exampleVi: "C\u00e1c t\u1ed5 ch\u1ee9c x\u00e1c minh th\u00f4ng tin \u0111\u1ed9c l\u1eadp b\u00f3c tr\u1ea7n nh\u1eefng video b\u1ecb c\u1eaft gh\u00e9p gi\u1ea3 m\u1ea1o tr\u01b0\u1edbc th\u1ec1m b\u1ea7u c\u1eed qu\u1ed1c gia.",
+      collocations: ["rigorous fact-checking", "fact-checking protocol"]
+    }
+    ,
+    {
+      id: "mega-unit-7-echo-chamber",
+      word: "echo chamber",
+      partOfSpeech: "n.phr",
+      meaningVi: "ph\u00f2ng vang th\u00f4ng tin n\u01a1i ng\u01b0\u1eddi ta ch\u1ec9 nghe \u0111i\u1ec1u m\u00ecnh th\u00edch",
+      ipa: "/\u02c8ek\u0259\u028a \u02c8t\u0283e\u026amb\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=echo+chamber&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Personalized feeds trap users inside an ideological echo chamber that reinforces pre-existing biases.",
+      exampleVi: "B\u1ea3ng tin \u0111\u01b0\u1ee3c c\u00e1 nh\u00e2n h\u00f3a giam gi\u1eef ng\u01b0\u1eddi d\u00f9ng b\u00ean trong m\u1ed9t ph\u00f2ng vang \u00fd th\u1ee9c h\u1ec7 khi\u1ebfn c\u00e1c \u0111\u1ecbnh ki\u1ebfn s\u1eb5n c\u00f3 c\u00e0ng th\u00eam s\u00e2u s\u1eafc.",
+      collocations: ["break out of an echo chamber", "online echo chamber"]
+    }
+    ,
+    {
+      id: "mega-unit-7-digital-footprints",
+      word: "digital footprints",
+      partOfSpeech: "n.pl",
+      meaningVi: "d\u1ea5u v\u1ebft k\u1ef9 thu\u1eadt s\u1ed1 \u0111\u1ec3 l\u1ea1i khi l\u01b0\u1edbt web",
+      ipa: "/\u02ccd\u026ad\u0292\u026atl \u02c8f\u028atpr\u026ants/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=digital+footprints&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Every online purchase and search query adds data points to your permanent digital footprints.",
+      exampleVi: "M\u1ed7i l\u1ea7n mua h\u00e0ng qua m\u1ea1ng hay tra c\u1ee9u t\u00ecm ki\u1ebfm \u0111\u1ec1u \u0111\u1ec3 l\u1ea1i c\u00e1c d\u1ea5u v\u1ebft d\u1eef li\u1ec7u v\u0129nh vi\u1ec5n tr\u00ean kh\u00f4ng gian m\u1ea1ng.",
+      collocations: ["minimize digital footprints", "trace digital footprints"]
+    }
+    ,
+    {
+      id: "mega-unit-7-citizen-journalism",
+      word: "citizen journalism",
+      partOfSpeech: "n.phr",
+      meaningVi: "ngh\u1ec1 b\u00e1o c\u00f4ng d\u00e2n ng\u01b0\u1eddi d\u00e2n t\u1ef1 quay tin t\u1ee9c",
+      ipa: "/\u02ccs\u026at\u026azn \u02c8d\u0292\u025c\u02d0n\u0259l\u026az\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=citizen+journalism&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Smartphone livestreams during emergencies demonstrate the powerful speed of citizen journalism.",
+      exampleVi: "Nh\u1eefng \u0111o\u1ea1n ph\u00e1t tr\u1ef1c ti\u1ebfp b\u1eb1ng \u0111i\u1ec7n tho\u1ea1i th\u00f4ng minh trong c\u00e1c t\u00ecnh hu\u1ed1ng kh\u1ea9n c\u1ea5p cho th\u1ea5y t\u1ed1c \u0111\u1ed9 th\u1ea7n t\u1ed1c c\u1ee7a ngh\u1ec1 b\u00e1o c\u00f4ng d\u00e2n.",
+      collocations: ["impact of citizen journalism", "rise of citizen journalism"]
+    }
+    ,
+    {
+      id: "mega-unit-7-media-literacy",
+      word: "media literacy",
+      partOfSpeech: "n.phr",
+      meaningVi: "n\u0103ng l\u1ef1c hi\u1ec3u bi\u1ebft v\u00e0 ph\u00e2n t\u00edch truy\u1ec1n th\u00f4ng ph\u00ea ph\u00e1n",
+      ipa: "/\u02c8mi\u02d0di\u0259 \u02c8l\u026at\u0259r\u0259si/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=media+literacy&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "High schools mandate media literacy courses teaching teenagers to recognize sponsored native ads.",
+      exampleVi: "C\u00e1c tr\u01b0\u1eddng THPT b\u1eaft bu\u1ed9c d\u1ea1y m\u00f4n hi\u1ec3u bi\u1ebft truy\u1ec1n th\u00f4ng \u0111\u1ec3 h\u1ecdc sinh nh\u1eadn bi\u1ebft \u0111\u01b0\u1ee3c c\u00e1c b\u00e0i qu\u1ea3ng c\u00e1o tr\u00e1 h\u00ecnh.",
+      collocations: ["promote media literacy", "critical media literacy"]
+    }
+    ,
+    {
+      id: "mega-unit-7-investigative-reporting",
+      word: "investigative reporting",
+      partOfSpeech: "n.phr",
+      meaningVi: "ph\u00f3ng s\u1ef1 \u0111i\u1ec1u tra chuy\u00ean s\u00e2u b\u00f3c tr\u1ea7n sai ph\u1ea1m",
+      ipa: "/\u026an\u02c8vest\u026a\u0261\u0259t\u026av r\u026a\u02c8p\u0254\u02d0t\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=investigative+reporting&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Months of courageous investigative reporting exposed political bribery and corporate kickbacks.",
+      exampleVi: "Nhi\u1ec1u th\u00e1ng l\u00e0m ph\u00f3ng s\u1ef1 \u0111i\u1ec1u tra d\u0169ng c\u1ea3m \u0111\u00e3 phanh phui c\u00e1c v\u1ee5 h\u1ed1i l\u1ed9 ch\u00ednh tr\u1ecb v\u00e0 ti\u1ec1n hoa h\u1ed3ng m\u1edd \u00e1m c\u1ee7a doanh nghi\u1ec7p.",
+      collocations: ["award for investigative reporting", "in-depth reporting"]
+    }
+    ,
+    {
+      id: "mega-unit-7-targeted-advertising",
+      word: "targeted advertising",
+      partOfSpeech: "n.phr",
+      meaningVi: "qu\u1ea3ng c\u00e1o nh\u1eafm m\u1ee5c ti\u00eau ch\u00ednh x\u00e1c theo s\u1edf th\u00edch",
+      ipa: "/\u02c8t\u0251\u02d0\u0261\u026at\u026ad \u02c8\u00e6dv\u0259ta\u026az\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=targeted+advertising&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Browsing for sports shoes triggers waves of hyper-personalized targeted advertising across apps.",
+      exampleVi: "Vi\u1ec7c v\u1eeba t\u00ecm ki\u1ebfm gi\u00e0y th\u1ec3 thao tr\u00ean web s\u1ebd l\u1eadp t\u1ee9c ch\u00e2m ng\u00f2i cho h\u00e0ng lo\u1ea1t qu\u1ea3ng c\u00e1o nh\u1eafm m\u1ee5c ti\u00eau b\u00e1m \u0111u\u1ed5i tr\u00ean m\u1ecdi \u1ee9ng d\u1ee5ng.",
+      collocations: ["block targeted advertising", "privacy and targeted ads"]
+    }
+    ,
+    {
+      id: "mega-unit-7-disinformation-campaign",
+      word: "disinformation campaign",
+      partOfSpeech: "n.phr",
+      meaningVi: "chi\u1ebfn d\u1ecbch tung tin gi\u1ea3 m\u1ea1o c\u00f3 ch\u1ee7 \u0111\u00edch ch\u00ednh tr\u1ecb",
+      ipa: "/\u02ccd\u026as\u02cc\u026anf\u0259\u02c8me\u026a\u0283n k\u00e6m\u02c8pe\u026an/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=disinformation+campaign&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Intelligence agencies intercepted a coordinated foreign disinformation campaign aimed at stoking ethnic unrest.",
+      exampleVi: "C\u01a1 quan an ninh \u0111\u00e3 ng\u0103n ch\u1eb7n m\u1ed9t chi\u1ebfn d\u1ecbch th\u00f4ng tin gi\u1ea3 m\u1ea1o c\u00f3 t\u1ed5 ch\u1ee9c t\u1eeb b\u00ean ngo\u00e0i nh\u1eb1m k\u00edch \u0111\u1ed9ng b\u1ea5t \u1ed5n s\u1eafc t\u1ed9c.",
+      collocations: ["neutralize a disinformation campaign", "launch a campaign"]
+    }
+    ,
+    {
+      id: "mega-unit-7-press-freedom",
+      word: "press freedom",
+      partOfSpeech: "n.phr",
+      meaningVi: "quy\u1ec1n t\u1ef1 do b\u00e1o ch\u00ed \u0111\u01b0a tin kh\u00e1ch quan",
+      ipa: "/\u02c8pres \u02c8fri\u02d0d\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=press+freedom&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "A flourishing democracy relies on robust press freedom to hold politicians accountable.",
+      exampleVi: "M\u1ed9t n\u1ec1n d\u00e2n ch\u1ee7 ph\u1ed3n vinh lu\u00f4n d\u1ef1a v\u00e0o quy\u1ec1n t\u1ef1 do b\u00e1o ch\u00ed v\u1eefng m\u1ea1nh \u0111\u1ec3 gi\u00e1m s\u00e1t tr\u00e1ch nhi\u1ec7m c\u1ee7a c\u00e1c ch\u00ednh tr\u1ecb gia.",
+      collocations: ["defend press freedom", "erosion of press freedom"]
+    }
+    ,
+    {
+      id: "mega-unit-7-infotainment",
+      word: "infotainment",
+      partOfSpeech: "n",
+      meaningVi: "ch\u01b0\u01a1ng tr\u00ecnh k\u1ebft h\u1ee3p cung c\u1ea5p th\u00f4ng tin v\u00e0 gi\u1ea3i tr\u00ed",
+      ipa: "/\u02cc\u026anf\u0259\u028a\u02c8te\u026anm\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=infotainment&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Late-night comedy news shows pioneer witty infotainment that makes politics accessible to youth.",
+      exampleVi: "C\u00e1c ch\u01b0\u01a1ng tr\u00ecnh tin t\u1ee9c h\u00e0i h\u01b0\u1edbc \u0111\u00eam khuya ti\u00ean phong cho phong c\u00e1ch th\u00f4ng tin gi\u1ea3i tr\u00ed d\u00ed d\u1ecfm gi\u00fap gi\u1edbi tr\u1ebb d\u1ec5 ti\u1ebfp c\u1eadn ch\u00ednh tr\u1ecb.",
+      collocations: ["popularity of infotainment", "watch infotainment"]
+    }
+    ,
+    {
+      id: "mega-unit-7-defamation-lawsuit",
+      word: "defamation lawsuit",
+      partOfSpeech: "n.phr",
+      meaningVi: "v\u1ee5 ki\u1ec7n \u0111\u00f2i b\u1ed3i th\u01b0\u1eddng v\u00ec h\u00e0nh vi b\u00f4i nh\u1ecd danh d\u1ef1",
+      ipa: "/\u02ccdef\u0259\u02c8me\u026a\u0283n \u02c8l\u0254\u02d0sju\u02d0t/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=defamation+lawsuit&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The celebrity won a multi-million-dollar defamation lawsuit against a libelous magazine.",
+      exampleVi: "Ng\u00f4i sao n\u1ed5i ti\u1ebfng \u0111\u00e3 th\u1eafng v\u1ee5 ki\u1ec7n b\u00f4i nh\u1ecd danh d\u1ef1 tr\u1ecb gi\u00e1 h\u00e0ng tri\u1ec7u \u0111\u00f4 la ch\u1ed1ng l\u1ea1i t\u1edd t\u1ea1p ch\u00ed vu kh\u1ed1ng.",
+      collocations: ["file a defamation lawsuit", "settle a lawsuit"]
+    }
+    ,
+    {
+      id: "mega-unit-7-algorithmic-amplification",
+      word: "algorithmic amplification",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 khu\u1ebfch \u0111\u1ea1i b\u00e0i vi\u1ebft b\u1eb1ng thu\u1eadt to\u00e1n gi\u1eef ch\u00e2n ng\u01b0\u1eddi xem",
+      ipa: "/\u02cc\u00e6l\u0261\u0259\u02c8r\u026a\u00f0m\u026ak \u02cc\u00e6mpl\u026af\u026a\u02c8ke\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=algorithmic+amplification&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Outrageous opinions receive disproportionate algorithmic amplification because anger drives engagement.",
+      exampleVi: "Nh\u1eefng \u00fd ki\u1ebfn g\u00e2y ph\u1eabn n\u1ed9 nh\u1eadn \u0111\u01b0\u1ee3c s\u1ef1 khu\u1ebfch \u0111\u1ea1i thu\u1eadt to\u00e1n qu\u00e1 m\u1ee9c b\u1edfi v\u00ec s\u1ef1 gi\u1eadn d\u1eef th\u00fac \u0111\u1ea9y t\u01b0\u01a1ng t\u00e1c b\u00ecnh lu\u1eadn.",
+      collocations: ["dangers of algorithmic amplification", "curb amplification"]
+    }
+    ,
+    {
+      id: "mega-unit-7-whistleblower-leak",
+      word: "whistleblower leak",
+      partOfSpeech: "n.phr",
+      meaningVi: "v\u1ee5 r\u00f2 r\u1ec9 t\u00e0i li\u1ec7u m\u1eadt t\u1eeb ng\u01b0\u1eddi trong n\u1ed9i b\u1ed9 t\u1ed1 c\u00e1o",
+      ipa: "/\u02c8w\u026aslbl\u0259\u028a\u0259 li\u02d0k/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=whistleblower+leak&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The investigative expos\u00e9 relied on a verified whistleblower leak detailing corporate tax avoidance.",
+      exampleVi: "Ph\u00f3ng s\u1ef1 \u0111i\u1ec1u tra d\u1ef1a tr\u00ean t\u00e0i li\u1ec7u r\u00f2 r\u1ec9 \u0111\u01b0\u1ee3c x\u00e1c th\u1ef1c t\u1eeb m\u1ed9t ng\u01b0\u1eddi t\u1ed1 gi\u00e1c n\u1ed9i b\u1ed9 ph\u01a1i b\u00e0y h\u00e0nh vi tr\u1ed1n thu\u1ebf c\u1ee7a c\u00f4ng ty.",
+      collocations: ["rely on a whistleblower leak", "publish a leak"]
+    }
+    ,
+    {
+      id: "mega-unit-7-paywall",
+      word: "paywall",
+      partOfSpeech: "n",
+      meaningVi: "b\u1ee9c t\u01b0\u1eddng thu ph\u00ed \u0111\u1ecdc b\u00e1o \u0111i\u1ec7n t\u1eed tr\u1ef1c tuy\u1ebfn",
+      ipa: "/\u02c8pe\u026aw\u0254\u02d0l/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=paywall&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Quality journalism outlets established a digital paywall to fund thorough on-the-ground reporting.",
+      exampleVi: "C\u00e1c c\u01a1 quan b\u00e1o ch\u00ed ch\u1ea5t l\u01b0\u1ee3ng cao \u0111\u00e3 d\u1ef1ng h\u00e0ng r\u00e0o thu ph\u00ed \u0111i\u1ec7n t\u1eed \u0111\u1ec3 c\u00f3 kinh ph\u00ed cho c\u00e1c ph\u00f3ng s\u1ef1 \u0111i\u1ec1u tra th\u1ef1c \u0111\u1ecba c\u00f4ng phu.",
+      collocations: ["put content behind a paywall", "digital paywall model"]
+    }
+    ,
+    {
+      id: "mega-unit-7-deepfake-technology",
+      word: "deepfake technology",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng ngh\u1ec7 gh\u00e9p m\u1eb7t v\u00e0 gi\u1ecdng n\u00f3i gi\u1ea3 m\u1ea1o si\u00eau tinh vi",
+      ipa: "/\u02c8di\u02d0pfe\u026ak tek\u02c8n\u0252l\u0259d\u0292i/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=deepfake+technology&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Detecting realistic deepfake technology videos requires advanced forensic cryptographic software.",
+      exampleVi: "Vi\u1ec7c ph\u00e1t hi\u1ec7n c\u00e1c video c\u00f4ng ngh\u1ec7 deepfake tinh vi nh\u01b0 th\u1eadt \u0111\u00f2i h\u1ecfi c\u00e1c ph\u1ea7n m\u1ec1m gi\u00e1m \u0111\u1ecbnh m\u1eadt m\u00e3 h\u1ecdc ti\u00ean ti\u1ebfn.",
+      collocations: ["combat deepfake technology", "spread of deepfakes"]
+    }
+    ,
+    {
+      id: "mega-unit-7-media-conglomerate",
+      word: "media conglomerate",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u1eadp \u0111o\u00e0n truy\u1ec1n th\u00f4ng kh\u1ed5ng l\u1ed3 th\u00e2u t\u00f3m th\u1ecb tr\u01b0\u1eddng",
+      ipa: "/\u02c8mi\u02d0di\u0259 k\u0259n\u02c8\u0261l\u0252m\u0259r\u0259t/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=media+conglomerate&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "A handful of mega media conglomerates control eighty percent of global television channels.",
+      exampleVi: "Ch\u1ec9 m\u1ed9t s\u1ed1 \u00edt t\u1eadp \u0111o\u00e0n truy\u1ec1n th\u00f4ng kh\u1ed5ng l\u1ed3 \u0111\u00e3 n\u1eafm quy\u1ec1n ki\u1ec3m so\u00e1t t\u00e1m m\u01b0\u01a1i ph\u1ea7n tr\u0103m c\u00e1c k\u00eanh truy\u1ec1n h\u00ecnh to\u00e0n c\u1ea7u.",
+      collocations: ["power of media conglomerates", "conglomerate monopoly"]
+    }
+    ,
+    {
+      id: "mega-unit-7-viral-phenomenon",
+      word: "viral phenomenon",
+      partOfSpeech: "n.phr",
+      meaningVi: "hi\u1ec7n t\u01b0\u1ee3ng m\u1ea1ng lan truy\u1ec1n v\u1edbi t\u1ed1c \u0111\u1ed9 ch\u00f3ng m\u1eb7t",
+      ipa: "/\u02c8va\u026ar\u0259l f\u0259\u02c8n\u0252m\u026an\u0259n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=viral+phenomenon&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The short music video exploded into an overnight viral phenomenon clocking fifty million views.",
+      exampleVi: "Video ca nh\u1ea1c ng\u1eafn \u0111\u00e3 b\u00f9ng n\u1ed5 th\u00e0nh m\u1ed9t hi\u1ec7n t\u01b0\u1ee3ng m\u1ea1ng lan truy\u1ec1n ch\u1ec9 sau m\u1ed9t \u0111\u00eam v\u1edbi n\u0103m m\u01b0\u01a1i tri\u1ec7u l\u01b0\u1ee3t xem.",
+      collocations: ["become a viral phenomenon", "global phenomenon"]
+    }
+    ,
+    {
+      id: "mega-unit-7-news-anchor",
+      word: "news anchor",
+      partOfSpeech: "n.phr",
+      meaningVi: "bi\u00ean t\u1eadp vi\u00ean ng\u01b0\u1eddi d\u1eabn ch\u01b0\u01a1ng tr\u00ecnh th\u1eddi s\u1ef1 ch\u00ednh",
+      ipa: "/\u02c8nju\u02d0z \u02cc\u00e6\u014bk\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=news+anchor&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The veteran news anchor delivered the live election results with calm authority.",
+      exampleVi: "Ng\u01b0\u1eddi d\u1eabn ch\u01b0\u01a1ng tr\u00ecnh th\u1eddi s\u1ef1 k\u1ef3 c\u1ef1u \u0111\u00e3 c\u00f4ng b\u1ed1 k\u1ebft qu\u1ea3 b\u1ea7u c\u1eed tr\u1ef1c ti\u1ebfp v\u1edbi phong th\u00e1i \u0111\u0129nh \u0111\u1ea1c v\u00e0 uy quy\u1ec1n.",
+      collocations: ["trusted news anchor", "deliver news as anchor"]
+    }
+    ,
+    {
+      id: "mega-unit-7-public-broadcaster",
+      word: "public broadcaster",
+      partOfSpeech: "n.phr",
+      meaningVi: "\u0111\u00e0i truy\u1ec1n h\u00ecnh qu\u1ed1c gia ph\u00e1t s\u00f3ng c\u00f4ng c\u1ed9ng",
+      ipa: "/\u02c8p\u028cbl\u026ak \u02c8br\u0254\u02d0dk\u0251\u02d0st\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=public+broadcaster&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Funded by taxpayer licenses, the public broadcaster delivers educational documentaries free from commercial ads.",
+      exampleVi: "\u0110\u01b0\u1ee3c t\u00e0i tr\u1ee3 t\u1eeb ng\u00e2n s\u00e1ch c\u00f4ng, \u0111\u00e0i truy\u1ec1n h\u00ecnh qu\u1ed1c gia ph\u00e1t s\u00f3ng c\u00e1c b\u1ed9 phim t\u00e0i li\u1ec7u gi\u00e1o d\u1ee5c m\u00e0 kh\u00f4ng c\u00f3 qu\u1ea3ng c\u00e1o th\u01b0\u01a1ng m\u1ea1i.",
+      collocations: ["trust in the public broadcaster", "national broadcaster"]
+    }
+    ,
+    {
+      id: "mega-unit-7-cyber-surveillance",
+      word: "cyber surveillance",
+      partOfSpeech: "n.phr",
+      meaningVi: "ho\u1ea1t \u0111\u1ed9ng gi\u00e1m s\u00e1t theo d\u00f5i kh\u00f4ng gian m\u1ea1ng",
+      ipa: "/\u02c8sa\u026ab\u0259 s\u0259\u02c8ve\u026al\u0259ns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cyber+surveillance&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Privacy advocates campaign vigorously against warrantless mass cyber surveillance.",
+      exampleVi: "Nh\u1eefng ng\u01b0\u1eddi \u0111\u1ea5u tranh v\u00ec quy\u1ec1n ri\u00eang t\u01b0 v\u1eadn \u0111\u1ed9ng quy\u1ebft li\u1ec7t ch\u1ed1ng l\u1ea1i h\u00e0nh vi gi\u00e1m s\u00e1t kh\u00f4ng gian m\u1ea1ng h\u00e0ng lo\u1ea1t tr\u00e1i ph\u00e9p.",
+      collocations: ["subject to cyber surveillance", "protect from surveillance"]
+    }
+    ,
+    {
+      id: "mega-unit-7-confirmation-bias",
+      word: "confirmation bias",
+      partOfSpeech: "n.phr",
+      meaningVi: "thi\u00ean ki\u1ebfn x\u00e1c nh\u1eadn ch\u1ec9 tin \u0111i\u1ec1u h\u1ee3p \u00fd m\u00ecnh",
+      ipa: "/\u02cck\u0252nf\u0259\u02c8me\u026a\u0283n \u02c8ba\u026a\u0259s/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=confirmation+bias&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Readers prone to confirmation bias gladly forward dubious articles that align with their political prejudices.",
+      exampleVi: "Nh\u1eefng \u0111\u1ed9c gi\u1ea3 m\u1eafc thi\u00ean ki\u1ebfn x\u00e1c nh\u1eadn vui v\u1ebb chia s\u1ebb nh\u1eefng b\u00e0i b\u00e1o m\u1edd \u00e1m ch\u1ec9 v\u00ec ch\u00fang h\u1ee3p v\u1edbi \u0111\u1ecbnh ki\u1ebfn ch\u00ednh tr\u1ecb c\u1ee7a m\u00ecnh.",
+      collocations: ["trap of confirmation bias", "succumb to bias"]
+    }
+    ,
+    {
+      id: "mega-unit-7-op-ed-column",
+      word: "op-ed column",
+      partOfSpeech: "n.phr",
+      meaningVi: "chuy\u00ean m\u1ee5c b\u00e0i b\u00ecnh lu\u1eadn c\u1ee7a chuy\u00ean gia tr\u00ean b\u00e1o",
+      ipa: "/\u02c8\u0252p ed \u02c8k\u0252l\u0259m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=op-ed+column&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Leading climatologists authored an urgent op-ed column in the morning gazette warning about emissions.",
+      exampleVi: "C\u00e1c chuy\u00ean gia kh\u00ed h\u1eadu h\u00e0ng \u0111\u1ea7u \u0111\u00e3 ch\u1eafp b\u00fat m\u1ed9t b\u00e0i b\u00ecnh lu\u1eadn kh\u1ea9n c\u1ea5p tr\u00ean trang b\u00e1o s\u00e1ng c\u1ea3nh b\u00e1o v\u1ec1 kh\u00ed th\u1ea3i.",
+      collocations: ["write an op-ed column", "publish an op-ed"]
+    }
+    ,
+    {
+      id: "mega-unit-7-click-through-rate",
+      word: "click-through rate",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u1ef7 l\u1ec7 nh\u1ea5p chu\u1ed9t v\u00e0o li\u00ean k\u1ebft b\u00e0i vi\u1ebft qu\u1ea3ng c\u00e1o",
+      ipa: "/\u02c8kl\u026ak \u03b8ru\u02d0 re\u026at/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=click-through+rate&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Digital copywriters test five variants of headlines to maximize the overall article click-through rate.",
+      exampleVi: "Nh\u1eefng ng\u01b0\u1eddi vi\u1ebft n\u1ed9i dung th\u1eed nghi\u1ec7m n\u0103m phi\u00ean b\u1ea3n ti\u00eau \u0111\u1ec1 kh\u00e1c nhau \u0111\u1ec3 t\u1ed1i \u0111a h\u00f3a t\u1ef7 l\u1ec7 nh\u1ea5p chu\u1ed9t v\u00e0o b\u00e0i vi\u1ebft.",
+      collocations: ["high click-through rate", "improve click-through rate"]
+    }
+    ,
+    {
+      id: "mega-unit-7-media-accountability",
+      word: "media accountability",
+      partOfSpeech: "n.phr",
+      meaningVi: "tr\u00e1ch nhi\u1ec7m gi\u1ea3i tr\u00ecnh \u0111\u1ea1o \u0111\u1ee9c c\u1ee7a b\u00e1o ch\u00ed truy\u1ec1n th\u00f4ng",
+      ipa: "/\u02c8mi\u02d0di\u0259 \u0259\u02ccka\u028ant\u0259\u02c8b\u026al\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=media+accountability&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Independent press ombudsmen enforce strict standards of media accountability and public retractions.",
+      exampleVi: "Ban thanh tra b\u00e1o ch\u00ed \u0111\u1ed9c l\u1eadp th\u1ef1c thi c\u00e1c chu\u1ea9n m\u1ef1c nghi\u00eam ng\u1eb7t v\u1ec1 tr\u00e1ch nhi\u1ec7m gi\u1ea3i tr\u00ecnh v\u00e0 \u0111\u00ednh ch\u00ednh c\u00f4ng khai.",
+      collocations: ["demand media accountability", "standards of accountability"]
+    }
+    ,
+    {
+      id: "mega-unit-7-media-watchdog",
+      word: "media watchdog",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u01a1 quan gi\u00e1m s\u00e1t \u0111\u1ed9c l\u1eadp t\u00ednh trung th\u1ef1c c\u1ee7a b\u00e1o ch\u00ed",
+      ipa: "/\u02c8mi\u02d0di\u0259 \u02c8w\u0252t\u0283d\u0252\u0261/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=media+watchdog&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The independent media watchdog investigates instances of unethical covert product placement in morning talk shows.",
+      exampleVi: "C\u01a1 quan gi\u00e1m s\u00e1t b\u00e1o ch\u00ed \u0111\u1ed9c l\u1eadp \u0111i\u1ec1u tra c\u00e1c v\u1ee5 c\u00e0i c\u1eafm qu\u1ea3ng c\u00e1o s\u1ea3n ph\u1ea9m ng\u1ea7m thi\u1ebfu \u0111\u1ea1o \u0111\u1ee9c trong c\u00e1c ch\u01b0\u01a1ng tr\u00ecnh tr\u00f2 chuy\u1ec7n bu\u1ed5i s\u00e1ng.",
+      collocations: ["role of media watchdog", "watchdog organization"]
+    }
+    ,
+    {
+      id: "mega-unit-7-digital-stream",
+      word: "digital stream",
+      partOfSpeech: "n.phr",
+      meaningVi: "lu\u1ed3ng ph\u00e1t s\u00f3ng tr\u1ef1c tuy\u1ebfn \u00e2m thanh h\u00ecnh \u1ea3nh k\u1ef9 thu\u1eadt s\u1ed1",
+      ipa: "/\u02ccd\u026ad\u0292\u026atl stri\u02d0m/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=digital+stream&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Millions of viewers tuned in to the official high-definition digital stream of the charity concert.",
+      exampleVi: "H\u00e0ng tri\u1ec7u kh\u00e1n gi\u1ea3 \u0111\u00e3 theo d\u00f5i lu\u1ed3ng ph\u00e1t s\u00f3ng tr\u1ef1c tuy\u1ebfn \u0111\u1ed9 n\u00e9t cao ch\u00ednh th\u1ee9c c\u1ee7a \u0111\u00eam nh\u1ea1c g\u00e2y qu\u1ef9 t\u1eeb thi\u1ec7n.",
+      collocations: ["watch the digital stream", "live digital stream"]
+    }
   ],
   "unit-8-wildlife-conservation": [
     {
@@ -5016,6 +7421,344 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleVi: "G\u1ea5u ng\u1ef1a \u0111\u01b0\u1ee3c gi\u1ea3i c\u1ee9u s\u1ebd tr\u1ea3i qua ph\u1ee5c h\u1ed3i t\u1eadp t\u00ednh tr\u01b0\u1edbc khi \u0111\u01b0\u1ee3c t\u00e1i th\u1ea3 v\u1ec1 v\u1edbi t\u1ef1 nhi\u00ean.",
       collocations: ["plan reintroduction into the wild", "successful reintroduction"]
     }
+    ,
+    {
+      id: "mega-unit-8-poaching-syndicate",
+      word: "poaching syndicate",
+      partOfSpeech: "n.phr",
+      meaningVi: "\u0111\u01b0\u1eddng d\u00e2y t\u1ed9i ph\u1ea1m bu\u00f4n b\u00e1n s\u0103n tr\u1ed9m \u0111\u1ed9ng v\u1eadt hoang d\u00e3",
+      ipa: "/\u02c8p\u0259\u028at\u0283\u026a\u014b \u02c8s\u026and\u026ak\u0259t/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=poaching+syndicate&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Interpol intercepted an international poaching syndicate trafficking pangolin scales and elephant ivory.",
+      exampleVi: "Interpol \u0111\u00e3 tri\u1ec7t ph\u00e1 m\u1ed9t \u0111\u01b0\u1eddng d\u00e2y s\u0103n tr\u1ed9m qu\u1ed1c t\u1ebf chuy\u00ean bu\u00f4n l\u1eadu v\u1ea3y t\u00ea t\u00ea v\u00e0 ng\u00e0 voi xuy\u00ean qu\u1ed1c gia.",
+      collocations: ["dismantle a poaching syndicate", "arrest members of a syndicate"]
+    }
+    ,
+    {
+      id: "mega-unit-8-wildlife-corridor",
+      word: "wildlife corridor",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u00e0nh lang sinh th\u00e1i cho \u0111\u1ed9ng v\u1eadt di chuy\u1ec3n an to\u00e0n",
+      ipa: "/\u02c8wa\u026aldla\u026af \u02c8k\u0252r\u026ad\u0254\u02d0(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=wildlife+corridor&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Constructing forested wildlife corridors over expressways allows grizzly bears to roam without getting struck.",
+      exampleVi: "X\u00e2y d\u1ef1ng h\u00e0nh lang sinh th\u00e1i ph\u1ee7 c\u00e2y xanh b\u1eafc qua \u0111\u01b0\u1eddng cao t\u1ed1c gi\u00fap lo\u00e0i g\u1ea5u di chuy\u1ec3n m\u00e0 kh\u00f4ng b\u1ecb xe \u0111\u00e2m.",
+      collocations: ["build a wildlife corridor", "wildlife overpass"]
+    }
+    ,
+    {
+      id: "mega-unit-8-captive-breeding",
+      word: "captive breeding",
+      partOfSpeech: "n.phr",
+      meaningVi: "ch\u01b0\u01a1ng tr\u00ecnh nh\u00e2n gi\u1ed1ng b\u1ea3o t\u1ed3n trong m\u00f4i tr\u01b0\u1eddng nu\u00f4i nh\u1ed1t",
+      ipa: "/\u02cck\u00e6pt\u026av \u02c8bri\u02d0d\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=captive+breeding&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Zoological sanctuaries successfully restored the California condor population through intensive captive breeding.",
+      exampleVi: "C\u00e1c khu b\u1ea3o t\u1ed3n th\u1ea3o c\u1ea7m vi\u00ean \u0111\u00e3 kh\u00f4i ph\u1ee5c th\u00e0nh c\u00f4ng qu\u1ea7n th\u1ec3 k\u1ec1n k\u1ec1n California qua ch\u01b0\u01a1ng tr\u00ecnh nh\u00e2n gi\u1ed1ng nu\u00f4i nh\u1ed1t c\u00f4ng phu.",
+      collocations: ["success in captive breeding", "captive breeding facility"]
+    }
+    ,
+    {
+      id: "mega-unit-8-species-reintroduction",
+      word: "species reintroduction",
+      partOfSpeech: "n.phr",
+      meaningVi: "ho\u1ea1t \u0111\u1ed9ng t\u00e1i th\u1ea3 lo\u00e0i sinh v\u1eadt v\u1ec1 t\u1ef1 nhi\u00ean hoang d\u00e3",
+      ipa: "/\u02c8spi\u02d0\u0283i\u02d0z \u02ccri\u02d0\u02cc\u026antr\u0259\u02c8d\u028ck\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=species+reintroduction&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Wildlife biologists tracked the species reintroduction of red wolves into Appalachian wilderness areas.",
+      exampleVi: "C\u00e1c nh\u00e0 sinh v\u1eadt h\u1ecdc theo d\u00f5i s\u00e1t sao ho\u1ea1t \u0111\u1ed9ng t\u00e1i th\u1ea3 lo\u00e0i s\u00f3i \u0111\u1ecf tr\u1edf l\u1ea1i c\u00e1c c\u00e1nh r\u1eebng hoang d\u00e3 Appalachian.",
+      collocations: ["plan species reintroduction", "successful reintroduction"]
+    }
+    ,
+    {
+      id: "mega-unit-8-habitat-fragmentation",
+      word: "habitat fragmentation",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 ph\u00e2n m\u1ea3nh chia c\u1eaft sinh c\u1ea3nh s\u1ed1ng",
+      ipa: "/\u02c8h\u00e6b\u026at\u00e6t \u02ccfr\u00e6\u0261men\u02c8te\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=habitat+fragmentation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Plantations and rubber concessions cause severe habitat fragmentation, isolating tiger prides.",
+      exampleVi: "C\u00e1c \u0111\u1ed3n \u0111i\u1ec1n v\u00e0 khu \u0111\u1ea5t khai th\u00e1c cao su g\u00e2y ra s\u1ef1 ph\u00e2n m\u1ea3nh sinh c\u1ea3nh nghi\u00eam tr\u1ecdng, c\u00f4 l\u1eadp c\u00e1c \u0111\u00e0n h\u1ed5.",
+      collocations: ["combat habitat fragmentation", "impact of fragmentation"]
+    }
+    ,
+    {
+      id: "mega-unit-8-red-list",
+      word: "red list",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u00e1ch \u0111\u1ecf c\u00e1c lo\u00e0i sinh v\u1eadt nguy c\u1ea5p tuy\u1ec7t ch\u1ee7ng",
+      ipa: "/red l\u026ast/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=red+list&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The IUCN Red List classifies the Javan rhinoceros as critically endangered with fewer than eighty individuals.",
+      exampleVi: "S\u00e1ch \u0111\u1ecf IUCN x\u1ebfp lo\u00e0i t\u00ea gi\u00e1c Java v\u00e0o c\u1ea5p c\u1ef1c k\u1ef3 nguy c\u1ea5p khi ch\u1ec9 c\u00f2n ch\u01b0a \u0111\u1ea7y t\u00e1m m\u01b0\u01a1i c\u00e1 th\u1ec3 tr\u00ean h\u00e0nh tinh.",
+      collocations: ["inscribed on the Red List", "IUCN Red List assessment"]
+    }
+    ,
+    {
+      id: "mega-unit-8-biodiversity-reserve",
+      word: "biodiversity reserve",
+      partOfSpeech: "n.phr",
+      meaningVi: "khu d\u1ef1 tr\u1eef sinh quy\u1ec3n b\u1ea3o t\u1ed3n thi\u00ean nhi\u00ean",
+      ipa: "/\u02ccba\u026a\u0259\u028ada\u026a\u02c8v\u025c\u02d0s\u0259ti r\u026a\u02c8z\u025c\u02d0v/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=biodiversity+reserve&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Cat Tien National Park is designated an international biodiversity reserve sheltering rare gibbons.",
+      exampleVi: "V\u01b0\u1eddn qu\u1ed1c gia C\u00e1t Ti\u00ean \u0111\u01b0\u1ee3c c\u00f4ng nh\u1eadn l\u00e0 khu d\u1ef1 tr\u1eef sinh quy\u1ec3n qu\u1ed1c t\u1ebf b\u1ea3o t\u1ed3n c\u00e1c lo\u00e0i v\u01b0\u1ee3n qu\u00fd hi\u1ebfm.",
+      collocations: ["explore a biodiversity reserve", "patrol the reserve"]
+    }
+    ,
+    {
+      id: "mega-unit-8-cites-convention",
+      word: "cites convention",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng \u01b0\u1edbc qu\u1ed1c t\u1ebf CITES v\u1ec1 bu\u00f4n b\u00e1n \u0111\u1ed9ng th\u1ef1c v\u1eadt hoang d\u00e3",
+      ipa: "/\u02c8sa\u026ati\u02d0z k\u0259n\u02c8ven\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cites+convention&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Over 180 nations enforce trade penalties under the CITES convention to save sea turtles.",
+      exampleVi: "H\u01a1n 180 qu\u1ed1c gia \u00e1p d\u1ee5ng ch\u1ebf t\u00e0i th\u01b0\u01a1ng m\u1ea1i theo c\u00f4ng \u01b0\u1edbc CITES nh\u1eb1m c\u1ee9u r\u1ed7i lo\u00e0i r\u00f9a bi\u1ec3n kh\u1ecfi s\u1ef1 s\u0103n b\u1eaft.",
+      collocations: ["signatory to CITES convention", "CITES appendix rules"]
+    }
+    ,
+    {
+      id: "mega-unit-8-anti-poaching-ranger",
+      word: "anti-poaching ranger",
+      partOfSpeech: "n.phr",
+      meaningVi: "ki\u1ec3m l\u00e2m vi\u00ean chuy\u00ean tr\u00e1ch ch\u1ed1ng s\u0103n tr\u1ed9m",
+      ipa: "/\u02cc\u00e6nti \u02c8p\u0259\u028at\u0283\u026a\u014b \u02c8re\u026and\u0292\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=anti-poaching+ranger&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Armed anti-poaching rangers brave dangerous armed encounters to safeguard mountain gorillas.",
+      exampleVi: "C\u00e1c ki\u1ec3m l\u00e2m vi\u00ean ch\u1ed1ng s\u0103n tr\u1ed9m d\u0169ng c\u1ea3m \u0111\u1ed1i m\u1eb7t v\u1edbi c\u00e1c cu\u1ed9c \u0111\u1ee5ng \u0111\u1ed9 v\u0169 trang nguy hi\u1ec3m \u0111\u1ec3 b\u1ea3o v\u1ec7 lo\u00e0i kh\u1ec9 \u0111\u1ed9t n\u00fai.",
+      collocations: ["serve as anti-poaching ranger", "patrol with rangers"]
+    }
+    ,
+    {
+      id: "mega-unit-8-camera-trap",
+      word: "camera trap",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u1eaby \u1ea3nh t\u1ef1 \u0111\u1ed9ng gi\u00e1m s\u00e1t \u0111\u1ed9ng v\u1eadt qu\u00fd hi\u1ebfm",
+      ipa: "/\u02c8k\u00e6mr\u0259 tr\u00e6p/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=camera+trap&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Motion-activated infrared camera traps captured rare nocturnal footage of an elusive snow leopard.",
+      exampleVi: "B\u1eaby \u1ea3nh h\u1ed3ng ngo\u1ea1i k\u00edch ho\u1ea1t b\u1eb1ng chuy\u1ec3n \u0111\u1ed9ng \u0111\u00e3 ghi l\u1ea1i nh\u1eefng th\u01b0\u1edbc phim hi\u1ebfm hoi v\u1ec1 b\u00e1o tuy\u1ebft b\u00ed \u1ea9n trong \u0111\u00eam.",
+      collocations: ["install camera traps", "camera trap footage"]
+    }
+    ,
+    {
+      id: "mega-unit-8-in-situ-conservation",
+      word: "in-situ conservation",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u1ea3o t\u1ed3n t\u1ea1i ch\u1ed7 ngay trong sinh c\u1ea3nh t\u1ef1 nhi\u00ean",
+      ipa: "/\u026an \u02c8s\u026atju\u02d0 \u02cck\u0252ns\u0259\u02c8ve\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=in-situ+conservation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Establishing strictly patrolled marine national parks exemplifies in-situ conservation at its best.",
+      exampleVi: "Th\u00e0nh l\u1eadp c\u00e1c c\u00f4ng vi\u00ean bi\u1ec3n qu\u1ed1c gia tu\u1ea7n tra nghi\u00eam ng\u1eb7t l\u00e0 h\u00ecnh m\u1eabu ti\u00eau bi\u1ec3u nh\u1ea5t c\u1ee7a b\u1ea3o t\u1ed3n t\u1ea1i ch\u1ed7 trong t\u1ef1 nhi\u00ean.",
+      collocations: ["prioritize in-situ conservation", "in-situ methods"]
+    }
+    ,
+    {
+      id: "mega-unit-8-ex-situ-conservation",
+      word: "ex-situ conservation",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u1ea3o t\u1ed3n chuy\u1ec3n ch\u1ed7 nu\u00f4i d\u01b0\u1ee1ng ngo\u00e0i t\u1ef1 nhi\u00ean",
+      ipa: "/ek \u02c8s\u026atju\u02d0 \u02cck\u0252ns\u0259\u02c8ve\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ex-situ+conservation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Botanical seed banks and cryo-vaults serve as vital ex-situ conservation safeguards against extinction.",
+      exampleVi: "Ng\u00e2n h\u00e0ng h\u1ea1t gi\u1ed1ng th\u1ef1c v\u1eadt v\u00e0 kho \u0111\u00f4ng l\u1ea1nh \u0111\u00f3ng vai tr\u00f2 l\u00e0 gi\u1ea3i ph\u00e1p b\u1ea3o t\u1ed3n chuy\u1ec3n ch\u1ed7 t\u1ed1i quan tr\u1ecdng ch\u1ed1ng tuy\u1ec7t ch\u1ee7ng.",
+      collocations: ["role of ex-situ conservation", "ex-situ botanical facilities"]
+    }
+    ,
+    {
+      id: "mega-unit-8-illegal-wildlife-trade",
+      word: "illegal wildlife trade",
+      partOfSpeech: "n.phr",
+      meaningVi: "n\u1ea1n bu\u00f4n b\u00e1n tr\u00e1i ph\u00e9p \u0111\u1ed9ng v\u1eadt hoang d\u00e3",
+      ipa: "/\u026a\u02c8li\u02d0\u0261l \u02c8wa\u026aldla\u026af tre\u026ad/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=illegal+wildlife+trade&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Customs sniffer dogs at air hubs detect contraband ivory and stem the illegal wildlife trade.",
+      exampleVi: "Ch\u00f3 nghi\u1ec7p v\u1ee5 h\u1ea3i quan t\u1ea1i s\u00e2n bay ph\u00e1t hi\u1ec7n ng\u00e0 voi bu\u00f4n l\u1eadu v\u00e0 ng\u0103n ch\u1eb7n n\u1ea1n bu\u00f4n b\u00e1n \u0111\u1ed9ng v\u1eadt hoang d\u00e3 tr\u00e1i ph\u00e9p.",
+      collocations: ["combat illegal wildlife trade", "crackdown on wildlife trade"]
+    }
+    ,
+    {
+      id: "mega-unit-8-snare-removal",
+      word: "snare removal",
+      partOfSpeech: "n.phr",
+      meaningVi: "ho\u1ea1t \u0111\u1ed9ng th\u00e1o d\u1ee1 b\u1eaby d\u00e2y si\u1ebft th\u00fa r\u1eebng",
+      ipa: "/sne\u0259 r\u026a\u02c8mu\u02d0vl/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=snare+removal&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Volunteer forest expeditions conducted extensive snare removal, destroying thousands of wire traps.",
+      exampleVi: "C\u00e1c chuy\u1ebfn tu\u1ea7n r\u1eebng t\u00ecnh nguy\u1ec7n \u0111\u00e3 ti\u1ebfn h\u00e0nh th\u00e1o g\u1ee1 b\u1eaby th\u00fa quy m\u00f4 l\u1edbn, ph\u00e1 h\u1ee7y h\u00e0ng ng\u00e0n chi\u1ebfc b\u1eaby d\u00e2y th\u00e9p nguy hi\u1ec3m.",
+      collocations: ["volunteer for snare removal", "snare removal campaign"]
+    }
+    ,
+    {
+      id: "mega-unit-8-gene-bank",
+      word: "gene bank",
+      partOfSpeech: "n.phr",
+      meaningVi: "ng\u00e2n h\u00e0ng gen l\u01b0u tr\u1eef ADN sinh v\u1eadt qu\u00fd",
+      ipa: "/\u02c8d\u0292i\u02d0n b\u00e6\u014bk/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=gene+bank&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The national gene bank preserves cryogenically frozen tissues of vanishing freshwater turtle breeds.",
+      exampleVi: "Ng\u00e2n h\u00e0ng gen qu\u1ed1c gia l\u01b0u gi\u1eef c\u00e1c m\u1eabu m\u00f4 \u0111\u00f4ng l\u1ea1nh c\u1ee7a c\u00e1c lo\u00e0i r\u00f9a n\u01b0\u1edbc ng\u1ecdt qu\u00fd hi\u1ebfm \u0111ang d\u1ea7n bi\u1ebfn m\u1ea5t.",
+      collocations: ["store in a gene bank", "cryogenic gene bank"]
+    }
+    ,
+    {
+      id: "mega-unit-8-ecotourism-revenue",
+      word: "ecotourism revenue",
+      partOfSpeech: "n.phr",
+      meaningVi: "ngu\u1ed3n thu t\u1eeb du l\u1ecbch sinh th\u00e1i t\u00e0i tr\u1ee3 ki\u1ec3m l\u00e2m",
+      ipa: "/\u02c8i\u02d0k\u0259\u028at\u028a\u0259r\u026az\u0259m \u02c8rev\u0259nju\u02d0/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ecotourism+revenue&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Allocating park entry ecotourism revenue directly pays the salaries of round-the-clock jungle guards.",
+      exampleVi: "Tr\u00edch ngu\u1ed3n thu t\u1eeb du l\u1ecbch sinh th\u00e1i v\u00e0o c\u1ed5ng c\u00f4ng vi\u00ean gi\u00fap tr\u1ea3 l\u01b0\u01a1ng tr\u1ef1c ti\u1ebfp cho c\u00e1c \u0111\u1ed9i tu\u1ea7n r\u1eebng su\u1ed1t ng\u00e0y \u0111\u00eam.",
+      collocations: ["generate ecotourism revenue", "fund protection via revenue"]
+    }
+    ,
+    {
+      id: "mega-unit-8-translocation",
+      word: "translocation",
+      partOfSpeech: "n",
+      meaningVi: "ho\u1ea1t \u0111\u1ed9ng di d\u1eddi \u0111\u1ed9ng v\u1eadt sang khu r\u1eebng an to\u00e0n h\u01a1n",
+      ipa: "/\u02cctr\u00e6nzl\u0259\u028a\u02c8ke\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=translocation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Veterinarians safely tranquilized rhinos to execute their emergency translocation away from poachers.",
+      exampleVi: "C\u00e1c b\u00e1c s\u0129 th\u00fa y \u0111\u00e3 b\u1eafn thu\u1ed1c m\u00ea an to\u00e0n cho t\u00ea gi\u00e1c \u0111\u1ec3 th\u1ef1c hi\u1ec7n cu\u1ed9c di d\u1eddi kh\u1ea9n c\u1ea5p tr\u00e1nh xa t\u1ea7m ng\u1eafm c\u1ee7a b\u1ecdn s\u0103n tr\u1ed9m.",
+      collocations: ["rhino translocation", "risks of translocation"]
+    }
+    ,
+    {
+      id: "mega-unit-8-endangered-primate",
+      word: "endangered primate",
+      partOfSpeech: "n.phr",
+      meaningVi: "lo\u00e0i linh tr\u01b0\u1edfng nguy c\u1ea5p c\u00f3 nguy c\u01a1 bi\u1ebfn m\u1ea5t",
+      ipa: "/\u026an\u02c8de\u026and\u0292\u0259d \u02c8pra\u026ame\u026at/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=endangered+primate&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The golden-headed langur of Cat Ba Island ranks among the world's most endangered primates.",
+      exampleVi: "Lo\u00e0i vo\u1ecdc \u0111\u1ea7u v\u00e0ng tr\u00ean \u0111\u1ea3o C\u00e1t B\u00e0 \u0111\u1ee9ng trong h\u00e0ng ng\u0169 nh\u1eefng lo\u00e0i linh tr\u01b0\u1edfng nguy c\u1ea5p b\u1eadc nh\u1ea5t th\u1ebf gi\u1edbi.",
+      collocations: ["shelter endangered primates", "census of primates"]
+    }
+    ,
+    {
+      id: "mega-unit-8-trophy-hunting",
+      word: "trophy hunting",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u0103n b\u1eafn th\u00fa r\u1eebng \u0111\u1ec3 l\u1ea5y s\u1eebng da l\u00e0m chi\u1ebfn t\u00edch",
+      ipa: "/\u02c8tr\u0259\u028afi \u02c8h\u028cnt\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=trophy+hunting&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Animal welfare groups successfully lobbied international airlines to refuse the transport of trophy hunting carcasses.",
+      exampleVi: "C\u00e1c t\u1ed5 ch\u1ee9c b\u1ea3o v\u1ec7 \u0111\u1ed9ng v\u1eadt \u0111\u00e3 v\u1eadn \u0111\u1ed9ng th\u00e0nh c\u00f4ng c\u00e1c h\u00e3ng bay t\u1eeb ch\u1ed1i v\u1eadn chuy\u1ec3n x\u00e1c th\u00fa s\u0103n l\u00e0m chi\u1ebfn t\u00edch.",
+      collocations: ["prohibit trophy hunting", "controversy over trophy hunting"]
+    }
+    ,
+    {
+      id: "mega-unit-8-wildlife-sanctuary",
+      word: "wildlife sanctuary",
+      partOfSpeech: "n.phr",
+      meaningVi: "khu c\u1ee9u h\u1ed9 v\u00e0 d\u01b0\u1ee1ng sinh \u0111\u1ed9ng v\u1eadt hoang d\u00e3",
+      ipa: "/\u02c8wa\u026aldla\u026af \u02c8s\u00e6\u014bkt\u0283u\u0259ri/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=wildlife+sanctuary&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Rescued moon bears roam peaceful grassy enclosures at the Tam Dao wildlife sanctuary.",
+      exampleVi: "Nh\u1eefng ch\u00fa g\u1ea5u ng\u1ef1a \u0111\u01b0\u1ee3c gi\u1ea3i c\u1ee9u thong dong d\u1ea1o ch\u01a1i tr\u00ean th\u1ea3m c\u1ecf b\u00ecnh y\u00ean t\u1ea1i trung t\u00e2m c\u1ee9u h\u1ed9 g\u1ea5u Tam \u0110\u1ea3o.",
+      collocations: ["visit a wildlife sanctuary", "establish a sanctuary"]
+    }
+    ,
+    {
+      id: "mega-unit-8-biodiversity-loss",
+      word: "biodiversity loss",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 m\u1ea5t m\u00e1t suy gi\u1ea3m \u0111a d\u1ea1ng sinh th\u00e1i",
+      ipa: "/\u02ccba\u026a\u0259\u028ada\u026a\u02c8v\u025c\u02d0s\u0259ti l\u0252s/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=biodiversity+loss&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Halting global biodiversity loss requires immediate conservation of pristine wetland estuaries.",
+      exampleVi: "Ng\u0103n ch\u1eb7n s\u1ef1 m\u1ea5t m\u00e1t \u0111a d\u1ea1ng sinh h\u1ecdc to\u00e0n c\u1ea7u \u0111\u00f2i h\u1ecfi h\u00e0nh \u0111\u1ed9ng b\u1ea3o t\u1ed3n t\u1ee9c th\u00ec c\u00e1c v\u00f9ng \u0111\u1ea7m l\u1ea7y c\u1eeda s\u00f4ng nguy\u00ean s\u01a1.",
+      collocations: ["stem biodiversity loss", "threat of biodiversity loss"]
+    }
+    ,
+    {
+      id: "mega-unit-8-endangered-habitat",
+      word: "endangered habitat",
+      partOfSpeech: "n.phr",
+      meaningVi: "sinh c\u1ea3nh s\u1ed1ng t\u1ef1 nhi\u00ean \u0111ang b\u1ecb \u0111e d\u1ecda bi\u1ebfn m\u1ea5t",
+      ipa: "/\u026an\u02c8de\u026and\u0292\u0259d \u02c8h\u00e6b\u026at\u00e6t/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=endangered+habitat&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Mangrove forests and coral atolls are classified as globally endangered habitats facing climate breakdown.",
+      exampleVi: "R\u1eebng ng\u1eadp m\u1eb7n v\u00e0 c\u00e1c r\u1ea1n san h\u00f4 v\u00f2ng \u0111\u01b0\u1ee3c x\u1ebfp v\u00e0o nh\u00f3m sinh c\u1ea3nh s\u1ed1ng \u0111ang b\u1ecb \u0111e d\u1ecda nghi\u00eam tr\u1ecdng do bi\u1ebfn \u0111\u1ed5i kh\u00ed h\u1eadu.",
+      collocations: ["protect endangered habitats", "restoration of habitats"]
+    }
+    ,
+    {
+      id: "mega-unit-8-satellite-tracking-collar",
+      word: "satellite tracking collar",
+      partOfSpeech: "n.phr",
+      meaningVi: "v\u00f2ng \u0111eo \u0111\u1ecbnh v\u1ecb v\u1ec7 tinh theo d\u00f5i th\u00fa r\u1eebng",
+      ipa: "/\u02c8s\u00e6t\u0259la\u026at \u02c8tr\u00e6k\u026a\u014b \u02c8k\u0252l\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=satellite+tracking+collar&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Biologists fitted an elephant matriarch with a satellite tracking collar to alert farmers before crop raids.",
+      exampleVi: "C\u00e1c nh\u00e0 sinh v\u1eadt h\u1ecdc \u0111\u00e3 g\u1eafn v\u00f2ng \u0111\u1ecbnh v\u1ecb v\u1ec7 tinh cho voi \u0111\u1ea7u \u0111\u00e0n \u0111\u1ec3 c\u1ea3nh b\u00e1o b\u00e0 con tr\u01b0\u1edbc khi voi v\u00e0o ph\u00e1 m\u00f9a m\u00e0ng.",
+      collocations: ["deploy satellite tracking collars", "GPS tracking collar"]
+    }
+    ,
+    {
+      id: "mega-unit-8-ecological-restoration",
+      word: "ecological restoration",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng cu\u1ed9c ph\u1ee5c h\u1ed3i th\u1ea3m th\u1ef1c v\u1eadt sinh th\u00e1i",
+      ipa: "/\u02cci\u02d0k\u0259\u02c8l\u0252d\u0292\u026akl \u02ccrest\u0259\u02c8re\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=ecological+restoration&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Replanting native broadleaf trees on barren slopes marks a successful phase of ecological restoration.",
+      exampleVi: "Tr\u1ed3ng l\u1ea1i c\u00e1c c\u00e2y l\u00e1 r\u1ed9ng b\u1ea3n \u0111\u1ecba tr\u00ean c\u00e1c s\u01b0\u1eddn d\u1ed1c tr\u01a1 tr\u1ecdi \u0111\u00e1nh d\u1ea5u b\u01b0\u1edbc th\u00e0nh c\u00f4ng c\u1ee7a c\u00f4ng cu\u1ed9c ph\u1ee5c h\u1ed3i sinh th\u00e1i.",
+      collocations: ["spearhead ecological restoration", "comprehensive restoration"]
+    }
+    ,
+    {
+      id: "mega-unit-8-wildlife-rehabilitation",
+      word: "wildlife rehabilitation",
+      partOfSpeech: "n.phr",
+      meaningVi: "ch\u0103m s\u00f3c h\u1ed3i s\u1ee9c th\u00fa r\u1eebng b\u1ecb th\u01b0\u01a1ng tr\u01b0\u1edbc khi th\u1ea3",
+      ipa: "/\u02c8wa\u026aldla\u026af \u02ccri\u02d0\u0259\u02ccb\u026al\u026a\u02c8te\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=wildlife+rehabilitation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Dedicated veterinarians operate a wildlife rehabilitation clinic nursing injured raptors back to flight.",
+      exampleVi: "C\u00e1c b\u00e1c s\u0129 th\u00fa y t\u1eadn t\u00e2m v\u1eadn h\u00e0nh ph\u00f2ng ph\u1ee5c h\u1ed3i th\u00fa hoang d\u00e3 \u0111\u1ec3 ch\u1eefa tr\u1ecb cho nh\u1eefng ch\u00fa chim s\u0103n m\u1ed3i b\u1ecb th\u01b0\u01a1ng bay l\u01b0\u1ee3n tr\u1edf l\u1ea1i.",
+      collocations: ["volunteer in wildlife rehabilitation", "center for rehabilitation"]
+    }
+    ,
+    {
+      id: "mega-unit-8-biodiversity-monitoring",
+      word: "biodiversity monitoring",
+      partOfSpeech: "n.phr",
+      meaningVi: "ho\u1ea1t \u0111\u1ed9ng quan tr\u1eafc gi\u00e1m s\u00e1t \u0111a d\u1ea1ng sinh th\u00e1i",
+      ipa: "/\u02ccba\u026a\u0259\u028ada\u026a\u02c8v\u025c\u02d0s\u0259ti \u02c8m\u0252n\u026at\u0259r\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=biodiversity+monitoring&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Acoustic audio sensors hung in jungle canopies provide automated continuous biodiversity monitoring.",
+      exampleVi: "C\u00e1c c\u1ea3m bi\u1ebfn \u00e2m thanh treo tr\u00ean ng\u1ecdn c\u00e2y r\u1eebng cung c\u1ea5p d\u1eef li\u1ec7u quan tr\u1eafc \u0111a d\u1ea1ng sinh h\u1ecdc li\u00ean t\u1ee5c v\u00e0 t\u1ef1 \u0111\u1ed9ng.",
+      collocations: ["conduct biodiversity monitoring", "field monitoring"]
+    }
   ],
   "unit-9-career-paths": [
     {
@@ -5608,6 +8351,331 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleEn: "Many digital creators prefer freelance contracting because of its schedule autonomy.",
       exampleVi: "Nhi\u1ec1u nh\u00e0 s\u00e1ng t\u1ea1o n\u1ed9i dung s\u1ed1 th\u00edch l\u00e0m t\u1ef1 do theo h\u1ee3p \u0111\u1ed3ng v\u00ec \u0111\u01b0\u1ee3c t\u1ef1 ch\u1ee7 th\u1eddi gian l\u00e0m vi\u1ec7c.",
       collocations: ["opt for freelance contracting", "sustainable freelance contracting"]
+    }
+    ,
+    {
+      id: "mega-unit-9-career-trajectory",
+      word: "career trajectory",
+      partOfSpeech: "n.phr",
+      meaningVi: "l\u1ed9 tr\u00ecnh v\u00e0 qu\u1ef9 \u0111\u1ea1o ph\u00e1t tri\u1ec3n c\u00f4ng danh",
+      ipa: "/k\u0259\u02c8r\u026a\u0259 tr\u0259\u02c8d\u0292ekt\u0259ri/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=career+trajectory&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Early mentorship and clear corporate roadmaps set her on a steep, rewarding career trajectory.",
+      exampleVi: "S\u1ef1 d\u1eabn d\u1eaft t\u1eeb s\u1edbm v\u00e0 l\u1ed9 tr\u00ecnh th\u0103ng ti\u1ebfn r\u00f5 r\u00e0ng \u0111\u00e3 \u0111\u01b0a c\u00f4 v\u00e0o m\u1ed9t qu\u1ef9 \u0111\u1ea1o s\u1ef1 nghi\u1ec7p th\u0103ng hoa v\u00e0 \u0111\u1ea7y ph\u1ea7n th\u01b0\u1edfng.",
+      collocations: ["define a career trajectory", "upward career trajectory"]
+    }
+    ,
+    {
+      id: "mega-unit-9-lateral-move",
+      word: "lateral move",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u01b0\u1edbc chuy\u1ec3n ngang v\u1ecb tr\u00ed \u0111\u1ec3 t\u00edch l\u0169y kinh nghi\u1ec7m m\u1edbi",
+      ipa: "/\u02c8l\u00e6t\u0259r\u0259l mu\u02d0v/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=lateral+move&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Taking a lateral move from sales to operations granted him a holistic view of supply chain logistics.",
+      exampleVi: "Chuy\u1ec3n ngang t\u1eeb b\u1ed9 ph\u1eadn kinh doanh sang v\u1eadn h\u00e0nh mang l\u1ea1i cho anh c\u00e1i nh\u00ecn to\u00e0n di\u1ec7n v\u1ec1 chu\u1ed7i cung \u1ee9ng logistics.",
+      collocations: ["make a lateral move", "benefit from a lateral move"]
+    }
+    ,
+    {
+      id: "mega-unit-9-portfolio-career",
+      word: "portfolio career",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 nghi\u1ec7p k\u1ebft h\u1ee3p nhi\u1ec1u c\u00f4ng vi\u1ec7c t\u1ef1 do c\u00f9ng l\u00fac",
+      ipa: "/p\u0254\u02d0t\u02c8f\u0259\u028ali\u0259\u028a k\u0259\u02c8r\u026a\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=portfolio+career&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Many young creatives balance consulting, lecturing, and writing within a flexible portfolio career.",
+      exampleVi: "Nhi\u1ec1u b\u1ea1n tr\u1ebb l\u00e0m s\u00e1ng t\u1ea1o k\u1ebft h\u1ee3p gi\u1eefa t\u01b0 v\u1ea5n, gi\u1ea3ng d\u1ea1y v\u00e0 vi\u1ebft l\u00e1ch trong m\u1ed9t s\u1ef1 nghi\u1ec7p \u0111a d\u1ea1ng v\u00e0 linh ho\u1ea1t.",
+      collocations: ["pursue a portfolio career", "advantages of a portfolio career"]
+    }
+    ,
+    {
+      id: "mega-unit-9-vocational-calling",
+      word: "vocational calling",
+      partOfSpeech: "n.phr",
+      meaningVi: "ti\u1ebfng g\u1ecdi th\u00f4i th\u00fac c\u1ee7a l\u01b0\u01a1ng duy\u00ean ngh\u1ec1 nghi\u1ec7p",
+      ipa: "/v\u0259\u028a\u02c8ke\u026a\u0283\u0259nl \u02c8k\u0254\u02d0l\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=vocational+calling&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Teaching children in mountainous hamlets felt like an irresistible vocational calling rather than merely a job.",
+      exampleVi: "D\u1ea1y h\u1ecdc cho tr\u1ebb em v\u00f9ng cao gi\u1ed1ng nh\u01b0 m\u1ed9t ti\u1ebfng g\u1ecdi ngh\u1ec1 nghi\u1ec7p thi\u00eang li\u00eang xu\u1ea5t ph\u00e1t t\u1eeb tr\u00e1i tim h\u01a1n l\u00e0 m\u1ed9t c\u00f4ng vi\u1ec7c m\u01b0u sinh thu\u1ea7n t\u00fay.",
+      collocations: ["discover one's vocational calling", "follow a calling"]
+    }
+    ,
+    {
+      id: "mega-unit-9-job-hopping",
+      word: "job hopping",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u00f3i quen nh\u1ea3y vi\u1ec7c th\u01b0\u1eddng xuy\u00ean sau 1-2 n\u0103m",
+      ipa: "/\u02c8d\u0292\u0252b h\u0252p\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=job+hopping&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "While strategic job hopping can boost compensation, it may raise red flags if tenure is under one year.",
+      exampleVi: "M\u1eb7c d\u00f9 nh\u1ea3y vi\u1ec7c c\u00f3 chi\u1ebfn l\u01b0\u1ee3c gi\u00fap t\u0103ng l\u01b0\u01a1ng, n\u00f3 c\u00f3 th\u1ec3 g\u00e2y nghi ng\u1ea1i cho nh\u00e0 tuy\u1ec3n d\u1ee5ng n\u1ebfu m\u1ed7i n\u01a1i l\u00e0m vi\u1ec7c d\u01b0\u1edbi m\u1ed9t n\u0103m.",
+      collocations: ["reasons for job hopping", "trend of job hopping"]
+    }
+    ,
+    {
+      id: "mega-unit-9-career-plateau",
+      word: "career plateau",
+      partOfSpeech: "n.phr",
+      meaningVi: "giai \u0111o\u1ea1n d\u1eadm ch\u00e2n t\u1ea1i ch\u1ed7 kh\u00f4ng th\u1ec3 th\u0103ng ti\u1ebfn th\u00eam",
+      ipa: "/k\u0259\u02c8r\u026a\u0259 \u02c8pl\u00e6t\u0259\u028a/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=career+plateau&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Pursuing an executive MBA often helps senior engineers break through a frustrating career plateau.",
+      exampleVi: "Theo h\u1ecdc th\u1ea1c s\u0129 qu\u1ea3n tr\u1ecb kinh doanh MBA th\u01b0\u1eddng gi\u00fap c\u00e1c k\u1ef9 s\u01b0 c\u1ea5p cao v\u01b0\u1ee3t qua giai \u0111o\u1ea1n ch\u1eefng l\u1ea1i d\u1eadm ch\u00e2n t\u1ea1i ch\u1ed7 trong s\u1ef1 nghi\u1ec7p.",
+      collocations: ["hit a career plateau", "overcome a plateau"]
+    }
+    ,
+    {
+      id: "mega-unit-9-professional-network",
+      word: "professional network",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u1ea1ng l\u01b0\u1edbi quan h\u1ec7 \u0111\u1ed3ng nghi\u1ec7p trong ng\u00e0nh",
+      ipa: "/pr\u0259\u02c8fe\u0283\u0259nl \u02c8netw\u025c\u02d0k/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=professional+network&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Attending industrial symposiums is the most effective avenue to expand your trusted professional network.",
+      exampleVi: "Tham d\u1ef1 c\u00e1c h\u1ed9i th\u1ea3o chuy\u00ean ng\u00e0nh l\u00e0 con \u0111\u01b0\u1eddng hi\u1ec7u qu\u1ea3 nh\u1ea5t \u0111\u1ec3 m\u1edf r\u1ed9ng m\u1ea1ng l\u01b0\u1edbi quan h\u1ec7 \u0111\u1ed3ng nghi\u1ec7p uy t\u00edn.",
+      collocations: ["cultivate a professional network", "tap into a network"]
+    }
+    ,
+    {
+      id: "mega-unit-9-performance-bonus",
+      word: "performance bonus",
+      partOfSpeech: "n.phr",
+      meaningVi: "kho\u1ea3n ti\u1ec1n th\u01b0\u1edfng hi\u1ec7u su\u1ea5t c\u00f4ng vi\u1ec7c v\u01b0\u1ee3t ch\u1ec9 ti\u00eau",
+      ipa: "/p\u0259\u02c8f\u0254\u02d0m\u0259ns \u02c8b\u0259\u028an\u0259s/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=performance+bonus&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Exceeding annual software sales quotas entitled the account executive to a six-figure performance bonus.",
+      exampleVi: "V\u01b0\u1ee3t ch\u1ec9 ti\u00eau doanh s\u1ed1 ph\u1ea7n m\u1ec1m h\u1eb1ng n\u0103m gi\u00fap chuy\u00ean vi\u00ean kinh doanh nh\u1eadn \u0111\u01b0\u1ee3c kho\u1ea3n ti\u1ec1n th\u01b0\u1edfng hi\u1ec7u su\u1ea5t s\u00e1u con s\u1ed1.",
+      collocations: ["earn a performance bonus", "generous bonus"]
+    }
+    ,
+    {
+      id: "mega-unit-9-succession-planning",
+      word: "succession planning",
+      partOfSpeech: "n.phr",
+      meaningVi: "k\u1ebf ho\u1ea1ch chu\u1ea9n b\u1ecb nh\u00e2n s\u1ef1 k\u1ebf c\u1eadn l\u00e3nh \u0111\u1ea1o",
+      ipa: "/s\u0259k\u02c8se\u0283n \u02c8pl\u00e6n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=succession+planning&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Rigorous succession planning ensures the conglomerate identifies capable future directors well ahead of retirements.",
+      exampleVi: "K\u1ebf ho\u1ea1ch chu\u1ea9n b\u1ecb nh\u00e2n s\u1ef1 k\u1ebf th\u1eeba b\u00e0i b\u1ea3n b\u1ea3o \u0111\u1ea3m t\u1eadp \u0111o\u00e0n x\u00e1c \u0111\u1ecbnh \u0111\u01b0\u1ee3c nh\u1eefng gi\u00e1m \u0111\u1ed1c t\u01b0\u01a1ng lai t\u00e0i n\u0103ng tr\u01b0\u1edbc khi ban l\u00e3nh \u0111\u1ea1o ngh\u1ec9 h\u01b0u.",
+      collocations: ["implement succession planning", "importance of succession planning"]
+    }
+    ,
+    {
+      id: "mega-unit-9-headhunting-agency",
+      word: "headhunting agency",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u00f4ng ty s\u0103n \u0111\u1ea7u ng\u01b0\u1eddi tuy\u1ec3n d\u1ee5ng nh\u00e2n s\u1ef1 c\u1ea5p cao",
+      ipa: "/\u02c8hedh\u028cnt\u026a\u014b \u02c8e\u026ad\u0292\u0259nsi/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=headhunting+agency&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The startup contracted a boutique headhunting agency to recruit a seasoned chief financial officer.",
+      exampleVi: "C\u00f4ng ty kh\u1edfi nghi\u1ec7p \u0111\u00e3 thu\u00ea m\u1ed9t \u0111\u01a1n v\u1ecb s\u0103n \u0111\u1ea7u ng\u01b0\u1eddi chuy\u00ean nghi\u1ec7p \u0111\u1ec3 tuy\u1ec3n m\u1ed9 v\u1ecb gi\u00e1m \u0111\u1ed1c t\u00e0i ch\u00ednh d\u00e0y d\u1ea1n kinh nghi\u1ec7m.",
+      collocations: ["contact a headhunting agency", "headhunting services"]
+    }
+    ,
+    {
+      id: "mega-unit-9-probationary-period",
+      word: "probationary period",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u1eddi gian th\u1eed vi\u1ec7c tr\u01b0\u1edbc khi k\u00fd h\u1ee3p \u0111\u1ed3ng ch\u00ednh th\u1ee9c",
+      ipa: "/pr\u0259\u02c8be\u026a\u0283\u0259nri \u02c8p\u026a\u0259ri\u0259d/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=probationary+period&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "During the three-month probationary period, new engineers receive hands-on guidance from senior mentors.",
+      exampleVi: "Trong su\u1ed1t th\u1eddi gian ba th\u00e1ng th\u1eed vi\u1ec7c, c\u00e1c k\u1ef9 s\u01b0 m\u1edbi nh\u1eadn \u0111\u01b0\u1ee3c s\u1ef1 h\u01b0\u1edbng d\u1eabn c\u1ea7m tay ch\u1ec9 vi\u1ec7c t\u1eadn t\u00ecnh t\u1eeb c\u00e1c \u0111\u00e0n anh d\u00e0y d\u1ea1n.",
+      collocations: ["complete the probationary period", "pass probation"]
+    }
+    ,
+    {
+      id: "mega-unit-9-salary-negotiation",
+      word: "salary negotiation",
+      partOfSpeech: "n.phr",
+      meaningVi: "k\u1ef9 n\u0103ng \u0111\u00e0m ph\u00e1n th\u01b0\u01a1ng l\u01b0\u1ee3ng m\u1ee9c l\u01b0\u01a1ng \u0111\u00e3i ng\u1ed9",
+      ipa: "/\u02c8s\u00e6l\u0259ri n\u026a\u02cc\u0261\u0259\u028a\u0283i\u02c8e\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=salary+negotiation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Conducting thorough market salary research equips candidates with confidence during salary negotiation.",
+      exampleVi: "Kh\u1ea3o s\u00e1t k\u1ef9 l\u01b0\u1ee1ng m\u1ee9c l\u01b0\u01a1ng m\u1eb7t b\u1eb1ng chung th\u1ecb tr\u01b0\u1eddng ti\u1ebfp th\u00eam s\u1ef1 t\u1ef1 tin v\u1eefng v\u00e0ng cho \u1ee9ng vi\u00ean khi th\u01b0\u01a1ng l\u01b0\u1ee3ng l\u01b0\u01a1ng.",
+      collocations: ["master salary negotiation", "tactics in negotiation"]
+    }
+    ,
+    {
+      id: "mega-unit-9-professional-accreditation",
+      word: "professional accreditation",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 c\u00f4ng nh\u1eadn v\u00e0 c\u1ea5p ch\u1ee9ng ch\u1ec9 ngh\u1ec1 nghi\u1ec7p qu\u1ed1c t\u1ebf",
+      ipa: "/pr\u0259\u02c8fe\u0283\u0259nl \u0259\u02cckred\u026a\u02c8te\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=professional+accreditation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Passing the CFA charter exams grants finance specialists globally recognized professional accreditation.",
+      exampleVi: "V\u01b0\u1ee3t qua k\u1ef3 thi CFA trao cho c\u00e1c chuy\u00ean gia t\u00e0i ch\u00ednh ch\u1ee9ng ch\u1ec9 ki\u1ec3m \u0111\u1ecbnh ngh\u1ec1 nghi\u1ec7p \u0111\u01b0\u1ee3c c\u00f4ng nh\u1eadn tr\u00ean to\u00e0n c\u1ea7u.",
+      collocations: ["obtain professional accreditation", "maintain accreditation"]
+    }
+    ,
+    {
+      id: "mega-unit-9-work-ethic",
+      word: "work ethic",
+      partOfSpeech: "n.phr",
+      meaningVi: "\u0111\u1ea1o \u0111\u1ee9c v\u00e0 tinh th\u1ea7n tr\u00e1ch nhi\u1ec7m v\u1edbi c\u00f4ng vi\u1ec7c",
+      ipa: "/\u02c8w\u025c\u02d0k \u02cce\u03b8\u026ak/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=work+ethic&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Punctuality, honesty, and meticulous attention to detail are hallmarks of an unassailable work ethic.",
+      exampleVi: "\u0110\u00fang gi\u1edd, trung th\u1ef1c v\u00e0 t\u1ec9 m\u1ec9 trong t\u1eebng chi ti\u1ebft l\u00e0 nh\u1eefng d\u1ea5u \u1ea5n c\u1ee7a m\u1ed9t tinh th\u1ea7n \u0111\u1ea1o \u0111\u1ee9c ngh\u1ec1 nghi\u1ec7p m\u1eabu m\u1ef1c.",
+      collocations: ["strong work ethic", "admire someone's work ethic"]
+    }
+    ,
+    {
+      id: "mega-unit-9-vocational-aptitude",
+      word: "vocational aptitude",
+      partOfSpeech: "n.phr",
+      meaningVi: "n\u0103ng khi\u1ebfu v\u00e0 thi\u00ean h\u01b0\u1edbng b\u1ea9m sinh v\u1edbi ngh\u1ec1",
+      ipa: "/v\u0259\u028a\u02c8ke\u026a\u0283\u0259nl \u02c8\u00e6pt\u026atju\u02d0d/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=vocational+aptitude&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Aptitude batteries reveal whether high schoolers possess natural vocational aptitude for precision mechanics.",
+      exampleVi: "C\u00e1c b\u00e0i ki\u1ec3m tra n\u0103ng khi\u1ebfu gi\u00fap ph\u00e1t hi\u1ec7n li\u1ec7u h\u1ecdc sinh c\u1ea5p ba c\u00f3 t\u1ed1 ch\u1ea5t b\u1ea9m sinh ph\u00f9 h\u1ee3p v\u1edbi ng\u00e0nh c\u01a1 kh\u00ed ch\u00ednh x\u00e1c hay kh\u00f4ng.",
+      collocations: ["test vocational aptitude", "assess candidate aptitude"]
+    }
+    ,
+    {
+      id: "mega-unit-9-freelance-consulting",
+      word: "freelance consulting",
+      partOfSpeech: "n.phr",
+      meaningVi: "ho\u1ea1t \u0111\u1ed9ng l\u00e0m t\u01b0 v\u1ea5n \u0111\u1ed9c l\u1eadp t\u1ef1 do",
+      ipa: "/\u02c8fri\u02d0l\u0251\u02d0ns k\u0259n\u02c8s\u028clt\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=freelance+consulting&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "After twenty years in banking, she launched a lucrative freelance consulting practice advising fintech startups.",
+      exampleVi: "Sau hai m\u01b0\u01a1i n\u0103m l\u00e0m trong ng\u00e0nh ng\u00e2n h\u00e0ng, b\u00e0 \u0111\u00e3 m\u1edf v\u0103n ph\u00f2ng t\u01b0 v\u1ea5n \u0111\u1ed9c l\u1eadp \u0103n n\u00ean l\u00e0m ra chuy\u00ean t\u01b0 v\u1ea5n cho c\u00e1c c\u00f4ng ty fintech.",
+      collocations: ["pivot to freelance consulting", "consulting fees"]
+    }
+    ,
+    {
+      id: "mega-unit-9-employment-contract",
+      word: "employment contract",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ee3p \u0111\u1ed3ng lao \u0111\u1ed9ng ph\u00e1p l\u00fd ch\u00ednh th\u1ee9c",
+      ipa: "/\u026am\u02c8pl\u0254\u026am\u0259nt \u02c8k\u0252ntr\u00e6kt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=employment+contract&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Carefully scrutinize non-compete clauses before signing an indefinite-term employment contract.",
+      exampleVi: "H\u00e3y xem x\u00e9t k\u1ef9 l\u01b0\u1ee1ng c\u00e1c \u0111i\u1ec1u kho\u1ea3n kh\u00f4ng c\u1ea1nh tranh tr\u01b0\u1edbc khi \u0111\u1eb7t b\u00fat k\u00fd h\u1ee3p \u0111\u1ed3ng lao \u0111\u1ed9ng kh\u00f4ng x\u00e1c \u0111\u1ecbnh th\u1eddi h\u1ea1n.",
+      collocations: ["sign an employment contract", "terminate a contract"]
+    }
+    ,
+    {
+      id: "mega-unit-9-career-counselor",
+      word: "career counselor",
+      partOfSpeech: "n.phr",
+      meaningVi: "chuy\u00ean vi\u00ean t\u01b0 v\u1ea5n \u0111\u1ecbnh h\u01b0\u1edbng ngh\u1ec1 nghi\u1ec7p",
+      ipa: "/k\u0259\u02c8r\u026a\u0259 \u02c8ka\u028ans\u0259l\u0259(r)/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=career+counselor&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "A career counselor helps undergraduates align their passions with emerging labor market demands.",
+      exampleVi: "Chuy\u00ean vi\u00ean t\u01b0 v\u1ea5n ngh\u1ec1 nghi\u1ec7p gi\u00fap sinh vi\u00ean \u0111\u1ea1i h\u1ecdc k\u1ebft n\u1ed1i ni\u1ec1m \u0111am m\u00ea v\u1edbi nhu c\u1ea7u th\u1ef1c t\u1ebf c\u1ee7a th\u1ecb tr\u01b0\u1eddng lao \u0111\u1ed9ng.",
+      collocations: ["consult a career counselor", "certified counselor"]
+    }
+    ,
+    {
+      id: "mega-unit-9-job-rotation",
+      word: "job rotation",
+      partOfSpeech: "n.phr",
+      meaningVi: "ch\u1ebf \u0111\u1ed9 lu\u00e2n chuy\u1ec3n v\u1ecb tr\u00ed c\u00f4ng t\u00e1c \u0111\u00e0o t\u1ea1o nh\u00e2n s\u1ef1",
+      ipa: "/\u02c8d\u0292\u0252b r\u0259\u028a\u02c8te\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=job+rotation&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Management trainee programs utilize job rotation across logistics, marketing, and finance divisions.",
+      exampleVi: "C\u00e1c ch\u01b0\u01a1ng tr\u00ecnh qu\u1ea3n tr\u1ecb vi\u00ean t\u1eadp s\u1ef1 \u00e1p d\u1ee5ng ch\u1ebf \u0111\u1ed9 lu\u00e2n chuy\u1ec3n c\u00f4ng vi\u1ec7c qua c\u00e1c ph\u00f2ng logistics, marketing v\u00e0 t\u00e0i ch\u00ednh.",
+      collocations: ["participate in job rotation", "benefits of rotation"]
+    }
+    ,
+    {
+      id: "mega-unit-9-soft-skills-mastery",
+      word: "soft skills mastery",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 thu\u1ea7n th\u1ee5c c\u00e1c k\u1ef9 n\u0103ng m\u1ec1m giao ti\u1ebfp \u0111\u00e0m ph\u00e1n",
+      ipa: "/s\u0252ft sk\u026alz \u02c8m\u0251\u02d0st\u0259ri/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=soft+skills+mastery&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Emotional intelligence and conflict de-escalation represent the pinnacle of soft skills mastery.",
+      exampleVi: "Tr\u00ed tu\u1ec7 c\u1ea3m x\u00fac v\u00e0 kh\u1ea3 n\u0103ng h\u00f3a gi\u1ea3i xung \u0111\u1ed9t \u0111\u1ea1i di\u1ec7n cho \u0111\u1ec9nh cao c\u1ee7a s\u1ef1 thu\u1ea7n th\u1ee5c c\u00e1c k\u1ef9 n\u0103ng m\u1ec1m \u1ee9ng x\u1eed.",
+      collocations: ["demonstrate soft skills mastery", "cultivate soft skills"]
+    }
+    ,
+    {
+      id: "mega-unit-9-professional-milestone",
+      word: "professional milestone",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u1ed9t m\u1ed1c son \u0111\u00e1nh d\u1ea5u b\u01b0\u1edbc ti\u1ebfn trong s\u1ef1 nghi\u1ec7p",
+      ipa: "/pr\u0259\u02c8fe\u0283\u0259nl \u02c8ma\u026alst\u0259\u028an/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=professional+milestone&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Being elected fellow of the Royal Society was the defining professional milestone of her life.",
+      exampleVi: "\u0110\u01b0\u1ee3c b\u1ea7u l\u00e0m vi\u1ec7n s\u0129 H\u1ed9i Khoa h\u1ecdc Ho\u00e0ng gia l\u00e0 c\u1ed9t m\u1ed1c son r\u1ef1c r\u1ee1 nh\u1ea5t \u0111\u00e1nh d\u1ea5u cu\u1ed9c \u0111\u1eddi nghi\u00ean c\u1ee9u khoa h\u1ecdc c\u1ee7a b\u00e0.",
+      collocations: ["reach a professional milestone", "celebrate milestones"]
+    }
+    ,
+    {
+      id: "mega-unit-9-work-life-integration",
+      word: "work-life integration",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 dung h\u00f2a nh\u1ecbp nh\u00e0ng gi\u1eefa c\u00f4ng vi\u1ec7c v\u00e0 \u0111\u1eddi s\u1ed1ng",
+      ipa: "/\u02ccw\u025c\u02d0k \u02c8la\u026af \u02cc\u026ant\u026a\u02c8\u0261re\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=work-life+integration&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Remote arrangements foster healthy work-life integration enabling parents to attend school recitals.",
+      exampleVi: "L\u00e0m vi\u1ec7c t\u1eeb xa th\u00fac \u0111\u1ea9y s\u1ef1 dung h\u00f2a nh\u1ecbp nh\u00e0ng gi\u1eefa c\u00f4ng vi\u1ec7c v\u00e0 gia \u0111\u00ecnh, gi\u00fap ph\u1ee5 huynh c\u00f3 th\u1ec3 tham d\u1ef1 bu\u1ed5i bi\u1ec3u di\u1ec5n c\u1ee7a con.",
+      collocations: ["achieve work-life integration", "modern integration"]
+    }
+    ,
+    {
+      id: "mega-unit-9-exit-interview",
+      word: "exit interview",
+      partOfSpeech: "n.phr",
+      meaningVi: "bu\u1ed5i ph\u1ecfng v\u1ea5n l\u1eafng nghe ph\u1ea3n h\u1ed3i khi nh\u00e2n vi\u00ean ngh\u1ec9 vi\u1ec7c",
+      ipa: "/\u02c8eks\u026at \u02c8\u026ant\u0259vju\u02d0/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=exit+interview&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Human resource leaders analyze candid feedback from exit interviews to rectify toxic management flaws.",
+      exampleVi: "L\u00e3nh \u0111\u1ea1o ph\u00f2ng nh\u00e2n s\u1ef1 ph\u00e2n t\u00edch c\u00e1c \u00fd ki\u1ebfn th\u1eb3ng th\u1eafn t\u1eeb bu\u1ed5i ph\u1ecfng v\u1ea5n th\u00f4i vi\u1ec7c \u0111\u1ec3 ch\u1ea5n ch\u1ec9nh c\u00e1c b\u1ea5t c\u1eadp qu\u1ea3n l\u00fd.",
+      collocations: ["conduct an exit interview", "feedback from exit interview"]
+    }
+    ,
+    {
+      id: "mega-unit-9-career-pivoting",
+      word: "career pivoting",
+      partOfSpeech: "n.phr",
+      meaningVi: "b\u01b0\u1edbc ngo\u1eb7t chuy\u1ec3n h\u01b0\u1edbng \u0111\u1ed9t ph\u00e1 sang l\u0129nh v\u1ef1c ho\u00e0n to\u00e0n m\u1edbi",
+      ipa: "/k\u0259\u02c8r\u026a\u0259 \u02c8p\u026av\u0259t\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=career+pivoting&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "At age forty, his bold career pivoting from corporate law to sustainable forestry inspired many colleagues.",
+      exampleVi: "\u1ede tu\u1ed5i b\u1ed1n m\u01b0\u01a1i, b\u01b0\u1edbc chuy\u1ec3n h\u01b0\u1edbng \u0111\u1ed9t ph\u00e1 t\u1eeb lu\u1eadt doanh nghi\u1ec7p sang l\u00e2m nghi\u1ec7p b\u1ec1n v\u1eefng c\u1ee7a anh \u0111\u00e3 truy\u1ec1n c\u1ea3m h\u1ee9ng cho bao \u0111\u1ed3ng nghi\u1ec7p.",
+      collocations: ["successful career pivoting", "navigate pivoting"]
+    }
+    ,
+    {
+      id: "mega-unit-9-compensation-package",
+      word: "compensation package",
+      partOfSpeech: "n.phr",
+      meaningVi: "g\u00f3i t\u1ed5ng thu nh\u1eadp v\u00e0 quy\u1ec1n l\u1ee3i \u0111\u00e3i ng\u1ed9 to\u00e0n di\u1ec7n",
+      ipa: "/\u02cck\u0252mpen\u02c8se\u026a\u0283n \u02c8p\u00e6k\u026ad\u0292/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=compensation+package&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "The competitive compensation package included base salary, quarterly dividends, and health insurance for dependents.",
+      exampleVi: "G\u00f3i \u0111\u00e3i ng\u1ed9 c\u1ea1nh tranh bao g\u1ed3m l\u01b0\u01a1ng c\u01a1 b\u1ea3n, c\u1ed5 t\u1ee9c chia theo qu\u00fd v\u00e0 b\u1ea3o hi\u1ec3m y t\u1ebf to\u00e0n di\u1ec7n cho c\u1ea3 gia \u0111\u00ecnh.",
+      collocations: ["negotiate compensation package", "lucrative package"]
     }
   ],
   "unit-10-lifelong-learning": [
@@ -6253,6 +9321,344 @@ export const EXPANDED_VOCAB_GRADE12: Record<string, Grade12VocabItem[]> = {
       exampleEn: "Pursuing arts, languages, and literature delivers deep lifelong enrichment for senior citizens.",
       exampleVi: "\u0110am m\u00ea ngh\u1ec7 thu\u1eadt, ng\u00f4n ng\u1eef v\u00e0 v\u0103n h\u1ecdc \u0111em l\u1ea1i s\u1ef1 b\u1ed3i \u0111\u1eafp t\u00e2m h\u1ed3n s\u00e2u s\u1eafc su\u1ed1t \u0111\u1eddi cho ng\u01b0\u1eddi cao tu\u1ed5i.",
       collocations: ["source of lifelong enrichment", "attain lifelong enrichment"]
+    }
+    ,
+    {
+      id: "mega-unit-1-self-directed-study",
+      word: "self-directed study",
+      partOfSpeech: "n.phr",
+      meaningVi: "tinh th\u1ea7n t\u1ef1 gi\u00e1c h\u1ecdc t\u1eadp v\u00e0 nghi\u00ean c\u1ee9u \u0111\u1ed9c l\u1eadp",
+      ipa: "/\u02ccself d\u0259\u02c8rekt\u026ad \u02c8st\u028cdi/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=self-directed+study&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Lifelong learners schedule two hours every evening for uninterrupted self-directed study in robotics.",
+      exampleVi: "Nh\u1eefng ng\u01b0\u1eddi h\u1ecdc su\u1ed1t \u0111\u1eddi lu\u00f4n d\u00e0nh hai ti\u1ebfng m\u1ed7i bu\u1ed5i t\u1ed1i cho vi\u1ec7c t\u1ef1 gi\u00e1c nghi\u00ean c\u1ee9u \u0111\u1ed9c l\u1eadp v\u1ec1 ng\u00e0nh robot.",
+      collocations: ["engage in self-directed study", "habit of study"]
+    }
+    ,
+    {
+      id: "mega-unit-1-neuroplasticity",
+      word: "neuroplasticity",
+      partOfSpeech: "n",
+      meaningVi: "kh\u1ea3 n\u0103ng t\u00e1i t\u1ea1o v\u00e0 th\u00edch \u1ee9ng li\u00ean t\u1ee5c c\u1ee7a t\u1ebf b\u00e0o n\u00e3o",
+      ipa: "/\u02ccnj\u028a\u0259r\u0259\u028apl\u00e6\u02c8st\u026as\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=neuroplasticity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Learning a musical instrument or new foreign language in old age stimulates beneficial neuroplasticity.",
+      exampleVi: "H\u1ecdc m\u1ed9t nh\u1ea1c c\u1ee5 m\u1edbi hay h\u1ecdc th\u00eam ngo\u1ea1i ng\u1eef khi v\u1ec1 gi\u00e0 gi\u00fap k\u00edch th\u00edch kh\u1ea3 n\u0103ng t\u00e1i t\u1ea1o t\u1ebf b\u00e0o th\u1ea7n kinh k\u1ef3 di\u1ec7u c\u1ee7a n\u00e3o b\u1ed9.",
+      collocations: ["harness neuroplasticity", "brain neuroplasticity"]
+    }
+    ,
+    {
+      id: "mega-unit-1-intellectual-curiosity",
+      word: "intellectual curiosity",
+      partOfSpeech: "n.phr",
+      meaningVi: "ni\u1ec1m \u0111am m\u00ea t\u00f2 m\u00f2 t\u00ecm hi\u1ec3u tri th\u1ee9c m\u1edbi",
+      ipa: "/\u02cc\u026ant\u0259\u02c8lekt\u0283u\u0259l \u02cckj\u028a\u0259ri\u02c8\u0252s\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=intellectual+curiosity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Albert Einstein attributed his discoveries not to innate genius but to insatiable intellectual curiosity.",
+      exampleVi: "Albert Einstein cho r\u1eb1ng c\u00e1c ph\u00e1t minh c\u1ee7a \u00f4ng kh\u00f4ng ph\u1ea3i nh\u1edd thi\u00ean t\u00e0i b\u1ea9m sinh m\u00e0 b\u1eaft ngu\u1ed3n t\u1eeb ni\u1ec1m \u0111am m\u00ea h\u1ecdc h\u1ecfi kh\u00f4ng ng\u1eebng.",
+      collocations: ["nurture intellectual curiosity", "insatiable curiosity"]
+    }
+    ,
+    {
+      id: "mega-unit-1-digital-micro-credential",
+      word: "digital micro-credential",
+      partOfSpeech: "n.phr",
+      meaningVi: "ch\u1ee9ng ch\u1ec9 s\u1ed1 t\u00edch l\u0169y cho t\u1eebng k\u1ef9 n\u0103ng c\u1ee5 th\u1ec3",
+      ipa: "/\u02ccd\u026ad\u0292\u026atl \u02c8ma\u026akr\u0259\u028a kr\u0259\u02c8den\u0283l/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=digital+micro-credential&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Earning a digital micro-credential in data analytics verifies actionable workplace skills for employers.",
+      exampleVi: "T\u00edch l\u0169y ch\u1ee9ng ch\u1ec9 s\u1ed1 vi m\u00f4 v\u1ec1 ph\u00e2n t\u00edch d\u1eef li\u1ec7u ch\u1ee9ng minh n\u0103ng l\u1ef1c l\u00e0m vi\u1ec7c th\u1ef1c t\u1ebf cho nh\u00e0 tuy\u1ec3n d\u1ee5ng.",
+      collocations: ["earn a digital micro-credential", "stackable micro-credentials"]
+    }
+    ,
+    {
+      id: "mega-unit-1-cognitive-resilience",
+      word: "cognitive resilience",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ee9c b\u1ec1n v\u00e0 s\u1ef1 d\u1ebbo dai c\u1ee7a tr\u00ed tu\u1ec7 khi v\u1ec1 gi\u00e0",
+      ipa: "/\u02c8k\u0252\u0261n\u0259t\u026av r\u026a\u02c8z\u026ali\u0259ns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=cognitive+resilience&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Daily crossword puzzles and chess matches maintain sharp cognitive resilience against memory decline.",
+      exampleVi: "Gi\u1ea3i \u00f4 ch\u1eef h\u1eb1ng ng\u00e0y v\u00e0 ch\u01a1i c\u1edd vua gi\u00fap duy tr\u00ec s\u1ef1 d\u1ebbo dai minh m\u1eabn c\u1ee7a tr\u00ed tu\u1ec7, ch\u1ed1ng l\u1ea1i s\u1ef1 suy gi\u1ea3m tr\u00ed nh\u1edb.",
+      collocations: ["boost cognitive resilience", "maintain resilience"]
+    }
+    ,
+    {
+      id: "mega-unit-1-massive-open-online-course",
+      word: "massive open online course",
+      partOfSpeech: "n.phr",
+      meaningVi: "kh\u00f3a h\u1ecdc tr\u1ef1c tuy\u1ebfn m\u1edf \u0111\u1ea1i ch\u00fang MOOC",
+      ipa: "/\u02ccm\u00e6s\u026av \u02c8\u0259\u028ap\u0259n \u02c8\u0252nla\u026an k\u0254\u02d0s/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=massive+open+online+course&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Millions of global scholars enroll in massive open online courses offered free by Ivy League faculties.",
+      exampleVi: "H\u00e0ng tri\u1ec7u h\u1ecdc vi\u00ean to\u00e0n c\u1ea7u ghi danh c\u00e1c kh\u00f3a h\u1ecdc tr\u1ef1c tuy\u1ebfn m\u1edf \u0111\u1ea1i ch\u00fang MOOC do c\u00e1c tr\u01b0\u1eddng \u0111\u1ea1i h\u1ecdc h\u00e0ng \u0111\u1ea7u cung c\u1ea5p mi\u1ec5n ph\u00ed.",
+      collocations: ["complete a massive open online course", "MOOC platform"]
+    }
+    ,
+    {
+      id: "mega-unit-1-personal-enrichment",
+      word: "personal enrichment",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 b\u1ed3i d\u01b0\u1ee1ng l\u00e0m gi\u00e0u \u0111\u1eb9p t\u00e2m h\u1ed3n v\u00e0 v\u1ed1n s\u1ed1ng",
+      ipa: "/\u02c8p\u025c\u02d0s\u0259nl \u026an\u02c8r\u026at\u0283m\u0259nt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=personal+enrichment&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Taking ceramic pottery and landscape painting classes brings immense personal enrichment.",
+      exampleVi: "Tham gia c\u00e1c l\u1edbp l\u00e0m g\u1ed1m ngh\u1ec7 thu\u1eadt v\u00e0 v\u1ebd tranh phong c\u1ea3nh \u0111em l\u1ea1i s\u1ef1 phong ph\u00fa v\u00e0 thi v\u1ecb tuy\u1ec7t v\u1eddi cho t\u00e2m h\u1ed3n.",
+      collocations: ["pursue personal enrichment", "avenue for enrichment"]
+    }
+    ,
+    {
+      id: "mega-unit-1-critical-inquiry",
+      word: "critical inquiry",
+      partOfSpeech: "n.phr",
+      meaningVi: "tinh th\u1ea7n tra v\u1ea5n v\u00e0 \u0111\u00e0o s\u00e2u nghi v\u1ea5n khoa h\u1ecdc",
+      ipa: "/\u02c8kr\u026at\u026akl \u026an\u02c8kwa\u026a\u0259ri/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=critical+inquiry&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Lifelong education cultivates critical inquiry questioning unverified claims and dogmatic assumptions.",
+      exampleVi: "Gi\u00e1o d\u1ee5c su\u1ed1t \u0111\u1eddi nu\u00f4i d\u01b0\u1ee1ng tinh th\u1ea7n tra v\u1ea5n ph\u1ea3n bi\u1ec7n, lu\u00f4n \u0111\u1eb7t nghi v\u1ea5n tr\u01b0\u1edbc c\u00e1c tuy\u00ean b\u1ed1 ch\u01b0a \u0111\u01b0\u1ee3c ki\u1ec3m ch\u1ee9ng.",
+      collocations: ["spirit of critical inquiry", "encourage inquiry"]
+    }
+    ,
+    {
+      id: "mega-unit-1-skill-obsolescence",
+      word: "skill obsolescence",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 l\u1ed7i th\u1eddi c\u1ee7a k\u1ef9 n\u0103ng do c\u00f4ng ngh\u1ec7 ph\u00e1t tri\u1ec3n",
+      ipa: "/sk\u026al \u02cc\u0252bs\u0259\u02c8lesns/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=skill+obsolescence&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Constant software updates mean developers must learn new frameworks to combat rapid skill obsolescence.",
+      exampleVi: "C\u00e1c b\u1ea3n c\u1eadp nh\u1eadt ph\u1ea7n m\u1ec1m li\u00ean t\u1ee5c \u0111\u1ed3ng ngh\u0129a v\u1edbi vi\u1ec7c l\u1eadp tr\u00ecnh vi\u00ean ph\u1ea3i h\u1ecdc th\u00eam c\u00f4ng ngh\u1ec7 m\u1edbi \u0111\u1ec3 ch\u1ed1ng l\u1ea1i s\u1ef1 l\u1ed7i th\u1eddi tay ngh\u1ec1.",
+      collocations: ["prevent skill obsolescence", "risk of obsolescence"]
+    }
+    ,
+    {
+      id: "mega-unit-1-formal-education",
+      word: "formal education",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ec7 th\u1ed1ng gi\u00e1o d\u1ee5c ch\u00ednh quy tr\u01b0\u1eddng l\u1edbp",
+      ipa: "/\u02c8f\u0254\u02d0ml \u02cced\u0292u\u02c8ke\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=formal+education&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Graduating university marks the conclusion of formal education but only the inception of real learning.",
+      exampleVi: "T\u1ed1t nghi\u1ec7p \u0111\u1ea1i h\u1ecdc \u0111\u00e1nh d\u1ea5u s\u1ef1 kh\u00e9p l\u1ea1i c\u1ee7a gi\u00e1o d\u1ee5c ch\u00ednh quy tr\u00ean gh\u1ebf nh\u00e0 tr\u01b0\u1eddng nh\u01b0ng l\u1ea1i l\u00e0 kh\u1edfi \u0111\u1ea7u c\u1ee7a vi\u1ec7c h\u1ecdc tr\u01b0\u1eddng \u0111\u1eddi.",
+      collocations: ["complete formal education", "limits of formal education"]
+    }
+    ,
+    {
+      id: "mega-unit-1-informal-learning",
+      word: "informal learning",
+      partOfSpeech: "n.phr",
+      meaningVi: "h\u1ecdc t\u1eadp kh\u00f4ng ch\u00ednh th\u1ee9c qua tr\u1ea3i nghi\u1ec7m \u0111\u1eddi th\u01b0\u1eddng",
+      ipa: "/\u026an\u02c8f\u0254\u02d0ml \u02c8l\u025c\u02d0n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=informal+learning&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Cooking alongside grandparents and tinkering with car engines are prime examples of informal learning.",
+      exampleVi: "C\u00f9ng n\u1ea5u \u0103n b\u00ean \u00f4ng b\u00e0 v\u00e0 t\u1ef1 m\u00e0y m\u00f2 s\u1eeda \u0111\u1ed9ng c\u01a1 xe l\u00e0 nh\u1eefng minh ch\u1ee9ng s\u1ed1ng \u0111\u1ed9ng c\u1ee7a vi\u1ec7c h\u1ecdc t\u1eadp qua tr\u1ea3i nghi\u1ec7m th\u1ef1c t\u1ebf.",
+      collocations: ["value informal learning", "rich informal learning"]
+    }
+    ,
+    {
+      id: "mega-unit-1-non-formal-education",
+      word: "non-formal education",
+      partOfSpeech: "n.phr",
+      meaningVi: "gi\u00e1o d\u1ee5c phi ch\u00ednh quy qua c\u00e1c kh\u00f3a \u0111\u00e0o t\u1ea1o c\u1ed9ng \u0111\u1ed3ng",
+      ipa: "/\u02ccn\u0252n \u02c8f\u0254\u02d0ml \u02cced\u0292u\u02c8ke\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=non-formal+education&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Community centers offer non-formal education courses covering household bookkeeping and organic farming.",
+      exampleVi: "C\u00e1c trung t\u00e2m c\u1ed9ng \u0111\u1ed3ng t\u1ed5 ch\u1ee9c c\u00e1c kh\u00f3a gi\u00e1o d\u1ee5c phi ch\u00ednh quy gi\u1ea3ng d\u1ea1y k\u1ef9 n\u0103ng qu\u1ea3n l\u00fd chi ti\u00eau gia \u0111\u00ecnh v\u00e0 tr\u1ed3ng tr\u1ecdt h\u1eefu c\u01a1.",
+      collocations: ["enroll in non-formal education", "community education"]
+    }
+    ,
+    {
+      id: "mega-unit-1-adaptive-mindset",
+      word: "adaptive mindset",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u01b0 duy th\u00edch \u1ee9ng linh ho\u1ea1t tr\u01b0\u1edbc m\u1ecdi \u0111\u1ed5i thay",
+      ipa: "/\u0259\u02c8d\u00e6pt\u026av \u02c8ma\u026andset/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=adaptive+mindset&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Surviving industrial disruption requires an adaptable, optimistic, and resilient adaptive mindset.",
+      exampleVi: "\u0110\u1ec3 v\u01b0\u1ee3t qua nh\u1eefng b\u01b0\u1edbc ngo\u1eb7t l\u1edbn c\u1ee7a th\u1eddi \u0111\u1ea1i c\u00f4ng ngh\u1ec7 \u0111\u00f2i h\u1ecfi m\u1ed9t t\u01b0 duy th\u00edch \u1ee9ng linh ho\u1ea1t, l\u1ea1c quan v\u00e0 ki\u00ean c\u01b0\u1eddng.",
+      collocations: ["develop an adaptive mindset", "embrace the mindset"]
+    }
+    ,
+    {
+      id: "mega-unit-1-knowledge-acquisition",
+      word: "knowledge acquisition",
+      partOfSpeech: "n.phr",
+      meaningVi: "qu\u00e1 tr\u00ecnh ti\u1ebfp thu v\u00e0 th\u1ea5u tri\u1ec7t tri th\u1ee9c m\u1edbi",
+      ipa: "/\u02c8n\u0252l\u026ad\u0292 \u02cc\u00e6kw\u026a\u02c8z\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=knowledge+acquisition&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Reading primary historical documents accelerates rapid and nuanced knowledge acquisition.",
+      exampleVi: "\u0110\u1ecdc tr\u1ef1c ti\u1ebfp c\u00e1c v\u0103n b\u1ea3n l\u1ecbch s\u1eed g\u1ed1c gi\u00fap \u0111\u1ea9y nhanh qu\u00e1 tr\u00ecnh ti\u1ebfp thu tri th\u1ee9c m\u1ed9t c\u00e1ch s\u00e2u s\u1eafc v\u00e0 chu\u1ea9n x\u00e1c.",
+      collocations: ["facilitate knowledge acquisition", "methods of acquisition"]
+    }
+    ,
+    {
+      id: "mega-unit-1-reflective-practice",
+      word: "reflective practice",
+      partOfSpeech: "n.phr",
+      meaningVi: "th\u00f3i quen t\u1ef1 suy ng\u1eabm \u0111\u1ec3 r\u00fat ra b\u00e0i h\u1ecdc kinh nghi\u1ec7m",
+      ipa: "/r\u026a\u02c8flekt\u026av \u02c8pr\u00e6kt\u026as/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=reflective+practice&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Journaling after challenging client presentations is an invaluable discipline of reflective practice.",
+      exampleVi: "Vi\u1ebft nh\u1eadt k\u00fd sau nh\u1eefng bu\u1ed5i thuy\u1ebft tr\u00ecnh kh\u00f3 kh\u0103n v\u1edbi \u0111\u1ed1i t\u00e1c l\u00e0 m\u1ed9t th\u00f3i quen t\u1ef1 suy ng\u1eabm r\u00fat kinh nghi\u1ec7m v\u00f4 gi\u00e1.",
+      collocations: ["engage in reflective practice", "reflective journaling"]
+    }
+    ,
+    {
+      id: "mega-unit-1-vocational-retagging",
+      word: "vocational retagging",
+      partOfSpeech: "n.phr",
+      meaningVi: "vi\u1ec7c chuy\u1ec3n \u0111\u1ed5i v\u00e0 c\u1ea5p nh\u00e3n ngh\u1ec1 nghi\u1ec7p m\u1edbi",
+      ipa: "/v\u0259\u028a\u02c8ke\u026a\u0283\u0259nl ri\u02d0\u02c8t\u00e6\u0261\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=vocational+retagging&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Government subsidies support the vocational retagging of assembly line staff into automation specialists.",
+      exampleVi: "Ch\u00ednh ph\u1ee7 h\u1ed7 tr\u1ee3 vi\u1ec7c \u0111\u00e0o t\u1ea1o chuy\u1ec3n \u0111\u1ed5i ngh\u1ec1 cho c\u00f4ng nh\u00e2n d\u00e2y chuy\u1ec1n th\u00e0nh k\u1ef9 thu\u1eadt vi\u00ean t\u1ef1 \u0111\u1ed9ng h\u00f3a.",
+      collocations: ["benefit from retagging", "vocational transition"]
+    }
+    ,
+    {
+      id: "mega-unit-1-digital-autodidact",
+      word: "digital autodidact",
+      partOfSpeech: "n.phr",
+      meaningVi: "ng\u01b0\u1eddi t\u1ef1 h\u1ecdc xu\u1ea5t s\u1eafc m\u1ecdi ki\u1ebfn th\u1ee9c tr\u00ean m\u1ea1ng",
+      ipa: "/\u02ccd\u026ad\u0292\u026atl \u02cc\u0254\u02d0t\u0259\u028a\u02c8da\u026ad\u00e6kt/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=digital+autodidact&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Without stepping foot on a university campus, the digital autodidact mastered three programming languages.",
+      exampleVi: "Kh\u00f4ng c\u1ea7n \u0111\u1eb7t ch\u00e2n t\u1edbi gi\u1ea3ng \u0111\u01b0\u1eddng \u0111\u1ea1i h\u1ecdc, ch\u00e0ng trai t\u1ef1 h\u1ecdc tr\u00ean m\u1ea1ng \u0111\u00e3 th\u00e0nh th\u1ea1o ba ng\u00f4n ng\u1eef l\u1eadp tr\u00ecnh.",
+      collocations: ["become a digital autodidact", "talented autodidact"]
+    }
+    ,
+    {
+      id: "mega-unit-1-intellectual-agility",
+      word: "intellectual agility",
+      partOfSpeech: "n.phr",
+      meaningVi: "s\u1ef1 nhanh nh\u1ea1y v\u00e0 s\u1eafc s\u1ea3o trong t\u01b0 duy",
+      ipa: "/\u02cc\u026ant\u0259\u02c8lekt\u0283u\u0259l \u0259\u02c8d\u0292\u026al\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=intellectual+agility&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Cross-disciplinary reading across physics, philosophy, and poetry sharpens mental and intellectual agility.",
+      exampleVi: "\u0110\u1ecdc s\u00e1ch \u0111a ng\u00e0nh t\u1eeb v\u1eadt l\u00fd, tri\u1ebft h\u1ecdc t\u1edbi th\u01a1 ca gi\u00fap m\u00e0i gi\u0169a s\u1ef1 nhanh nh\u1ea1y s\u1eafc s\u1ea3o trong t\u01b0 duy tr\u00ed tu\u1ec7.",
+      collocations: ["foster intellectual agility", "demonstrate agility"]
+    }
+    ,
+    {
+      id: "mega-unit-1-learning-community",
+      word: "learning community",
+      partOfSpeech: "n.phr",
+      meaningVi: "c\u1ed9ng \u0111\u1ed3ng nh\u1eefng ng\u01b0\u1eddi c\u00f9ng \u0111am m\u00ea h\u1ecdc t\u1eadp",
+      ipa: "/\u02c8l\u025c\u02d0n\u026a\u014b k\u0259\u02c8mju\u02d0n\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=learning+community&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Joining a local astronomy learning community introduced amateur stargazers to high-powered telescope lenses.",
+      exampleVi: "Tham gia c\u1ed9ng \u0111\u1ed3ng h\u1ecdc thi\u00ean v\u0103n \u0111\u1ecba ph\u01b0\u01a1ng gi\u00fap nh\u1eefng ng\u01b0\u1eddi y\u00eau ng\u1eafm sao ti\u1ebfp c\u1eadn v\u1edbi k\u00ednh vi\u1ec5n v\u1ecdng c\u1ee1 l\u1edbn.",
+      collocations: ["thrive in a learning community", "vibrant community"]
+    }
+    ,
+    {
+      id: "mega-unit-1-growth-mindset",
+      word: "growth mindset",
+      partOfSpeech: "n.phr",
+      meaningVi: "t\u01b0 duy c\u1ea7u ti\u1ebfn tin r\u1eb1ng t\u00e0i n\u0103ng c\u00f3 th\u1ec3 r\u00e8n luy\u1ec7n",
+      ipa: "/\u02c8\u0261r\u0259\u028a\u03b8 ma\u026andset/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=growth+mindset&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Carol Dweck's research proves that cultivating a growth mindset empowers students to conquer challenging math.",
+      exampleVi: "Nghi\u00ean c\u1ee9u ch\u1ee9ng minh r\u1eb1ng vi\u1ec7c x\u00e2y d\u1ef1ng t\u01b0 duy c\u1ea7u ti\u1ebfn gi\u00fap h\u1ecdc sinh t\u1ef1 tin chinh ph\u1ee5c nh\u1eefng b\u00e0i to\u00e1n h\u00f3c b\u00faa.",
+      collocations: ["instill a growth mindset", "power of growth mindset"]
+    }
+    ,
+    {
+      id: "mega-unit-1-metacognition",
+      word: "metacognition",
+      partOfSpeech: "n",
+      meaningVi: "n\u0103ng l\u1ef1c nh\u1eadn th\u1ee9c v\u1ec1 ch\u00ednh qu\u00e1 tr\u00ecnh t\u01b0 duy c\u1ee7a m\u00ecnh",
+      ipa: "/\u02ccmet\u0259k\u0252\u0261\u02c8n\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=metacognition&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Teaching metacognition helps adolescents evaluate which study strategies maximize their personal retention.",
+      exampleVi: "D\u1ea1y v\u1ec1 si\u00eau nh\u1eadn th\u1ee9c gi\u00fap h\u1ecdc sinh t\u1ef1 \u0111\u00e1nh gi\u00e1 xem ph\u01b0\u01a1ng ph\u00e1p h\u1ecdc n\u00e0o mang l\u1ea1i hi\u1ec7u qu\u1ea3 ghi nh\u1edb t\u1ed1t nh\u1ea5t cho m\u00ecnh.",
+      collocations: ["develop metacognition", "metacognitive awareness"]
+    }
+    ,
+    {
+      id: "mega-unit-1-unlearning",
+      word: "unlearning",
+      partOfSpeech: "n",
+      meaningVi: "qu\u00e1 tr\u00ecnh ch\u1ee7 \u0111\u1ed9ng t\u1eeb b\u1ecf nh\u1eefng ki\u1ebfn th\u1ee9c v\u00e0 \u0111\u1ecbnh ki\u1ebfn \u0111\u00e3 c\u0169",
+      ipa: "/\u028cn\u02c8l\u025c\u02d0n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=unlearning&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "In rapidly evolving domains, unlearning outdated dogmas is just as vital as absorbing new algorithms.",
+      exampleVi: "Trong c\u00e1c l\u0129nh v\u1ef1c ph\u00e1t tri\u1ec3n v\u0169 b\u00e3o, vi\u1ec7c ch\u1ee7 \u0111\u1ed9ng t\u1eeb b\u1ecf nh\u1eefng \u0111\u1ecbnh ki\u1ebfn l\u1ed7i th\u1eddi c\u0169ng quan tr\u1ecdng nh\u01b0 vi\u1ec7c ti\u1ebfp thu thu\u1eadt to\u00e1n m\u1edbi.",
+      collocations: ["practice deliberate unlearning", "process of unlearning"]
+    }
+    ,
+    {
+      id: "mega-unit-1-peer-to-peer-learning",
+      word: "peer-to-peer learning",
+      partOfSpeech: "n.phr",
+      meaningVi: "m\u00f4 h\u00ecnh b\u1ea1n h\u1ecdc h\u1ecfi l\u1eabn nhau c\u00f9ng ti\u1ebfn b\u1ed9",
+      ipa: "/\u02ccp\u026a\u0259 t\u0259 \u02c8p\u026a\u0259 \u02c8l\u025c\u02d0n\u026a\u014b/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=peer-to-peer+learning&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Coding clubs utilize peer-to-peer learning with student pairs alternating as driver and navigator.",
+      exampleVi: "C\u00e2u l\u1ea1c b\u1ed9 l\u1eadp tr\u00ecnh \u00e1p d\u1ee5ng m\u00f4 h\u00ecnh h\u1ecdc h\u1ecfi b\u1ea1n b\u00e8 v\u1edbi c\u00e1c c\u1eb7p \u0111\u00f4i lu\u00e2n phi\u00ean \u0111\u00f3ng vai tr\u00f2 ng\u01b0\u1eddi vi\u1ebft m\u00e3 v\u00e0 ng\u01b0\u1eddi ki\u1ec3m tra.",
+      collocations: ["promote peer-to-peer learning", "collaborative peer learning"]
+    }
+    ,
+    {
+      id: "mega-unit-1-experiential-education",
+      word: "experiential education",
+      partOfSpeech: "n.phr",
+      meaningVi: "ph\u01b0\u01a1ng ph\u00e1p gi\u00e1o d\u1ee5c th\u00f4ng qua tr\u1ea3i nghi\u1ec7m th\u1ef1c \u0111\u1ecba",
+      ipa: "/\u026ak\u02ccsp\u026a\u0259ri\u02c8en\u0283l \u02cced\u0292u\u02c8ke\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=experiential+education&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Archeological digs in coastal caves provide undergraduates with transformative experiential education.",
+      exampleVi: "C\u00e1c chuy\u1ebfn khai qu\u1eadt kh\u1ea3o c\u1ed5 trong hang \u0111\u1ed9ng ven bi\u1ec3n mang l\u1ea1i cho sinh vi\u00ean tr\u1ea3i nghi\u1ec7m gi\u00e1o d\u1ee5c th\u1ef1c t\u1ebf s\u00e2u s\u1eafc.",
+      collocations: ["embrace experiential education", "field experiential education"]
+    }
+    ,
+    {
+      id: "mega-unit-1-lifelong-curiosity",
+      word: "lifelong curiosity",
+      partOfSpeech: "n.phr",
+      meaningVi: "tinh th\u1ea7n ham h\u1ecdc h\u1ecfi say m\u00ea su\u1ed1t cu\u1ed9c \u0111\u1eddi",
+      ipa: "/\u02ccla\u026afl\u0252\u014b \u02cckj\u028a\u0259ri\u02c8\u0252s\u0259ti/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=lifelong+curiosity&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Retirees who sustain a vibrant lifelong curiosity report markedly higher levels of vitality and joy.",
+      exampleVi: "Nh\u1eefng ng\u01b0\u1eddi v\u1ec1 h\u01b0u v\u1eabn gi\u1eef \u0111\u01b0\u1ee3c ni\u1ec1m say m\u00ea h\u1ecdc h\u1ecfi su\u1ed1t \u0111\u1eddi c\u00f3 m\u1ee9c \u0111\u1ed9 vui s\u1ed1ng v\u00e0 s\u1ee9c kh\u1ecfe tinh th\u1ea7n cao h\u01a1n r\u00f5 r\u1ec7t.",
+      collocations: ["spark lifelong curiosity", "anchor in lifelong curiosity"]
+    }
+    ,
+    {
+      id: "mega-unit-1-self-actualization",
+      word: "self-actualization",
+      partOfSpeech: "n",
+      meaningVi: "nhu c\u1ea7u t\u1ef1 th\u1ec3 hi\u1ec7n v\u00e0 hi\u1ec7n th\u1ef1c h\u00f3a ti\u1ec1m n\u0103ng b\u1ea3n th\u00e2n",
+      ipa: "/\u02ccself \u02cc\u00e6kt\u0283u\u0259la\u026a\u02c8ze\u026a\u0283n/",
+      audioUrl: "https://dict.youdao.com/dictvoice?audio=self-actualization&type=2",
+      imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      exampleEn: "Reaching self-actualization through creative painting and poetry fulfills an innate human desire.",
+      exampleVi: "\u0110\u1ea1t t\u1edbi s\u1ef1 t\u1ef1 hi\u1ec7n th\u1ef1c h\u00f3a ti\u1ec1m n\u0103ng b\u1ea3n th\u00e2n qua h\u1ed9i h\u1ecda s\u00e1ng t\u1ea1o v\u00e0 th\u01a1 ca th\u1ecfa m\u00e3n kh\u00e1t khao s\u00e2u th\u1eb3m c\u1ee7a con ng\u01b0\u1eddi.",
+      collocations: ["strive for self-actualization", "peak of self-actualization"]
     }
   ],
 };

@@ -14,10 +14,11 @@ import {
   Gamepad2,
   Sparkles,
   Trophy,
+  PenTool,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export type UnitTabType = "vocab" | "grammar" | "reading" | "objectives" | "quiz";
+export type UnitTabType = "vocab" | "grammar" | "reading" | "exercises" | "objectives" | "quiz";
 
 interface UnitLearningStepperProps {
   activeTab: UnitTabType;
@@ -55,8 +56,15 @@ const STEPS: {
     icon: BookOpen,
   },
   {
-    id: "quiz",
+    id: "exercises",
     stepNum: 4,
+    label: "Bài tập đa dạng",
+    sublabel: "Viết lại câu, Lỗi sai & Ghép câu",
+    icon: PenTool,
+  },
+  {
+    id: "quiz",
+    stepNum: 5,
     label: "Kiểm tra phản xạ",
     sublabel: "Đánh giá & tích luỹ XP",
     icon: Award,
@@ -75,7 +83,7 @@ export function UnitLearningStepper({
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-            Lộ trình 4 bước tiếp thu kiến thức chuẩn THPT
+            Lộ trình 5 bước tiếp thu kiến thức chuẩn THPT
           </span>
         </div>
         <span className="text-[11px] font-semibold text-slate-400 hidden sm:inline">
@@ -83,7 +91,7 @@ export function UnitLearningStepper({
         </span>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
         {STEPS.map((step) => {
           const isActive = activeTab === step.id;
           const Icon = step.icon;
@@ -114,6 +122,8 @@ export function UnitLearningStepper({
                       isActive
                         ? step.id === "grammar"
                           ? "text-amber-500"
+                          : step.id === "exercises"
+                          ? "text-indigo-600"
                           : step.id === "quiz"
                           ? "text-emerald-600"
                           : "text-blue-600"
@@ -153,29 +163,36 @@ export function UnitLearningStepper({
 }
 
 interface UnitNextStepCardProps {
-  currentTab: "vocab" | "grammar" | "reading";
+  currentTab: "vocab" | "grammar" | "reading" | "exercises";
   onNext: () => void;
 }
 
 const NEXT_CONFIG = {
   vocab: {
-    badge: "Bước 2 / 4",
+    badge: "Bước 2 / 5",
     title: "Đã nạp xong từ vựng bài học?",
     desc: "Khám phá ngay công thức, bản chất thời gian và các cấu trúc ngữ pháp trọng tâm của Unit.",
     btnText: "Tiếp tục: Học Ngữ pháp chuyên sâu",
     btnColor: "bg-blue-600 hover:bg-blue-700 text-white",
   },
   grammar: {
-    badge: "Bước 3 / 4",
+    badge: "Bước 3 / 5",
     title: "Đã hiểu rõ các cấu trúc ngữ pháp?",
     desc: "Bước vào phòng đọc hiểu để đọc văn bản chuẩn SGK và chạm tra từ vựng ngữ cảnh tức thì.",
     btnText: "Tiếp tục: Vào Phòng Đọc hiểu SGK",
     btnColor: "bg-blue-600 hover:bg-blue-700 text-white",
   },
   reading: {
-    badge: "Bước 4 / 4",
+    badge: "Bước 4 / 5",
     title: "Đã nắm bắt trọn vẹn bài đọc?",
-    desc: "Thử thách trắc nghiệm phản xạ 10 câu để kiểm tra mức độ tiếp thu và nhận thưởng tích luỹ XP.",
+    desc: "Rèn luyện các dạng bài tập thực hành: Viết lại câu, Tìm & sửa lỗi sai ABCD, Ghép câu và Mẫu câu giao tiếp.",
+    btnText: "Tiếp tục: Luyện Bài tập đa dạng",
+    btnColor: "bg-indigo-600 hover:bg-indigo-700 text-white",
+  },
+  exercises: {
+    badge: "Bước 5 / 5",
+    title: "Đã làm chủ các dạng bài tập?",
+    desc: "Thử thách trắc nghiệm phản xạ 50 câu để kiểm tra mức độ tiếp thu và nhận thưởng tích luỹ XP.",
     btnText: "Tiếp tục: Làm bài Kiểm tra & Thử thách",
     btnColor: "bg-emerald-600 hover:bg-emerald-700 text-white",
   },
