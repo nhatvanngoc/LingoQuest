@@ -5,6 +5,7 @@
 */
 
 import { RICH_VOCAB_GRADE12 } from "./grade12-rich-vocab";
+import { EXPANDED_VOCAB_GRADE12 } from "./expanded-vocab-g12";
 
 export interface Grade12VocabItem {
   id: string;
@@ -2003,12 +2004,13 @@ export function getGrade12UnitsByTerm(term: 1 | 2): Grade12Unit[] {
   return GRADE_12_CURRICULUM.filter((u) => u.term === term);
 }
 
-// Enrich GRADE_12_CURRICULUM with real photos, collocations, and contextual examples
+// Enrich GRADE_12_CURRICULUM with real photos, collocations, and expanded vocabulary
 for (const unit of GRADE_12_CURRICULUM) {
-  const richList = RICH_VOCAB_GRADE12[unit.slug];
-  if (richList && richList.length > 0) {
+  const sources = [RICH_VOCAB_GRADE12[unit.slug], EXPANDED_VOCAB_GRADE12[unit.slug]];
+  for (const list of sources) {
+    if (!list || list.length === 0) continue;
     const existingMap = new Map(unit.vocabulary.map((v) => [v.word.toLowerCase(), v]));
-    for (const r of richList) {
+    for (const r of list) {
       const match = existingMap.get(r.word.toLowerCase());
       if (match) {
         if (r.imageUrl) match.imageUrl = r.imageUrl;
@@ -2016,7 +2018,7 @@ for (const unit of GRADE_12_CURRICULUM) {
         if (r.meaningVi && match.meaningVi.length < r.meaningVi.length) match.meaningVi = r.meaningVi;
         if (r.exampleVi && !match.exampleVi) match.exampleVi = r.exampleVi;
       } else {
-        unit.vocabulary.unshift(r);
+        unit.vocabulary.push(r);
       }
     }
   }

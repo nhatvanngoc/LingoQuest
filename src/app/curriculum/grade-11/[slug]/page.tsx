@@ -918,6 +918,7 @@ export default function Grade11UnitDetailPage() {
               grammarTitle={unit.grammarTitle}
               grammarSummary={unit.grammarSummary}
               topic={unit.topic}
+              grammarHtml={unit.grammarHtml}
             />
             <UnitNextStepCard currentTab="grammar" onNext={() => handleTabChange("reading")} />
           </div>

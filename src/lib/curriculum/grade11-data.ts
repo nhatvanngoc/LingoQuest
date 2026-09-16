@@ -3,6 +3,8 @@
    10 Units + 4 Reviews with full vocabulary, IPA, audio, examples & grammar.
 */
 
+import { EXPANDED_VOCAB_GRADE11 } from "./expanded-vocab-g11";
+
 export interface Grade11VocabItem {
   id: string;
   word: string;
@@ -4118,4 +4120,23 @@ export function getGrade11UnitBySlug(slug: string): Grade11Unit | undefined {
 
 export function getGrade11UnitsByTerm(term: 1 | 2): Grade11Unit[] {
   return GRADE_11_CURRICULUM.filter((u) => u.term === term);
+}
+
+// Enrich GRADE_11_CURRICULUM with expanded vocabulary, real photos and collocations
+for (const unit of GRADE_11_CURRICULUM) {
+  const extraList = EXPANDED_VOCAB_GRADE11[unit.slug];
+  if (extraList && extraList.length > 0) {
+    const existingMap = new Map(unit.vocabulary.map((v) => [v.word.toLowerCase(), v]));
+    for (const r of extraList) {
+      const match = existingMap.get(r.word.toLowerCase());
+      if (match) {
+        if (r.imageUrl) match.imageUrl = r.imageUrl;
+        if (r.collocations && r.collocations.length > 0) match.collocations = r.collocations;
+        if (r.meaningVi && match.meaningVi.length < r.meaningVi.length) match.meaningVi = r.meaningVi;
+        if (r.exampleVi && !match.exampleVi) match.exampleVi = r.exampleVi;
+      } else {
+        unit.vocabulary.push(r);
+      }
+    }
+  }
 }

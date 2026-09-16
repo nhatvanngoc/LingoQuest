@@ -4,6 +4,9 @@
    10 Units + 4 Reviews with full vocabulary, IPA, audio, examples & grammar.
 */
 
+import { RICH_VOCAB_GRADE10 } from "./grade10-rich-vocab";
+import { EXPANDED_VOCAB_GRADE10 } from "./expanded-vocab-g10";
+
 export interface Grade10VocabItem {
   id: string;
   word: string;
@@ -1896,4 +1899,24 @@ export function getGrade10UnitBySlug(slug: string): Grade10Unit | undefined {
 
 export function getGrade10UnitsByTerm(term: 1 | 2): Grade10Unit[] {
   return GRADE_10_CURRICULUM.filter((u) => u.term === term);
+}
+
+// Enrich GRADE_10_CURRICULUM with real photos, collocations, and expanded vocabulary
+for (const unit of GRADE_10_CURRICULUM) {
+  const sources = [RICH_VOCAB_GRADE10[unit.slug], EXPANDED_VOCAB_GRADE10[unit.slug]];
+  for (const list of sources) {
+    if (!list || list.length === 0) continue;
+    const existingMap = new Map(unit.vocabulary.map((v) => [v.word.toLowerCase(), v]));
+    for (const r of list) {
+      const match = existingMap.get(r.word.toLowerCase());
+      if (match) {
+        if (r.imageUrl) match.imageUrl = r.imageUrl;
+        if (r.collocations && r.collocations.length > 0) match.collocations = r.collocations;
+        if (r.meaningVi && match.meaningVi.length < r.meaningVi.length) match.meaningVi = r.meaningVi;
+        if (r.exampleVi && !match.exampleVi) match.exampleVi = r.exampleVi;
+      } else {
+        unit.vocabulary.push(r);
+      }
+    }
+  }
 }

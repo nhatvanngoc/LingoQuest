@@ -4,10 +4,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Zap,
-  Clock,
   Volume2,
   CheckCircle2,
-  HelpCircle,
   Sparkles,
   ArrowRight,
   RotateCcw,
@@ -16,14 +14,17 @@ import {
   Layers,
   BookOpen,
   Award,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getGrammarTopicData } from "@/lib/curriculum/grammar-bank";
 
 interface InteractiveGrammarStudioProps {
   unitNumber: number;
   grammarTitle: string;
   grammarSummary: string;
   topic: string;
+  grammarHtml?: string;
 }
 
 export function InteractiveGrammarStudio({
@@ -31,9 +32,13 @@ export function InteractiveGrammarStudio({
   grammarTitle,
   grammarSummary,
   topic,
+  grammarHtml,
 }: InteractiveGrammarStudioProps) {
+  // Look up comprehensive grammar data for this specific topic
+  const grammarData = getGrammarTopicData(grammarTitle || grammarSummary);
+
   // Active View Tab inside Grammar Studio
-  const [grammarView, setGrammarView] = useState<"comparison" | "formulas" | "signals" | "minicheck">("comparison");
+  const [grammarView, setGrammarView] = useState<"comparison" | "formulas" | "signals" | "minicheck" | "textbook">("comparison");
 
   // Mini-check state
   const [userAnswers, setUserAnswers] = useState<Record<number, number>>({});
@@ -50,27 +55,7 @@ export function InteractiveGrammarStudio({
     }
   };
 
-  // Mini-check questions
-  const miniCheckQuestions = [
-    {
-      q: "1. She ________ in Ha Noi for 5 years and she still lives there now.",
-      options: ["lived", "has lived", "lives", "is living"],
-      correct: 1,
-      hint: "Dấu hiệu 'for 5 years' và hành động vẫn đang tiếp diễn ở hiện tại -> Dùng Hiện tại hoàn thành.",
-    },
-    {
-      q: "2. We ________ a great football match on TV yesterday evening.",
-      options: ["have watched", "watched", "watch", "had watched"],
-      correct: 1,
-      hint: "Dấu hiệu thời gian xác định đã kết thúc trong quá khứ 'yesterday evening' -> Dùng Quá khứ đơn.",
-    },
-    {
-      q: "3. Have you ________ taken antibiotics for a viral infection?",
-      options: ["ever", "yet", "ago", "since"],
-      correct: 0,
-      hint: "Trong câu hỏi Hiện tại hoàn thành hỏi về trải nghiệm, dùng 'ever' (đã từng).",
-    },
-  ];
+  const miniQuestions = grammarData.quizQuestions.slice(0, 4);
 
   return (
     <div className="space-y-6">
@@ -80,13 +65,13 @@ export function InteractiveGrammarStudio({
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-amber-100/90 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-amber-900 border border-amber-300">
               <Zap className="h-4 w-4 text-amber-600" />
-              Chuyên đề ngữ pháp trọng tâm • Unit {unitNumber}
+              {grammarData.badge || `Chuyên đề ngữ pháp • Unit ${unitNumber}`}
             </div>
             <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mt-2.5">
               {grammarTitle}
             </h2>
             <p className="mt-2.5 text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed max-w-2xl font-normal">
-              {grammarSummary}
+              {grammarSummary || grammarData.summary}
             </p>
           </div>
 
@@ -94,7 +79,7 @@ export function InteractiveGrammarStudio({
           <div className="flex flex-wrap items-center rounded-2xl bg-slate-100/90 p-1.5 border border-slate-200/70 shrink-0 gap-1">
             <button
               onClick={() => setGrammarView("comparison")}
-              className={`rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 grammarView === "comparison"
                   ? "bg-white text-indigo-700 shadow-xs border border-slate-900/10"
                   : "text-slate-600 hover:text-slate-900"
@@ -104,7 +89,7 @@ export function InteractiveGrammarStudio({
             </button>
             <button
               onClick={() => setGrammarView("formulas")}
-              className={`rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 grammarView === "formulas"
                   ? "bg-white text-indigo-700 shadow-xs border border-slate-900/10"
                   : "text-slate-600 hover:text-slate-900"
@@ -114,7 +99,7 @@ export function InteractiveGrammarStudio({
             </button>
             <button
               onClick={() => setGrammarView("signals")}
-              className={`rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 grammarView === "signals"
                   ? "bg-white text-indigo-700 shadow-xs border border-slate-900/10"
                   : "text-slate-600 hover:text-slate-900"
@@ -124,7 +109,7 @@ export function InteractiveGrammarStudio({
             </button>
             <button
               onClick={() => setGrammarView("minicheck")}
-              className={`rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 grammarView === "minicheck"
                   ? "bg-white text-indigo-700 shadow-xs border border-slate-900/10"
                   : "text-slate-600 hover:text-slate-900"
@@ -132,189 +117,118 @@ export function InteractiveGrammarStudio({
             >
               ⚡ Thử thách nhanh
             </button>
+            {grammarHtml && (
+              <button
+                onClick={() => setGrammarView("textbook")}
+                className={`rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                  grammarView === "textbook"
+                    ? "bg-indigo-600 text-white shadow-xs"
+                    : "text-indigo-700 hover:bg-indigo-50 font-bold"
+                }`}
+              >
+                📖 Bài học SGK
+              </button>
+            )}
           </div>
         </div>
       </div>
 
-      {/* 2. Interactive Visual Timeline (Trục thời gian tương tác) */}
-      <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-500">
-            Trực quan hóa Dòng thời gian (Timeline Infographic)
-          </span>
-          <span className="text-xs sm:text-sm font-bold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
-            Bản chất thời gian
-          </span>
-        </div>
+      {/* 2. Interactive Visual Timeline / Core Concept (if available) */}
+      {grammarData.timeline && (
+        <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-500">
+              Trực quan hóa Bản chất Ngữ pháp (Visual Concept)
+            </span>
+            <span className="text-xs sm:text-sm font-bold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
+              Tư duy bản chất
+            </span>
+          </div>
 
-        {/* Timeline Graphic Bar */}
-        <div className="relative py-8">
-          <div className="h-3 w-full bg-slate-100 rounded-full relative">
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 h-2 w-1/3 bg-blue-500 rounded-l-full" />
-            <div className="absolute left-1/3 top-1/2 -translate-y-1/2 h-3 w-1/3 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600" />
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 h-2 w-1/3 bg-slate-200 rounded-r-full" />
-
-            {/* Marker 1: Past Simple Stop Point */}
-            <div className="absolute left-[18%] top-1/2 -translate-y-1/2 flex flex-col items-center">
-              <div className="h-6 w-6 rounded-full bg-blue-600 border-4 border-white shadow-md flex items-center justify-center text-[10px] text-white font-black">
-                ⏹
-              </div>
-              <div className="absolute top-7 whitespace-nowrap text-center">
-                <span className="block font-bold text-xs sm:text-sm text-blue-700">Quá khứ đơn</span>
-                <span className="block text-xs text-slate-500 font-medium">Chấm dứt hoàn toàn</span>
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div className="rounded-2xl bg-blue-50/70 border border-blue-100 p-4">
+              <span className="font-bold text-sm sm:text-base text-blue-900 block mb-1.5">
+                🟦 {grammarData.timeline.leftLabel}:
+              </span>
+              <p className="text-xs sm:text-sm text-blue-900/90 leading-relaxed font-normal">
+                {grammarData.timeline.leftDesc}
+              </p>
             </div>
 
-            {/* Marker 2: Present Perfect Bridge Arrow */}
-            <div className="absolute left-[50%] top-1/2 -translate-y-1/2 flex flex-col items-center">
-              <div className="h-7 w-7 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 border-4 border-white shadow-lg flex items-center justify-center text-xs text-white font-black animate-pulse">
-                🔗
-              </div>
-              <div className="absolute top-7 whitespace-nowrap text-center">
-                <span className="block font-bold text-xs sm:text-sm text-purple-700">Hiện tại hoàn thành</span>
-                <span className="block text-xs text-slate-500 font-medium">Kéo dài đến Hiện tại</span>
-              </div>
-            </div>
-
-            {/* Marker 3: Present Moment */}
-            <div className="absolute left-[66.6%] top-1/2 -translate-y-1/2 flex flex-col items-center">
-              <div className="h-5 w-5 rounded-full bg-slate-900 border-2 border-white shadow-sm" />
-              <div className="absolute top-7 whitespace-nowrap text-center">
-                <span className="block font-bold text-xs sm:text-sm text-slate-900">NOW</span>
-                <span className="block text-xs text-slate-500 font-medium">Hiện tại</span>
-              </div>
+            <div className="rounded-2xl bg-purple-50/70 border border-purple-100 p-4">
+              <span className="font-bold text-sm sm:text-base text-purple-900 block mb-1.5">
+                🟪 {grammarData.timeline.rightLabel}:
+              </span>
+              <p className="text-xs sm:text-sm text-purple-900/90 leading-relaxed font-normal">
+                {grammarData.timeline.rightDesc}
+              </p>
             </div>
           </div>
         </div>
-
-        <div className="mt-14 pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="rounded-2xl bg-blue-50/60 border border-blue-100 p-4">
-            <span className="font-bold text-sm sm:text-base text-blue-900 block mb-1.5">🟦 Quá khứ đơn (Past Simple):</span>
-            <p className="text-xs sm:text-sm text-blue-900/90 leading-relaxed font-normal">
-              Hành động đã xảy ra và <strong>kết thúc trọn vẹn</strong> trong quá khứ. Luôn gắn liền với một thời điểm đã qua (ví dụ: <em>yesterday, in 2020, 2 days ago</em>).
-            </p>
-          </div>
-
-          <div className="rounded-2xl bg-purple-50/60 border border-purple-100 p-4">
-            <span className="font-bold text-sm sm:text-base text-purple-900 block mb-1.5">🟪 Hiện tại hoàn thành (Present Perfect):</span>
-            <p className="text-xs sm:text-sm text-purple-900/90 leading-relaxed font-normal">
-              Chiếc cầu nối giữa quá khứ và hiện tại. Hành động bắt đầu trong quá khứ và <strong>vẫn tiếp diễn</strong> hoặc để lại <strong>kết quả thấy rõ ở hiện tại</strong>.
-            </p>
-          </div>
-        </div>
-      </div>
+      )}
 
       {/* ========================================================= */}
       {/* VIEW 1: SIDE-BY-SIDE BATTLE MATRIX (SO SÁNH ĐỐI ĐẦU) */}
       {/* ========================================================= */}
       {grammarView === "comparison" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card Left: Past Simple */}
+          {/* Card Left */}
           <div className="rounded-3xl border border-blue-200 bg-white p-6 sm:p-8 shadow-xs hover:border-blue-300 transition-all flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-3.5">
                 <span className="rounded-full bg-blue-100 text-blue-900 px-3.5 py-1 text-xs sm:text-sm font-black tracking-wide">
-                  PAST SIMPLE (Quá khứ đơn)
+                  {grammarData.cardLeft.title}
                 </span>
-                <span className="text-sm sm:text-base font-mono font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-100">
-                  S + V2/ed
+                <span className="text-xs sm:text-sm font-mono font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-100">
+                  {grammarData.cardLeft.formula}
                 </span>
               </div>
 
               <h3 className="font-heading text-lg sm:text-xl font-bold text-slate-900 mb-3.5">
-                Khi nào cần dùng?
+                Quy tắc cốt lõi:
               </h3>
 
-              <ul className="space-y-3.5 text-sm sm:text-base text-slate-700 leading-relaxed">
-                <li className="flex items-start gap-2.5">
-                  <span className="h-6 w-6 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">1</span>
-                  <span><strong>Sự việc đã dứt điểm:</strong> Diễn ra và chấm dứt tại thời điểm cụ thể trong quá khứ.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="h-6 w-6 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">2</span>
-                  <span><strong>Chuỗi hành động liên tiếp:</strong> Kể lại các sự việc nối tiếp nhau trong quá khứ (kể chuyện).</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="h-6 w-6 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">3</span>
-                  <span><strong>Thói quen trong quá khứ:</strong> Hành động từng làm thường xuyên trước đây nhưng giờ đã dừng.</span>
-                </li>
+              <ul className="space-y-3 text-sm sm:text-base text-slate-700 leading-relaxed">
+                {grammarData.cardLeft.rules.map((rule, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <span className="h-6 w-6 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
+                      {idx + 1}
+                    </span>
+                    <span>{rule}</span>
+                  </li>
+                ))}
               </ul>
 
-              {/* Interactive Examples (7 câu bám sát SGK & thực tế) */}
+              {/* Sample Sentences */}
               <div className="mt-6 pt-5 border-t border-slate-100 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider block">
-                    7 Ví dụ chuẩn mực (Bấm loa nghe giọng đọc):
+                    Ví dụ mẫu câu thực tế:
                   </span>
                   <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
-                    7 câu phân tích
+                    Bấm loa nghe đọc
                   </span>
                 </div>
 
-                <div className="space-y-2.5 max-h-[420px] overflow-y-auto pr-1.5 scrollbar-thin">
-                  {[
-                    {
-                      en: "We lived in Ha Noi when I was little.",
-                      renderEn: <>We <span className="text-blue-600 underline decoration-2 font-bold">lived</span> in Ha Noi when I was little.</>,
-                      vi: "Chúng tôi từng sống ở Hà Nội khi tôi còn nhỏ (sự việc đã chấm dứt hoàn toàn trong quá khứ).",
-                      tag: "Dứt điểm trong quá khứ",
-                    },
-                    {
-                      en: "Dr. Alexander Fleming discovered penicillin in 1928.",
-                      renderEn: <>Dr. Alexander Fleming <span className="text-blue-600 underline decoration-2 font-bold">discovered</span> penicillin in 1928.</>,
-                      vi: "Bác sĩ Alexander Fleming đã phát hiện ra penicillin vào năm 1928 (mốc lịch sử xác định).",
-                      tag: "Mốc năm cụ thể (in 1928)",
-                    },
-                    {
-                      en: "She fell off her bicycle yesterday and broke her arm.",
-                      renderEn: <>She <span className="text-blue-600 underline decoration-2 font-bold">fell</span> off her bicycle yesterday and <span className="text-blue-600 underline decoration-2 font-bold">broke</span> her arm.</>,
-                      vi: "Cô ấy bị ngã xe đạp hôm qua và gãy tay (hành động xảy ra tại thời điểm cụ thể).",
-                      tag: "Dấu hiệu 'yesterday'",
-                    },
-                    {
-                      en: "He walked into the clinic, sat down, and waited for the doctor.",
-                      renderEn: <>He <span className="text-blue-600 underline decoration-2 font-bold">walked</span> into the clinic, <span className="text-blue-600 underline decoration-2 font-bold">sat</span> down, and <span className="text-blue-600 underline decoration-2 font-bold">waited</span> for the doctor.</>,
-                      vi: "Anh ấy bước vào phòng khám, ngồi xuống và đợi bác sĩ (chuỗi hành động nối tiếp nhau).",
-                      tag: "Chuỗi hành động liên tiếp",
-                    },
-                    {
-                      en: "My grandfather did regular morning exercise when he was young.",
-                      renderEn: <>My grandfather <span className="text-blue-600 underline decoration-2 font-bold">did</span> regular morning exercise when he was young.</>,
-                      vi: "Ông tôi từng tập thể dục buổi sáng đều đặn khi còn trẻ (thói quen xưa không còn nữa).",
-                      tag: "Thói quen thời trẻ",
-                    },
-                    {
-                      en: "They did not take any antibiotics during their illness last week.",
-                      renderEn: <>They <span className="text-blue-600 underline decoration-2 font-bold">did not take</span> any antibiotics during their illness last week.</>,
-                      vi: "Họ đã không uống viên kháng sinh nào trong đợt ốm tuần trước (câu phủ định với didn't).",
-                      tag: "Thể phủ định (didn't + V)",
-                    },
-                    {
-                      en: "Did you consult a nutritionist before starting this strict diet?",
-                      renderEn: <><span className="text-blue-600 underline decoration-2 font-bold">Did</span> you <span className="text-blue-600 underline decoration-2 font-bold">consult</span> a nutritionist before starting this strict diet?</>,
-                      vi: "Bạn đã tham vấn chuyên gia dinh dưỡng trước khi bắt đầu chế độ ăn này chưa?",
-                      tag: "Thể nghi vấn (Did + S + V?)",
-                    },
-                  ].map((item, idx) => (
-                    <div key={idx} className="rounded-2xl bg-slate-50/90 p-3.5 flex items-start justify-between gap-3 border border-slate-100 hover:bg-blue-50/40 hover:border-blue-200 transition-colors">
+                <div className="space-y-2.5 max-h-[380px] overflow-y-auto pr-1.5 scrollbar-thin">
+                  {grammarData.cardLeft.examples.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="rounded-2xl bg-slate-50/90 p-3.5 flex items-start justify-between gap-3 border border-slate-100 hover:bg-blue-50/40 hover:border-blue-200 transition-colors"
+                    >
                       <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="h-5 w-5 rounded-full bg-blue-100 text-blue-800 text-xs font-black flex items-center justify-center shrink-0">
-                            {idx + 1}
-                          </span>
-                          <span className="text-3xs sm:text-2xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100/60 px-2 py-0.5 rounded-md">
-                            {item.tag}
-                          </span>
-                        </div>
+                        <span className="text-3xs sm:text-2xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100/60 px-2 py-0.5 rounded-md">
+                          {item.tag}
+                        </span>
                         <p className="text-sm sm:text-base font-semibold text-slate-900 italic leading-relaxed pt-0.5">
-                          &quot;{item.renderEn}&quot;
+                          &quot;{item.en}&quot;
                         </p>
                         <p className="text-xs sm:text-sm text-slate-600 leading-snug">→ {item.vi}</p>
                       </div>
                       <button
                         onClick={() => playSentenceAudio(item.en)}
                         className="p-2.5 rounded-xl bg-white text-blue-600 hover:bg-blue-100 transition-colors shadow-2xs shrink-0 cursor-pointer border border-slate-100 mt-1"
-                        title="Nghe câu ví dụ chuẩn bản ngữ"
+                        title="Nghe câu ví dụ"
                       >
                         <Volume2 className="h-4 w-4 sm:h-5 sm:w-5" />
                       </button>
@@ -327,7 +241,7 @@ export function InteractiveGrammarStudio({
             <div className="mt-6 pt-4 border-t border-slate-100">
               <span className="text-xs sm:text-sm font-bold text-slate-500 uppercase block mb-2">Dấu hiệu nhận biết:</span>
               <div className="flex flex-wrap gap-2">
-                {["yesterday", "ago", "last week", "last year", "in 2019", "when I was young"].map((tag, idx) => (
+                {grammarData.cardLeft.signals.map((tag, idx) => (
                   <span key={idx} className="rounded-xl bg-blue-50 text-blue-700 px-3 py-1.5 text-xs sm:text-sm font-bold border border-blue-100">
                     {tag}
                   </span>
@@ -336,112 +250,63 @@ export function InteractiveGrammarStudio({
             </div>
           </div>
 
-          {/* Card Right: Present Perfect */}
+          {/* Card Right */}
           <div className="rounded-3xl border border-purple-200 bg-white p-6 sm:p-8 shadow-xs hover:border-purple-300 transition-all flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-3.5">
                 <span className="rounded-full bg-purple-100 text-purple-900 px-3.5 py-1 text-xs sm:text-sm font-black tracking-wide">
-                  PRESENT PERFECT (Hiện tại hoàn thành)
+                  {grammarData.cardRight.title}
                 </span>
-                <span className="text-sm sm:text-base font-mono font-bold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-lg border border-purple-100">
-                  S + have/has + V3/ed
+                <span className="text-xs sm:text-sm font-mono font-bold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-lg border border-purple-100">
+                  {grammarData.cardRight.formula}
                 </span>
               </div>
 
               <h3 className="font-heading text-lg sm:text-xl font-bold text-slate-900 mb-3.5">
-                Khi nào cần dùng?
+                Quy tắc cốt lõi:
               </h3>
 
-              <ul className="space-y-3.5 text-sm sm:text-base text-slate-700 leading-relaxed">
-                <li className="flex items-start gap-2.5">
-                  <span className="h-6 w-6 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">1</span>
-                  <span><strong>Hành động kéo dài đến hiện tại:</strong> Bắt đầu trong quá khứ và vẫn đang tiếp diễn.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="h-6 w-6 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">2</span>
-                  <span><strong>Vừa mới xảy ra:</strong> Hành động xảy ra rất gần, có kết quả rõ ràng ở hiện tại.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="h-6 w-6 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">3</span>
-                  <span><strong>Trải nghiệm &amp; Kinh nghiệm:</strong> Nhấn mạnh việc đã từng hoặc chưa từng làm điều gì tính đến nay.</span>
-                </li>
+              <ul className="space-y-3 text-sm sm:text-base text-slate-700 leading-relaxed">
+                {grammarData.cardRight.rules.map((rule, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <span className="h-6 w-6 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
+                      {idx + 1}
+                    </span>
+                    <span>{rule}</span>
+                  </li>
+                ))}
               </ul>
 
-              {/* Interactive Examples (7 câu bám sát SGK & thực tế) */}
+              {/* Sample Sentences */}
               <div className="mt-6 pt-5 border-t border-slate-100 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider block">
-                    7 Ví dụ chuẩn mực (Bấm loa nghe giọng đọc):
+                    Ví dụ mẫu câu thực tế:
                   </span>
                   <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-100">
-                    7 câu phân tích
+                    Bấm loa nghe đọc
                   </span>
                 </div>
 
-                <div className="space-y-2.5 max-h-[420px] overflow-y-auto pr-1.5 scrollbar-thin">
-                  {[
-                    {
-                      en: "We have lived in Ha Noi for ten years.",
-                      renderEn: <>We <span className="text-purple-600 underline decoration-2 font-bold">have lived</span> in Ha Noi for ten years.</>,
-                      vi: "Chúng tôi đã sống ở Hà Nội được 10 năm (và hiện tại vẫn đang tiếp tục sinh sống ở đây).",
-                      tag: "Kéo dài đến hiện tại (for 10 years)",
-                    },
-                    {
-                      en: "Scientists have developed several effective vaccines recently.",
-                      renderEn: <>Scientists <span className="text-purple-600 underline decoration-2 font-bold">have developed</span> several effective vaccines recently.</>,
-                      vi: "Các nhà khoa học vừa phát triển nhiều loại vắc-xin hiệu quả gần đây (kết quả ở hiện tại).",
-                      tag: "Dấu hiệu 'recently'",
-                    },
-                    {
-                      en: "She has suffered from a severe headache since this morning.",
-                      renderEn: <>She <span className="text-purple-600 underline decoration-2 font-bold">has suffered</span> from a severe headache since this morning.</>,
-                      vi: "Cô ấy bị đau đầu dữ dội kể từ sáng nay (tới giờ vẫn chưa khỏi hẳn).",
-                      tag: "Mốc thời gian (since this morning)",
-                    },
-                    {
-                      en: "Have you ever experienced severe food poisoning in your life?",
-                      renderEn: <><span className="text-purple-600 underline decoration-2 font-bold">Have</span> you ever <span className="text-purple-600 underline decoration-2 font-bold">experienced</span> severe food poisoning in your life?</>,
-                      vi: "Bạn đã từng bị ngộ độc thực phẩm nặng bao giờ trong đời chưa (hỏi trải nghiệm)?",
-                      tag: "Trải nghiệm cuộc sống (ever)",
-                    },
-                    {
-                      en: "The hospital has already adopted advanced robotic diagnosis technology.",
-                      renderEn: <>The hospital <span className="text-purple-600 underline decoration-2 font-bold">has already adopted</span> advanced robotic diagnosis technology.</>,
-                      vi: "Bệnh viện đã áp dụng công nghệ chẩn đoán bằng robot tân tiến (hành động đã hoàn thành).",
-                      tag: "Đã hoàn thành sớm (already)",
-                    },
-                    {
-                      en: "I have not consumed sugary drinks for nearly six months.",
-                      renderEn: <>I <span className="text-purple-600 underline decoration-2 font-bold">have not consumed</span> sugary drinks for nearly six months.</>,
-                      vi: "Tôi đã không dùng đồ uống có đường suốt gần 6 tháng qua (thể phủ định).",
-                      tag: "Thể phủ định (haven't + V3)",
-                    },
-                    {
-                      en: "He has just finished his 30-minute cardio workout.",
-                      renderEn: <>He <span className="text-purple-600 underline decoration-2 font-bold">has just finished</span> his 30-minute cardio workout.</>,
-                      vi: "Anh ấy vừa mới hoàn thành buổi tập cardio 30 phút (hành động vừa dứt).",
-                      tag: "Vừa mới xảy ra (just)",
-                    },
-                  ].map((item, idx) => (
-                    <div key={idx} className="rounded-2xl bg-slate-50/90 p-3.5 flex items-start justify-between gap-3 border border-slate-100 hover:bg-purple-50/40 hover:border-purple-200 transition-colors">
+                <div className="space-y-2.5 max-h-[380px] overflow-y-auto pr-1.5 scrollbar-thin">
+                  {grammarData.cardRight.examples.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="rounded-2xl bg-slate-50/90 p-3.5 flex items-start justify-between gap-3 border border-slate-100 hover:bg-purple-50/40 hover:border-purple-200 transition-colors"
+                    >
                       <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="h-5 w-5 rounded-full bg-purple-100 text-purple-800 text-xs font-black flex items-center justify-center shrink-0">
-                            {idx + 1}
-                          </span>
-                          <span className="text-3xs sm:text-2xs font-bold uppercase tracking-wider text-purple-700 bg-purple-100/60 px-2 py-0.5 rounded-md">
-                            {item.tag}
-                          </span>
-                        </div>
+                        <span className="text-3xs sm:text-2xs font-bold uppercase tracking-wider text-purple-700 bg-purple-100/60 px-2 py-0.5 rounded-md">
+                          {item.tag}
+                        </span>
                         <p className="text-sm sm:text-base font-semibold text-slate-900 italic leading-relaxed pt-0.5">
-                          &quot;{item.renderEn}&quot;
+                          &quot;{item.en}&quot;
                         </p>
                         <p className="text-xs sm:text-sm text-slate-600 leading-snug">→ {item.vi}</p>
                       </div>
                       <button
                         onClick={() => playSentenceAudio(item.en)}
                         className="p-2.5 rounded-xl bg-white text-purple-600 hover:bg-purple-100 transition-colors shadow-2xs shrink-0 cursor-pointer border border-slate-100 mt-1"
-                        title="Nghe câu ví dụ chuẩn bản ngữ"
+                        title="Nghe câu ví dụ"
                       >
                         <Volume2 className="h-4 w-4 sm:h-5 sm:w-5" />
                       </button>
@@ -454,7 +319,7 @@ export function InteractiveGrammarStudio({
             <div className="mt-6 pt-4 border-t border-slate-100">
               <span className="text-xs sm:text-sm font-bold text-slate-500 uppercase block mb-2">Dấu hiệu nhận biết:</span>
               <div className="flex flex-wrap gap-2">
-                {["since + mốc", "for + khoảng", "already", "yet", "just", "ever / never", "so far", "recently"].map((tag, idx) => (
+                {grammarData.cardRight.signals.map((tag, idx) => (
                   <span key={idx} className="rounded-xl bg-purple-50 text-purple-700 px-3 py-1.5 text-xs sm:text-sm font-bold border border-purple-100">
                     {tag}
                   </span>
@@ -466,124 +331,79 @@ export function InteractiveGrammarStudio({
       )}
 
       {/* ========================================================= */}
-      {/* VIEW 2: FORMULA CARDS (THẺ CÔNG THỨC MÀU SẮC) */}
+      {/* VIEW 2: FORMULA CARDS */}
       {/* ========================================================= */}
       {grammarView === "formulas" && (
         <div className="space-y-6">
-          {/* Past Simple Formulas */}
           <div className="rounded-3xl border border-blue-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
             <h3 className="font-heading text-lg sm:text-xl font-bold text-blue-900 flex items-center gap-2.5">
               <span className="h-3.5 w-3.5 rounded-full bg-blue-500" />
-              Công thức Thì Quá Khứ Đơn (Past Simple Formula)
+              Công thức: {grammarData.cardLeft.title}
             </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-2xl bg-blue-50/60 p-5 border border-blue-100">
-                <span className="font-black text-blue-800 text-xs sm:text-sm uppercase tracking-wide block mb-2">(+) Thể Khẳng định:</span>
-                <div className="font-mono font-black text-slate-900 text-base sm:text-lg bg-white p-3 rounded-xl border border-blue-200 shadow-2xs">
-                  S + V2 / V-ed
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 italic">&quot;They worked out yesterday.&quot;</p>
+            <div className="p-4 rounded-2xl bg-blue-50/60 border border-blue-100">
+              <div className="font-mono font-black text-slate-900 text-base sm:text-lg bg-white p-4 rounded-xl border border-blue-200 shadow-2xs">
+                {grammarData.cardLeft.formula}
               </div>
-
-              <div className="rounded-2xl bg-blue-50/60 p-5 border border-blue-100">
-                <span className="font-black text-blue-800 text-xs sm:text-sm uppercase tracking-wide block mb-2">(-) Thể Phủ định:</span>
-                <div className="font-mono font-black text-slate-900 text-base sm:text-lg bg-white p-3 rounded-xl border border-blue-200 shadow-2xs">
-                  S + didn&apos;t + V-inf
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 italic">&quot;They didn&apos;t work out.&quot;</p>
-              </div>
-
-              <div className="rounded-2xl bg-blue-50/60 p-5 border border-blue-100">
-                <span className="font-black text-blue-800 text-xs sm:text-sm uppercase tracking-wide block mb-2">(?) Thể Nghi vấn:</span>
-                <div className="font-mono font-black text-slate-900 text-base sm:text-lg bg-white p-3 rounded-xl border border-blue-200 shadow-2xs">
-                  Did + S + V-inf ?
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 italic">&quot;Did they work out?&quot;</p>
-              </div>
+              <p className="text-xs sm:text-sm text-slate-600 mt-3">
+                Áp dụng: {grammarData.cardLeft.rules.join(" ")}
+              </p>
             </div>
           </div>
 
-          {/* Present Perfect Formulas */}
           <div className="rounded-3xl border border-purple-200 bg-white p-6 sm:p-8 shadow-xs space-y-4">
             <h3 className="font-heading text-lg sm:text-xl font-bold text-purple-900 flex items-center gap-2.5">
               <span className="h-3.5 w-3.5 rounded-full bg-purple-500" />
-              Công thức Thì Hiện Tại Hoàn Thành (Present Perfect Formula)
+              Công thức: {grammarData.cardRight.title}
             </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-2xl bg-purple-50/60 p-5 border border-purple-100">
-                <span className="font-black text-purple-800 text-xs sm:text-sm uppercase tracking-wide block mb-2">(+) Thể Khẳng định:</span>
-                <div className="font-mono font-black text-slate-900 text-base sm:text-lg bg-white p-3 rounded-xl border border-purple-200 shadow-2xs">
-                  S + have/has + V3/ed
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 italic">&quot;I have taken antibiotics.&quot;</p>
+            <div className="p-4 rounded-2xl bg-purple-50/60 border border-purple-100">
+              <div className="font-mono font-black text-slate-900 text-base sm:text-lg bg-white p-4 rounded-xl border border-purple-200 shadow-2xs">
+                {grammarData.cardRight.formula}
               </div>
-
-              <div className="rounded-2xl bg-purple-50/60 p-5 border border-purple-100">
-                <span className="font-black text-purple-800 text-xs sm:text-sm uppercase tracking-wide block mb-2">(-) Thể Phủ định:</span>
-                <div className="font-mono font-black text-slate-900 text-base sm:text-lg bg-white p-3 rounded-xl border border-purple-200 shadow-2xs">
-                  S + haven&apos;t/hasn&apos;t + V3
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 italic">&quot;I haven&apos;t taken antibiotics.&quot;</p>
-              </div>
-
-              <div className="rounded-2xl bg-purple-50/60 p-5 border border-purple-100">
-                <span className="font-black text-purple-800 text-xs sm:text-sm uppercase tracking-wide block mb-2">(?) Thể Nghi vấn:</span>
-                <div className="font-mono font-black text-slate-900 text-base sm:text-lg bg-white p-3 rounded-xl border border-purple-200 shadow-2xs">
-                  Have/Has + S + V3 ?
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2.5 italic">&quot;Have you taken antibiotics?&quot;</p>
-              </div>
+              <p className="text-xs sm:text-sm text-slate-600 mt-3">
+                Áp dụng: {grammarData.cardRight.rules.join(" ")}
+              </p>
             </div>
           </div>
         </div>
       )}
 
       {/* ========================================================= */}
-      {/* VIEW 3: SIGNALS & MEMORY HACKS (MẸO NHẬN BIẾT) */}
+      {/* VIEW 3: SIGNALS & TIPS */}
       {/* ========================================================= */}
       {grammarView === "signals" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs space-y-4">
-            <h3 className="font-heading text-lg font-bold text-slate-900 flex items-center gap-2">
-              <span>🎯 Mẹo nhận biết Quá khứ đơn trong bài thi</span>
+            <h3 className="font-heading text-lg font-bold text-slate-900">
+              🎯 Mẹo nhận biết: {grammarData.cardLeft.title}
             </h3>
-            <div className="space-y-3.5">
-              <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100">
-                <span className="font-bold text-sm sm:text-base text-blue-700 block mb-1.5">Quy tắc 1: Có mốc thời gian rõ ràng</span>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                  Nếu trong câu xuất hiện <strong>yesterday, last night, last month, in 1995, 3 days ago</strong>, chọn ngay thì Quá khứ đơn!
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100">
-                <span className="font-bold text-sm sm:text-base text-blue-700 block mb-1.5">Quy tắc 2: Khi vế câu có &quot;When + Quá khứ&quot;</span>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                  Ví dụ: <em>&quot;When I was young, I played football every afternoon.&quot;</em> (Chỉ thói quen thời thơ ấu đã kết thúc).
-                </p>
+            <div className="space-y-3">
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                Khi trong câu xuất hiện các từ/cụm từ dấu hiệu sau, hãy ưu tiên vận dụng cấu trúc này:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {grammarData.cardLeft.signals.map((s, idx) => (
+                  <span key={idx} className="rounded-xl bg-blue-50 text-blue-700 font-bold px-3 py-1.5 text-xs sm:text-sm border border-blue-100">
+                    {s}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
 
           <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs space-y-4">
-            <h3 className="font-heading text-lg font-bold text-slate-900 flex items-center gap-2">
-              <span>🎯 Mẹo nhận biết Hiện tại hoàn thành trong bài thi</span>
+            <h3 className="font-heading text-lg font-bold text-slate-900">
+              🎯 Mẹo nhận biết: {grammarData.cardRight.title}
             </h3>
-            <div className="space-y-3.5">
-              <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100">
-                <span className="font-bold text-sm sm:text-base text-purple-700 block mb-1.5">Quy tắc 1: Cặp đôi SINCE và FOR</span>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                  • <strong>SINCE</strong> + mốc thời gian: <em>since 2015, since last week, since breakfast</em>.<br />
-                  • <strong>FOR</strong> + khoảng thời gian: <em>for 10 years, for a long time, for 3 hours</em>.
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100">
-                <span className="font-bold text-sm sm:text-base text-purple-700 block mb-1.5">Quy tắc 2: Từ chỉ kinh nghiệm &amp; trạng thái</span>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                  Gặp <strong>already, yet, just, ever, never, so far, recently, up to now</strong> ➡️ Ưu tiên chọn Hiện tại hoàn thành!
-                </p>
+            <div className="space-y-3">
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                Khi trong câu xuất hiện các từ/cụm từ dấu hiệu sau, hãy ưu tiên vận dụng cấu trúc này:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {grammarData.cardRight.signals.map((s, idx) => (
+                  <span key={idx} className="rounded-xl bg-purple-50 text-purple-700 font-bold px-3 py-1.5 text-xs sm:text-sm border border-purple-100">
+                    {s}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -591,59 +411,78 @@ export function InteractiveGrammarStudio({
       )}
 
       {/* ========================================================= */}
-      {/* VIEW 4: INSTANT MINI-CHECK (THỬ THÁCH NHANH TẠI CHỖ) */}
+      {/* VIEW 4: INSTANT MINI-CHECK */}
       {/* ========================================================= */}
       {grammarView === "minicheck" && (
         <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs space-y-6">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-heading text-lg sm:text-xl font-bold text-slate-900">
-                Thử Thách Nhanh Ngữ Pháp (Mini-Check)
+                ⚡ Bài tập củng cố nhanh tại chỗ (Instant Mini-check)
               </h3>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                Chạm vào đáp án đúng để kiểm tra độ hiểu bài ngay lập tức
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                Luyện tập 4 câu trắc nghiệm trọng tâm để tự đánh giá mức độ hiểu bài ngay lập tức.
               </p>
             </div>
-            <span className="rounded-full bg-amber-100 text-amber-900 px-3.5 py-1 text-xs sm:text-sm font-bold border border-amber-200">
-              3 Câu hỏi chớp nhoáng
-            </span>
+            {checkedResults && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setUserAnswers({});
+                  setCheckedResults(false);
+                }}
+                className="rounded-xl text-xs font-bold"
+              >
+                <RotateCcw className="mr-1.5 h-3.5 w-3.5" /> Làm lại
+              </Button>
+            )}
           </div>
 
           <div className="space-y-4">
-            {miniCheckQuestions.map((item, qIdx) => {
+            {miniQuestions.map((item, qIdx) => {
               const selected = userAnswers[qIdx];
               return (
-                <div key={qIdx} className="rounded-2xl border border-slate-200/90 bg-slate-50/50 p-5">
-                  <p className="font-heading text-base sm:text-lg font-bold text-slate-900 mb-3.5 leading-relaxed">{item.q}</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {item.options.map((opt, optIdx) => {
-                      const isChosen = selected === optIdx;
-                      const isCorrect = item.correct === optIdx;
-                      let style = "border-slate-200 bg-white text-slate-800 hover:bg-slate-50 font-medium";
+                <div key={qIdx} className="rounded-2xl border border-slate-200/80 p-5 bg-slate-50/50 space-y-3">
+                  <p className="font-bold text-sm sm:text-base text-slate-900">
+                    {qIdx + 1}. {item.q}
+                  </p>
+                  {item.s && (
+                    <p className="font-mono text-sm bg-white p-3 rounded-xl border border-slate-200 text-indigo-950 font-semibold">
+                      {item.s}
+                    </p>
+                  )}
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {item.opts.map((opt, optIdx) => {
+                      const isChosen = selected === optIdx;
+                      let btnStyle = "bg-white border-slate-200 text-slate-700 hover:bg-slate-100";
                       if (checkedResults) {
-                        if (isCorrect) style = "border-emerald-400 bg-emerald-50 text-emerald-950 font-bold";
-                        else if (isChosen && !isCorrect) style = "border-red-300 bg-red-50 text-red-900";
+                        if (optIdx === item.c) {
+                          btnStyle = "bg-emerald-50 border-emerald-400 text-emerald-900 font-bold";
+                        } else if (isChosen && optIdx !== item.c) {
+                          btnStyle = "bg-red-50 border-red-300 text-red-900";
+                        }
                       } else if (isChosen) {
-                        style = "border-indigo-600 bg-indigo-50 text-indigo-950 font-bold";
+                        btnStyle = "bg-indigo-50 border-indigo-500 text-indigo-900 font-bold";
                       }
 
                       return (
                         <button
                           key={optIdx}
+                          disabled={checkedResults}
                           onClick={() => setUserAnswers((prev) => ({ ...prev, [qIdx]: optIdx }))}
-                          className={`text-left rounded-xl border p-3.5 text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer ${style}`}
+                          className={`rounded-xl border p-3 text-left text-xs sm:text-sm font-medium transition-all cursor-pointer ${btnStyle}`}
                         >
-                          <span>{opt}</span>
-                          {checkedResults && isCorrect && <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />}
+                          {opt}
                         </button>
                       );
                     })}
                   </div>
 
                   {checkedResults && (
-                    <div className="mt-3.5 rounded-xl bg-indigo-50/80 p-3 text-xs sm:text-sm text-indigo-900 border border-indigo-100 leading-relaxed">
-                      <strong className="text-indigo-950">💡 Lời giải thích: </strong> {item.hint}
+                    <div className="mt-3 p-3 rounded-xl bg-indigo-50/80 border border-indigo-100 text-xs sm:text-sm text-indigo-900 font-medium">
+                      💡 <strong>Giải thích sư phạm:</strong> {item.exp}
                     </div>
                   )}
                 </div>
@@ -651,28 +490,42 @@ export function InteractiveGrammarStudio({
             })}
           </div>
 
-          <div className="flex items-center justify-between pt-2">
-            {!checkedResults ? (
-              <Button
-                onClick={() => setCheckedResults(true)}
-                disabled={Object.keys(userAnswers).length === 0}
-                className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm px-6 py-3 shadow-xs cursor-pointer"
-              >
-                Kiểm tra kết quả ngay 🚀
-              </Button>
-            ) : (
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setUserAnswers({});
-                  setCheckedResults(false);
-                }}
-                className="rounded-xl text-xs sm:text-sm font-bold cursor-pointer py-3 px-5"
-              >
-                <RotateCcw className="mr-1.5 h-4 w-4" /> Thử sức lại
-              </Button>
-            )}
+          {!checkedResults && (
+            <Button
+              onClick={() => setCheckedResults(true)}
+              disabled={Object.keys(userAnswers).length === 0}
+              className="w-full sm:w-auto rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 shadow-xs cursor-pointer"
+            >
+              Kiểm tra kết quả ngay
+            </Button>
+          )}
+        </div>
+      )}
+
+      {/* ========================================================= */}
+      {/* VIEW 5: FULL TEXTBOOK HTML LESSON (GIÁO TRÌNH SGK) */}
+      {/* ========================================================= */}
+      {grammarView === "textbook" && grammarHtml && (
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 shadow-xs space-y-6">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+            <div>
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-700 border border-indigo-200">
+                <BookOpen className="h-3.5 w-3.5" />
+                Nguyên bản Giáo trình SGK Global Success
+              </div>
+              <h3 className="font-heading text-xl sm:text-2xl font-black text-slate-900 mt-2">
+                Bài học chi tiết: {grammarTitle}
+              </h3>
+            </div>
+            <span className="text-xs text-slate-400 font-medium hidden sm:inline">
+              Bộ Giáo dục và Đào tạo
+            </span>
           </div>
+
+          <div
+            className="prose prose-slate max-w-none prose-table:border prose-th:bg-slate-100 prose-th:p-3 prose-td:p-3 prose-p:leading-relaxed text-slate-800 text-sm sm:text-base"
+            dangerouslySetInnerHTML={{ __html: grammarHtml }}
+          />
         </div>
       )}
     </div>
